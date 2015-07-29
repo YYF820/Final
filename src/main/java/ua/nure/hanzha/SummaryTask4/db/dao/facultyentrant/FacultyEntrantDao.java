@@ -24,9 +24,9 @@ public interface FacultyEntrantDao extends Dao<FacultyEntrant> {
 
     List<FacultyEntrant> selectByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException;
 
-    List<FacultyEntrant> selectBySubjectId(int entrantId, Connection connection) throws SQLException, CrudException;
+    List<FacultyEntrant> selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
 
-    FacultyEntrant selectByFacultyIdSubjectId(int facultyId, int entrantId, Connection connection) throws SQLException, CrudException;
+    FacultyEntrant selectByFacultyIdEntrantId(int facultyId, int entrantId, Connection connection) throws SQLException, CrudException;
 
     List<FacultyEntrant> selectByPriority(int priority, Connection connection) throws SQLException, CrudException;
 

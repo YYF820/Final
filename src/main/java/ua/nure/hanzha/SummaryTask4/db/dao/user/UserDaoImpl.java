@@ -1,7 +1,7 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.user;
 
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
-import ua.nure.hanzha.SummaryTask4.constants.Fields;
+import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.User;
@@ -25,7 +25,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     protected void prepareForInsert(User entity, PreparedStatement preparedStatement) throws SQLException {
         int k = 1;
-        preparedStatement.setString(k++, entity.getLogin());
         preparedStatement.setString(k++, entity.getPassword());
         preparedStatement.setString(k++, entity.getFirstName());
         preparedStatement.setString(k++, entity.getLastName());
@@ -36,7 +35,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     protected void prepareForUpdate(User entity, PreparedStatement preparedStatement) throws SQLException {
         int k = 1;
-        preparedStatement.setString(k++, entity.getLogin());
         preparedStatement.setString(k++, entity.getPassword());
         preparedStatement.setString(k++, entity.getFirstName());
         preparedStatement.setString(k++, entity.getLastName());
@@ -48,14 +46,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     protected User extractInfo(ResultSet resultSet) throws SQLException {
         User user = new User();
-        user.setId(resultSet.getInt(Fields.ENTITY_ID));
-        user.setLogin(resultSet.getString(Fields.USER_LOGIN));
-        user.setPassword(resultSet.getString(Fields.USER_PASSWORD));
-        user.setFirstName(resultSet.getString(Fields.USER_FIRST_NAME));
-        user.setLastName(resultSet.getString(Fields.USER_LAST_NAME));
-        user.setPatronymic(resultSet.getString(Fields.USER_PATRONYMIC));
-        user.setEmail(resultSet.getString(Fields.USER_EMAIL));
-        user.setRoleId(resultSet.getInt(Fields.USER_ROLE_ID));
+        user.setId(resultSet.getInt(FieldsDataBase.ENTITY_ID));
+        user.setPassword(resultSet.getString(FieldsDataBase.USER_PASSWORD));
+        user.setFirstName(resultSet.getString(FieldsDataBase.USER_FIRST_NAME));
+        user.setLastName(resultSet.getString(FieldsDataBase.USER_LAST_NAME));
+        user.setPatronymic(resultSet.getString(FieldsDataBase.USER_PATRONYMIC));
+        user.setEmail(resultSet.getString(FieldsDataBase.USER_EMAIL));
+        user.setRoleId(resultSet.getInt(FieldsDataBase.USER_ROLE_ID));
         return user;
     }
 

@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.facultysubject;
 
-import ua.nure.hanzha.SummaryTask4.constants.Fields;
+import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.FacultySubject;
@@ -39,8 +39,8 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
     @Override
     protected FacultySubject extractInfo(ResultSet resultSet) throws SQLException {
         FacultySubject facultySubject = new FacultySubject();
-        facultySubject.setFacultyId(resultSet.getInt(Fields.FACULTY_SUBJECT_FACULTY_ID));
-        facultySubject.setSubjectId(resultSet.getInt(Fields.FACULTY_SUBJECT_SUBJECT_ID));
+        facultySubject.setFacultyId(resultSet.getInt(FieldsDataBase.FACULTY_SUBJECT_FACULTY_ID));
+        facultySubject.setSubjectId(resultSet.getInt(FieldsDataBase.FACULTY_SUBJECT_SUBJECT_ID));
         return facultySubject;
     }
 
@@ -111,11 +111,7 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
 
     @Override
     public void update(FacultySubject entity, Connection connection) throws SQLException, CrudException {
-        update(
-                entity,
-                SqlQueriesHolder.getSqlQuery("faculty_subject.update"),
-                connection
-        );
+        throw new UnsupportedOperationException("No realisation for FacultySubjectDaoIml#update");
     }
 
     @Override

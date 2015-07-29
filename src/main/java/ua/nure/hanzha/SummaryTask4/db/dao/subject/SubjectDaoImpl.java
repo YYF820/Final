@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.subject;
 
-import ua.nure.hanzha.SummaryTask4.constants.Fields;
+import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
@@ -36,8 +36,8 @@ public class SubjectDaoImpl extends AbstractDao<Subject> implements SubjectDao {
     @Override
     protected Subject extractInfo(ResultSet resultSet) throws SQLException {
         Subject subject = new Subject();
-        subject.setId(resultSet.getInt(Fields.ENTITY_ID));
-        subject.setName(resultSet.getString(Fields.SUBJECT_NAME));
+        subject.setId(resultSet.getInt(FieldsDataBase.ENTITY_ID));
+        subject.setName(resultSet.getString(FieldsDataBase.SUBJECT_NAME));
         return subject;
     }
 

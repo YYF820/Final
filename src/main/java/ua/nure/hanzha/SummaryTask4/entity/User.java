@@ -7,21 +7,12 @@ package ua.nure.hanzha.SummaryTask4.entity;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class User extends Entity {
-    private String login;
     private String password;
     private String firstName;
     private String lastName;
     private String patronymic;
     private String email;
     private int roleId;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     public String getPassword() {
         return password;
@@ -73,8 +64,7 @@ public class User extends Entity {
 
     @Override
     public String toString() {
-        return "Login: " + login +
-                "Password: " + password +
+        return "Password: " + password +
                 "First name: " + firstName +
                 "Last name : " + lastName +
                 "Patronymic: " + patronymic +

@@ -35,6 +35,7 @@ CREATE TABLE Entrants (
   region                    TEXT    NOT NULL,
   school                    INTEGER NOT NULL,
   without_competitive_entry BOOLEAN DEFAULT FALSE,
+  blocked                   BOOLEAN DEFAULT FALSE,
   user_id                   INTEGER NOT NULL UNIQUE,
   CONSTRAINT entrants_pk PRIMARY KEY (id),
   CONSTRAINT user_id_fk FOREIGN KEY (user_id)
@@ -96,3 +97,5 @@ CREATE TABLE Entrants_final_sheets (
   CONSTRAINT entrant_id_fk FOREIGN KEY (entrant_id)
   REFERENCES Entrants (id)
 );
+
+

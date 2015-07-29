@@ -114,8 +114,9 @@ public class GeneratorSql {
                                 city + "\', \'" +
                                 region + "\', " +
                                 random_school + ", " +
-                                without_competitive_entry + ", "
-                                + k++ + ");"
+                                without_competitive_entry + ", " +
+                                "DEFAULT, " +
+                                k++ + ");"
                 );
                 if (k == keys.size() + 1) {
                     pwEntrants.close();

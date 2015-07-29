@@ -26,15 +26,15 @@
          -->
 
     <Resource
-            name="jdbc/practice9"
+            name="jdbc/summaryTask4"
             auth="Container"
             type="javax.sql.DataSource"
-            maxActive="100"
-            maxIdle="30"
+            maxActive="50"
+            maxIdle="20"
             maxWait="10000"
-            driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/practice9"
-            username="root"
+            driverClassName="org.postgresql.Driver"
+            url="jdbc:postgresql://localhost:5432/summarytask4"
+            username="faffi-ubuntu"
             password="t9dnb2mq"
             />
 

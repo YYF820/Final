@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.extramark;
 
-import ua.nure.hanzha.SummaryTask4.constants.Fields;
+import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.ExtraMark;
@@ -39,9 +39,9 @@ public class ExtraMarkDaoImpl extends AbstractDao<ExtraMark> implements ExtraMar
     @Override
     protected ExtraMark extractInfo(ResultSet resultSet) throws SQLException {
         ExtraMark extraMark = new ExtraMark();
-        extraMark.setEntrantId(resultSet.getInt(Fields.EXTRA_MARK_ENTRANT_ID));
-        extraMark.setCertificatePoints(resultSet.getDouble(Fields.EXTRA_MARK_CERTIFICATE_POINTS));
-        extraMark.setExtraPoints(resultSet.getDouble(Fields.EXTRA_MARK_EXTRA_POINTS));
+        extraMark.setEntrantId(resultSet.getInt(FieldsDataBase.EXTRA_MARK_ENTRANT_ID));
+        extraMark.setCertificatePoints(resultSet.getDouble(FieldsDataBase.EXTRA_MARK_CERTIFICATE_POINTS));
+        extraMark.setExtraPoints(resultSet.getDouble(FieldsDataBase.EXTRA_MARK_EXTRA_POINTS));
         return extraMark;
     }
 

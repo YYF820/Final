@@ -1,11 +1,10 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.facultyentrant;
 
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
-import ua.nure.hanzha.SummaryTask4.constants.Fields;
+import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.FacultyEntrant;
-import ua.nure.hanzha.SummaryTask4.entity.Mark;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
 import java.sql.Connection;
@@ -46,10 +45,10 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     protected FacultyEntrant extractInfo(ResultSet resultSet) throws SQLException {
         FacultyEntrant facultyEntrant = new FacultyEntrant();
-        facultyEntrant.setFacultyId(resultSet.getInt(Fields.FACULTY_ENTRANT_FACULTY_ID));
-        facultyEntrant.setFacultyId(resultSet.getInt(Fields.FACULTY_ENTRANT_ENTRANT_ID));
-        facultyEntrant.setPriority(resultSet.getInt(Fields.FACULTY_ENTRANT_PRIORITY));
-        facultyEntrant.setSumMarks(resultSet.getDouble(Fields.FACULTY_ENTRANT_SUM_MARKS));
+        facultyEntrant.setFacultyId(resultSet.getInt(FieldsDataBase.FACULTY_ENTRANT_FACULTY_ID));
+        facultyEntrant.setFacultyId(resultSet.getInt(FieldsDataBase.FACULTY_ENTRANT_ENTRANT_ID));
+        facultyEntrant.setPriority(resultSet.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY));
+        facultyEntrant.setSumMarks(resultSet.getDouble(FieldsDataBase.FACULTY_ENTRANT_SUM_MARKS));
         return facultyEntrant;
     }
 
@@ -91,7 +90,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     }
 
     @Override
-    public List<FacultyEntrant> selectBySubjectId(int entrantId, Connection connection) throws SQLException, CrudException {
+    public List<FacultyEntrant> selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         return selectByIdMultiRows(
                 entrantId,
                 SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.entrant.id"),
@@ -100,7 +99,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     }
 
     @Override
-    public FacultyEntrant selectByFacultyIdSubjectId(int facultyId, int entrantId, Connection connection) throws SQLException, CrudException {
+    public FacultyEntrant selectByFacultyIdEntrantId(int facultyId, int entrantId, Connection connection) throws SQLException, CrudException {
         return selectByDoubleId(
                 facultyId,
                 entrantId,

@@ -1,7 +1,7 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.mark;
 
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
-import ua.nure.hanzha.SummaryTask4.constants.Fields;
+import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.Mark;
@@ -41,9 +41,9 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     @Override
     protected Mark extractInfo(ResultSet resultSet) throws SQLException {
         Mark mark = new Mark();
-        mark.setSubjectId(resultSet.getInt(Fields.MARK_SUBJECT_ID));
-        mark.setEntrantId(resultSet.getInt(Fields.MARK_ENTRANT_ID));
-        mark.setMarkValue(resultSet.getDouble(Fields.MARK_VALUE));
+        mark.setSubjectId(resultSet.getInt(FieldsDataBase.MARK_SUBJECT_ID));
+        mark.setEntrantId(resultSet.getInt(FieldsDataBase.MARK_ENTRANT_ID));
+        mark.setMarkValue(resultSet.getDouble(FieldsDataBase.MARK_VALUE));
         return mark;
     }
 

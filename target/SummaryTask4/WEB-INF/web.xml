@@ -169,7 +169,7 @@
         <filter-class>ua.nure.hanzha.SummaryTask4.filters.CharsetFilter</filter-class>
         <init-param>
             <param-name>requestEncoding</param-name>
-            <param-value>UTF-8</param-value>
+            <param-markValue>UTF-8</param-markValue>
         </init-param>
     </filter>
 

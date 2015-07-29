@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.faculty;
 
-import ua.nure.hanzha.SummaryTask4.constants.Fields;
+import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.Faculty;
@@ -40,10 +40,10 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
     @Override
     protected Faculty extractInfo(ResultSet resultSet) throws SQLException {
         Faculty faculty = new Faculty();
-        faculty.setId(resultSet.getInt(Fields.ENTITY_ID));
-        faculty.setName(resultSet.getString(Fields.FACULTY_NAME));
-        faculty.setTotalSpots(resultSet.getInt(Fields.FACULTY_TOTAL_SPOTS));
-        faculty.setBudgetSpots(resultSet.getInt(Fields.FACULTY_BUDGET_SPOTS));
+        faculty.setId(resultSet.getInt(FieldsDataBase.ENTITY_ID));
+        faculty.setName(resultSet.getString(FieldsDataBase.FACULTY_NAME));
+        faculty.setTotalSpots(resultSet.getInt(FieldsDataBase.FACULTY_TOTAL_SPOTS));
+        faculty.setBudgetSpots(resultSet.getInt(FieldsDataBase.FACULTY_BUDGET_SPOTS));
         return faculty;
     }
 

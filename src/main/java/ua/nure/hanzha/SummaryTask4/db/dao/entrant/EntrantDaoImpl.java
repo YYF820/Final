@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.entrant;
 
-import ua.nure.hanzha.SummaryTask4.constants.Fields;
+import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
@@ -27,6 +27,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
         preparedStatement.setString(k++, entity.getRegion());
         preparedStatement.setInt(k++, entity.getSchool());
         preparedStatement.setBoolean(k++, entity.isWithoutCompetitiveEntry());
+        preparedStatement.setBoolean(k++, entity.isBlocked());
         preparedStatement.setInt(k, entity.getUserId());
     }
 
@@ -37,6 +38,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
         preparedStatement.setString(k++, entity.getRegion());
         preparedStatement.setInt(k++, entity.getSchool());
         preparedStatement.setBoolean(k++, entity.isWithoutCompetitiveEntry());
+        preparedStatement.setBoolean(k++, entity.isBlocked());
         preparedStatement.setInt(k++, entity.getUserId());
         preparedStatement.setInt(k, entity.getId());
     }
@@ -44,12 +46,13 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     @Override
     protected Entrant extractInfo(ResultSet resultSet) throws SQLException {
         Entrant entrant = new Entrant();
-        entrant.setId(resultSet.getInt(Fields.ENTITY_ID));
-        entrant.setCity(resultSet.getString(Fields.ENTRANT_CITY));
-        entrant.setRegion(resultSet.getString(Fields.ENTRANT_REGION));
-        entrant.setSchool(resultSet.getInt(Fields.ENTRANT_SCHOOL));
-        entrant.setWithoutCompetitiveEntry(resultSet.getBoolean(Fields.ENTRANT_WITHOUT_COMPETITIVE_ENTRY));
-        entrant.setUserId(resultSet.getInt(Fields.ENTRANT_USER_ID));
+        entrant.setId(resultSet.getInt(FieldsDataBase.ENTITY_ID));
+        entrant.setCity(resultSet.getString(FieldsDataBase.ENTRANT_CITY));
+        entrant.setRegion(resultSet.getString(FieldsDataBase.ENTRANT_REGION));
+        entrant.setSchool(resultSet.getInt(FieldsDataBase.ENTRANT_SCHOOL));
+        entrant.setWithoutCompetitiveEntry(resultSet.getBoolean(FieldsDataBase.ENTRANT_WITHOUT_COMPETITIVE_ENTRY));
+        entrant.setBlocked(resultSet.getBoolean(FieldsDataBase.ENTRANT_BLOCKED));
+        entrant.setUserId(resultSet.getInt(FieldsDataBase.ENTRANT_USER_ID));
         return entrant;
     }
 
