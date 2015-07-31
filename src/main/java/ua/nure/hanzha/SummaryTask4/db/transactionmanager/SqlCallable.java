@@ -5,6 +5,7 @@ import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.concurrent.Callable;
 
 /**
  * Created by faffi-ubuntu on 18/07/15.

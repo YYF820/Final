@@ -22,7 +22,7 @@ CREATE TABLE Users (
   first_name TEXT    NOT NULL,
   last_name  TEXT    NOT NULL,
   patronymic TEXT    NOT NULL,
-  "e-mail"   TEXT    NOT NULL UNIQUE,
+  email      TEXT    NOT NULL UNIQUE,
   role_id    INTEGER NOT NULL,
   CONSTRAINT users_pk PRIMARY KEY (id),
   CONSTRAINT role_id_fk FOREIGN KEY (role_id)

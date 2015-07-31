@@ -76,6 +76,14 @@ public class GeneratorSql {
                         new FileOutputStream("sql/INSERT_Users.sql", false), "UTF-8")
         );
 
+        pwUsers.println(
+                "INSERT INTO Users VALUES (DEFAULT, \'" +
+                        PasswordHash.createHash("t9dnb2mq") + "\', \'" +
+                        "Ganzha" + "\', \'" +
+                        "Dmitriy" + "\', \'" +
+                        "Dmytrievich" + "\', \'" +
+                        "ganzha.010695@gmail.com" + "\', 1);"
+        );
         for (Map.Entry<Integer, List<String>> pair : shuffled.entrySet()) {
             List<String> infoEntrants = pair.getValue();
             final int prime_email = 31;
