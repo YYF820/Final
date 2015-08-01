@@ -59,5 +59,6 @@
 
     </div>
 </div>
+<%@include file="../jspf/modals/accountNameRules.jspf"%>
 </body>
 </html>

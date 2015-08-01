@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -59,21 +58,21 @@ public class AuthServlet extends HttpServlet {
         Map<String, Boolean> validationsEmailPassword = Validation.validateLoginAction(email, password);
         int numberOfBadValidations = checkValidations(validationsEmailPassword, request);
         if (numberOfNulls != 0 || numberOfBadValidations != 0) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PAGE_LOGIN);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.LOGIN_HTML);
             requestDispatcher.forward(request, response);
         } else {
             try {
                 User user = userService.selectByEmail(email);
                 if (PasswordHash.validatePassword(password, user.getPassword())) {
-                    response.sendRedirect(Pages.PAGE_INDEX);
+                    response.sendRedirect(Pages.INDEX_HTML);
                 } else {
                     request.setAttribute(REQUEST_ATTRIBUTE_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD, false);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PAGE_LOGIN);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.LOGIN_HTML);
                     requestDispatcher.forward(request, response);
                 }
             } catch (DaoSystemException | InvalidKeySpecException | NoSuchAlgorithmException e) {
                 request.setAttribute(REQUEST_ATTRIBUTE_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD, false);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PAGE_LOGIN);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.LOGIN_HTML);
                 requestDispatcher.forward(request, response);
             }
         }
@@ -81,12 +80,12 @@ public class AuthServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect(Pages.PAGE_LOGIN);
+        response.sendRedirect(Pages.LOGIN_HTML);
     }
 
     private int checkValidations(Map<String, Boolean> validationsEmailPassword, HttpServletRequest request) {
         int k = 0;
-        if (!validationsEmailPassword.get(Validations.MAP_KEY_IS_EMAIL_VALID)) {
+        if (!validationsEmailPassword.get(Validations.MAP_KEY_IS_ACCOUNT_NAME_VALID)) {
             k++;
             request.setAttribute(REQUEST_ATTRIBUTE_IS_ACCOUNT_NAME_VALID, false);
         } else {

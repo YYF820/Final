@@ -14,10 +14,12 @@ public class Validation {
 
 
     public static Map<String, Boolean> validateLoginAction(String email, String password) {
+        Map<String, Boolean> validations = new HashMap<>();
+
         boolean isEmailValid = validateEmail(email);
         boolean isPasswordValid = validatePassword(password);
-        Map<String, Boolean> validations = new HashMap<>();
-        validations.put(Validations.MAP_KEY_IS_EMAIL_VALID, isEmailValid);
+
+        validations.put(Validations.MAP_KEY_IS_ACCOUNT_NAME_VALID, isEmailValid);
         validations.put(Validations.MAP_KEY_IS_PASSWORD_VALID, isPasswordValid);
         return validations;
     }
@@ -30,15 +32,47 @@ public class Validation {
     }
 
     public static Map<String, Boolean> validateAddForm(String login, String password, String fullName, String email) {
+        Map<String, Boolean> validations = new HashMap<>();
+
         Boolean isLoginValid = validateLogin(login);
         Boolean isPasswordValid = validatePassword(password);
         Boolean isFullNameValid = validateFullName(fullName);
         Boolean isEmailValid = validateEmail(email);
-        Map<String, Boolean> validations = new HashMap<>();
+
         validations.put(login, isLoginValid);
         validations.put(password, isPasswordValid);
         validations.put(fullName, isFullNameValid);
         validations.put(email, isEmailValid);
+
+        return validations;
+    }
+
+    public static Map<String, Boolean> validateRegistrationForm(
+            String firstName, String lastName, String patronymic,
+            String accountName, String city, String region, String password, String school) {
+
+        Map<String, Boolean> validations = new HashMap<>();
+
+        Boolean isFirstNameValid = validateFio(firstName);
+        Boolean isLastNameValid = validateFio(lastName);
+        Boolean isPatronymicValid = validateFio(patronymic);
+        System.out.println(validateFio("Dmitrievich"));
+        System.out.println(isPatronymicValid);
+        Boolean isAccountNameValid = validateEmail(accountName);
+        Boolean isCityValid = validateCity(city);
+        Boolean isRegionValid = validateRegion(region);
+        Boolean isPasswordValid = validatePassword(password);
+        Boolean isSchoolValid = validateSchool(school);
+
+        validations.put(Validations.MAP_KEY_IS_FIRST_NAME_VALID, isFirstNameValid);
+        validations.put(Validations.MAP_KEY_IS_LAST_NAME_VALID, isLastNameValid);
+        validations.put(Validations.MAP_KEY_IS_PATRONYMIC_VALID, isPatronymicValid);
+        validations.put(Validations.MAP_KEY_IS_ACCOUNT_NAME_VALID, isAccountNameValid);
+        validations.put(Validations.MAP_KEY_IS_CITY_VALID, isCityValid);
+        validations.put(Validations.MAP_KEY_IS_REGION_VALID, isRegionValid);
+        validations.put(Validations.MAP_KEY_IS_PASSWORD_VALID, isPasswordValid);
+        validations.put(Validations.MAP_KEY_IS_SCHOOL_VALID, isSchoolValid);
+
         return validations;
     }
 
@@ -64,6 +98,30 @@ public class Validation {
     private static boolean validateFullName(String fullName) {
         Pattern p = Pattern.compile("^\\p{L}+ \\p{L}+$");
         Matcher m = p.matcher(fullName);
+        return m.matches();
+    }
+
+    private static boolean validateCity(String city) {
+        Pattern p = Pattern.compile("^\\p{Lu}\\p{L}{2,14}+(?:[', -]\\p{Lu}\\p{L}*+)*+$");
+        Matcher m = p.matcher(city);
+        return m.matches();
+    }
+
+    private static boolean validateRegion(String region) {
+        Pattern p = Pattern.compile("^\\p{Lu}\\p{L}{2,14}+(?:[', -]\\p{Lu}\\p{L}*+)*+ \\p{L}{2,14}+(?:[', -]\\p{L}*+)*+$");
+        Matcher m = p.matcher(region);
+        return m.matches();
+    }
+
+    private static boolean validateSchool(String school) {
+        Pattern p = Pattern.compile("^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$");
+        Matcher m = p.matcher(school);
+        return m.matches();
+    }
+
+    private static boolean validateFio(String fio) {
+        Pattern p = Pattern.compile("^\\p{Lu}\\p{L}{1,14}+(?:[', -]\\p{Lu}\\p{L}*+)*+$");
+        Matcher m = p.matcher(fio);
         return m.matches();
     }
 }

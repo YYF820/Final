@@ -5,7 +5,8 @@ package ua.nure.hanzha.SummaryTask4.constants;
  */
 public class Pages {
 
-    public static final String PAGE_INDEX = "index.html";
-
-    public static final String PAGE_LOGIN = "login.html";
+    public static final String INDEX_HTML = "index.html";
+    public static final String LOGIN_HTML = "login.html";
+    public static final String REGISTRATION_HTML = "registration.html";
 }
+;

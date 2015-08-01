@@ -27,25 +27,6 @@
                     <i class="uk-icon-question"></i>
                 </a>
             </h3>
-            <!-- This is the modal -->
-            <div id="email-id" class="uk-modal">
-                <div class="uk-modal-dialog">
-                    <a class="uk-modal-close uk-close"></a>
-
-                    <h3 class="uk-text-danger">Email is not valid.</h3>
-                    <ul class="uk-list uk-list-line">
-                        <li>E-mail must contains "@" symbol</li>
-                        <li>Tld can not start with dot "."</li>
-                        <li>Last tld must contains at least two characters</li>
-                        <li>Tld can not start with dot “.”</li>
-                        <li>E-mail's first character can not start with dot "."</li>
-                        <li>E-mail's is only allow character, digit, underscore and dash</li>
-                        <li>Double dots "." are not allow</li>
-                        <li>E-mail's last character can not end with dot "."</li>
-                        <li>Email's tld which has two characters can not contains digit</li>
-                    </ul>
-                </div>
-            </div>
             <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
         </c:if>
         <c:if test="${requestScope.isPasswordValid == false && requestScope.isPasswordNull == false}">
