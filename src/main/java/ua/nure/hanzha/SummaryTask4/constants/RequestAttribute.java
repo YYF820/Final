@@ -35,5 +35,7 @@ public class RequestAttribute {
     public static final String REGION = "region";
     public static final String SCHOOL = "school";
 
+    public static final String MAIL_INFO_BEAN = "mailInfoBean";
+
 
 }

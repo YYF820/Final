@@ -49,7 +49,7 @@ public class TicketsWriterReader {
         return null;
     }
 
-    public static void writePair(String key, String property) throws PropertiesDuplicateException {
+    public synchronized static void writePair(String key, String property) throws PropertiesDuplicateException {
         if (properties.containsKey(key)) {
             throw new PropertiesDuplicateException("duplicate key");
         } else {
@@ -67,7 +67,7 @@ public class TicketsWriterReader {
         }
     }
 
-    public static void removePair(String key) {
+    public synchronized static void removePair(String key) {
         try (InputStream in = new FileInputStream(ticketsConfirmAccountPath)) {
             FileOutputStream fos = new FileOutputStream(file, false);
             properties.load(in);

@@ -1,8 +1,8 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
+import ua.nure.hanzha.SummaryTask4.bean.MailInfoBean;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.mail.MailHelper;
 
 import javax.mail.MessagingException;
@@ -19,16 +19,16 @@ import java.io.IOException;
  */
 public class ConfirmAccountMailServlet extends HttpServlet {
 
-    private static final String SESSION_ATTRIBUTE_CONFIRM_LINK = "confirmLink";
     private static final String REQUEST_ATTRIBUTE_IS_MESSAGE_SENT = "isMessageSent";
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String firstName = (String) request.getAttribute(RequestAttribute.FIRST_NAME);
-        String lastName = (String) request.getAttribute(SessionAttribute.LAST_NAME);
-        String patronymic = (String) request.getAttribute(SessionAttribute.PATRONYMIC);
-        String accountName = (String) request.getAttribute(SessionAttribute.ACCOUNT_NAME);
-        String verifyLink = (String) request.getAttribute(SESSION_ATTRIBUTE_CONFIRM_LINK);
+        MailInfoBean mailInfoBean = (MailInfoBean) request.getAttribute(RequestAttribute.MAIL_INFO_BEAN);
+        String firstName = mailInfoBean.getFirstName();
+        String lastName = mailInfoBean.getLastName();
+        String patronymic = mailInfoBean.getPatronymic();
+        String accountName = mailInfoBean.getAccountName();
+        String verifyLink = mailInfoBean.getVerifyLink();
         String subjectMail = createSubject();
         String messageMail = createMessage(firstName, lastName, patronymic, verifyLink);
         try {

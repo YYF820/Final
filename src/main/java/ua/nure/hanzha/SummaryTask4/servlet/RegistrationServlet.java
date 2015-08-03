@@ -1,6 +1,10 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
-import ua.nure.hanzha.SummaryTask4.constants.*;
+import ua.nure.hanzha.SummaryTask4.bean.MailInfoBean;
+import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.Pages;
+import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.Validations;
 import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.Entity;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
@@ -45,8 +49,6 @@ public class RegistrationServlet extends HttpServlet {
 
     private static final String MAP_KEY_USER = "user";
     private static final String MAP_KEY_ENTRANT = "entrant";
-
-    private static final String SESSION_ATTRIBUTE_CONFIRM_LINK = "confirmLink";
 
     private UserService userService;
     private RegistrationService registrationService;
@@ -98,8 +100,6 @@ public class RegistrationServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
-
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -278,11 +278,13 @@ public class RegistrationServlet extends HttpServlet {
                 ticket = generateTicket();
             }
         }
-        request.setAttribute(SessionAttribute.FIRST_NAME, firstName);
-        request.setAttribute(SessionAttribute.LAST_NAME, lastName);
-        request.setAttribute(SessionAttribute.PATRONYMIC, patronymic);
-        request.setAttribute(SessionAttribute.ACCOUNT_NAME, accountName);
-        request.setAttribute(SESSION_ATTRIBUTE_CONFIRM_LINK, verifyLink);
+        MailInfoBean mailInfoBean = new MailInfoBean();
+        mailInfoBean.setFirstName(firstName);
+        mailInfoBean.setLastName(lastName);
+        mailInfoBean.setPatronymic(patronymic);
+        mailInfoBean.setAccountName(accountName);
+        mailInfoBean.setVerifyLink(verifyLink);
+        request.setAttribute(RequestAttribute.MAIL_INFO_BEAN, mailInfoBean);
     }
 
     private String generateTicket() {

@@ -23,7 +23,7 @@
              src="<c:url value="/resources/img/mainLogo.png"/>"
              alt="">
 
-        <form class="uk-panel uk-panel-box uk-form" action="resendEmailVerification.do" method="POST">
+        <form class="uk-panel uk-panel-box uk-form" action="checkQuestion.do" method="POST">
 
             <div class="uk-alert uk-alert-warning" data-uk-alert>
                 <p class="uk-text-middle">Please answer question to verify it's your email.</p>

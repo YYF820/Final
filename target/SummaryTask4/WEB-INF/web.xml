@@ -63,12 +63,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ResendEmailVerificationView</servlet-name>
-        <jsp-file>/WEB-INF/jsp/resendEmailVerification.jsp</jsp-file>
+        <servlet-name>ResendVerificationOrRecoverPasswordView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/resendVerificationOrRecoverPassword.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ResendEmailVerificationView</servlet-name>
-        <url-pattern>/resendEmailVerification.html</url-pattern>
+        <servlet-name>ResendVerificationOrRecoverPasswordView</servlet-name>
+        <url-pattern>/resendVerificationOrRecoverPassword.html</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -120,12 +120,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ResendEmailVerificationServlet</servlet-name>
-        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.resendEmail.ResendEmailVerificationServlet</servlet-class>
+        <servlet-name>ResendVerificationOrRecoverPasswordServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.resendEmail.ResendVerificationOrRecoverPasswordServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ResendEmailVerificationServlet</servlet-name>
-        <url-pattern>/resendEmailVerification.do</url-pattern>
+        <servlet-name>ResendVerificationOrRecoverPasswordServlet</servlet-name>
+        <url-pattern>/resendVerificationOrRecoverPassword.do</url-pattern>
     </servlet-mapping>
 
     <servlet>

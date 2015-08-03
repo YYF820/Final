@@ -23,13 +23,33 @@
              src="<c:url value="/resources/img/mainLogo.png"/>"
              alt="">
 
-        <form class="uk-panel uk-panel-box uk-form" action="resendEmailVerification.do" method="POST">
+        <form class="uk-panel uk-panel-box uk-form" action="checkQuestion.do" method="POST">
 
             <div class="uk-alert uk-alert-warning" data-uk-alert>
                 <p class="uk-text-middle">Please answer question to verify it's your email.</p>
 
                 <p>What school did you study?</p>
             </div>
+            <c:if test="${
+            requestScope.isSchoolNumberValid == false ||
+            requestScope.isSchoolNumberNull == true ||
+            requestScope.isSchoolNumberCorrect == false}">
+                <div class="uk-alert" data-uk-alert>
+                    <a href="" class="uk-alert-close uk-close"></a>
+                    <c:choose>
+                        <c:when test="${requestScope.isSchoolNumberNull == true}">
+                            <p class="uk-text-danger">Please enter your school №.</p>
+                        </c:when>
+                        <c:when test="${requestScope.isSchoolNumberValid == false}">
+                            <p class="uk-text-danger">School № is not valid, you can use number 0-255. </p>
+                        </c:when>
+                        <c:when test="${requestScope.isSchoolNumberCorrect == false}">
+                            <p class="uk-text-danger">The answer is wrong try, you can contact support if you have any questions.</p>
+                        </c:when>
+                    </c:choose>
+
+                </div>
+            </c:if>
             <label id="school-label" class="control-label" for="school"></label>
 
             <div class="uk-form-row row-margin">

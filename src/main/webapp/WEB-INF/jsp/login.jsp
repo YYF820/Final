@@ -53,10 +53,12 @@
             </div>
 
             <div class="uk-form-row uk-text-small">
-                <a class="uk-link uk-link-muted uk-float-left" href="resendEmailVerification.html">
+                <a class="uk-link uk-link-muted uk-float-left"
+                   href="resendVerificationOrRecoverPassword.html?command=verifyEmail">
                     Resent verification message <i class="uk-icon-external-link"></i>
                 </a>
-                <a class="uk-link uk-link-muted uk-float-right" href="#">
+                <a class="uk-link uk-link-muted uk-float-right"
+                   href="resendVerificationOrRecoverPassword.html?command=recoverPassword">
                     Forgot Password? <i class="uk-icon-external-link"></i>
                 </a>
             </div>
