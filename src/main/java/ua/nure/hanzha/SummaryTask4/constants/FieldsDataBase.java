@@ -27,7 +27,7 @@ public class FieldsDataBase {
     public static final String ENTRANT_REGION = "region";
     public static final String ENTRANT_SCHOOL = "school";
     public static final String ENTRANT_WITHOUT_COMPETITIVE_ENTRY = "without_competitive_entry";
-    public static final String ENTRANT_BLOCKED = "blocked";
+    public static final String ENTRANT_STATUS = "entrant_status_id";
     public static final String ENTRANT_USER_ID = "user_id";
 
     //===========================FACULTY FIELDS==================================

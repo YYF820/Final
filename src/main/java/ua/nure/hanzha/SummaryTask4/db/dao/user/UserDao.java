@@ -20,6 +20,8 @@ public interface UserDao extends Dao<User> {
 
     User selectById(int id, Connection connection) throws SQLException, CrudException;
 
-    User selectByEmail(String login, Connection connection) throws SQLException, CrudException;
+    User selectByEmail(String email, Connection connection) throws SQLException, CrudException;
+
+    boolean userExistsByEmail(String email, Connection connection) throws SQLException;
 
 }

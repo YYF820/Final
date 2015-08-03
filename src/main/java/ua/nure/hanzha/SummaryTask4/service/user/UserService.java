@@ -10,5 +10,7 @@ import java.sql.Connection;
  */
 public interface UserService {
 
-    User selectByEmail(String accountName) throws DaoSystemException;
+    User selectByEmail(String email) throws DaoSystemException;
+
+    boolean userExistsByAccountName(String accountName) throws DaoSystemException;
 }

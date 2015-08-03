@@ -5,6 +5,8 @@ package ua.nure.hanzha.SummaryTask4.constants;
  */
 public class RequestAttribute {
 
+    public static final String IS_ACCOUNT_NAME_EXISTS = "isAccountNameExists";
+    
     public static final String IS_ACCOUNT_NAME_NULL = "isAccountNameNull";
     public static final String IS_PASSWORD_NULL = "isPasswordNull";
     public static final String IS_FIRST_NAME_NULL = "isFirstNameNull";
@@ -32,4 +34,6 @@ public class RequestAttribute {
     public static final String CITY = "city";
     public static final String REGION = "region";
     public static final String SCHOOL = "school";
+
+
 }

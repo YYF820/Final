@@ -19,4 +19,10 @@ public interface EntrantDao extends Dao<Entrant> {
     void deleteById(int id, Connection connection) throws SQLException, CrudException;
 
     Entrant selectById(int id, Connection connection) throws SQLException, CrudException;
+
+    int selectStatusByUserId(int userId, Connection connection) throws SQLException;
+
+    Entrant selectByUserId(int userId, Connection connection) throws SQLException, CrudException;
+
+    void updateEntrantStatus(int statusId, int entrantId, Connection connection) throws SQLException, CrudException;
 }

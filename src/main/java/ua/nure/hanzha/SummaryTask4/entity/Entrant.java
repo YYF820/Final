@@ -12,7 +12,7 @@ public class Entrant extends Entity {
     private String region;
     private int school;
     private boolean withoutCompetitiveEntry;
-    private boolean blocked;
+    private int entrantStatus;
     private int userId;
 
     public String getCity() {
@@ -47,14 +47,13 @@ public class Entrant extends Entity {
         this.withoutCompetitiveEntry = withoutCompetitiveEntry;
     }
 
-    public boolean isBlocked() {
-        return blocked;
+    public int getEntrantStatus() {
+        return entrantStatus;
     }
 
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
+    public void setEntrantStatus(int entrantStatus) {
+        this.entrantStatus = entrantStatus;
     }
-
 
     public int getUserId() {
         return userId;
@@ -70,7 +69,7 @@ public class Entrant extends Entity {
                 "Region: " + region +
                 "school" + school +
                 "Without competitive entry: " + withoutCompetitiveEntry +
-                "Blocked: " + blocked +
+                "Entrant status: " + entrantStatus +
                 "User id: " + userId;
     }
 }

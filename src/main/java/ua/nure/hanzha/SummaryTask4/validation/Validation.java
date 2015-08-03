@@ -8,7 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by faffi-ubuntu on 18/07/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 18/07/15.
  */
 public class Validation {
 
@@ -53,11 +54,9 @@ public class Validation {
 
         Map<String, Boolean> validations = new HashMap<>();
 
-        Boolean isFirstNameValid = validateFio(firstName);
-        Boolean isLastNameValid = validateFio(lastName);
-        Boolean isPatronymicValid = validateFio(patronymic);
-        System.out.println(validateFio("Dmitrievich"));
-        System.out.println(isPatronymicValid);
+        Boolean isFirstNameValid = validateFirstName(firstName);
+        Boolean isLastNameValid = validateLastName(lastName);
+        Boolean isPatronymicValid = validatePatronymic(patronymic);
         Boolean isAccountNameValid = validateEmail(accountName);
         Boolean isCityValid = validateCity(city);
         Boolean isRegionValid = validateRegion(region);
@@ -89,7 +88,7 @@ public class Validation {
         return m.matches();
     }
 
-    private static boolean validateEmail(String email) {
+    public static boolean validateEmail(String email) {
         Pattern p = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         Matcher m = p.matcher(email);
         return m.matches();
@@ -102,26 +101,38 @@ public class Validation {
     }
 
     private static boolean validateCity(String city) {
-        Pattern p = Pattern.compile("^\\p{Lu}\\p{L}{2,14}+(?:[', -]\\p{Lu}\\p{L}*+)*+$");
+        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}+(['-][\\p{Lu}][\\p{L}&&[^\\p{Lu}]]*+)*+$");
         Matcher m = p.matcher(city);
         return m.matches();
     }
 
     private static boolean validateRegion(String region) {
-        Pattern p = Pattern.compile("^\\p{Lu}\\p{L}{2,14}+(?:[', -]\\p{Lu}\\p{L}*+)*+ \\p{L}{2,14}+(?:[', -]\\p{L}*+)*+$");
+        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}(?:[', -][\\p{Lu}][\\p{L}&&[^\\p{Lu}]]*+)*+ [\\p{L}&&[^\\p{Lu}]]{2,14}+(?:[', -][\\p{L}&&[^\\p{Lu}]]*+)*+$");
         Matcher m = p.matcher(region);
         return m.matches();
     }
 
-    private static boolean validateSchool(String school) {
+    public static boolean validateSchool(String school) {
         Pattern p = Pattern.compile("^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$");
         Matcher m = p.matcher(school);
         return m.matches();
     }
 
-    private static boolean validateFio(String fio) {
-        Pattern p = Pattern.compile("^\\p{Lu}\\p{L}{1,14}+(?:[', -]\\p{Lu}\\p{L}*+)*+$");
-        Matcher m = p.matcher(fio);
+    private static boolean validateFirstName(String firstName) {
+        Pattern p = Pattern.compile("^[\\p{Lu}][['-]?\\p{L}&&[^\\p{Lu}]]{2,15}$");
+        Matcher m = p.matcher(firstName);
+        return m.matches();
+    }
+
+    private static boolean validateLastName(String lastName) {
+        Pattern p = Pattern.compile("^[\\p{Lu}](['-]?[\\p{L}&&[^\\p{Lu}]]+){2,15}$");
+        Matcher m = p.matcher(lastName);
+        return m.matches();
+    }
+
+    private static boolean validatePatronymic(String patronymic) {
+        Pattern p = Pattern.compile("^[\\p{Lu}]['-]?[\\p{L}&&[^\\p{Lu}]]{2,15}$");
+        Matcher m = p.matcher(patronymic);
         return m.matches();
     }
 }

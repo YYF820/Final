@@ -1,26 +1,32 @@
 package ua.nure.hanzha.SummaryTask4.mail;
 
 import javax.mail.*;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 /**
- * Created by faffi-ubuntu on 29/07/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 29/07/15.
  */
 public class MailHelper {
 
-    static final String username = "serverApp@summarytask4.epam";
+    static final String username = "support@university.com";
     static final String password = "t9dnb2mq";
 
-    public static void sendMail(String mail, String subject, String message)
-            throws AddressException, MessagingException {
-        Message msg = new MimeMessage(getSession());
+    public static void sendMail(String mail, String subject, String message) throws MessagingException {
+        MimeMessage msg = new MimeMessage(getSession());
+        msg.setFrom(new InternetAddress(username));
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail));
-        msg.setSubject(subject);
-        msg.setText(message);
+        msg.setSubject(subject, "UTF-8");
+        msg.setHeader("Content-Type", "text/plain; charset=\"utf-8\"");
+        MimeBodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setHeader("Content-Type", "text/html; charset=\"utf-8\"");
+        msg.setText(message, "UTF-8");
         Transport.send(msg);
+
+
     }
 
     private static Session getSession() {
@@ -34,12 +40,11 @@ public class MailHelper {
 
     private static Properties getProperties() {
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", "localhost");
-        properties.put("mail.smtp.socketFactory.port", "25");
+        properties.put("mail.transport.protocol", "smtp");
+        properties.put("mail.smtp.host", "127.0.0.1");
+        properties.put("mail.smtp.port", "12345");
+        properties.put("mail.mime.charset", "UTF-8");
         return properties;
     }
 
-    public static void main(String[] args) throws MessagingException {
-        MailHelper.sendMail("123@mail.ru", "Subject", "Message");
-    }
 }

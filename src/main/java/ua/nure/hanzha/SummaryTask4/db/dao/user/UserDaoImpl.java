@@ -29,6 +29,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         preparedStatement.setString(k++, entity.getFirstName());
         preparedStatement.setString(k++, entity.getLastName());
         preparedStatement.setString(k++, entity.getPatronymic());
+        preparedStatement.setString(k++, entity.getEmail());
         preparedStatement.setInt(k, entity.getRoleId());
     }
 
@@ -84,6 +85,16 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             } else {
                 throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
             }
+        }
+    }
+
+    @Override
+    public boolean userExistsByEmail(String email, Connection connection) throws SQLException {
+        try {
+            selectByEmail(email, connection);
+            return true;
+        } catch (CrudException e) {
+            return false;
         }
     }
 

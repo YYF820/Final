@@ -33,4 +33,14 @@ public class UserServiceImpl implements UserService {
             }
         });
     }
+
+    @Override
+    public boolean userExistsByAccountName(final String accountName) throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<Boolean>() {
+            @Override
+            public Boolean call(Connection connection) throws SQLException, CrudException {
+                return userDao.userExistsByEmail(accountName, connection);
+            }
+        });
+    }
 }

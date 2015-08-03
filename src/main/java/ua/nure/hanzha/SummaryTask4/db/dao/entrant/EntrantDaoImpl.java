@@ -1,15 +1,18 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.entrant;
 
+import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
+import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +30,6 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
         preparedStatement.setString(k++, entity.getRegion());
         preparedStatement.setInt(k++, entity.getSchool());
         preparedStatement.setBoolean(k++, entity.isWithoutCompetitiveEntry());
-        preparedStatement.setBoolean(k++, entity.isBlocked());
         preparedStatement.setInt(k, entity.getUserId());
     }
 
@@ -38,7 +40,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
         preparedStatement.setString(k++, entity.getRegion());
         preparedStatement.setInt(k++, entity.getSchool());
         preparedStatement.setBoolean(k++, entity.isWithoutCompetitiveEntry());
-        preparedStatement.setBoolean(k++, entity.isBlocked());
+        preparedStatement.setInt(k++, entity.getEntrantStatus());
         preparedStatement.setInt(k++, entity.getUserId());
         preparedStatement.setInt(k, entity.getId());
     }
@@ -51,7 +53,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
         entrant.setRegion(resultSet.getString(FieldsDataBase.ENTRANT_REGION));
         entrant.setSchool(resultSet.getInt(FieldsDataBase.ENTRANT_SCHOOL));
         entrant.setWithoutCompetitiveEntry(resultSet.getBoolean(FieldsDataBase.ENTRANT_WITHOUT_COMPETITIVE_ENTRY));
-        entrant.setBlocked(resultSet.getBoolean(FieldsDataBase.ENTRANT_BLOCKED));
+        entrant.setEntrantStatus(resultSet.getInt(FieldsDataBase.ENTRANT_STATUS));
         entrant.setUserId(resultSet.getInt(FieldsDataBase.ENTRANT_USER_ID));
         return entrant;
     }
@@ -75,6 +77,29 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     }
 
     @Override
+    public int selectStatusByUserId(int userId, Connection connection) throws SQLException {
+        int entrantStatusId;
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.select.by.user.id"))) {
+            ps.setInt(1, userId);
+            try (ResultSet resultSet = ps.executeQuery()) {
+                resultSet.next();
+                entrantStatusId = resultSet.getInt(FieldsDataBase.ENTRANT_STATUS);
+            }
+        }
+        return entrantStatusId;
+    }
+
+    @Override
+    public Entrant selectByUserId(int userId, Connection connection) throws SQLException, CrudException {
+        return selectById(
+                userId,
+                SqlQueriesHolder.getSqlQuery("entrant.select.by.user.id"),
+                connection
+        );
+    }
+
+
+    @Override
     public void insert(Entrant entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
@@ -90,6 +115,17 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
                 SqlQueriesHolder.getSqlQuery("entrant.update"),
                 connection
         );
+    }
+
+    @Override
+    public void updateEntrantStatus(int statusId, int entrantId, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.update.status"))) {
+            ps.setInt(1, statusId);
+            ps.setInt(2, entrantId);
+            if (ps.executeUpdate() == 0) {
+                throw new CrudException(ExceptionMessages.UPDATE_EXCEPTION_MESSAGE);
+            }
+        }
     }
 
     @Override

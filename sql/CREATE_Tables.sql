@@ -1,4 +1,5 @@
 ﻿DROP TABLE IF EXISTS Roles CASCADE;
+DROP TABLE IF EXISTS Entrants_Statuses CASCADE;
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS Faculties_Subjects;
 DROP TABLE IF EXISTS Faculties_Entrants;
@@ -15,6 +16,13 @@ CREATE TABLE Roles (
   name TEXT    NOT NULL,
   CONSTRAINT roles_pk PRIMARY KEY (id)
 );
+
+CREATE TABLE Entrants_Statuses (
+  id   INTEGER NOT NULL,
+  name TEXT    NOT NULL,
+  CONSTRAINT entrants_status_pk PRIMARY KEY (id)
+);
+
 
 CREATE TABLE Users (
   id         SERIAL  NOT NULL,
@@ -35,9 +43,11 @@ CREATE TABLE Entrants (
   region                    TEXT    NOT NULL,
   school                    INTEGER NOT NULL,
   without_competitive_entry BOOLEAN DEFAULT FALSE,
-  blocked                   BOOLEAN DEFAULT FALSE,
+  entrant_status_id         INTEGER DEFAULT 3,
   user_id                   INTEGER NOT NULL UNIQUE,
   CONSTRAINT entrants_pk PRIMARY KEY (id),
+  CONSTRAINT entrant_id_fk FOREIGN KEY (entrant_status_id)
+  REFERENCES Entrants_Statuses (id) ON DELETE CASCADE,
   CONSTRAINT user_id_fk FOREIGN KEY (user_id)
   REFERENCES Users (id) ON DELETE CASCADE
 );

@@ -1,8 +1,15 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
-import ua.nure.hanzha.SummaryTask4.constants.Pages;
-import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.Validations;
+import ua.nure.hanzha.SummaryTask4.constants.*;
+import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
+import ua.nure.hanzha.SummaryTask4.entity.Entity;
+import ua.nure.hanzha.SummaryTask4.entity.Entrant;
+import ua.nure.hanzha.SummaryTask4.entity.User;
+import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
+import ua.nure.hanzha.SummaryTask4.exception.PropertiesDuplicateException;
+import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationService;
+import ua.nure.hanzha.SummaryTask4.service.user.UserService;
+import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReader;
 import ua.nure.hanzha.SummaryTask4.validation.Validation;
 
 import javax.servlet.RequestDispatcher;
@@ -11,9 +18,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Registration servlet, takes all information, doing some validation --> genarate ticket for confirm account
+ * put ticket in properties file tickets.properties --> send request response to servlet which send email with ticket.
+ * <p/>
+ * doGet send to REGISTRATION html.
+ *
  * @author Dmytro Hanzha
  *         Created by faffi-ubuntu on 01/08/15.
  */
@@ -29,6 +42,21 @@ public class RegistrationServlet extends HttpServlet {
     private static final String PARAM_REGION = "region";
     private static final String PARAM_PASSWORD = "password";
     private static final String PARAM_SCHOOL = "school";
+
+    private static final String MAP_KEY_USER = "user";
+    private static final String MAP_KEY_ENTRANT = "entrant";
+
+    private static final String SESSION_ATTRIBUTE_CONFIRM_LINK = "confirmLink";
+
+    private UserService userService;
+    private RegistrationService registrationService;
+
+
+    @Override
+    public void init() throws ServletException {
+        userService = (UserService) getServletContext().getAttribute(AppAttribute.USER_SERVICE);
+        registrationService = (RegistrationService) getServletContext().getAttribute(AppAttribute.REGISTRATION_SERVICE);
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String firstName = request.getParameter(PARAM_FIRST_NAME);
@@ -46,11 +74,29 @@ public class RegistrationServlet extends HttpServlet {
         int counterOfEmptyFields = checkFormEmptyFields(request, firstName, lastName, patronymic, accountName, city, region, password, school);
         int counterOfBadValidations = checkFormBadValidations(request, validationsRegisterForm);
         if (counterOfBadValidations != 0 || counterOfEmptyFields != 0) {
-            setUpAttrForFields(request, firstName, lastName, password, accountName, city, region, school);
+            setUpAttrForFields(request, firstName, lastName, patronymic, accountName, city, region, password, school);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.REGISTRATION_HTML);
             requestDispatcher.forward(request, response);
         } else {
-
+            try {
+                boolean isUserExists = userService.userExistsByAccountName(accountName);
+                if (!isUserExists) {
+                    Map<String, Entity> infoForRegistration = prepareEntities(firstName, lastName, patronymic, accountName, city, region, password, school);
+                    User userInfo = (User) infoForRegistration.get(MAP_KEY_USER);
+                    Entrant entrantInfo = (Entrant) infoForRegistration.get(MAP_KEY_ENTRANT);
+                    registrationService.registerNewEntrant(userInfo, entrantInfo);
+                    prepareInfoForEmail(request, firstName, lastName, patronymic, accountName);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.CONFIRM_ACCOUNT_SEND_MAIL_SERVLET);
+                    requestDispatcher.forward(request, response);
+                } else {
+                    setUpAttrForFields(request, firstName, lastName, patronymic, accountName, city, region, password, school);
+                    request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_EXISTS, true);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.REGISTRATION_HTML);
+                    requestDispatcher.forward(request, response);
+                }
+            } catch (DaoSystemException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -187,6 +233,60 @@ public class RegistrationServlet extends HttpServlet {
         request.setAttribute(RequestAttribute.ACCOUNT_NAME, attributes[3]);
         request.setAttribute(RequestAttribute.CITY, attributes[4]);
         request.setAttribute(RequestAttribute.REGION, attributes[5]);
-        request.setAttribute(RequestAttribute.SCHOOL, attributes[6]);
+        request.setAttribute(RequestAttribute.PASSWORD, attributes[6]);
+        request.setAttribute(RequestAttribute.SCHOOL, attributes[7]);
     }
+
+    private Map<String, Entity> prepareEntities(String firstName, String lastName,
+                                                String patronymic, String accountName,
+                                                String city, String region,
+                                                String password, String school) {
+        Map<String, Entity> entrantInfo = new HashMap<>();
+        User user = new User();
+        Entrant entrant = new Entrant();
+        String hashPassword = PasswordHash.createHash(password);
+
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPatronymic(patronymic);
+        user.setEmail(accountName);
+        user.setPassword(hashPassword);
+        user.setRoleId(2);
+
+        entrant.setCity(city);
+        entrant.setRegion(region);
+        entrant.setSchool(Integer.parseInt(school));
+        entrant.setEntrantStatus(3);
+        entrant.setWithoutCompetitiveEntry(false);
+
+        entrantInfo.put(MAP_KEY_USER, user);
+        entrantInfo.put(MAP_KEY_ENTRANT, entrant);
+
+        return entrantInfo;
+    }
+
+    private void prepareInfoForEmail(HttpServletRequest request, String firstName,
+                                     String lastName, String patronymic, String accountName) {
+        String ticket = generateTicket();
+        String verifyLink = "localhost:8080/confirmAccount.do?ticket=" + ticket;
+        boolean flagSuccessTicket = false;
+        while (!flagSuccessTicket) {
+            try {
+                TicketsWriterReader.writePair(ticket, accountName);
+                flagSuccessTicket = true;
+            } catch (PropertiesDuplicateException e) {
+                ticket = generateTicket();
+            }
+        }
+        request.setAttribute(SessionAttribute.FIRST_NAME, firstName);
+        request.setAttribute(SessionAttribute.LAST_NAME, lastName);
+        request.setAttribute(SessionAttribute.PATRONYMIC, patronymic);
+        request.setAttribute(SessionAttribute.ACCOUNT_NAME, accountName);
+        request.setAttribute(SESSION_ATTRIBUTE_CONFIRM_LINK, verifyLink);
+    }
+
+    private String generateTicket() {
+        return PasswordHash.randomPassword(40);
+    }
+
 }

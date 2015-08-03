@@ -6,9 +6,12 @@
   padding: 0px;
 }
 
-.schoolForm {
-  width: 200px;
-  margin-left: 150px;
+.alertSchoolNumber {
+  padding: 4px 6px;
+}
+
+.alertBlockSchoolNumber {
+  padding-left: 15px;
 }
 
 /*# sourceMappingURL=formRows.css.map */

@@ -76,14 +76,7 @@ public class GeneratorSql {
                         new FileOutputStream("sql/INSERT_Users.sql", false), "UTF-8")
         );
 
-        pwUsers.println(
-                "INSERT INTO Users VALUES (DEFAULT, \'" +
-                        PasswordHash.createHash("t9dnb2mq") + "\', \'" +
-                        "Ganzha" + "\', \'" +
-                        "Dmitriy" + "\', \'" +
-                        "Dmytrievich" + "\', \'" +
-                        "ganzha.010695@gmail.com" + "\', 1);"
-        );
+
         for (Map.Entry<Integer, List<String>> pair : shuffled.entrySet()) {
             List<String> infoEntrants = pair.getValue();
             final int prime_email = 31;
@@ -101,6 +94,14 @@ public class GeneratorSql {
                             emailGenarated + "\', 2);"
             );
         }
+        pwUsers.println(
+                "INSERT INTO Users VALUES (DEFAULT, \'" +
+                        PasswordHash.createHash("t9dnb2mq") + "\', \'" +
+                        "Ganzha" + "\', \'" +
+                        "Dmitriy" + "\', \'" +
+                        "Dmytrievich" + "\', \'" +
+                        "ganzha.010695@gmail.com" + "\', 1);"
+        );
         pwUsers.close();
 
         int k = 1;
@@ -123,7 +124,7 @@ public class GeneratorSql {
                                 region + "\', " +
                                 random_school + ", " +
                                 without_competitive_entry + ", " +
-                                "DEFAULT, " +
+                                "2" + ", " +
                                 k++ + ");"
                 );
                 if (k == keys.size() + 1) {

@@ -47,18 +47,23 @@
                 <button class="uk-width-1-1 uk-button uk-button-primary uk-button-large" type="submit">Log in</button>
             </div>
             <div class="uk-form-row">
-                <a href="registration.html" class="uk-width-2-3 uk-button uk-button-success">Create Account <i
-                        class="uk-icon-external-link"></i></a>
+                <a href="registration.html" class="uk-width-2-3 uk-button uk-button-success">
+                    Create Account <i class="uk-icon-external-link"></i>
+                </a>
             </div>
 
             <div class="uk-form-row uk-text-small">
-                <a class="uk-link uk-link-muted " href="#">Forgot Password? <i
-                        class="uk-icon-external-link"></i></a>
+                <a class="uk-link uk-link-muted uk-float-left" href="resendEmailVerification.html">
+                    Resent verification message <i class="uk-icon-external-link"></i>
+                </a>
+                <a class="uk-link uk-link-muted uk-float-right" href="#">
+                    Forgot Password? <i class="uk-icon-external-link"></i>
+                </a>
             </div>
         </form>
 
     </div>
 </div>
-<%@include file="../jspf/modals/accountNameRules.jspf"%>
+<%@include file="../jspf/modals/accountNameRules.jspf" %>
 </body>
 </html>

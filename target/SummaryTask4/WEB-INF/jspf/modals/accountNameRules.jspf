@@ -7,7 +7,7 @@
       <li>E-mail must contains "@" symbol</li>
       <li>Tld can not start with dot "."</li>
       <li>Last tld must contains at least two characters</li>
-      <li>Tld can not start with dot “.”</li>
+      <li>Tld can not start with dot "."</li>
       <li>E-mail's first character can not start with dot "."</li>
       <li>E-mail's is only allow character, digit, underscore and dash</li>
       <li>Double dots "." are not allow</li>

@@ -1,7 +1,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${requestScope.isAccountNameNull == true || requestScope.isPasswordNull == true || requestScope.isAccountNameValid == false || requestScope.isPasswordValid == false ||requestScope.isCorrectAccountNameOrPassword == false}">
-    <div class="uk-panel uk-panel-box uk-panel-box-primary uk-padding-bottom-remove">
-        <c:set scope="page" var="isDoValidate" value="true"/>
+<c:if test="${requestScope.isAccountNameNull == true || requestScope.isPasswordNull == true ||
+requestScope.isAccountNameValid == false || requestScope.isPasswordValid == false ||
+requestScope.isCorrectAccountNameOrPassword == false || requestScope.isVerifiedAccount == false ||
+requestScope.isBlocked == true}">
+    <div class="uk-panel uk-panel-box uk-panel-box-primary uk-padding-bottom-remove uk-animation-fade">
+        <c:if test="${requestScope.isVerifiedAccount == false}">
+            <div class="uk-width-1-1">
+                <h3 class="uk-text-danger">Please verify your account, we sent you email.</h3>
+            </div>
+            <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
+            <c:set scope="page" var="badPasswordClass" value="uk-form-danger"/>
+        </c:if>
+        <c:if test="${requestScope.isBlocked == true}">
+            <div class="uk-width-1-1">
+                <h3 class="uk-text-danger">Your account is blocked.</h3>
+
+                <p>You can contact our
+                    <a href="" class="uk-text-success uk-link-reset">
+                        support  <i class=" uk-icon-external-link "></i>
+                    </a>
+
+                    for more information.
+                </p>
+            </div>
+            <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
+            <c:set scope="page" var="badPasswordClass" value="uk-form-danger"/>
+        </c:if>
         <c:if test="${requestScope.isCorrectAccountNameOrPassword == false}">
             <div class="uk-width-1-1">
                 <h3 class="uk-text-danger">The username or password is incorrect. Please try again.</h3>

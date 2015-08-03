@@ -1,10 +1,10 @@
 package ua.nure.hanzha.SummaryTask4.db.util;
 
-import java.security.SecureRandom;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Random;
 
@@ -31,8 +31,7 @@ public class PasswordHash {
      * @param password the password to hash
      * @return a salted PBKDF2 hash of the password
      */
-    public static String createHash(String password)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static String createHash(String password) {
         return createHash(password.toCharArray());
     }
 
@@ -42,15 +41,20 @@ public class PasswordHash {
      * @param password the password to hash
      * @return a salted PBKDF2 hash of the password
      */
-    public static String createHash(char[] password)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static String createHash(char[] password) {
         // Generate a random salt
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_BYTE_SIZE];
         random.nextBytes(salt);
 
         // Hash the password
-        byte[] hash = pbkdf2(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
+        byte[] hash = new byte[0];
+        try {
+            hash = pbkdf2(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace();
+            /*LOG4J*/
+        }
         // format iterations:salt:hash
         return PBKDF2_ITERATIONS + ":" + toHex(salt) + ":" + toHex(hash);
     }
@@ -62,8 +66,7 @@ public class PasswordHash {
      * @param correctHash the hash of the valid password
      * @return true if the password is correct, false if not
      */
-    public static boolean validatePassword(String password, String correctHash)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static boolean validatePassword(String password, String correctHash) {
         return validatePassword(password.toCharArray(), correctHash);
     }
 
@@ -74,8 +77,7 @@ public class PasswordHash {
      * @param correctHash the hash of the valid password
      * @return true if the password is correct, false if not
      */
-    private static boolean validatePassword(char[] password, String correctHash)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
+    private static boolean validatePassword(char[] password, String correctHash) {
         // Decode the hash into its parameters
         String[] params = correctHash.split(":");
         int iterations = Integer.parseInt(params[ITERATION_INDEX]);
@@ -83,7 +85,13 @@ public class PasswordHash {
         byte[] hash = fromHex(params[PBKDF2_INDEX]);
         // Compute the hash of the provided password, using the same salt,
         // iteration count, and hash length
-        byte[] testHash = pbkdf2(password, salt, iterations, hash.length);
+        byte[] testHash = new byte[0];
+        try {
+            testHash = pbkdf2(password, salt, iterations, hash.length);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace();
+                     /*LOG4J*/
+        }
         // Compare the hashes in constant time. The password is correct if
         // both hashes match.
         return slowEquals(hash, testHash);
@@ -153,10 +161,12 @@ public class PasswordHash {
 
     public static String randomPassword(int length) {
         final String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        final String numbers = "0123456789";
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length; i++)
             sb.append(alphabet.charAt(rnd.nextInt(alphabet.length())));
+        sb.append(numbers.charAt(rnd.nextInt(numbers.length())));
         return sb.toString().toLowerCase();
     }
 
@@ -165,40 +175,8 @@ public class PasswordHash {
      *
      * @param args ignored
      */
-    public static void main(String[] args) {
-        try {
-            // Print out 10 hashes
-            for (int i = 0; i < 10; i++)
-                System.out.println(PasswordHash.createHash("t9dnb2mq"));
-
-            // Test password validation
-            boolean failure = false;
-            System.out.println("Running tests...");
-            for (int i = 0; i < 100; i++) {
-                String password = "" + i;
-                String hash = createHash(password);
-                String secondHash = createHash(password);
-                if (hash.equals(secondHash)) {
-                    System.out.println("FAILURE: TWO HASHES ARE EQUAL!");
-                    failure = true;
-                }
-                String wrongPassword = "" + (i + 1);
-                if (validatePassword(wrongPassword, hash)) {
-                    System.out.println("FAILURE: WRONG PASSWORD ACCEPTED!");
-                    failure = true;
-                }
-                if (!validatePassword(password, hash)) {
-                    System.out.println("FAILURE: GOOD PASSWORD NOT ACCEPTED!");
-                    failure = true;
-                }
-            }
-            if (failure)
-                System.out.println("TESTS FAILED!");
-            else
-                System.out.println("TESTS PASSED!");
-        } catch (Exception ex) {
-            System.out.println("ERROR: " + ex);
-        }
+    public static void main(String[] args) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        System.out.println(PasswordHash.createHash("ganzha-2000@gmail.com"));
     }
 
 }
