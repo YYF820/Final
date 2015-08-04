@@ -164,7 +164,7 @@ public class PasswordHash {
         final String numbers = "0123456789";
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < length - 1; i++)
             sb.append(alphabet.charAt(rnd.nextInt(alphabet.length())));
         sb.append(numbers.charAt(rnd.nextInt(numbers.length())));
         return sb.toString().toLowerCase();

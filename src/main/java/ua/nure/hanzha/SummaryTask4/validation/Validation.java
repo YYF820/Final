@@ -82,7 +82,7 @@ public class Validation {
         return m.matches();
     }
 
-    private static boolean validatePassword(String password) {
+    public static boolean validatePassword(String password) {
         Pattern p = Pattern.compile("^((?=.*\\d)(?=.*[\\p{L}]).{6,20})$");
         Matcher m = p.matcher(password);
         return m.matches();
@@ -133,6 +133,12 @@ public class Validation {
     private static boolean validatePatronymic(String patronymic) {
         Pattern p = Pattern.compile("^[\\p{Lu}]['-]?[\\p{L}&&[^\\p{Lu}]]{2,15}$");
         Matcher m = p.matcher(patronymic);
+        return m.matches();
+    }
+
+    public static boolean validateTicketResetPassword(String ticketResetPassword) {
+        Pattern p = Pattern.compile("^[A-Z0-9]{6}$");
+        Matcher m = p.matcher(ticketResetPassword);
         return m.matches();
     }
 }

@@ -70,7 +70,7 @@
                 <input aria-labelledby="accountName-label" id="accountName" name="accountName"
                        class="uk-width-1-1 uk-form-large uk-form-width-large
                        ${badEmailClass}"
-                       type="text" spellcheck="false" placeholder="E-mail"
+                       type="text" autocomplete="off" spellcheck="false" placeholder="E-mail"
                        value="${requestScope.accountName}">
             </div>
 
@@ -81,8 +81,8 @@
                 <c:when test="${param.command == 'recoverPassword'}">
                     <input type="hidden" name="command" value="recoverPassword">
                 </c:when>
-                <c:when test="${param.command== 'verifyEmail'}">
-                    <input type="hidden" name="command" value="verifyEmail">
+                <c:when test="${param.command== 'verifyAccount'}">
+                    <input type="hidden" name="command" value="verifyAccount">
                 </c:when>
             </c:choose>
         </form>

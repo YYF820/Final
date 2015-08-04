@@ -80,6 +80,42 @@
         <url-pattern>/checkQuestion.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ResetPasswordMessageSentView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/resetPasswordMessageSent.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordMessageSentView</servlet-name>
+        <url-pattern>/resetPasswordMessageSent.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResetPasswordView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/resetPassword.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordView</servlet-name>
+        <url-pattern>/resetPassword.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResetPasswordSessionInvalidatedView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/sessionInvalidated/resetPasswordSessionInvalidated.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordSessionInvalidatedView</servlet-name>
+        <url-pattern>/resetPasswordSessionInvalidated.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResetPasswordSuccessView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/success/resetPasswordSuccess.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordSuccessView</servlet-name>
+        <url-pattern>/resetPasswordSuccess.html</url-pattern>
+    </servlet-mapping>
+
 
     <!--Servlets mapping-->
     <servlet>
@@ -121,7 +157,8 @@
 
     <servlet>
         <servlet-name>ResendVerificationOrRecoverPasswordServlet</servlet-name>
-        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.resendEmail.ResendVerificationOrRecoverPasswordServlet</servlet-class>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.resendEmail.ResendVerificationOrRecoverPasswordServlet
+        </servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ResendVerificationOrRecoverPasswordServlet</servlet-name>
@@ -136,10 +173,27 @@
         <servlet-name>CheckQuestionServlet</servlet-name>
         <url-pattern>/checkQuestion.do</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CheckTicketResetPasswordServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.check.CheckTicketResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckTicketResetPasswordServlet</servlet-name>
+        <url-pattern>/checkTicketResetPassword.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.resetPassword.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/resetPassword.do</url-pattern>
+    </servlet-mapping>
     <!--Filters-->
     <filter>
         <filter-name>CharsetFilter</filter-name>
-
         <filter-class>ua.nure.hanzha.SummaryTask4.filters.CharsetFilter</filter-class>
         <init-param>
             <param-name>requestEncoding</param-name>
@@ -150,6 +204,15 @@
         <filter-name>CharsetFilter</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>ResetPasswordCheckInvalidateFilter</filter-name>
+        <filter-class>ua.nure.hanzha.SummaryTask4.filters.ResetPasswordCheckInvalidateFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ResetPasswordCheckInvalidateFilter</filter-name>
+        <url-pattern>/checkTicketResetPassword.do</url-pattern>
     </filter-mapping>
     <!--Listeners-->
 

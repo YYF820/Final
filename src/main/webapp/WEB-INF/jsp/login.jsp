@@ -54,7 +54,7 @@
 
             <div class="uk-form-row uk-text-small">
                 <a class="uk-link uk-link-muted uk-float-left"
-                   href="resendVerificationOrRecoverPassword.html?command=verifyEmail">
+                   href="resendVerificationOrRecoverPassword.html?command=verifyAccount">
                     Resent verification message <i class="uk-icon-external-link"></i>
                 </a>
                 <a class="uk-link uk-link-muted uk-float-right"

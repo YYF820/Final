@@ -99,6 +99,17 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
+    public void updatePasswordById(int id, String password, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("user.update.by.id"))) {
+            ps.setString(1, password);
+            ps.setInt(2, id);
+            if (ps.executeUpdate() == 0) {
+                throw new CrudException(ExceptionMessages.UPDATE_EXCEPTION_MESSAGE);
+            }
+        }
+    }
+
+    @Override
     public void insert(User entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,

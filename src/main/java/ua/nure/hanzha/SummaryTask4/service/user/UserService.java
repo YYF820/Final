@@ -13,4 +13,6 @@ public interface UserService {
     User selectByEmail(String email) throws DaoSystemException;
 
     boolean userExistsByAccountName(String accountName) throws DaoSystemException;
+
+    void updatePasswordById(int id, String password) throws DaoSystemException;
 }

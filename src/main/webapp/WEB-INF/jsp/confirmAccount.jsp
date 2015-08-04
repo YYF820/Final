@@ -64,8 +64,6 @@
                 <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="login.html">Continue to
                     Account Management</a>
             </div>
-
-
         </c:if>
     </div>
 </div>

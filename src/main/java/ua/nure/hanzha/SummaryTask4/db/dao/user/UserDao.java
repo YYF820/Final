@@ -24,4 +24,6 @@ public interface UserDao extends Dao<User> {
 
     boolean userExistsByEmail(String email, Connection connection) throws SQLException;
 
+    void updatePasswordById(int id, String password, Connection connection) throws SQLException, CrudException;
+
 }

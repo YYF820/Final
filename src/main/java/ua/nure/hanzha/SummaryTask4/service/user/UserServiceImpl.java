@@ -43,4 +43,15 @@ public class UserServiceImpl implements UserService {
             }
         });
     }
+
+    @Override
+    public void updatePasswordById(final int id, final String password) throws DaoSystemException {
+        txManager.doInTransaction(new SqlCallable<Void>() {
+            @Override
+            public Void call(Connection connection) throws SQLException, CrudException {
+                userDao.updatePasswordById(id, password, connection);
+                return null;
+            }
+        });
+    }
 }

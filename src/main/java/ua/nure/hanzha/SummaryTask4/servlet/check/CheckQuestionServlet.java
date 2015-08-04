@@ -1,6 +1,7 @@
 package ua.nure.hanzha.SummaryTask4.servlet.check;
 
-import ua.nure.hanzha.SummaryTask4.bean.MailInfoBean;
+import ua.nure.hanzha.SummaryTask4.bean.MailInfoRecoverPasswordBean;
+import ua.nure.hanzha.SummaryTask4.bean.MailInfoVerifyAccountBean;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
 import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
@@ -30,14 +31,16 @@ public class CheckQuestionServlet extends HttpServlet {
     private static final String EMPTY_PARAM = "";
 
     private static final String PARAM_SCHOOL_NUMBER = "school";
+
     private static final String SESSION_ATTRIBUTE_COMMAND = "command";
+    private static final String SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD = "entrantForVerifyAccountResetPassword";
+    private static final String SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD = "userForVerifyAccountResetPassword";
+    private static final String SESSION_ATTRIBUTE_HASH_TICKET_RESET_PASSWORD = "hashTicketRecoverPassword";
+    private static final String SESSION_ATTRIBUTE_COUNTER_BAD_TICKET_INSERTS = "counterBadTicketInserts";
 
-    private static final String SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT = "entrantForVerifyAccount";
-    private static final String SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT = "userForVerifyAccount";
+    private static final String REQUEST_ATTRIBUTE_IS_SCHOOL_CORRECT = "isSchoolCorrect";
 
-    private static final String REQUEST_ATTRIBUTE_IS_SCHOOL_NUMBER_CORRECT = "isSchoolNumberCorrect";
-
-    private static final String COMMAND_VERIFY_EMAIL = "verifyEmail";
+    private static final String COMMAND_VERIFY_ACCOUNT = "verifyAccount";
     private static final String COMMAND_RECOVER_PASSWORD = "recoverPassword";
 
     private static final String FIRST_NAME = "firstName";
@@ -47,6 +50,7 @@ public class CheckQuestionServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String schoolNumberFromQuestion = request.getParameter(PARAM_SCHOOL_NUMBER);
+        request.setAttribute(RequestAttribute.SCHOOL, schoolNumberFromQuestion);
         boolean isSchoolNumberFromQuestionValid = checkValidationSchoolNumber(request, schoolNumberFromQuestion);
         boolean isSchoolNumberEmpty = checkEmptyFields(request, schoolNumberFromQuestion);
         if (!isSchoolNumberFromQuestionValid || isSchoolNumberEmpty) {
@@ -54,20 +58,20 @@ public class CheckQuestionServlet extends HttpServlet {
             requestDispatcher.forward(request, response);
         } else {
             HttpSession session = request.getSession(false);
-            Entrant entrant = (Entrant) session.getAttribute(SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT);
+            Entrant entrant = (Entrant) session.getAttribute(SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
             int schoolNumberFromEntrant = entrant.getSchool();
             if (!(Integer.parseInt(schoolNumberFromQuestion) == schoolNumberFromEntrant)) {
-                request.setAttribute(REQUEST_ATTRIBUTE_IS_SCHOOL_NUMBER_CORRECT, false);
+                request.setAttribute(REQUEST_ATTRIBUTE_IS_SCHOOL_CORRECT, false);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.CHECK_QUESTION_HTML);
                 requestDispatcher.forward(request, response);
             } else {
                 String command = (String) session.getAttribute(SESSION_ATTRIBUTE_COMMAND);
                 try {
                     switch (command) {
-                        case COMMAND_VERIFY_EMAIL:
-                            User user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT);
+                        case COMMAND_VERIFY_ACCOUNT:
+                            User user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
                             Map<String, String> extractedUserInfo = extractInfo(user);
-                            prepareInfoForEmail(
+                            prepareInfoVerifyEmail(
                                     request,
                                     extractedUserInfo.get(FIRST_NAME),
                                     extractedUserInfo.get(LAST_NAME),
@@ -78,6 +82,24 @@ public class CheckQuestionServlet extends HttpServlet {
                             requestDispatcher.forward(request, response);
                             break;
                         case COMMAND_RECOVER_PASSWORD:
+                            session.setMaxInactiveInterval(10 * 60);
+                            Long counterBadTicketInserts = 0L;
+                            String ticketResetPassword = PasswordHash.randomPassword(6).toUpperCase();
+                            String hashTicketResetPassword = PasswordHash.createHash(ticketResetPassword);
+                            session.setAttribute(SESSION_ATTRIBUTE_HASH_TICKET_RESET_PASSWORD, hashTicketResetPassword);
+                            session.setAttribute(SESSION_ATTRIBUTE_COUNTER_BAD_TICKET_INSERTS, counterBadTicketInserts);
+                            user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
+                            extractedUserInfo = extractInfo(user);
+                            prepareInfoRecoverPassword(
+                                    request,
+                                    extractedUserInfo.get(FIRST_NAME),
+                                    extractedUserInfo.get(LAST_NAME),
+                                    extractedUserInfo.get(PATRONYMIC),
+                                    extractedUserInfo.get(ACCOUNT_NAME),
+                                    ticketResetPassword
+                            );
+                            requestDispatcher = request.getRequestDispatcher(Pages.CONFIRM_ACCOUNT_SEND_MAIL_SERVLET);
+                            requestDispatcher.forward(request, response);
                             break;
                         default:
                             throw new ServletSystemException("unknown command...");
@@ -106,16 +128,19 @@ public class CheckQuestionServlet extends HttpServlet {
         boolean isSchoolNumberEmpty = false;
         if (schoolNumber.equals(EMPTY_PARAM)) {
             isSchoolNumberEmpty = true;
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_NULL, true);
+            request.setAttribute(RequestAttribute.IS_SCHOOL_NULL, true);
         }
         return isSchoolNumberEmpty;
     }
 
-    private void prepareInfoForEmail(HttpServletRequest request, String firstName,
-                                     String lastName, String patronymic, String accountName) {
+    private void prepareInfoVerifyEmail(HttpServletRequest request, String firstName,
+                                        String lastName, String patronymic, String accountName) {
         String ticket = generateTicket();
         String verifyLink = "localhost:8080/confirmAccount.do?ticket=" + ticket;
         boolean flagSuccessTicket = false;
+        if (TicketsWriterReader.containsValue(accountName)) {
+            TicketsWriterReader.removeAllValues(accountName);
+        }
         while (!flagSuccessTicket) {
             try {
                 TicketsWriterReader.writePair(ticket, accountName);
@@ -124,13 +149,28 @@ public class CheckQuestionServlet extends HttpServlet {
                 ticket = generateTicket();
             }
         }
-        MailInfoBean mailInfoBean = new MailInfoBean();
-        mailInfoBean.setFirstName(firstName);
-        mailInfoBean.setLastName(lastName);
-        mailInfoBean.setPatronymic(patronymic);
-        mailInfoBean.setAccountName(accountName);
-        mailInfoBean.setVerifyLink(verifyLink);
-        request.setAttribute(RequestAttribute.MAIL_INFO_BEAN, mailInfoBean);
+        MailInfoVerifyAccountBean mailInfoVerifyAccountBean = new MailInfoVerifyAccountBean();
+        mailInfoVerifyAccountBean.setFirstName(firstName);
+        mailInfoVerifyAccountBean.setLastName(lastName);
+        mailInfoVerifyAccountBean.setPatronymic(patronymic);
+        mailInfoVerifyAccountBean.setAccountName(accountName);
+        mailInfoVerifyAccountBean.setVerifyLink(verifyLink);
+        request.setAttribute(RequestAttribute.MAIL_INFO_VERIFY_ACCOUNT_BEAN, mailInfoVerifyAccountBean);
+    }
+
+    private void prepareInfoRecoverPassword(HttpServletRequest request, String firstName,
+                                            String lastName, String patronymic,
+                                            String accountName, String ticketRecoverPassword) {
+
+        MailInfoRecoverPasswordBean mailInfoRecoverPasswordBean = new MailInfoRecoverPasswordBean();
+        mailInfoRecoverPasswordBean.setFirstName(firstName);
+        mailInfoRecoverPasswordBean.setLastName(lastName);
+        mailInfoRecoverPasswordBean.setPatronymic(patronymic);
+        mailInfoRecoverPasswordBean.setAccountName(accountName);
+        mailInfoRecoverPasswordBean.setTicketResetPassword(ticketRecoverPassword);
+
+        request.setAttribute(RequestAttribute.MAIL_INFO_RECOVER_PASSWORD_BEAN, mailInfoRecoverPasswordBean);
+
     }
 
     private Map<String, String> extractInfo(User user) {

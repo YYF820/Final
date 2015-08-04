@@ -31,23 +31,22 @@
                 <p>What school did you study?</p>
             </div>
             <c:if test="${
-            requestScope.isSchoolNumberValid == false ||
-            requestScope.isSchoolNumberNull == true ||
-            requestScope.isSchoolNumberCorrect == false}">
+            requestScope.isSchoolValid == false ||
+            requestScope.isSchoolNull == true ||
+            requestScope.isSchoolCorrect == false}">
                 <div class="uk-alert" data-uk-alert>
                     <a href="" class="uk-alert-close uk-close"></a>
                     <c:choose>
-                        <c:when test="${requestScope.isSchoolNumberNull == true}">
+                        <c:when test="${requestScope.isSchoolNull == true}">
                             <p class="uk-text-danger">Please enter your school №.</p>
                         </c:when>
-                        <c:when test="${requestScope.isSchoolNumberValid == false}">
+                        <c:when test="${requestScope.isSchoolValid == false}">
                             <p class="uk-text-danger">School № is not valid, you can use number 0-255. </p>
                         </c:when>
-                        <c:when test="${requestScope.isSchoolNumberCorrect == false}">
-                            <p class="uk-text-danger">The answer is wrong try, you can contact support if you have any questions.</p>
+                        <c:when test="${requestScope.isSchoolCorrect == false}">
+                            <p class="uk-text-danger">Wrong answer.</p>
                         </c:when>
                     </c:choose>
-
                 </div>
             </c:if>
             <label id="school-label" class="control-label" for="school"></label>
@@ -55,7 +54,7 @@
             <div class="uk-form-row row-margin">
                 <input aria-labelledby="school" id="school" name="school"
                        class="uk-width-1-1 uk-form-large uk-form-width-large"
-                       type="text" spellcheck="false" placeholder="School №:"
+                       type="text" spellcheck="false" autocomplete="off" placeholder="School №:"
                        value="${requestScope.school}">
             </div>
 

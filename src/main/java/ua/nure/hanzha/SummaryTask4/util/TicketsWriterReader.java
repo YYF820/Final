@@ -3,6 +3,7 @@ package ua.nure.hanzha.SummaryTask4.util;
 import ua.nure.hanzha.SummaryTask4.exception.PropertiesDuplicateException;
 
 import java.io.*;
+import java.util.Enumeration;
 import java.util.Properties;
 
 /**
@@ -18,6 +19,8 @@ public class TicketsWriterReader {
     private static File file;
     private static String ticketsConfirmAccountPath;
 
+    private static final String BACK_UP_SH_PATH = "/home/faffi-ubuntu/IdeaProjects/SummaryTask4/sh/backUpTickets.sh";
+
     private TicketsWriterReader() {
 
     }
@@ -25,10 +28,10 @@ public class TicketsWriterReader {
     public static void initSqlQueriesHolder(String ticketsConfirmAccountPath) throws FileNotFoundException {
         file = new File(ticketsConfirmAccountPath);
         TicketsWriterReader.ticketsConfirmAccountPath = ticketsConfirmAccountPath;
-        loadSqlQueries(ticketsConfirmAccountPath);
+        loadTickets(ticketsConfirmAccountPath);
     }
 
-    private static void loadSqlQueries(String ticketsConfirmAccountPath) {
+    private static void loadTickets(String ticketsConfirmAccountPath) {
         try (InputStream in = new FileInputStream(ticketsConfirmAccountPath)) {
             properties = new Properties();
             properties.load(in);
@@ -59,6 +62,7 @@ public class TicketsWriterReader {
                 properties.setProperty(key, property);
                 properties.store(fos, null);
                 fos.close();
+                Runtime.getRuntime().exec(BACK_UP_SH_PATH);
             } catch (IOException e) {
                 e.printStackTrace();
                 /*LOG4J*/
@@ -74,13 +78,35 @@ public class TicketsWriterReader {
             properties.remove(key);
             properties.store(fos, "removed pair with key:" + key);
             fos.close();
+            Runtime.getRuntime().exec(BACK_UP_SH_PATH);
         } catch (IOException e) {
             e.printStackTrace();
             /*LOG4J*/
         }
     }
 
-    public static boolean containsParameter(String parameter) {
-        return properties.containsValue(parameter);
+    public static boolean containsValue(String value) {
+        return properties.containsValue(value);
+    }
+
+    public synchronized static void removeAllValues(String value) {
+        try (InputStream in = new FileInputStream(ticketsConfirmAccountPath)) {
+            FileOutputStream fos = new FileOutputStream(file, false);
+            properties.load(in);
+            Enumeration e = properties.propertyNames();
+            while (e.hasMoreElements()) {
+                String key = (String) e.nextElement();
+                String valueFromProperties = properties.getProperty(key);
+                if (value.equals(valueFromProperties)) {
+                    properties.remove(key);
+                }
+            }
+            properties.store(fos, "removed duplicate values");
+            fos.close();
+            Runtime.getRuntime().exec(BACK_UP_SH_PATH);
+        } catch (IOException e) {
+            e.printStackTrace();
+            /*LOG4J*/
+        }
     }
 }

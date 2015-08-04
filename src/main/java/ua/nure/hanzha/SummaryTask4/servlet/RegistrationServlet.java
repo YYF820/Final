@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
-import ua.nure.hanzha.SummaryTask4.bean.MailInfoBean;
+import ua.nure.hanzha.SummaryTask4.bean.MailInfoVerifyAccountBean;
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +50,10 @@ public class RegistrationServlet extends HttpServlet {
 
     private static final String MAP_KEY_USER = "user";
     private static final String MAP_KEY_ENTRANT = "entrant";
+
+    private static final String SESSION_ATTRIBUTE_COMMAND = "command";
+
+    private static final String COMMAND_VERIFY_ACCOUNT = "verifyAccount";
 
     private UserService userService;
     private RegistrationService registrationService;
@@ -87,7 +92,10 @@ public class RegistrationServlet extends HttpServlet {
                     User userInfo = (User) infoForRegistration.get(MAP_KEY_USER);
                     Entrant entrantInfo = (Entrant) infoForRegistration.get(MAP_KEY_ENTRANT);
                     registrationService.registerNewEntrant(userInfo, entrantInfo);
-                    prepareInfoForEmail(request, firstName, lastName, patronymic, accountName);
+                    HttpSession session = request.getSession(true);
+                    prepareInfoVerifyEmail(request, firstName, lastName, patronymic, accountName);
+                    session.setAttribute(SESSION_ATTRIBUTE_COMMAND, COMMAND_VERIFY_ACCOUNT);
+                    session.setMaxInactiveInterval(2 * 60);
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.CONFIRM_ACCOUNT_SEND_MAIL_SERVLET);
                     requestDispatcher.forward(request, response);
                 } else {
@@ -265,8 +273,8 @@ public class RegistrationServlet extends HttpServlet {
         return entrantInfo;
     }
 
-    private void prepareInfoForEmail(HttpServletRequest request, String firstName,
-                                     String lastName, String patronymic, String accountName) {
+    private void prepareInfoVerifyEmail(HttpServletRequest request, String firstName,
+                                        String lastName, String patronymic, String accountName) {
         String ticket = generateTicket();
         String verifyLink = "localhost:8080/confirmAccount.do?ticket=" + ticket;
         boolean flagSuccessTicket = false;
@@ -278,13 +286,13 @@ public class RegistrationServlet extends HttpServlet {
                 ticket = generateTicket();
             }
         }
-        MailInfoBean mailInfoBean = new MailInfoBean();
-        mailInfoBean.setFirstName(firstName);
-        mailInfoBean.setLastName(lastName);
-        mailInfoBean.setPatronymic(patronymic);
-        mailInfoBean.setAccountName(accountName);
-        mailInfoBean.setVerifyLink(verifyLink);
-        request.setAttribute(RequestAttribute.MAIL_INFO_BEAN, mailInfoBean);
+        MailInfoVerifyAccountBean mailInfoVerifyAccountBean = new MailInfoVerifyAccountBean();
+        mailInfoVerifyAccountBean.setFirstName(firstName);
+        mailInfoVerifyAccountBean.setLastName(lastName);
+        mailInfoVerifyAccountBean.setPatronymic(patronymic);
+        mailInfoVerifyAccountBean.setAccountName(accountName);
+        mailInfoVerifyAccountBean.setVerifyLink(verifyLink);
+        request.setAttribute(RequestAttribute.MAIL_INFO_VERIFY_ACCOUNT_BEAN, mailInfoVerifyAccountBean);
     }
 
     private String generateTicket() {

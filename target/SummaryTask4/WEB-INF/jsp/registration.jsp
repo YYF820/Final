@@ -315,6 +315,7 @@
                 <a href="registration.html" class="uk-width-1-5 uk-button-large uk-button uk-button-success">Cancel</a>
             </div>
         </div>
+        <input type="hidden" name="command" value="verifyAccount">
 
     </form>
 </div>
