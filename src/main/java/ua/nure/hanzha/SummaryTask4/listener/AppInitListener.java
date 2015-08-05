@@ -9,6 +9,8 @@ import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManager;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManagerImpl;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.security.AuthorizationMap;
+import ua.nure.hanzha.SummaryTask4.security.XmlAuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationService;
@@ -20,9 +22,7 @@ import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReader;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
 
 /**
  * @author Dmytro Hanzha
@@ -32,18 +32,20 @@ public class AppInitListener implements ServletContextListener {
 
     private static final String PATH_TO_PROPERTIES_SQL = "WEB-INF/classes/sqlQueries.properties";
     private static final String PATH_TO_PROPERTIES_TICKETS = "WEB-INF/classes/tickets.properties";
+    private static final String CONTEXT_PARAM_SECURITY_CONFIG = "SECURITY_CONFIG";
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext servletContext = servletContextEvent.getServletContext();
         String contextPath = servletContext.getRealPath("/");
+
         TransactionManager txManager = new TransactionManagerImpl();
+
         SqlQueriesHolder.initSqlQueriesHolder(contextPath + PATH_TO_PROPERTIES_SQL);
-        try {
-            TicketsWriterReader.initSqlQueriesHolder(contextPath  + PATH_TO_PROPERTIES_TICKETS);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        TicketsWriterReader.initSqlQueriesHolder(contextPath + PATH_TO_PROPERTIES_TICKETS);
+
+        String securityConfigName = servletContext.getInitParameter(CONTEXT_PARAM_SECURITY_CONFIG);
+        setAuthorizationMap(servletContext, securityConfigName);
 
         setUpServices(servletContext, txManager);
         System.out.println("INITIALAIZED");
@@ -69,6 +71,16 @@ public class AppInitListener implements ServletContextListener {
         servletContext.setAttribute(AppAttribute.REGISTRATION_SERVICE, registrationService);
 
 
+    }
+
+    private void setAuthorizationMap(ServletContext servletContext, String fileName) {
+        try {
+            File file = new File(this.getClass().getResource(fileName).toURI());
+            AuthorizationMap authorizationMap = new XmlAuthorizationMap(file);
+            servletContext.setAttribute(AppAttribute.AUTHORIZATION_MAP, authorizationMap);
+        } catch (Exception ex) {
+            throw new RuntimeException("Can't load authorization map file: '" + fileName + "'");
+        }
     }
 
 

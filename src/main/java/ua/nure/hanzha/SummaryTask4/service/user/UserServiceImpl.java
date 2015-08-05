@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectByEmail(final String accountName) throws DaoSystemException {
+    public User getByEmail(final String accountName) throws DaoSystemException {
         return txManager.doInTransaction(new SqlCallable<User>() {
             @Override
             public User call(Connection connection) throws SQLException, CrudException {

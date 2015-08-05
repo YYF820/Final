@@ -32,12 +32,13 @@
             </div>
             <c:if test="${
             requestScope.isSchoolValid == false ||
-            requestScope.isSchoolNull == true ||
+            requestScope.isSchoolEmpty == true ||
             requestScope.isSchoolCorrect == false}">
+                <c:set scope="page" var="badSchoolClass" value="uk-form-danger"/>
                 <div class="uk-alert" data-uk-alert>
                     <a href="" class="uk-alert-close uk-close"></a>
                     <c:choose>
-                        <c:when test="${requestScope.isSchoolNull == true}">
+                        <c:when test="${requestScope.isSchoolEmpty == true}">
                             <p class="uk-text-danger">Please enter your school №.</p>
                         </c:when>
                         <c:when test="${requestScope.isSchoolValid == false}">
@@ -53,7 +54,7 @@
 
             <div class="uk-form-row row-margin">
                 <input aria-labelledby="school" id="school" name="school"
-                       class="uk-width-1-1 uk-form-large uk-form-width-large"
+                       class="uk-width-1-1 uk-form-large uk-form-width-large ${badSchoolClass}"
                        type="text" spellcheck="false" autocomplete="off" placeholder="School №:"
                        value="${requestScope.school}">
             </div>

@@ -79,6 +79,7 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);
                         requestDispatcher.forward(request, response);
                     } catch (DaoSystemException e) {
+                        //TODO: no entrant by id, add 500 page maybe your account was deleted.
                         e.printStackTrace();
                     }
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);

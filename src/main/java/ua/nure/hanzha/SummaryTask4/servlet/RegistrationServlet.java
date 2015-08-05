@@ -96,7 +96,7 @@ public class RegistrationServlet extends HttpServlet {
                     prepareInfoVerifyEmail(request, firstName, lastName, patronymic, accountName);
                     session.setAttribute(SESSION_ATTRIBUTE_COMMAND, COMMAND_VERIFY_ACCOUNT);
                     session.setMaxInactiveInterval(2 * 60);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.CONFIRM_ACCOUNT_SEND_MAIL_SERVLET);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.MAIL_SENDER_SERVLET);
                     requestDispatcher.forward(request, response);
                 } else {
                     setUpAttrForFields(request, firstName, lastName, patronymic, accountName, city, region, password, school);
@@ -105,6 +105,7 @@ public class RegistrationServlet extends HttpServlet {
                     requestDispatcher.forward(request, response);
                 }
             } catch (DaoSystemException e) {
+                //TODO: only SQLException can be here, send to 500 error page.
                 e.printStackTrace();
             }
         }
@@ -178,58 +179,58 @@ public class RegistrationServlet extends HttpServlet {
         int counterOfEmptyFields = 0;
         if (params[0].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_FIRST_NAME_NULL, true);
+            request.setAttribute(RequestAttribute.IS_FIRST_NAME_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_FIRST_NAME_NULL, false);
+            request.setAttribute(RequestAttribute.IS_FIRST_NAME_EMPTY, false);
         }
 
         if (params[1].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_LAST_NAME_NULL, true);
+            request.setAttribute(RequestAttribute.IS_LAST_NAME_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_LAST_NAME_NULL, false);
+            request.setAttribute(RequestAttribute.IS_LAST_NAME_EMPTY, false);
         }
 
         if (params[2].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_PATRONYMIC_NULL, true);
+            request.setAttribute(RequestAttribute.IS_PATRONYMIC_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_PATRONYMIC_NULL, false);
+            request.setAttribute(RequestAttribute.IS_PATRONYMIC_EMPTY, false);
         }
 
         if (params[3].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_NULL, true);
+            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_NULL, false);
+            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_EMPTY, false);
         }
 
         if (params[4].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_CITY_NULL, true);
+            request.setAttribute(RequestAttribute.IS_CITY_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_CITY_NULL, false);
+            request.setAttribute(RequestAttribute.IS_CITY_EMPTY, false);
         }
 
         if (params[5].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_REGION_NULL, true);
+            request.setAttribute(RequestAttribute.IS_REGION_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_REGION_NULL, false);
+            request.setAttribute(RequestAttribute.IS_REGION_EMPTY, false);
         }
 
         if (params[6].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_PASSWORD_NULL, true);
+            request.setAttribute(RequestAttribute.IS_PASSWORD_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_PASSWORD_NULL, false);
+            request.setAttribute(RequestAttribute.IS_PASSWORD_EMPTY, false);
         }
 
         if (params[7].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_SCHOOL_NULL, true);
+            request.setAttribute(RequestAttribute.IS_SCHOOL_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_SCHOOL_NULL, false);
+            request.setAttribute(RequestAttribute.IS_SCHOOL_EMPTY, false);
         }
         return counterOfEmptyFields;
     }
@@ -276,7 +277,7 @@ public class RegistrationServlet extends HttpServlet {
     private void prepareInfoVerifyEmail(HttpServletRequest request, String firstName,
                                         String lastName, String patronymic, String accountName) {
         String ticket = generateTicket();
-        String verifyLink = "localhost:8080/confirmAccount.do?ticket=" + ticket;
+        String verifyLink = "http://localhost:8080/verifyAccount.do?ticket=" + ticket;
         boolean flagSuccessTicket = false;
         while (!flagSuccessTicket) {
             try {

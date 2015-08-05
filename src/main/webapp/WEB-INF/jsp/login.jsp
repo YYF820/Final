@@ -40,7 +40,7 @@
                        class="uk-width-1-1 uk-form-large uk-form-width-large
                        ${badPasswordClass}"
                        type="password" autocomplete="off" placeholder="Password"
-                       value="${requestScope.isAccountNameNull == true && requestScope.isPasswordNull == false ? requestScope.password : ""}">
+                       value="${requestScope.isAccountNameEmpty == true && requestScope.isPasswordEmpty == false ? requestScope.password : ""}">
             </div>
 
             <div class="uk-form-row">
@@ -54,11 +54,11 @@
 
             <div class="uk-form-row uk-text-small">
                 <a class="uk-link uk-link-muted uk-float-left"
-                   href="resendVerificationOrRecoverPassword.html?command=verifyAccount">
+                   href="resendVerificationOrResetPassword.html?command=verifyAccount">
                     Resent verification message <i class="uk-icon-external-link"></i>
                 </a>
                 <a class="uk-link uk-link-muted uk-float-right"
-                   href="resendVerificationOrRecoverPassword.html?command=recoverPassword">
+                   href="resendVerificationOrResetPassword.html?command=resetPassword">
                     Forgot Password? <i class="uk-icon-external-link"></i>
                 </a>
             </div>

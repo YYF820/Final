@@ -70,7 +70,7 @@ public class ResetPasswordServlet extends HttpServlet {
                 String patronymic = userForUpdatePassword.getPatronymic();
                 String accountName = userForUpdatePassword.getEmail();
                 prepareInfoUpdatedPasswordEmail(request, firstName, lastName, patronymic, accountName);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.CONFIRM_ACCOUNT_SEND_MAIL_SERVLET);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.MAIL_SENDER_SERVLET);
                 requestDispatcher.forward(request, response);
             } catch (DaoSystemException e) {
                 e.printStackTrace();
@@ -86,14 +86,14 @@ public class ResetPasswordServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RECOVER_PASSWORD_HTML);
+        response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML);
     }
 
     private boolean checkEmpty(HttpServletRequest request, String password, String confirmPassword) {
         boolean isEmpty = false;
         if (password.equals(EMPTY_PARAM)) {
             isEmpty = true;
-            request.setAttribute(RequestAttribute.IS_PASSWORD_NULL, true);
+            request.setAttribute(RequestAttribute.IS_PASSWORD_EMPTY, true);
         }
         if (confirmPassword.equals(EMPTY_PARAM)) {
             isEmpty = true;

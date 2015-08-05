@@ -7,14 +7,14 @@ public class RequestAttribute {
 
     public static final String IS_ACCOUNT_NAME_EXISTS = "isAccountNameExists";
 
-    public static final String IS_ACCOUNT_NAME_NULL = "isAccountNameNull";
-    public static final String IS_PASSWORD_NULL = "isPasswordNull";
-    public static final String IS_FIRST_NAME_NULL = "isFirstNameNull";
-    public static final String IS_LAST_NAME_NULL = "isLastNameNull";
-    public static final String IS_PATRONYMIC_NULL = "isPatronymicNull";
-    public static final String IS_CITY_NULL = "isCityNull";
-    public static final String IS_REGION_NULL = "isRegionNull";
-    public static final String IS_SCHOOL_NULL = "isSchoolNull";
+    public static final String IS_ACCOUNT_NAME_EMPTY = "isAccountNameEmpty";
+    public static final String IS_PASSWORD_EMPTY = "isPasswordEmpty";
+    public static final String IS_FIRST_NAME_EMPTY = "isFirstNameEmpty";
+    public static final String IS_LAST_NAME_EMPTY = "isLastNameEmpty";
+    public static final String IS_PATRONYMIC_EMPTY = "isPatronymicEmpty";
+    public static final String IS_CITY_EMPTY = "isCityEmpty";
+    public static final String IS_REGION_EMPTY = "isRegionEmpty";
+    public static final String IS_SCHOOL_EMPTY = "isSchoolEmpty";
 
 
     public static final String IS_ACCOUNT_NAME_VALID = "isAccountNameValid";
@@ -36,7 +36,7 @@ public class RequestAttribute {
     public static final String SCHOOL = "school";
 
     public static final String MAIL_INFO_VERIFY_ACCOUNT_BEAN = "mailInfoVerifyAccountBean";
-    public static final String MAIL_INFO_RECOVER_PASSWORD_BEAN = "mailInfoRecoverPasswordBean";
+    public static final String MAIL_INFO_RESET_PASSWORD_BEAN = "mailInfoResetPasswordBean";
     public static final String MAIL_INFO_UPDATED_PASSWORD_BEAN = "mailInfoUpdatedPasswordBean";
 
 

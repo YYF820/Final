@@ -9,9 +9,9 @@ import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
  */
 public interface EntrantService {
 
-    int selectStatusIdByUserId(int userId) throws DaoSystemException;
+    int getStatusIdByUserId(int userId) throws DaoSystemException;
 
-    Entrant selectByUserId(int userId) throws DaoSystemException;
+    Entrant getByUserId(int userId) throws DaoSystemException;
 
     void updateEntrantStatus(int statusId, int entrantId) throws DaoSystemException;
 }

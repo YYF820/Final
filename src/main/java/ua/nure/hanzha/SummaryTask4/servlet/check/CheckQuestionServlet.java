@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.servlet.check;
 
-import ua.nure.hanzha.SummaryTask4.bean.MailInfoRecoverPasswordBean;
+import ua.nure.hanzha.SummaryTask4.bean.MailInfoResetPasswordBean;
 import ua.nure.hanzha.SummaryTask4.bean.MailInfoVerifyAccountBean;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
@@ -41,7 +41,7 @@ public class CheckQuestionServlet extends HttpServlet {
     private static final String REQUEST_ATTRIBUTE_IS_SCHOOL_CORRECT = "isSchoolCorrect";
 
     private static final String COMMAND_VERIFY_ACCOUNT = "verifyAccount";
-    private static final String COMMAND_RECOVER_PASSWORD = "recoverPassword";
+    private static final String COMMAND_RESET_PASSWORD = "resetPassword";
 
     private static final String FIRST_NAME = "firstName";
     private static final String LAST_NAME = "lastName";
@@ -78,11 +78,11 @@ public class CheckQuestionServlet extends HttpServlet {
                                     extractedUserInfo.get(PATRONYMIC),
                                     extractedUserInfo.get(ACCOUNT_NAME)
                             );
-                            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.CONFIRM_ACCOUNT_SEND_MAIL_SERVLET);
+                            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.MAIL_SENDER_SERVLET);
                             requestDispatcher.forward(request, response);
                             break;
-                        case COMMAND_RECOVER_PASSWORD:
-                            session.setMaxInactiveInterval(10 * 60);
+                        case COMMAND_RESET_PASSWORD:
+                            session.setMaxInactiveInterval(60);
                             Long counterBadTicketInserts = 0L;
                             String ticketResetPassword = PasswordHash.randomPassword(6).toUpperCase();
                             String hashTicketResetPassword = PasswordHash.createHash(ticketResetPassword);
@@ -98,7 +98,7 @@ public class CheckQuestionServlet extends HttpServlet {
                                     extractedUserInfo.get(ACCOUNT_NAME),
                                     ticketResetPassword
                             );
-                            requestDispatcher = request.getRequestDispatcher(Pages.CONFIRM_ACCOUNT_SEND_MAIL_SERVLET);
+                            requestDispatcher = request.getRequestDispatcher(Pages.MAIL_SENDER_SERVLET);
                             requestDispatcher.forward(request, response);
                             break;
                         default:
@@ -128,7 +128,7 @@ public class CheckQuestionServlet extends HttpServlet {
         boolean isSchoolNumberEmpty = false;
         if (schoolNumber.equals(EMPTY_PARAM)) {
             isSchoolNumberEmpty = true;
-            request.setAttribute(RequestAttribute.IS_SCHOOL_NULL, true);
+            request.setAttribute(RequestAttribute.IS_SCHOOL_EMPTY, true);
         }
         return isSchoolNumberEmpty;
     }
@@ -136,7 +136,7 @@ public class CheckQuestionServlet extends HttpServlet {
     private void prepareInfoVerifyEmail(HttpServletRequest request, String firstName,
                                         String lastName, String patronymic, String accountName) {
         String ticket = generateTicket();
-        String verifyLink = "localhost:8080/confirmAccount.do?ticket=" + ticket;
+        String verifyLink = "http://localhost:8080/verifyAccount.do?ticket=" + ticket;
         boolean flagSuccessTicket = false;
         if (TicketsWriterReader.containsValue(accountName)) {
             TicketsWriterReader.removeAllValues(accountName);
@@ -162,14 +162,14 @@ public class CheckQuestionServlet extends HttpServlet {
                                             String lastName, String patronymic,
                                             String accountName, String ticketRecoverPassword) {
 
-        MailInfoRecoverPasswordBean mailInfoRecoverPasswordBean = new MailInfoRecoverPasswordBean();
-        mailInfoRecoverPasswordBean.setFirstName(firstName);
-        mailInfoRecoverPasswordBean.setLastName(lastName);
-        mailInfoRecoverPasswordBean.setPatronymic(patronymic);
-        mailInfoRecoverPasswordBean.setAccountName(accountName);
-        mailInfoRecoverPasswordBean.setTicketResetPassword(ticketRecoverPassword);
+        MailInfoResetPasswordBean mailInfoResetPasswordBean = new MailInfoResetPasswordBean();
+        mailInfoResetPasswordBean.setFirstName(firstName);
+        mailInfoResetPasswordBean.setLastName(lastName);
+        mailInfoResetPasswordBean.setPatronymic(patronymic);
+        mailInfoResetPasswordBean.setAccountName(accountName);
+        mailInfoResetPasswordBean.setTicketResetPassword(ticketRecoverPassword);
 
-        request.setAttribute(RequestAttribute.MAIL_INFO_RECOVER_PASSWORD_BEAN, mailInfoRecoverPasswordBean);
+        request.setAttribute(RequestAttribute.MAIL_INFO_RESET_PASSWORD_BEAN, mailInfoResetPasswordBean);
 
     }
 

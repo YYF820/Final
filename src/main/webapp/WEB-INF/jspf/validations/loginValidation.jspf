@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${requestScope.isAccountNameNull == true || requestScope.isPasswordNull == true ||
+<c:if test="${requestScope.isAccountNameEmpty == true || requestScope.isPasswordEmpty == true ||
 requestScope.isAccountNameValid == false || requestScope.isPasswordValid == false ||
 requestScope.isCorrectAccountNameOrPassword == false || requestScope.isVerifiedAccount == false ||
 requestScope.isBlocked == true}">
@@ -33,19 +33,19 @@ requestScope.isBlocked == true}">
             <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
             <c:set scope="page" var="badPasswordClass" value="uk-form-danger"/>
         </c:if>
-        <c:if test="${requestScope.isAccountNameNull == true}">
+        <c:if test="${requestScope.isAccountNameEmpty == true}">
             <div class="uk-width-1-1">
                 <h3 class="uk-text-danger">Please enter your Email.</h3>
             </div>
             <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
         </c:if>
-        <c:if test="${requestScope.isPasswordNull == true}">
+        <c:if test="${requestScope.isPasswordEmpty == true}">
             <div class="uk-width-1-1">
                 <h3 class="uk-text-danger">Please enter your password.</h3>
             </div>
             <c:set scope="page" var="badPasswordClass" value="uk-form-danger"/>
         </c:if>
-        <c:if test="${requestScope.isAccountNameValid == false && requestScope.isAccountNameNull == false}">
+        <c:if test="${requestScope.isAccountNameValid == false && requestScope.isAccountNameEmpty == false}">
             <h3 class="uk-panel-title uk-text-left uk-margin-top">Email is not valid
                 <a href="#email-id" class="uk-align-right" data-uk-modal="{bgclose:false, center:true}">
                     <i class="uk-icon-question"></i>
@@ -53,7 +53,7 @@ requestScope.isBlocked == true}">
             </h3>
             <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
         </c:if>
-        <c:if test="${requestScope.isPasswordValid == false && requestScope.isPasswordNull == false}">
+        <c:if test="${requestScope.isPasswordValid == false && requestScope.isPasswordEmpty == false}">
             <h3 class="uk-panel-title uk-text-left">Password is not valid
                 <a href="#password-id" class="uk-align-right" data-uk-modal="{bgclose:false, center:true}">
                     <i class="uk-icon-question"></i>

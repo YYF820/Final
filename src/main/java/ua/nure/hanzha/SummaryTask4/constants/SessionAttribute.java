@@ -5,6 +5,8 @@ package ua.nure.hanzha.SummaryTask4.constants;
  */
 public class SessionAttribute {
 
+    public static final String ACCOUNT = "account";
+
     public static final String ACCOUNT_NAME = "accountName";
     public static final String PASSWORD = "password";
     public static final String FIRST_NAME = "firstName";

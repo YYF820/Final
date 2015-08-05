@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<map>
+    <!-- Pages for guest only -->
+
+    <action path="/registration.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/registration.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/login.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/auth.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resendVerificationOrResetPassword.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resendVerificationOrResetPassword.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPassword.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPassword.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/verifyAccount.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPasswordMessageSent.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/verifyAccountMessageSent.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/mail.send">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPasswordSessionInvalidated.html">
+        <role name="guest"/>
+    </action>
+
+
+    <!-- pages for admin -->
+    <action path="/admin/index.html">
+        <role name="admin"/>
+    </action>
+
+    <!-- pages for entrant -->
+    <action path="/entrant/index.html">
+        <role name="entrant"/>
+    </action>
+
+    <!--
+        &lt;!&ndash; uses in ifAuth tag &ndash;&gt;
+        <action path="guest">
+            <role name="guest"/>
+        </action>
+        <action path="user">
+            <role name="client"/>
+            <role name="manager"/>
+        </action>
+        <action path="manager">
+            <role name="manager"/>
+        </action>
+        <action path="client">
+            <role name="client"/>
+        </action>-->
+
+</map>

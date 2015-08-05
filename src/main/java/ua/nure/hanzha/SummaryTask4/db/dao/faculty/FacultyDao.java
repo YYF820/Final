@@ -2,7 +2,6 @@ package ua.nure.hanzha.SummaryTask4.db.dao.faculty;
 
 import ua.nure.hanzha.SummaryTask4.db.dao.Dao;
 import ua.nure.hanzha.SummaryTask4.entity.Faculty;
-import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
 import java.sql.Connection;

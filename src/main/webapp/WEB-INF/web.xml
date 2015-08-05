@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+
     <context-param>
-        <param-name>SQL_HOLDER</param-name>
-        <param-value>../../resources/sqlQueries.properties</param-value>
+        <param-name>SECURITY_CONFIG</param-name>
+        <param-value>/security-config.xml</param-value>
     </context-param>
 
     <!-- JSP mapping-->
@@ -45,30 +46,30 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ConfirmAccountView</servlet-name>
-        <jsp-file>/WEB-INF/jsp/confirmAccount.jsp</jsp-file>
+        <servlet-name>VerifyAccountView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/verifyAccount.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ConfirmAccountView</servlet-name>
-        <url-pattern>/confirmAccount.html</url-pattern>
+        <servlet-name>VerifyAccountView</servlet-name>
+        <url-pattern>/verifyAccount.html</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ConfirmAccountMessageSentView</servlet-name>
-        <jsp-file>/WEB-INF/jsp/confirmAccountMessageSent.jsp</jsp-file>
+        <servlet-name>VerifyAccountMessageSentView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/verifyAccountMessageSent.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ConfirmAccountMessageSentView</servlet-name>
-        <url-pattern>/confirmAccountMessageSent.html</url-pattern>
+        <servlet-name>VerifyAccountMessageSentView</servlet-name>
+        <url-pattern>/verifyAccountMessageSent.html</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ResendVerificationOrRecoverPasswordView</servlet-name>
-        <jsp-file>/WEB-INF/jsp/resendVerificationOrRecoverPassword.jsp</jsp-file>
+        <servlet-name>ResendVerificationOrResetPasswordView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/resendVerificationOrResetPassword.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ResendVerificationOrRecoverPasswordView</servlet-name>
-        <url-pattern>/resendVerificationOrRecoverPassword.html</url-pattern>
+        <servlet-name>ResendVerificationOrResetPasswordView</servlet-name>
+        <url-pattern>/resendVerificationOrResetPassword.html</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -117,6 +118,27 @@
     </servlet-mapping>
 
 
+    <!-- admin pages -->
+    <servlet>
+        <servlet-name>AdminIndexView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/admin/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminIndexView</servlet-name>
+        <url-pattern>/admin/index.html</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- entrant pages -->
+    <servlet>
+        <servlet-name>EntrantIndexView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/entrant/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EntrantIndexView</servlet-name>
+        <url-pattern>/entrant/index.html</url-pattern>
+    </servlet-mapping>
+
     <!--Servlets mapping-->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -137,32 +159,31 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ConfirmAccountMailServlet</servlet-name>
-        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.ConfirmAccountMailServlet</servlet-class>
+        <servlet-name>MailSenderServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.MailSenderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ConfirmAccountMailServlet</servlet-name>
-        <url-pattern>/confirmAccount.send</url-pattern>
+        <servlet-name>MailSenderServlet</servlet-name>
+        <url-pattern>/mail.send</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ConfirmAccountServlet</servlet-name>
-        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.ConfirmAccountServlet</servlet-class>
+        <servlet-name>VerifyAccountServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.VerifyAccountServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
-        <servlet-name>ConfirmAccountServlet</servlet-name>
-        <url-pattern>/confirmAccount.do</url-pattern>
+        <servlet-name>VerifyAccountServlet</servlet-name>
+        <url-pattern>/verifyAccount.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ResendVerificationOrRecoverPasswordServlet</servlet-name>
-        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.resendEmail.ResendVerificationOrRecoverPasswordServlet
+        <servlet-name>ResendVerificationOrResetPasswordServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.resendEmail.ResendVerificationOrResetPasswordServlet
         </servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ResendVerificationOrRecoverPasswordServlet</servlet-name>
-        <url-pattern>/resendVerificationOrRecoverPassword.do</url-pattern>
+        <servlet-name>ResendVerificationOrResetPasswordServlet</servlet-name>
+        <url-pattern>/resendVerificationOrResetPassword.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -192,6 +213,7 @@
         <url-pattern>/resetPassword.do</url-pattern>
     </servlet-mapping>
     <!--Filters-->
+
     <filter>
         <filter-name>CharsetFilter</filter-name>
         <filter-class>ua.nure.hanzha.SummaryTask4.filters.CharsetFilter</filter-class>
@@ -207,12 +229,31 @@
     </filter-mapping>
 
     <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>ua.nure.hanzha.SummaryTask4.filters.SecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+        <url-pattern>/entrant/*</url-pattern>
+        <url-pattern>/login.html</url-pattern>
+        <url-pattern>/registration.html</url-pattern>
+        <url-pattern>/resendVerificationOrResetPassword.html</url-pattern>
+        <url-pattern>/checkQuestion.html</url-pattern>
+        <url-pattern>/resetPasswordMessageSent.html</url-pattern>
+        <url-pattern>/verifyAccount.html</url-pattern>
+        <url-pattern>/verifyAccountMessageSent.html</url-pattern>
+        <url-pattern>/resetPasswordSessionInvalidated.html</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>ResetPasswordCheckInvalidateFilter</filter-name>
         <filter-class>ua.nure.hanzha.SummaryTask4.filters.ResetPasswordCheckInvalidateFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ResetPasswordCheckInvalidateFilter</filter-name>
         <url-pattern>/checkTicketResetPassword.do</url-pattern>
+        <url-pattern>/resetPassword.do</url-pattern>
     </filter-mapping>
     <!--Listeners-->
 

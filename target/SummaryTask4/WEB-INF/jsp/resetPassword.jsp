@@ -14,6 +14,13 @@
     <title></title>
 </head>
 <body>
+<c:if test="${
+    requestScope.isPasswordEmpty == true ||
+    requestScope.isPasswordValid == false ||
+    requestScope.isPasswordsSame == false
+}">
+    <c:set scope="page" var="badPasswordClass" value="uk-form-danger"/>
+</c:if>
 <div class="uk-container uk-container-center uk-width-8-10 uk-text-center uk-margin-top ">
     <div class="uk-grid uk-align-center uk-width-small-1-2 uk-margin-large-top">
         <c:if test="${requestScope.isTicketResetPasswordCorrect == true || requestScope.isFromResetPasswordServlet == true}">
@@ -35,23 +42,24 @@
                                    for="password"></label>
                             <input aria-labelledby="password-label" id="password"
                                    name="password"
-                                   class="uk-form-width-small uk-form-width-small"
+                                   class="uk-form-width-small uk-form-width-small ${badPasswordClass}"
                                    type="password" autocomplete="off" value="${requestScope.password}"
                                    placeholder="Password: ">
                         </div>
                         <c:if test="${
-                        requestScope.isPasswordNull == true ||
+                        requestScope.isPasswordEmpty == true ||
                         requestScope.isPasswordValid == false ||
                         requestScope.isPasswordsSame == false
                         }">
                             <div class="uk-width-medium-3-5">
                                 <div class="uk-alert alertSchoolNumber">
                                     <c:choose>
-                                        <c:when test="${requestScope.isPasswordNull == true}">
+                                        <c:when test="${requestScope.isPasswordEmpty == true}">
                                             <p class="uk-text-danger uk-text-middle">Please enter password.</p>
                                         </c:when>
                                         <c:when test="${requestScope.isPasswordValid == false}">
-                                            <p class="uk-text-danger uk-text-middle">Password or confirm password is not valid.</p>
+                                            <p class="uk-text-danger uk-text-middle">Password or confirm password is not
+                                                valid.</p>
 
                                             <p class="uk-text-left-small">Password must contains letters and at least
                                                 one digit,
@@ -73,7 +81,7 @@
                                    for="confirmPassword"></label>
                             <input aria-labelledby="confirmPassword-label" id="confirmPassword"
                                    name="confirmPassword"
-                                   class="uk-form-width-small uk-form-width-small"
+                                   class="uk-form-width-small uk-form-width-small ${badPasswordClass}"
                                    type="password" autocomplete="off" value="${requestScope.confirmPassword}"
                                    placeholder="Confirm password: ">
                         </div>

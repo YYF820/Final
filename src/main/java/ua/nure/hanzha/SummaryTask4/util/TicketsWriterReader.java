@@ -14,18 +14,17 @@ import java.util.Properties;
  */
 public class TicketsWriterReader {
 
+    private static final String BACK_UP_SH_PATH = "/home/faffi-ubuntu/IdeaProjects/SummaryTask4/sh/backUpTickets.sh";
     //===========================SINGLETON
     private static Properties properties;
     private static File file;
     private static String ticketsConfirmAccountPath;
 
-    private static final String BACK_UP_SH_PATH = "/home/faffi-ubuntu/IdeaProjects/SummaryTask4/sh/backUpTickets.sh";
-
     private TicketsWriterReader() {
 
     }
 
-    public static void initSqlQueriesHolder(String ticketsConfirmAccountPath) throws FileNotFoundException {
+    public static void initSqlQueriesHolder(String ticketsConfirmAccountPath) {
         file = new File(ticketsConfirmAccountPath);
         TicketsWriterReader.ticketsConfirmAccountPath = ticketsConfirmAccountPath;
         loadTickets(ticketsConfirmAccountPath);

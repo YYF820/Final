@@ -33,8 +33,7 @@
 
     </c:when>
     <c:when test="${requestScope.isUpdatedPassword == null}">
-
-        <%--<c:redirect url="login.html"/>--%>
+        <c:redirect url="login.html"/>
     </c:when>
 </c:choose>
 </body>

@@ -1,9 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
-import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.Pages;
-import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.Validations;
+import ua.nure.hanzha.SummaryTask4.constants.*;
 import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.enums.EntrantStatus;
@@ -18,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
@@ -59,25 +57,29 @@ public class AuthServlet extends HttpServlet {
         String password = request.getParameter(PARAM_PASSWORD);
         request.setAttribute(RequestAttribute.ACCOUNT_NAME, email);
         request.setAttribute(RequestAttribute.PASSWORD, password);
-        int numberOfNulls = checkNull(email, password, request);
+        int numberOfEmptys = checkEmpty(email, password, request);
         Map<String, Boolean> validationsEmailPassword = Validation.validateLoginAction(email, password);
         int numberOfBadValidations = checkValidations(validationsEmailPassword, request);
-        if (numberOfNulls != 0 || numberOfBadValidations != 0) {
+        if (numberOfEmptys != 0 || numberOfBadValidations != 0) {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.LOGIN_HTML);
             requestDispatcher.forward(request, response);
         } else {
             try {
-                User user = userService.selectByEmail(email);
+                User user = userService.getByEmail(email);
                 if (PasswordHash.validatePassword(password, user.getPassword())) {
                     String role = Role.getRole(user).getName();
                     if (role.equals(ROLE_ADMIN)) {
+                        HttpSession session = request.getSession(true);
+                        session.setAttribute(SessionAttribute.ACCOUNT, user);
                         response.sendRedirect(Pages.INDEX_HTML);
                     } else {
                         int userId = user.getId();
-                        int statusId = entrantService.selectStatusIdByUserId(userId);
+                        int statusId = entrantService.getStatusIdByUserId(userId);
                         String status = EntrantStatus.getEntrantStatusById(statusId).getName();
                         switch (status) {
                             case ENTRANT_STATUS_ACTIVE:
+                                HttpSession session = request.getSession(true);
+                                session.setAttribute(SessionAttribute.ACCOUNT, user);
                                 response.sendRedirect(Pages.INDEX_HTML);
                                 break;
                             case ENTRANT_STATUS_NOT_VERIFIED:
@@ -129,19 +131,19 @@ public class AuthServlet extends HttpServlet {
         return k;
     }
 
-    private int checkNull(String accountName, String password, HttpServletRequest request) {
+    private int checkEmpty(String accountName, String password, HttpServletRequest request) {
         int k = 0;
         if (accountName.equals(EMPTY_PARAM)) {
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_NULL, true);
+            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_EMPTY, true);
             k++;
         } else {
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_NULL, false);
+            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_EMPTY, false);
         }
         if (password.equals(EMPTY_PARAM)) {
-            request.setAttribute(RequestAttribute.IS_PASSWORD_NULL, true);
+            request.setAttribute(RequestAttribute.IS_PASSWORD_EMPTY, true);
             k++;
         } else {
-            request.setAttribute(RequestAttribute.IS_PASSWORD_NULL, false);
+            request.setAttribute(RequestAttribute.IS_PASSWORD_EMPTY, false);
         }
         return k;
     }
