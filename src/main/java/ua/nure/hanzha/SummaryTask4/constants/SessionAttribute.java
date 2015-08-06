@@ -15,4 +15,8 @@ public class SessionAttribute {
     public static final String CITY = "city";
     public static final String REGION = "region";
     public static final String SCHOOL = "school";
+
+    public static final String ENTRANTS_ADMIN = "entrantsAdmin";
+    public static final String NUMBER_OF_PAGES = "numberOfPages";
+    public static final String CURRENT_PAGE = "currentPage";
 }

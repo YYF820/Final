@@ -87,7 +87,7 @@
                 </ul>
                 <p class="uk-text-danger">Click the button below to return to Account Management, where you can resend
                     verification code to recover password.</p>
-                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="login.html">Continue to
+                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="<c:url value="/login.html"/>">Continue to
                     Account Management</a>
             </div>
         </c:if>

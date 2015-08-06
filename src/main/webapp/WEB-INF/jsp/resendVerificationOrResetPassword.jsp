@@ -54,7 +54,7 @@
                         </c:when>
                         <c:when test="${requestScope.isActiveAccount == true}">
                             <p class="uk-text-danger">Your account is already verified,
-                                <a href="login.html" class="uk-text-success">want to log in ?</a>
+                                <a href="<c:url value="/login.html"/>" class="uk-text-success">want to log in ?</a>
                             </p>
                         </c:when>
                         <c:when test="${requestScope.isBlockedAccount == true}">

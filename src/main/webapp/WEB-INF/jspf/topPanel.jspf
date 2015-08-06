@@ -1,19 +1,55 @@
+<%@ taglib prefix="u" uri="http://SummaryTask4.hanzha.nure.ua" %>
 <nav class="uk-navbar">
-    <img class="uk-navbar-brand" src="../../resources/img/logo.png"/>
+    <u:ifAuthAs role="admin">
+        <a href="#adminCanvasId" class="uk-navbar-toggle" data-uk-offcanvas></a>
+    </u:ifAuthAs>
+    <a href="<c:url value="/index.html"/>"><img class="uk-navbar-brand" src="../../resources/img/logo.png"/></a>
 
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">
-            <li><a href="">Support</a></li>
+            <u:ifAuthAs role="guest">
+                <li><a href="">Support</a></li>
+            </u:ifAuthAs>
+            <u:ifAuthAs role="entrant">
+                <li><a href="">Support</a></li>
+            </u:ifAuthAs>
             <li class="uk-parent" data-uk-dropdown>
-                <a href="">Your Account</a>
+                <u:ifAuthAs role="guest">
+                    <a href="">Your Account <i class="uk-icon uk-icon-chevron-down"></i></a>
+                </u:ifAuthAs>
+                <u:ifAuth>
+                    <a href="">
+                        <p>
+                                ${sessionScope.account.lastName} ${sessionScope.account.firstName}
+                            <i class="uk-icon uk-icon-chevron-down"></i>
+                        </p>
+                    </a>
+                </u:ifAuth>
 
                 <div class="uk-dropdown uk-dropdown-navbar">
                     <ul class="uk-nav uk-nav-navbar">
-                        <li><a href="login.html">Log in</a></li>
-                        <li><a href="">Account Settings</a></li>
+                        <u:ifAuthAs role="guest">
+                            <li><a href="<c:url value="/login.html"/>">Log in <i class="uk-icon uk-icon-sign-in"></i></a></li>
+                            <li><a href="">Account Settings</a></li>
+                        </u:ifAuthAs>
+                        <u:ifAuth>
+                            <li><a href="<c:url value="/logout.do"/>">Log out <i class="uk-icon uk-icon-sign-out"></i></a></li>
+                            <li><a href="">Account Settings <i class="uk-icon uk-icon-cog"></i></a></li>
+                        </u:ifAuth>
                     </ul>
                 </div>
             </li>
         </ul>
     </div>
 </nav>
+
+<div id="adminCanvasId" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
+            <li><a href="<c:url value="/admin/entrants.do"/>">Entrants <i class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
+            <li class="uk-active"><a href="">Faculties <i class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
+            <li><a href="">Final sheet <i class="uk-icon uk-icon-university uk-text-primary"></i></a></li>
+            <li class="uk-active"><a class="uk-text-success" href="">life@University</a></li>
+        </ul>
+    </div>
+</div>

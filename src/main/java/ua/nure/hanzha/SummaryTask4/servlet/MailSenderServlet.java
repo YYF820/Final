@@ -91,8 +91,8 @@ public class MailSenderServlet extends HttpServlet {
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_SUCCESS_HTML);
                     requestDispatcher.forward(request, response);
                 } catch (MessagingException e) {
-                    request.setAttribute(REQUEST_ATTRIBUTE_IS_MESSAGE_SENT, false);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);
+                    request.setAttribute(REQUEST_ATTRIBUTE_IS_UPDATED_PASSWORD, true);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_SUCCESS_HTML);
                     requestDispatcher.forward(request, response);
                 }
                 break;

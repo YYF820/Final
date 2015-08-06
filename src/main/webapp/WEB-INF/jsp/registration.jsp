@@ -224,7 +224,7 @@
                             </c:when>
                             <c:when test="${requestScope.isAccountNameExists == true}">
                                 <p class="uk-text-danger">This email is already in use.
-                                    <a href="login.html" class="uk-text-success">Want to log in?</a>
+                                    <a href="<c:url value="/login.html"/>" class="uk-text-success">Want to log in?</a>
                                 </p>
                             </c:when>
                             <c:when test="${requestScope.isAccountNameValid == false}">
@@ -312,7 +312,7 @@
         <div class="uk-grid uk-align-center uk-width-small-1-11 uk-margin-top">
             <div class="uk-width-1-1 uk-form-row registrationNormalizeButton">
                 <button class="uk-width-1-2 uk-button uk-button-primary uk-button-large" type="submit">Register</button>
-                <a href="registration.html" class="uk-width-1-5 uk-button-large uk-button uk-button-success">Cancel</a>
+                <a href="<c:url value="/registration.html"/>" class="uk-width-1-5 uk-button-large uk-button uk-button-success">Cancel</a>
             </div>
         </div>
         <input type="hidden" name="command" value="verifyAccount">

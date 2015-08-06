@@ -128,6 +128,15 @@
         <url-pattern>/admin/index.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminEntrantsView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/admin/entrants.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminEntrantsView</servlet-name>
+        <url-pattern>/admin/entrants.html</url-pattern>
+    </servlet-mapping>
+
 
     <!-- entrant pages -->
     <servlet>
@@ -141,11 +150,11 @@
 
     <!--Servlets mapping-->
     <servlet>
-        <servlet-name>LoginServlet</servlet-name>
+        <servlet-name>AuthServlet</servlet-name>
         <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.AuthServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
+        <servlet-name>AuthServlet</servlet-name>
         <url-pattern>/auth.do</url-pattern>
     </servlet-mapping>
 
@@ -212,6 +221,33 @@
         <servlet-name>ResetPasswordServlet</servlet-name>
         <url-pattern>/resetPassword.do</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogOutServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.LogOutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogOutServlet</servlet-name>
+        <url-pattern>/logout.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EntrantsServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.EntrantsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EntrantsServlet</servlet-name>
+        <url-pattern>/admin/entrants.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BlockEntrantServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.BlockEntrantServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BlockEntrantServlet</servlet-name>
+        <url-pattern>/admin/blockEntrant.do</url-pattern>
+    </servlet-mapping>
     <!--Filters-->
 
     <filter>
@@ -225,7 +261,6 @@
     <filter-mapping>
         <filter-name>CharsetFilter</filter-name>
         <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 
     <filter>
@@ -236,14 +271,29 @@
         <filter-name>SecurityFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
         <url-pattern>/entrant/*</url-pattern>
+
+        <!-- login, logout, registration, verify account, reset password -->
         <url-pattern>/login.html</url-pattern>
-        <url-pattern>/registration.html</url-pattern>
+        <url-pattern>/auth.do</url-pattern>
+        <url-pattern>/logout.do</url-pattern>
         <url-pattern>/resendVerificationOrResetPassword.html</url-pattern>
+        <url-pattern>/resendVerificationOrResetPassword.do</url-pattern>
         <url-pattern>/checkQuestion.html</url-pattern>
-        <url-pattern>/resetPasswordMessageSent.html</url-pattern>
-        <url-pattern>/verifyAccount.html</url-pattern>
+        <url-pattern>/checkQuestion.do</url-pattern>
+        <url-pattern>/mail.send</url-pattern>
         <url-pattern>/verifyAccountMessageSent.html</url-pattern>
+        <url-pattern>/verifyAccount.do</url-pattern>
+        <url-pattern>/verifyAccount.html</url-pattern>
+        <url-pattern>/resetPasswordMessageSent.html</url-pattern>
+        <url-pattern>/checkTicketResetPassword.do</url-pattern>
+        <url-pattern>/resetPassword.html</url-pattern>
+        <url-pattern>/resetPassword.do</url-pattern>
+        <url-pattern>/resetPasswordSuccess.html</url-pattern>
         <url-pattern>/resetPasswordSessionInvalidated.html</url-pattern>
+        <url-pattern>/registration.html</url-pattern>
+        <url-pattern>/registration.do</url-pattern>
+
+        <url-pattern>/index.html</url-pattern>
     </filter-mapping>
 
     <filter>

@@ -30,7 +30,7 @@
 
             <div class="uk-margin-large-top">
                 <form class="uk-panel uk-panel-box uk-form"
-                      action="resetPassword.do"
+                      action="<c:url value="/resetPassword.do"/>"
                       method="POST">
                     <div class="uk-alert uk-alert-warning" data-uk-alert>
                         <p class="uk-text-middle">Please enter new password and confirm it in the form below.</p>

@@ -21,7 +21,8 @@
                 <p class="uk-text-success uk-text-large uk-text-middle">
                     <i class="uk-icon-check uk-icon-large uk-text-success"></i>&nbspThank you! Password was changed.
                     <br/>
-                    <a href="login.html" class="uk-text-success uk-text-large uk-align-center uk-text-center ">
+                    <a href="<c:url value="/login.html"/>"
+                       class="uk-text-success uk-text-large uk-align-center uk-text-center ">
                         Want to log in ?
                         <i class="uk-icon-external-link"></i>
                     </a>

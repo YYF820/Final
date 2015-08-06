@@ -21,4 +21,7 @@ public class Pages {
     public static final String RESET_PASSWORD_MESSAGE_SENT_HTML = "resetPasswordMessageSent.html";
 
     public static final String MAIL_SENDER_SERVLET = "mail.send";
+
+    public static final String ENTRANTS_ADMIN_SERVLET = "entrants.do";
+    public static final String ENTRANTS_ADMIN_HTML = "entrants.html";
 }

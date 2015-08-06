@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <map>
+    <!-- Pages for every one -->
+    <action path="/index.html">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
     <!-- Pages for guest only -->
 
     <action path="/registration.html">
@@ -27,6 +33,38 @@
         <role name="guest"/>
     </action>
 
+    <action path="/checkQuestion.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/checkQuestion.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/mail.send">
+        <role name="guest"/>
+    </action>
+
+    <action path="/verifyAccountMessageSent.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/verifyAccount.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/verifyAccount.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPasswordMessageSent.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/checkTicketResetPassword.do">
+        <role name="guest"/>
+    </action>
+
     <action path="/resetPassword.html">
         <role name="guest"/>
     </action>
@@ -35,19 +73,7 @@
         <role name="guest"/>
     </action>
 
-    <action path="/verifyAccount.do">
-        <role name="guest"/>
-    </action>
-
-    <action path="/resetPasswordMessageSent.html">
-        <role name="guest"/>
-    </action>
-
-    <action path="/verifyAccountMessageSent.html">
-        <role name="guest"/>
-    </action>
-
-    <action path="/mail.send">
+    <action path="/resetPasswordSuccess.html">
         <role name="guest"/>
     </action>
 
@@ -61,10 +87,27 @@
         <role name="admin"/>
     </action>
 
+    <action path="/logout.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/entrants.html">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/entrants.do">
+        <role name="admin"/>
+    </action>
+
     <!-- pages for entrant -->
     <action path="/entrant/index.html">
         <role name="entrant"/>
     </action>
+
+    <action path="/logout.do">
+        <role name="entrant"/>
+    </action>
+
 
     <!--
         &lt;!&ndash; uses in ifAuth tag &ndash;&gt;

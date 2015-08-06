@@ -4,6 +4,8 @@ package ua.nure.hanzha.SummaryTask4.listener;
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDaoImpl;
+import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminDao;
+import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManager;
@@ -13,6 +15,8 @@ import ua.nure.hanzha.SummaryTask4.security.AuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.security.XmlAuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantServiceImpl;
+import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminService;
+import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationService;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
@@ -59,6 +63,7 @@ public class AppInitListener implements ServletContextListener {
     private void setUpServices(ServletContext servletContext, TransactionManager txManager) {
         UserDao userDao = new UserDaoImpl();
         EntrantDao entrantDao = new EntrantDaoImpl();
+        EntrantInfoAdminDao entrantInfoAdminDao = new EntrantInfoAdminImpl();
 
 
         UserService userService = new UserServiceImpl(txManager, userDao);
@@ -69,6 +74,9 @@ public class AppInitListener implements ServletContextListener {
 
         RegistrationService registrationService = new RegistrationServiceImpl(txManager, userDao, entrantDao);
         servletContext.setAttribute(AppAttribute.REGISTRATION_SERVICE, registrationService);
+
+        EntrantInfoAdminService entrantInfoAdminService = new EntrantInfoAdminServiceImpl(txManager, entrantInfoAdminDao);
+        servletContext.setAttribute(AppAttribute.ENTRANT_INFO_ADMIN_SERVICE, entrantInfoAdminService);
 
 
     }

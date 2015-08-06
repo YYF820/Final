@@ -16,7 +16,7 @@ public class FieldsDataBase {
 
     public static final String USER_PASSWORD = "password";
     public static final String USER_FIRST_NAME = "first_name";
-    public static final String USER_LAST_NAME = "first_name";
+    public static final String USER_LAST_NAME = "last_name";
     public static final String USER_PATRONYMIC = "patronymic";
     public static final String USER_EMAIL = "email";
     public static final String USER_ROLE_ID = "role_id";
@@ -29,6 +29,17 @@ public class FieldsDataBase {
     public static final String ENTRANT_WITHOUT_COMPETITIVE_ENTRY = "without_competitive_entry";
     public static final String ENTRANT_STATUS = "entrant_status_id";
     public static final String ENTRANT_USER_ID = "user_id";
+
+    //===========================ENTRANT INFO ADMIN BEAN=========================
+
+    public static final String ENTRANT_INFO_ADMIN_FIRST_NAME = "first_name";
+    public static final String ENTRANT_INFO_ADMIN_LAST_NAME = "last_name";
+    public static final String ENTRANT_INFO_ADMIN_PATRONYMIC = "patronymic";
+    public static final String ENTRANT_INFO_ADMIN_EMAIL = "email";
+    public static final String ENTRANT_INFO_ADMIN_CITY = "city";
+    public static final String ENTRANT_INFO_ADMIN_REGION = "region";
+    public static final String ENTRANT_INFO_ADMIN_SCHOOL = "school";
+    public static final String ENTRANT_INFO_ADMIN_STATUS = "entrant_status_id";
 
     //===========================FACULTY FIELDS==================================
 

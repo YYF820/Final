@@ -37,7 +37,7 @@
                 </ul>
                 <p class="uk-text-success">Click the button below to return to Account Management, where you can try new
                     things.</p>
-                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="login.html">Continue to
+                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="<c:url value="/login.html"/>">Continue to
                     Account
                     Management</a>
             </div>
@@ -61,7 +61,7 @@
                 <p class="uk-text-danger">Click the button below to return to Account Management, where you can request
                     another copy of the
                     verification e-mail.</p>
-                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="login.html">Continue to
+                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="<c:url value="/login.html"/>">Continue to
                     Account Management</a>
             </div>
         </c:if>
