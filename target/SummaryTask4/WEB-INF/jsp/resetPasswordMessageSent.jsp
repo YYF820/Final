@@ -18,7 +18,7 @@
 <div class="uk-container uk-container-center uk-width-8-10 uk-text-center uk-margin-top ">
     <div class="uk-grid uk-align-center uk-width-small-1-2 uk-margin-large-top">
 
-        <c:if test="${requestScope.isMessageSent == true || requestScope.isFromServlet == true}">
+        <c:if test="${sessionScope.checkTicketIsMessageSent == true}">
 
             <p class="uk-text-success uk-text-large uk-text-middle"><i
                     class="uk-icon-check uk-icon-large uk-text-success"></i>&nbspThank you! We have sent verification
@@ -26,7 +26,7 @@
 
             <div class="uk-margin-large-top uk-text-center">
                 <form class="uk-panel uk-panel-box uk-form"
-                      action="checkTicketResetPassword.do"
+                      action="<c:url value="/checkTicketResetPassword.do"/>"
                       method="POST">
 
                     <div class="uk-alert uk-alert-warning" data-uk-alert>
@@ -34,7 +34,7 @@
                             password.</p>
 
                         <p class="uk-text-danger">You've got <span
-                                class="uk-text-danger uk-h4">${3 - sessionScope.counterBadTicketInserts}</span>
+                                class="uk-text-danger uk-h4">${3 - sessionScope.checkTicketCounterBadTicketInserts}</span>
                             tries and 10 minutes, failing that account will be blocked.</p>
                     </div>
                     <div class="uk-grid">
@@ -44,17 +44,17 @@
                             <input aria-labelledby="ticketResetPassword-label" id="ticketResetPassword"
                                    name="ticketResetPassword"
                                    class="uk-form-width-small uk-form-width-small"
-                                   type="text" autocomplete="off" value="${requestScope.ticketResetPassword}"
+                                   type="text" autocomplete="off" value="${sessionScope.checkTicketTicketResetPassword}"
                                    placeholder="Code : ">
                         </div>
-                        <c:if test="${requestScope.isTicketResetPasswordEmpty == true || requestScope.isTicketResetPasswordCorrect == false}">
+                        <c:if test="${sessionScope.checkTicketIsEmpty == true || sessionScope.checkTicketIsTicketResetPasswordCorrect == false}">
                             <div class="uk-width-medium-2-3">
                                 <div class="uk-alert alertSchoolNumber uk-animation-fade">
                                     <c:choose>
-                                        <c:when test="${requestScope.isTicketResetPasswordEmpty == true}">
+                                        <c:when test="${sessionScope.checkTicketIsEmpty == true}">
                                             <p class="uk-text-danger">Please enter code.</p>
                                         </c:when>
-                                        <c:when test="${requestScope.isTicketResetPasswordCorrect == false}">
+                                        <c:when test="${sessionScope.checkTicketIsTicketResetPasswordCorrect == false}">
                                             <p class="uk-text-danger">Wrong code.</p>
                                         </c:when>
                                     </c:choose>
@@ -62,15 +62,15 @@
                             </div>
                         </c:if>
                     </div>
-                    <div class="uk-margin-top ">
-                        <button class="uk-width-1-1 uk-button uk-button-primary" type="submit">Next</button>
+                    <div class="uk-grid uk-form-row uk-align-center uk-margin-bottom-remove uk-margin-top">
+                        <button class="uk-width-medium-3-5 uk-button uk-button-primary " type="submit">Next</button>
+                        <a href="<c:url value="/index.html"/>"
+                           class="uk-width-medium-1-5 uk-button uk-button-success uk-push-2-10">Cancel</a>
                     </div>
-                    <c:set scope="session" var="counterBadTicketInserts"
-                           value="${sessionScope.counterBadTicketInserts + 1}"/>
                 </form>
             </div>
         </c:if>
-        <c:if test="${requestScope.isMessageSent == false || (requestScope.isMessageSent == null && requestScope.isFromServlet == null && requestScope.isBlockedAccount == null)}">
+        <c:if test="${sessionScope.checkTicketIsMessageSent == false || sessionScope.checkTicketIsMessageSent == null }">
             <p class="uk-text-danger uk-text-large uk-text-middle"><i
                     class="uk-icon-exclamation-triangle uk-icon-large uk-text-danger"></i>&nbspWe couldn't send you
                 verification code to your email.</p>
@@ -87,14 +87,10 @@
                 </ul>
                 <p class="uk-text-danger">Click the button below to return to Account Management, where you can resend
                     verification code to recover password.</p>
-                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="<c:url value="/login.html"/>">Continue to
+                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center"
+                   href="<c:url value="/login.html"/>">Continue to
                     Account Management</a>
             </div>
-        </c:if>
-        <c:if test="${requestScope.isBlockedAccount == true}">
-            <p class="uk-text-exclamation-triangle uk-text-large uk-text-middle uk-text-danger"><i
-                    class="uk-icon-check uk-icon-large uk-text-danger"></i>&nbspYou wrote wrong code 3 times, we
-                blocked account, contact our support.</p>
         </c:if>
     </div>
 </div>

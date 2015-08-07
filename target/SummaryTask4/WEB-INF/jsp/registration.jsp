@@ -24,17 +24,17 @@
     <div class="uk-grid uk-align-center uk-width-small-9-10">
         <div class="uk-width-1-3">
             <c:choose>
-                <c:when test="${requestScope.isFirstNameEmpty == false && requestScope.isFirstNameValid == true}">
+                <c:when test="${sessionScope.registrationIsFirstNameEmpty == false && sessionScope.registrationIsFirstNameValid == true}">
                     <c:set scope="page" var="firstNameSuccessClass" value="uk-form-success"/>
                 </c:when>
-                <c:when test="${requestScope.isFirstNameEmpty == true || requestScope.isFirstNameValid == false}">
+                <c:when test="${sessionScope.registrationIsFirstNameEmpty == true || sessionScope.registrationIsFirstNameValid == false}">
                     <div class="uk-alert uk-width-1-1 uk-animation-fade" data-uk-alert>
                         <c:choose>
-                            <c:when test="${requestScope.isFirstNameEmpty == true}">
+                            <c:when test="${sessionScope.registrationIsFirstNameEmpty == true}">
                                 <c:set scope="page" var="firstNameSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger">Please enter your First name.</p>
                             </c:when>
-                            <c:when test="${requestScope.isFirstNameValid == false}">
+                            <c:when test="${sessionScope.registrationIsFirstNameValid == false}">
                                 <c:set scope="page" var="firstNameSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger">First name is not valid.</p>
 
@@ -49,19 +49,19 @@
                 </c:when>
             </c:choose>
         </div>
-        <div class="uk-width-1-3 ${requestScope.isFirstNameEmpty == false && requestScope.isFirstNameValid == true ? 'uk-push-1-3' : ''}">
+        <div class="uk-width-1-3 ${sessionScope.registrationIsFirstNameEmpty == false && sessionScope.registrationIsFirstNameValid == true ? 'uk-push-1-3' : ''}">
             <c:choose>
-                <c:when test="${requestScope.isLastNameEmpty == false && requestScope.isLastNameValid == true}">
+                <c:when test="${sessionScope.registrationIsLastNameEmpty == false && sessionScope.registrationIsLastNameValid == true}">
                     <c:set scope="page" var="lastNameSuccessClass" value="uk-form-success"/>
                 </c:when>
-                <c:when test="${requestScope.isLastNameEmpty == true || requestScope.isLastNameValid == false}">
+                <c:when test="${sessionScope.registrationIsLastNameEmpty == true || sessionScope.registrationIsLastNameValid == false}">
                     <div class="uk-alert uk-width-1-1 uk-animation-fade" data-uk-alert>
                         <c:choose>
-                            <c:when test="${requestScope.isLastNameEmpty == true}">
+                            <c:when test="${sessionScope.registrationIsLastNameEmpty == true}">
                                 <c:set scope="page" var="lastNameSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger">Please enter your Last name.</p>
                             </c:when>
-                            <c:when test="${requestScope.isLastNameValid == false}">
+                            <c:when test="${sessionScope.registrationIsLastNameValid == false}">
                                 <c:set scope="page" var="lastNameSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger">Last name is not valid.</p>
 
@@ -78,21 +78,21 @@
 
         </div>
         <div class="uk-width-1-3
-        ${(requestScope.isLastNameEmpty == false && requestScope.isLastNameValid == true) && (requestScope.isFirstNameEmpty == false && requestScope.isFirstNameValid == true) ? 'uk-push-2-3' : ''}
-        ${requestScope.isFirstNameEmpty == false && requestScope.isFirstNameValid == true ? 'uk-push-1-3' : ''}
-        ${requestScope.isLastNameEmpty == false && requestScope.isLastNameValid == true ? 'uk-push-1-3' : ''}">
+        ${(sessionScope.registrationIsLastNameEmpty == false && sessionScope.registrationIsLastNameValid == true) && (sessionScope.registrationIsFirstNameEmpty == false && sessionScope.registrationIsFirstNameValid == true) ? 'uk-push-2-3' : ''}
+        ${sessionScope.registrationIsFirstNameEmpty == false && sessionScope.registrationIsFirstNameValid == true ? 'uk-push-1-3' : ''}
+        ${sessionScope.registrationIsLastNameEmpty == false && sessionScope.registrationIsLastNameValid == true ? 'uk-push-1-3' : ''}">
             <c:choose>
-                <c:when test="${requestScope.isPatronymicEmpty == false && requestScope.isPatronymicValid == true}">
+                <c:when test="${sessionScope.registrationIsPatronymicEmpty == false && sessionScope.registrationIsPatronymicValid == true}">
                     <c:set scope="page" var="patronymicSuccessClass" value="uk-form-success"/>
                 </c:when>
-                <c:when test="${requestScope.isPatronymicEmpty == true || requestScope.isPatronymicValid == false}">
+                <c:when test="${sessionScope.registrationIsPatronymicEmpty == true || sessionScope.registrationIsPatronymicValid == false}">
                     <div class="uk-alert uk-width-1-1 uk-animation-fade" data-uk-alert>
                         <c:choose>
-                            <c:when test="${requestScope.isPatronymicEmpty == true}">
+                            <c:when test="${sessionScope.registrationIsPatronymicEmpty == true}">
                                 <c:set scope="page" var="patronymicSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger">Please enter your Patronymic.</p>
                             </c:when>
-                            <c:when test="${requestScope.isPatronymicValid == false}">
+                            <c:when test="${sessionScope.registrationIsPatronymicValid == false}">
                                 <c:set scope="page" var="patronymicSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger">Patronymic name is not valid.</p>
 
@@ -108,31 +108,33 @@
             </c:choose>
         </div>
     </div>
-    <form class="uk-form" action="register.do" method="POST">
+    <form class="uk-form" action="<c:url value="/register.do"/>" method="POST">
         <div class="uk-grid uk-align-center uk-width-small-9-10">
 
             <div class="uk-width-1-3 ">
                 <label id="firstName-label" class="control-label" for="firstName"></label>
                 <input aria-labelledby="firstName-label" id="firstName" name="firstName"
                        class="uk-width-1-1 uk-form-large uk-form-width-large ${pageScope.firstNameSuccessClass}"
-                       type="text" spellcheck="false" autocomplete="off" value="${requestScope.firstName}" placeholder="First Name:">
+                       type="text" spellcheck="false" autocomplete="off" value="${sessionScope.registrationFirstName}"
+                       placeholder="First Name:">
             </div>
 
             <div class="uk-width-1-3 ">
                 <label id="lastName-label " class="control-label" for="lastName"></label>
                 <input aria-labelledby="lastName-label" id="lastName" name="lastName"
                        class="uk-width-1-1 uk-form-large uk-form-width-large ${pageScope.lastNameSuccessClass}"
-                       type="text" spellcheck="false" autocomplete="off" value="${requestScope.lastName}" placeholder="Last Name:">
+                       type="text" spellcheck="false" autocomplete="off" value="${sessionScope.registrationLastName}"
+                       placeholder="Last Name:">
             </div>
 
             <div class="uk-width-1-3 ">
                 <label id="patronymic-label" class="control-label" for="patronymic"></label>
                 <input aria-labelledby="patronymic-label" id="patronymic" name="patronymic"
                        class="uk-width-1-1 uk-form-large uk-form-width-large ${pageScope.patronymicSuccessClass}"
-                       type="text" spellcheck="false" autocomplete="off" value="${requestScope.patronymic}" placeholder="Patronymic:">
+                       type="text" spellcheck="false" autocomplete="off" value="${sessionScope.registrationPatronymic}"
+                       placeholder="Patronymic:">
             </div>
         </div>
-
 
 
         <div class="uk-grid uk-align-center uk-margin-bottom-remove uk-margin-top">
@@ -140,21 +142,21 @@
                 <label id="city-label" class="control-label" for="city"></label>
                 <input aria-labelledby="city-label" id="city" name="city"
                        class="uk-width-1-1
-                       ${(requestScope.isCityEmpty == false && requestScope.isCityValid == true) ||
-                       (requestScope.isCityEmpty == null && requestScope.isCityValid == null) ? 'uk-push-1-2' : ''}
+                       ${(sessionScope.registrationIsCityEmpty == false && sessionScope.registrationIsCityValid == true) ||
+                       (sessionScope.registrationIsCityEmpty == null && sessionScope.registrationIsCityValid == null) ? 'uk-push-1-2' : ''}
                        uk-form-large uk-form-width-large
-                       ${requestScope.isCityEmpty == true || requestScope.isCityValid == false ? 'uk-form-danger' : ''}
-                       ${requestScope.isCityEmpty == false && requestScope.isCityValid == true ? 'uk-form-success' : ''}"
-                       type="text" value="${requestScope.city}" autocomplete="off" placeholder="City: ">
+                       ${sessionScope.registrationIsCityEmpty == true || sessionScope.registrationIsCityValid == false ? 'uk-form-danger' : ''}
+                       ${sessionScope.registrationIsCityEmpty == false && sessionScope.registrationIsCityValid == true ? 'uk-form-success' : ''}"
+                       type="text" value="${sessionScope.registrationCity}" autocomplete="off" placeholder="City: ">
             </div>
-            <c:if test="${requestScope.isCityEmpty == true || requestScope.isCityValid == false}">
+            <c:if test="${sessionScope.registrationIsCityEmpty == true || sessionScope.registrationIsCityValid == false}">
                 <div class="uk-width-medium-1-2 uk-animation-fade ">
                     <div class="uk-alert uk-width-1-1 " data-uk-alert>
                         <c:choose>
-                            <c:when test="${requestScope.isCityEmpty == true}">
+                            <c:when test="${sessionScope.registrationIsCityEmpty == true}">
                                 <p class="uk-text-danger">Please enter your city.</p>
                             </c:when>
-                            <c:when test="${requestScope.isCityValid == false}">
+                            <c:when test="${sessionScope.registrationIsCityValid == false}">
                                 <p class="uk-text-danger">City is not valid.</p>
 
                                 <p class="uk-text-left-small">First letter must be uppercase.</p>
@@ -172,21 +174,21 @@
                 <label id="region-label" class="control-label" for="region"></label>
                 <input aria-labelledby="region-label" id="region" name="region"
                        class="uk-width-1-1
-                       ${(requestScope.isRegionEmpty == false && requestScope.isRegionValid == true) ||
-                       (requestScope.isRegionEmpty == null && requestScope.isRegionValid == null) ? 'uk-push-1-2' : ''}
+                       ${(sessionScope.registrationIsRegionEmpty == false && sessionScope.registrationIsRegionValid == true) ||
+                       (sessionScope.registrationIsRegionEmpty == null && sessionScope.registrationIsRegionValid == null) ? 'uk-push-1-2' : ''}
                        uk-form-large uk-form-width-large
-                       ${requestScope.isRegionEmpty == true || requestScope.isRegionValid == false ? 'uk-form-danger' : ''}
-                       ${requestScope.isRegionEmpty == false && requestScope.isRegionValid == true ? 'uk-form-success' : ''}"
-                       type="text" value="${requestScope.region}" autocomplete="off" placeholder="Region: ">
+                       ${sessionScope.registrationIsRegionEmpty == true || sessionScope.registrationIsRegionValid == false ? 'uk-form-danger' : ''}
+                       ${sessionScope.registrationIsRegionEmpty == false && sessionScope.registrationIsRegionValid == true ? 'uk-form-success' : ''}"
+                       type="text" value="${sessionScope.registrationRegion}" autocomplete="off" placeholder="Region: ">
             </div>
-            <c:if test="${requestScope.isRegionEmpty == true || requestScope.isRegionValid == false}">
+            <c:if test="${sessionScope.registrationIsRegionEmpty == true || sessionScope.registrationIsRegionValid == false}">
                 <div class="uk-width-medium-1-2 uk-animation-fade ">
                     <div class="uk-alert uk-width-1-1 " data-uk-alert>
                         <c:choose>
-                            <c:when test="${requestScope.isRegionEmpty == true}">
+                            <c:when test="${sessionScope.registrationIsRegionEmpty == true}">
                                 <p class="uk-text-danger">Please enter your region.</p>
                             </c:when>
-                            <c:when test="${requestScope.isRegionValid == false}">
+                            <c:when test="${sessionScope.registrationIsRegionValid == false}">
                                 <p class="uk-text-danger">Region is not valid.</p>
 
                                 <p class="uk-text-left-small">First letter of first word must be uppercase.</p>
@@ -208,26 +210,26 @@
                 <label id="accountName-label" class="control-label" for="accountName"></label>
                 <input aria-labelledby="accountName-label" id="accountName" name="accountName"
                        class="uk-width-1-1
-                       ${(requestScope.isAccountNameEmpty == false && requestScope.isAccountNameValid == true) && requestScope.isAccountNameExists == false ||
-                       (requestScope.isAccountNameEmpty == null && requestScope.isAccountNameValid == null && requestScope.isAccountNameExists == null) ? 'uk-push-1-2' : ''}
+                       ${(sessionScope.registrationIsAccountNameEmpty == false && sessionScope.registrationIsAccountNameValid == true) && (sessionScope.registrationIsAccountNameExregistrationIsts == false || sessionScope.registrationIsAccountNameExregistrationIsts == null) ||
+                       (sessionScope.registrationIsAccountNameEmpty == null && sessionScope.registrationIsAccountNameValid == null && sessionScope.registrationIsAccountNameExregistrationIsts == null) ? 'uk-push-1-2' : ''}
                        uk-form-large uk-form-width-large
-                       ${requestScope.isAccountNameEmpty == true || requestScope.isAccountNameValid == false || requestScope.isAccountNameExists == true ? 'uk-form-danger' : ''}
-                       ${requestScope.isAccountNameEmpty == false && requestScope.isAccountNameValid == true && requestScope.isAccountNameExists == false ? 'uk-form-success' : ''}"
-                       type="text" value="${requestScope.accountName}" autocomplete="off" placeholder="Email: ">
+                       ${sessionScope.registrationIsAccountNameEmpty == true || sessionScope.registrationIsAccountNameValid == false || sessionScope.registrationIsAccountNameExregistrationIsts == true ? 'uk-form-danger' : ''}
+                       ${sessionScope.registrationIsAccountNameEmpty == false && sessionScope.registrationIsAccountNameValid == true && (sessionScope.registrationIsAccountNameExregistrationIsts == false || sessionScope.registrationIsAccountNameExregistrationIsts == null) ? 'uk-form-success' : ''}"
+                       type="text" value="${sessionScope.registrationAccountName}" autocomplete="off" placeholder="Email: ">
             </div>
-            <c:if test="${requestScope.isAccountNameEmpty == true || requestScope.isAccountNameValid == false || requestScope.isAccountNameExists == true}">
+            <c:if test="${sessionScope.registrationIsAccountNameEmpty == true || sessionScope.registrationIsAccountNameValid == false || sessionScope.registrationIsAccountNameExregistrationIsts == true}">
                 <div class="uk-width-medium-1-2 uk-animation-fade ">
                     <div class="uk-alert uk-width-1-1 " data-uk-alert>
                         <c:choose>
-                            <c:when test="${requestScope.isAccountNameEmpty == true}">
+                            <c:when test="${sessionScope.registrationIsAccountNameEmpty == true}">
                                 <p class="uk-text-danger">Please enter Email.</p>
                             </c:when>
-                            <c:when test="${requestScope.isAccountNameExists == true}">
+                            <c:when test="${sessionScope.registrationIsAccountNameExregistrationIsts == true}">
                                 <p class="uk-text-danger">This email is already in use.
                                     <a href="<c:url value="/login.html"/>" class="uk-text-success">Want to log in?</a>
                                 </p>
                             </c:when>
-                            <c:when test="${requestScope.isAccountNameValid == false}">
+                            <c:when test="${sessionScope.registrationIsAccountNameValid == false}">
                                 <p class="uk-text-danger">Email is not valid
                                     <a href="#email-id" class="uk-align-right"
                                        data-uk-modal="{bgclose:false, center:true}">
@@ -246,24 +248,24 @@
                 <label id="password-label" class="control-label" for="password"></label>
                 <input aria-labelledby="password-label" id="password" name="password"
                        class="uk-width-1-1
-                       ${(requestScope.isPasswordEmpty == false && requestScope.isPasswordValid == true) ||
-                       (requestScope.isPasswordEmpty == null && requestScope.isPasswordValid == null) ? 'uk-push-1-2' : ''}
+                       ${(sessionScope.registrationIsPasswordEmpty == false && sessionScope.registrationIsPasswordValid == true) ||
+                       (sessionScope.registrationIsPasswordEmpty == null && sessionScope.registrationIsPasswordValid == null) ? 'uk-push-1-2' : ''}
                        uk-form-large uk-form-width-large
-                       ${requestScope.isPasswordEmpty == true || requestScope.isPasswordValid == false ? 'uk-form-danger' : ''}
-                       ${requestScope.isPasswordEmpty == false && requestScope.isPasswordValid == true ? 'uk-form-success' : ''} "
-                       type="password" autocomplete="off" value="${requestScope.password}" placeholder="Password: ">
+                       ${sessionScope.registrationIsPasswordEmpty == true || sessionScope.registrationIsPasswordValid == false ? 'uk-form-danger' : ''}
+                       ${sessionScope.registrationIsPasswordEmpty == false && sessionScope.registrationIsPasswordValid == true ? 'uk-form-success' : ''} "
+                       type="password" autocomplete="off" value="${sessionScope.registrationPassword}" placeholder="Password: ">
 
 
             </div>
-            <c:if test="${requestScope.isPasswordEmpty == true || requestScope.isPasswordValid == false}">
+            <c:if test="${sessionScope.registrationIsPasswordEmpty == true || sessionScope.registrationIsPasswordValid == false}">
                 <div class="uk-width-medium-1-2 uk-animation-fade ">
                     <div class="uk-alert uk-width-1-1 " data-uk-alert>
                         <c:choose>
-                            <c:when test="${requestScope.isPasswordEmpty == true}">
+                            <c:when test="${sessionScope.registrationIsPasswordEmpty == true}">
                                 <c:set scope="page" var="passwordSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger">Please enter Password.</p>
                             </c:when>
-                            <c:when test="${requestScope.isPasswordValid == false}">
+                            <c:when test="${sessionScope.registrationIsPasswordValid == false}">
                                 <c:set scope="page" var="passwordSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger">Password is not valid.</p>
 
@@ -279,10 +281,10 @@
         </div>
         <div class="uk-grid uk-align-center uk-margin-bottom-remove uk-margin-top">
             <c:choose>
-                <c:when test="${requestScope.isSchoolEmpty == false && requestScope.isSchoolValid == true}">
+                <c:when test="${sessionScope.registrationIsSchoolEmpty == false && sessionScope.registrationIsSchoolValid == true}">
                     <c:set scope="page" var="schoolSuccessClass" value="uk-form-success"/>
                 </c:when>
-                <c:when test="${requestScope.isSchoolEmpty == true || requestScope.isSchoolValid == false}">
+                <c:when test="${sessionScope.registrationIsSchoolEmpty == true || sessionScope.registrationIsSchoolValid == false}">
                     <c:set scope="page" var="schoolSuccessClass" value="uk-form-danger"/>
                 </c:when>
             </c:choose>
@@ -290,16 +292,16 @@
                 <label id="school-label" class="control-label" for="school"></label>
                 <input aria-labelledby="school-label" id="school" name="school"
                        class="uk-form-width-small uk-form-width-small uk-push-1-10 ${pageScope.schoolSuccessClass}"
-                       type="text" autocomplete="off" value="${requestScope.school}" placeholder="School №: ">
+                       type="text" autocomplete="off" value="${sessionScope.registrationSchool}" placeholder="School №: ">
             </div>
-            <c:if test="${requestScope.isSchoolEmpty == true || requestScope.isSchoolValid == false}">
+            <c:if test="${sessionScope.registrationIsSchoolEmpty == true || sessionScope.registrationIsSchoolValid == false}">
                 <div class="uk-width-medium-1-2 uk-animation-fade alertBlockSchoolNumber">
                     <div class="uk-alert uk-width-6-10 uk-pull-3-10 uk-align-center alertSchoolNumber" data-uk-alert>
                         <c:choose>
-                            <c:when test="${requestScope.isSchoolEmpty == true}">
+                            <c:when test="${sessionScope.registrationIsSchoolEmpty == true}">
                                 <p class="uk-text-danger">Please enter your school №.</p>
                             </c:when>
-                            <c:when test="${requestScope.isSchoolValid == false}">
+                            <c:when test="${sessionScope.registrationIsSchoolValid == false}">
                                 <p class="uk-text-danger">School № is not valid, you can use number 0-255.</p>
                             </c:when>
                         </c:choose>
@@ -312,7 +314,8 @@
         <div class="uk-grid uk-align-center uk-width-small-1-11 uk-margin-top">
             <div class="uk-width-1-1 uk-form-row registrationNormalizeButton">
                 <button class="uk-width-1-2 uk-button uk-button-primary uk-button-large" type="submit">Register</button>
-                <a href="<c:url value="/registration.html"/>" class="uk-width-1-5 uk-button-large uk-button uk-button-success">Cancel</a>
+                <a href="<c:url value="/index.html"/>"
+                   class="uk-width-1-5 uk-button-large uk-button uk-button-success">Cancel</a>
             </div>
         </div>
         <input type="hidden" name="command" value="verifyAccount">

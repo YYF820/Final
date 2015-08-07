@@ -2,6 +2,8 @@ package ua.nure.hanzha.SummaryTask4.servlet.check;
 
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
+import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
@@ -26,15 +28,6 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
 
     private static final String PARAM_TICKET_RESET_PASSWORD = "ticketResetPassword";
 
-    private static final String REQUEST_ATTRIBUTE_IS_TICKET_RESET_PASSWORD_EMPTY = "isTicketResetPasswordEmpty";
-    private static final String REQUEST_ATTRIBUTE_IS_BLOCKED_ACCOUNT = "isBlockedAccount";
-    private static final String REQUEST_ATTRIBUTE_IS_TICKET_RESET_PASSWORD_CORRECT = "isTicketResetPasswordCorrect";
-    private static final String REQUEST_ATTRIBUTE_IS_FROM_SERVLET = "isFromServlet";
-    private static final String REQUEST_ATTRIBUTE_TICKET_RESET_PASSWORD = "ticketResetPassword";
-
-    private static final String SESSION_ATTRIBUTE_HASH_TICKET_RESET_PASSWORD = "hashTicketRecoverPassword";
-    private static final String SESSION_ATTRIBUTE_COUNTER_BAD_TICKET_INSERTS = "counterBadTicketInserts";
-    private static final String SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD = "entrantForVerifyAccountResetPassword";
 
     private static final int STATUS_BLOCKED_ID = 1;
 
@@ -48,67 +41,61 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        Long counterBadTicketInserts = (Long) session.getAttribute(SESSION_ATTRIBUTE_COUNTER_BAD_TICKET_INSERTS);
+        Long counterBadTicketInserts = (Long) session.getAttribute(SessionAttribute.CHECK_TICKET_COUNTER_BAD_TICKET_INSERTS);
+        session.setAttribute(SessionAttribute.CHECK_TICKET_COUNTER_BAD_TICKET_INSERTS, ++counterBadTicketInserts);
         if (counterBadTicketInserts == 3) {
             String ticketResetPassword = request.getParameter(PARAM_TICKET_RESET_PASSWORD);
-            request.setAttribute(REQUEST_ATTRIBUTE_TICKET_RESET_PASSWORD, ticketResetPassword);
-            boolean checkEmpty = checkEmpty(request, ticketResetPassword);
+            boolean checkEmpty = checkEmpty(session, ticketResetPassword);
             if (checkEmpty) {
-                Entrant entrantForBlock = (Entrant) session.getAttribute(SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
+                Entrant entrantForBlock = (Entrant) session.getAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
                 int entrantId = entrantForBlock.getId();
                 try {
+                    System.out.println(1);
                     entrantService.updateEntrantStatus(STATUS_BLOCKED_ID, entrantId);
-                    request.setAttribute(REQUEST_ATTRIBUTE_IS_BLOCKED_ACCOUNT, true);
                     session.invalidate();
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);
-                    requestDispatcher.forward(request, response);
+                    request.getSession(true).setAttribute(SessionAttribute.CHECK_TICKET_IS_BLOCKED_ACCOUNT, true);
+                    response.sendRedirect(Pages.RESET_PASSWORD_BLOCK_ACCOUNT);
                 } catch (DaoSystemException e) {
                     e.printStackTrace();
                 }
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);
-                requestDispatcher.forward(request, response);
             } else {
-                Entrant entrantForBlock = (Entrant) session.getAttribute(SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
+                Entrant entrantForBlock = (Entrant) session.getAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
                 int entrantId = entrantForBlock.getId();
-                String hashTicketResetPassword = (String) session.getAttribute(SESSION_ATTRIBUTE_HASH_TICKET_RESET_PASSWORD);
+                String hashTicketResetPassword = (String) session.getAttribute(SessionAttribute.CHECK_TICKET_HASH_TICKET_RESET_PASSWORD);
                 if (!PasswordHash.validatePassword(ticketResetPassword, hashTicketResetPassword)) {
                     try {
+                        System.out.println(2);
                         entrantService.updateEntrantStatus(STATUS_BLOCKED_ID, entrantId);
-                        request.setAttribute(REQUEST_ATTRIBUTE_IS_BLOCKED_ACCOUNT, true);
                         session.invalidate();
-                        RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);
-                        requestDispatcher.forward(request, response);
+                        request.getSession(true).setAttribute(SessionAttribute.CHECK_TICKET_IS_BLOCKED_ACCOUNT, true);
+                        response.sendRedirect(Pages.RESET_PASSWORD_BLOCK_ACCOUNT);
                     } catch (DaoSystemException e) {
                         //TODO: no entrant by id, add 500 page maybe your account was deleted.
                         e.printStackTrace();
                     }
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);
-                    requestDispatcher.forward(request, response);
                 } else {
-                    request.setAttribute(REQUEST_ATTRIBUTE_IS_TICKET_RESET_PASSWORD_CORRECT, true);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_HTML);
-                    requestDispatcher.forward(request, response);
+                    System.out.println(3);
+                    session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, true);
+                    response.sendRedirect(Pages.RESET_PASSWORD_HTML);
                 }
             }
         } else {
             String ticketResetPassword = request.getParameter(PARAM_TICKET_RESET_PASSWORD);
-            request.setAttribute(REQUEST_ATTRIBUTE_TICKET_RESET_PASSWORD, ticketResetPassword);
-            boolean checkEmpty = checkEmpty(request, ticketResetPassword);
+            session.setAttribute(SessionAttribute.CHECK_TICKET_TICKET_RESET_PASSWORD, ticketResetPassword);
+            boolean checkEmpty = checkEmpty(session, ticketResetPassword);
             if (checkEmpty) {
-                request.setAttribute(REQUEST_ATTRIBUTE_IS_FROM_SERVLET, true);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);
-                requestDispatcher.forward(request, response);
+                System.out.println(4);
+                response.sendRedirect(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML + "?" + PARAM_TICKET_RESET_PASSWORD + "=" + ticketResetPassword);
             } else {
-                String hashTicketResetPassword = (String) session.getAttribute(SESSION_ATTRIBUTE_HASH_TICKET_RESET_PASSWORD);
+                String hashTicketResetPassword = (String) session.getAttribute(SessionAttribute.CHECK_TICKET_HASH_TICKET_RESET_PASSWORD);
                 if (!PasswordHash.validatePassword(ticketResetPassword, hashTicketResetPassword)) {
-                    request.setAttribute(REQUEST_ATTRIBUTE_IS_FROM_SERVLET, true);
-                    request.setAttribute(REQUEST_ATTRIBUTE_IS_TICKET_RESET_PASSWORD_CORRECT, false);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);
-                    requestDispatcher.forward(request, response);
+                    System.out.println(5);
+                    session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, false);
+                    response.sendRedirect(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML + "?" + PARAM_TICKET_RESET_PASSWORD + "=" + ticketResetPassword);
                 } else {
-                    request.setAttribute(REQUEST_ATTRIBUTE_IS_TICKET_RESET_PASSWORD_CORRECT, true);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_HTML);
-                    requestDispatcher.forward(request, response);
+                    System.out.println(6);
+                    session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, true);
+                    response.sendRedirect(Pages.RESET_PASSWORD_HTML);
                 }
             }
         }
@@ -119,10 +106,12 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
         response.sendRedirect(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML);
     }
 
-    private boolean checkEmpty(HttpServletRequest request, String ticketResetPassword) {
+    private boolean checkEmpty(HttpSession session, String ticketResetPassword) {
         if (ticketResetPassword.equals(EMPTY_PARAM)) {
-            request.setAttribute(REQUEST_ATTRIBUTE_IS_TICKET_RESET_PASSWORD_EMPTY, true);
+            session.setAttribute(SessionAttribute.CHECK_TICKET_IS_EMPTY, true);
             return true;
+        } else {
+            session.setAttribute(SessionAttribute.CHECK_TICKET_IS_EMPTY, false);
         }
         return false;
     }

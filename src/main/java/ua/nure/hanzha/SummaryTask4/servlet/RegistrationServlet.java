@@ -1,10 +1,7 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
 import ua.nure.hanzha.SummaryTask4.bean.MailInfoVerifyAccountBean;
-import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.Pages;
-import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.Validations;
+import ua.nure.hanzha.SummaryTask4.constants.*;
 import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.Entity;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
@@ -66,6 +63,7 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
         String firstName = request.getParameter(PARAM_FIRST_NAME);
         String lastName = request.getParameter(PARAM_LAST_NAME);
         String patronymic = request.getParameter(PARAM_PATRONYMIC);
@@ -78,12 +76,11 @@ public class RegistrationServlet extends HttpServlet {
         Map<String, Boolean> validationsRegisterForm = Validation.validateRegistrationForm(
                 firstName, lastName, patronymic, accountName, city, region, password, school
         );
-        int counterOfEmptyFields = checkFormEmptyFields(request, firstName, lastName, patronymic, accountName, city, region, password, school);
-        int counterOfBadValidations = checkFormBadValidations(request, validationsRegisterForm);
+        int counterOfEmptyFields = checkFormEmptyFields(session, firstName, lastName, patronymic, accountName, city, region, password, school);
+        int counterOfBadValidations = checkFormBadValidations(session, validationsRegisterForm);
         if (counterOfBadValidations != 0 || counterOfEmptyFields != 0) {
-            setUpAttrForFields(request, firstName, lastName, patronymic, accountName, city, region, password, school);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.REGISTRATION_HTML);
-            requestDispatcher.forward(request, response);
+            setUpAttrForFields(session, firstName, lastName, patronymic, accountName, city, region, password, school);
+            response.sendRedirect(Pages.REGISTRATION_HTML);
         } else {
             try {
                 boolean isUserExists = userService.userExistsByAccountName(accountName);
@@ -92,17 +89,15 @@ public class RegistrationServlet extends HttpServlet {
                     User userInfo = (User) infoForRegistration.get(MAP_KEY_USER);
                     Entrant entrantInfo = (Entrant) infoForRegistration.get(MAP_KEY_ENTRANT);
                     registrationService.registerNewEntrant(userInfo, entrantInfo);
-                    HttpSession session = request.getSession(true);
                     prepareInfoVerifyEmail(request, firstName, lastName, patronymic, accountName);
                     session.setAttribute(SESSION_ATTRIBUTE_COMMAND, COMMAND_VERIFY_ACCOUNT);
                     session.setMaxInactiveInterval(2 * 60);
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.MAIL_SENDER_SERVLET);
                     requestDispatcher.forward(request, response);
                 } else {
-                    setUpAttrForFields(request, firstName, lastName, patronymic, accountName, city, region, password, school);
-                    request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_EXISTS, true);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.REGISTRATION_HTML);
-                    requestDispatcher.forward(request, response);
+                    setUpAttrForFields(session, firstName, lastName, patronymic, accountName, city, region, password, school);
+                    request.setAttribute(SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_EXISTS, true);
+                    response.sendRedirect(Pages.REGISTRATION_HTML);
                 }
             } catch (DaoSystemException e) {
                 //TODO: only SQLException can be here, send to 500 error page.
@@ -115,135 +110,135 @@ public class RegistrationServlet extends HttpServlet {
         response.sendRedirect(Pages.REGISTRATION_HTML);
     }
 
-    private int checkFormBadValidations(HttpServletRequest request, Map<String, Boolean> validationsRegisterForm) {
+    private int checkFormBadValidations(HttpSession session, Map<String, Boolean> validationsRegisterForm) {
         int counterOfBadValidations = 0;
         if (!validationsRegisterForm.get(Validations.MAP_KEY_IS_FIRST_NAME_VALID)) {
             counterOfBadValidations++;
-            request.setAttribute(RequestAttribute.IS_FIRST_NAME_VALID, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_FIRST_NAME_VALID, false);
         } else {
-            request.setAttribute(RequestAttribute.IS_FIRST_NAME_VALID, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_FIRST_NAME_VALID, true);
         }
 
         if (!validationsRegisterForm.get(Validations.MAP_KEY_IS_LAST_NAME_VALID)) {
             counterOfBadValidations++;
-            request.setAttribute(RequestAttribute.IS_LAST_NAME_VALID, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_LAST_NAME_VALID, false);
         } else {
-            request.setAttribute(RequestAttribute.IS_LAST_NAME_VALID, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_LAST_NAME_VALID, true);
         }
 
         if (!validationsRegisterForm.get(Validations.MAP_KEY_IS_PATRONYMIC_VALID)) {
             counterOfBadValidations++;
-            request.setAttribute(RequestAttribute.IS_PATRONYMIC_VALID, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_PATRONYMIC_VALID, false);
         } else {
-            request.setAttribute(RequestAttribute.IS_PATRONYMIC_VALID, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_PATRONYMIC_VALID, true);
         }
 
         if (!validationsRegisterForm.get(Validations.MAP_KEY_IS_ACCOUNT_NAME_VALID)) {
             counterOfBadValidations++;
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_VALID, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_VALID, false);
         } else {
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_VALID, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_VALID, true);
         }
 
         if (!validationsRegisterForm.get(Validations.MAP_KEY_IS_CITY_VALID)) {
             counterOfBadValidations++;
-            request.setAttribute(RequestAttribute.IS_CITY_VALID, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_CITY_VALID, false);
         } else {
-            request.setAttribute(RequestAttribute.IS_CITY_VALID, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_CITY_VALID, true);
         }
 
         if (!validationsRegisterForm.get(Validations.MAP_KEY_IS_REGION_VALID)) {
             counterOfBadValidations++;
-            request.setAttribute(RequestAttribute.IS_REGION_VALID, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_REGION_VALID, false);
         } else {
-            request.setAttribute(RequestAttribute.IS_REGION_VALID, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_REGION_VALID, true);
         }
 
         if (!validationsRegisterForm.get(Validations.MAP_KEY_IS_PASSWORD_VALID)) {
             counterOfBadValidations++;
-            request.setAttribute(RequestAttribute.IS_PASSWORD_VALID, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_PASSWORD_VALID, false);
         } else {
-            request.setAttribute(RequestAttribute.IS_PASSWORD_VALID, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_PASSWORD_VALID, true);
         }
 
         if (!validationsRegisterForm.get(Validations.MAP_KEY_IS_SCHOOL_VALID)) {
             counterOfBadValidations++;
-            request.setAttribute(RequestAttribute.IS_SCHOOL_VALID, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_SCHOOL_VALID, false);
         } else {
-            request.setAttribute(RequestAttribute.IS_SCHOOL_VALID, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_SCHOOL_VALID, true);
         }
         return counterOfBadValidations;
     }
 
-    private int checkFormEmptyFields(HttpServletRequest request, String... params) {
+    private int checkFormEmptyFields(HttpSession session, String... params) {
         int counterOfEmptyFields = 0;
         if (params[0].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_FIRST_NAME_EMPTY, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_FIRST_NAME_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_FIRST_NAME_EMPTY, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_FIRST_NAME_EMPTY, false);
         }
 
         if (params[1].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_LAST_NAME_EMPTY, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_LAST_NAME_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_LAST_NAME_EMPTY, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_LAST_NAME_EMPTY, false);
         }
 
         if (params[2].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_PATRONYMIC_EMPTY, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_PATRONYMIC_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_PATRONYMIC_EMPTY, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_PATRONYMIC_EMPTY, false);
         }
 
         if (params[3].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_EMPTY, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_EMPTY, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_EMPTY, false);
         }
 
         if (params[4].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_CITY_EMPTY, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_CITY_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_CITY_EMPTY, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_CITY_EMPTY, false);
         }
 
         if (params[5].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_REGION_EMPTY, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_REGION_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_REGION_EMPTY, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_REGION_EMPTY, false);
         }
 
         if (params[6].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_PASSWORD_EMPTY, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_PASSWORD_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_PASSWORD_EMPTY, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_PASSWORD_EMPTY, false);
         }
 
         if (params[7].equals(EMPTY_PARAM)) {
             counterOfEmptyFields++;
-            request.setAttribute(RequestAttribute.IS_SCHOOL_EMPTY, true);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_SCHOOL_EMPTY, true);
         } else {
-            request.setAttribute(RequestAttribute.IS_SCHOOL_EMPTY, false);
+            session.setAttribute(SessionAttribute.REGISTRATION_IS_SCHOOL_EMPTY, false);
         }
         return counterOfEmptyFields;
     }
 
-    private void setUpAttrForFields(HttpServletRequest request, String... attributes) {
-        request.setAttribute(RequestAttribute.FIRST_NAME, attributes[0]);
-        request.setAttribute(RequestAttribute.LAST_NAME, attributes[1]);
-        request.setAttribute(RequestAttribute.PATRONYMIC, attributes[2]);
-        request.setAttribute(RequestAttribute.ACCOUNT_NAME, attributes[3]);
-        request.setAttribute(RequestAttribute.CITY, attributes[4]);
-        request.setAttribute(RequestAttribute.REGION, attributes[5]);
-        request.setAttribute(RequestAttribute.PASSWORD, attributes[6]);
-        request.setAttribute(RequestAttribute.SCHOOL, attributes[7]);
+    private void setUpAttrForFields(HttpSession session, String... attributes) {
+        session.setAttribute(SessionAttribute.REGISTRATION_FIRST_NAME, attributes[0]);
+        session.setAttribute(SessionAttribute.REGISTRATION_LAST_NAME, attributes[1]);
+        session.setAttribute(SessionAttribute.REGISTRATION_PATRONYMIC, attributes[2]);
+        session.setAttribute(SessionAttribute.REGISTRATION_ACCOUNT_NAME, attributes[3]);
+        session.setAttribute(SessionAttribute.REGISTRATION_CITY, attributes[4]);
+        session.setAttribute(SessionAttribute.REGISTRATION_REGION, attributes[5]);
+        session.setAttribute(SessionAttribute.REGISTRATION_PASSWORD, attributes[6]);
+        session.setAttribute(SessionAttribute.REGISTRATION_SCHOOL, attributes[7]);
     }
 
     private Map<String, Entity> prepareEntities(String firstName, String lastName,

@@ -1,10 +1,7 @@
 package ua.nure.hanzha.SummaryTask4.servlet.resetPassword;
 
-import ua.nure.hanzha.SummaryTask4.bean.MailInfoUpdatedPasswordBean;
-import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
-import ua.nure.hanzha.SummaryTask4.constants.Pages;
-import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
+import ua.nure.hanzha.SummaryTask4.bean.MailInfoUpdatedPasswordOrBlockedBean;
+import ua.nure.hanzha.SummaryTask4.constants.*;
 import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
@@ -27,14 +24,8 @@ public class ResetPasswordServlet extends HttpServlet {
 
     private static final String EMPTY_PARAM = "";
     private static final String PARAM_PASSWORD = "password";
-    private static final String CONFIRM_PASSWORD = "confirmPassword";
+    private static final String PARAM_CONFIRM_PASSWORD = "confirmPassword";
 
-    private static final String REQUEST_ATTRIBUTE_IS_CONFIRM_PASSWORD_EMPTY = "isConfirmPasswordEmpty";
-    private static final String REQUEST_ATTRIBUTE_IS_SAME_PASSWORDS = "isPasswordsSame";
-    private static final String REQUEST_ATTRIBUTE_IS_FROM_RESET_PASSWORD_SERVLET = "isFromResetPasswordServlet";
-    private static final String REQUEST_ATTRIBUTE_IS_UPDATED_PASSWORD = "isUpdatedPassword";
-
-    private static final String SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD = "userForVerifyAccountResetPassword";
     private static final String SESSION_ATTRIBUTE_COMMAND = "command";
 
     private static final String COMMAND_UPDATED_PASSWORD = "updatedPassword";
@@ -48,18 +39,16 @@ public class ResetPasswordServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
         String password = request.getParameter(PARAM_PASSWORD);
-        String confirmPassword = request.getParameter(CONFIRM_PASSWORD);
-        request.setAttribute(REQUEST_ATTRIBUTE_IS_FROM_RESET_PASSWORD_SERVLET, true);
-        boolean isEmpty = checkEmpty(request, password, confirmPassword);
-        boolean isEquals = checkEquals(request, password, confirmPassword);
+        String confirmPassword = request.getParameter(PARAM_CONFIRM_PASSWORD);
+        boolean isEmpty = checkEmpty(session, password, confirmPassword);
+        boolean isEquals = checkEquals(session, password, confirmPassword);
         boolean isValidPasswords = checkValidationPasswords(request, password, confirmPassword);
         if (isEmpty || !isEquals || !isValidPasswords) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESET_PASSWORD_HTML);
-            requestDispatcher.forward(request, response);
+            response.sendRedirect(Pages.RESET_PASSWORD_HTML);
         } else {
-            HttpSession session = request.getSession(false);
-            User userForUpdatePassword = (User) session.getAttribute(SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
+            User userForUpdatePassword = (User) session.getAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
             int userId = userForUpdatePassword.getId();
             String hashPassword = PasswordHash.createHash(password);
             try {
@@ -89,24 +78,29 @@ public class ResetPasswordServlet extends HttpServlet {
         response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML);
     }
 
-    private boolean checkEmpty(HttpServletRequest request, String password, String confirmPassword) {
+    private boolean checkEmpty(HttpSession session, String password, String confirmPassword) {
         boolean isEmpty = false;
         if (password.equals(EMPTY_PARAM)) {
             isEmpty = true;
-            request.setAttribute(RequestAttribute.IS_PASSWORD_EMPTY, true);
+            session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_PASSWORD_EMPTY, true);
+        } else {
+            session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_PASSWORD_EMPTY, false);
         }
         if (confirmPassword.equals(EMPTY_PARAM)) {
             isEmpty = true;
-            request.setAttribute(REQUEST_ATTRIBUTE_IS_CONFIRM_PASSWORD_EMPTY, true);
+            session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_CONFIRM_PASSWORD_EMPTY, true);
+        } else {
+            session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_CONFIRM_PASSWORD_EMPTY, false);
         }
         return isEmpty;
     }
 
-    private boolean checkEquals(HttpServletRequest request, String password, String confirmPassword) {
+    private boolean checkEquals(HttpSession session, String password, String confirmPassword) {
         if (!password.equals(confirmPassword)) {
-            request.setAttribute(REQUEST_ATTRIBUTE_IS_SAME_PASSWORDS, false);
+            session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_SAME_PASSWORDS, false);
             return false;
         }
+        session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_SAME_PASSWORDS, true);
         return true;
     }
 
@@ -114,22 +108,23 @@ public class ResetPasswordServlet extends HttpServlet {
         boolean isValidPassword = Validation.validatePassword(password);
         boolean isValidConfirmPassword = Validation.validatePassword(confirmPassword);
         if (!isValidPassword || !isValidConfirmPassword) {
-            request.setAttribute(RequestAttribute.IS_PASSWORD_VALID, false);
+            request.setAttribute(SessionAttribute.RESET_PASSWORD_IS_PASSWORD_VALID, false);
             return false;
         }
+        request.setAttribute(SessionAttribute.RESET_PASSWORD_IS_PASSWORD_VALID, true);
         return true;
     }
 
     private void prepareInfoUpdatedPasswordEmail(HttpServletRequest request, String firstName, String lastName,
                                                  String patronymic, String accountName) {
 
-        MailInfoUpdatedPasswordBean mailInfoUpdatedPasswordBean = new MailInfoUpdatedPasswordBean();
+        MailInfoUpdatedPasswordOrBlockedBean mailInfoUpdatedPasswordOrBlockedBean = new MailInfoUpdatedPasswordOrBlockedBean();
 
-        mailInfoUpdatedPasswordBean.setFirstName(firstName);
-        mailInfoUpdatedPasswordBean.setLastName(lastName);
-        mailInfoUpdatedPasswordBean.setPatronymic(patronymic);
-        mailInfoUpdatedPasswordBean.setAccountName(accountName);
+        mailInfoUpdatedPasswordOrBlockedBean.setFirstName(firstName);
+        mailInfoUpdatedPasswordOrBlockedBean.setLastName(lastName);
+        mailInfoUpdatedPasswordOrBlockedBean.setPatronymic(patronymic);
+        mailInfoUpdatedPasswordOrBlockedBean.setAccountName(accountName);
 
-        request.setAttribute(RequestAttribute.MAIL_INFO_UPDATED_PASSWORD_BEAN, mailInfoUpdatedPasswordBean);
+        request.setAttribute(RequestAttribute.MAIL_INFO_UPDATED_PASSWORD_OR_BLOCKED_BEAN, mailInfoUpdatedPasswordOrBlockedBean);
     }
 }

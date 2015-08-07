@@ -43,6 +43,7 @@
 
     <action path="/mail.send">
         <role name="guest"/>
+        <rolen name="admin"/>
     </action>
 
     <action path="/verifyAccountMessageSent.html">
@@ -58,6 +59,10 @@
     </action>
 
     <action path="/resetPasswordMessageSent.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/blockAccount.html">
         <role name="guest"/>
     </action>
 
@@ -96,6 +101,14 @@
     </action>
 
     <action path="/admin/entrants.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/changeStatusEntrant.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/mail.send">
         <role name="admin"/>
     </action>
 

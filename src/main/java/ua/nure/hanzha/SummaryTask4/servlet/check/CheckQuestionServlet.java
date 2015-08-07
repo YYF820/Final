@@ -4,6 +4,7 @@ import ua.nure.hanzha.SummaryTask4.bean.MailInfoResetPasswordBean;
 import ua.nure.hanzha.SummaryTask4.bean.MailInfoVerifyAccountBean;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.entity.User;
@@ -38,7 +39,6 @@ public class CheckQuestionServlet extends HttpServlet {
     private static final String SESSION_ATTRIBUTE_HASH_TICKET_RESET_PASSWORD = "hashTicketRecoverPassword";
     private static final String SESSION_ATTRIBUTE_COUNTER_BAD_TICKET_INSERTS = "counterBadTicketInserts";
 
-    private static final String REQUEST_ATTRIBUTE_IS_SCHOOL_CORRECT = "isSchoolCorrect";
 
     private static final String COMMAND_VERIFY_ACCOUNT = "verifyAccount";
     private static final String COMMAND_RESET_PASSWORD = "resetPassword";
@@ -49,27 +49,26 @@ public class CheckQuestionServlet extends HttpServlet {
     private static final String ACCOUNT_NAME = "accountName";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
         String schoolNumberFromQuestion = request.getParameter(PARAM_SCHOOL_NUMBER);
-        request.setAttribute(RequestAttribute.SCHOOL, schoolNumberFromQuestion);
-        boolean isSchoolNumberFromQuestionValid = checkValidationSchoolNumber(request, schoolNumberFromQuestion);
-        boolean isSchoolNumberEmpty = checkEmptyFields(request, schoolNumberFromQuestion);
+        session.setAttribute(SessionAttribute.CHECK_QUESTION_SCHOOL, schoolNumberFromQuestion);
+        boolean isSchoolNumberFromQuestionValid = checkValidationSchoolNumber(session, schoolNumberFromQuestion);
+        boolean isSchoolNumberEmpty = checkEmptyFields(session, schoolNumberFromQuestion);
         if (!isSchoolNumberFromQuestionValid || isSchoolNumberEmpty) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.CHECK_QUESTION_HTML);
-            requestDispatcher.forward(request, response);
+            response.sendRedirect(Pages.CHECK_QUESTION_HTML);
         } else {
-            HttpSession session = request.getSession(false);
-            Entrant entrant = (Entrant) session.getAttribute(SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
+            Entrant entrant = (Entrant) session.getAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
             int schoolNumberFromEntrant = entrant.getSchool();
             if (!(Integer.parseInt(schoolNumberFromQuestion) == schoolNumberFromEntrant)) {
-                request.setAttribute(REQUEST_ATTRIBUTE_IS_SCHOOL_CORRECT, false);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.CHECK_QUESTION_HTML);
-                requestDispatcher.forward(request, response);
+                session.setAttribute(SessionAttribute.CHECK_QUESTION_IS_SCHOOL_CORRECT, false);
+                response.sendRedirect(Pages.CHECK_QUESTION_HTML);
             } else {
                 String command = (String) session.getAttribute(SESSION_ATTRIBUTE_COMMAND);
+                System.out.println(command);
                 try {
                     switch (command) {
                         case COMMAND_VERIFY_ACCOUNT:
-                            User user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
+                            User user = (User) session.getAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
                             Map<String, String> extractedUserInfo = extractInfo(user);
                             prepareInfoVerifyEmail(
                                     request,
@@ -82,13 +81,13 @@ public class CheckQuestionServlet extends HttpServlet {
                             requestDispatcher.forward(request, response);
                             break;
                         case COMMAND_RESET_PASSWORD:
-                            session.setMaxInactiveInterval(60);
+                            session.setMaxInactiveInterval(10 * 60);
                             Long counterBadTicketInserts = 0L;
                             String ticketResetPassword = PasswordHash.randomPassword(6).toUpperCase();
                             String hashTicketResetPassword = PasswordHash.createHash(ticketResetPassword);
-                            session.setAttribute(SESSION_ATTRIBUTE_HASH_TICKET_RESET_PASSWORD, hashTicketResetPassword);
-                            session.setAttribute(SESSION_ATTRIBUTE_COUNTER_BAD_TICKET_INSERTS, counterBadTicketInserts);
-                            user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
+                            session.setAttribute(SessionAttribute.CHECK_TICKET_HASH_TICKET_RESET_PASSWORD, hashTicketResetPassword);
+                            session.setAttribute(SessionAttribute.CHECK_TICKET_COUNTER_BAD_TICKET_INSERTS, counterBadTicketInserts);
+                            user = (User) session.getAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
                             extractedUserInfo = extractInfo(user);
                             prepareInfoRecoverPassword(
                                     request,
@@ -116,19 +115,23 @@ public class CheckQuestionServlet extends HttpServlet {
         response.sendRedirect(Pages.CHECK_QUESTION_HTML);
     }
 
-    private boolean checkValidationSchoolNumber(HttpServletRequest request, String schoolNumber) {
+    private boolean checkValidationSchoolNumber(HttpSession session, String schoolNumber) {
         boolean isAccountNameValid = Validation.validateSchool(schoolNumber);
         if (!isAccountNameValid) {
-            request.setAttribute(RequestAttribute.IS_SCHOOL_VALID, false);
+            session.setAttribute(SessionAttribute.CHECK_QUESTION_IS_SCHOOL_VALID, false);
+        } else {
+            session.setAttribute(SessionAttribute.CHECK_QUESTION_IS_SCHOOL_VALID, true);
         }
         return isAccountNameValid;
     }
 
-    private boolean checkEmptyFields(HttpServletRequest request, String schoolNumber) {
+    private boolean checkEmptyFields(HttpSession session, String schoolNumber) {
         boolean isSchoolNumberEmpty = false;
         if (schoolNumber.equals(EMPTY_PARAM)) {
             isSchoolNumberEmpty = true;
-            request.setAttribute(RequestAttribute.IS_SCHOOL_EMPTY, true);
+            session.setAttribute(SessionAttribute.CHECK_QUESTION_IS_SCHOOL_EMPTY, true);
+        } else {
+            session.setAttribute(SessionAttribute.CHECK_QUESTION_IS_SCHOOL_EMPTY, false);
         }
         return isSchoolNumberEmpty;
     }

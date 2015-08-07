@@ -34,6 +34,16 @@ public class EntrantServiceImpl implements EntrantService {
     }
 
     @Override
+    public Entrant getById(final int entrantId) throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<Entrant>() {
+            @Override
+            public Entrant call(Connection connection) throws SQLException, CrudException {
+                return entrantDao.selectById(entrantId, connection);
+            }
+        });
+    }
+
+    @Override
     public Entrant getByUserId(final int userId) throws DaoSystemException {
         return txManager.doInTransaction(new SqlCallable<Entrant>() {
             @Override

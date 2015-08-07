@@ -9,14 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%@include file="../jspf/header/header.jspf"%>
+    <%@include file="../jspf/header/header.jspf" %>
     <title></title>
 </head>
 <body>
 <%@include file="../jspf/topPanel.jspf" %>
 <div class="uk-container uk-container-center uk-width-8-10 uk-text-center uk-margin-top ">
     <div class="uk-grid uk-align-center uk-width-small-1-2 uk-margin-large-top">
-        <c:if test="${requestScope.isConfirmedAccount == true}">
+        <c:if test="${sessionScope.isVerifiedAccount == true}">
             <p class="uk-text-success uk-text-large uk-text-middle"><i
                     class="uk-icon-check uk-icon-large uk-text-success"></i>&nbspThank you! Your email verification is
                 complete!</p>
@@ -37,12 +37,13 @@
                 </ul>
                 <p class="uk-text-success">Click the button below to return to Account Management, where you can try new
                     things.</p>
-                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="<c:url value="/login.html"/>">Continue to
+                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center"
+                   href="<c:url value="/login.html"/>">Continue to
                     Account
                     Management</a>
             </div>
         </c:if>
-        <c:if test="${requestScope.isConfirmedAccount == false}">
+        <c:if test="${sessionScope.isVerifiedAccount == false || sessionScope.isVerifiedAccount == null}">
 
             <p class="uk-text-danger uk-text-large uk-text-middle"><i
                     class="uk-icon-exclamation-triangle uk-icon-large uk-text-danger"></i>&nbspAccount Verification
@@ -61,7 +62,8 @@
                 <p class="uk-text-danger">Click the button below to return to Account Management, where you can request
                     another copy of the
                     verification e-mail.</p>
-                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="<c:url value="/login.html"/>">Continue to
+                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center"
+                   href="<c:url value="/login.html"/>">Continue to
                     Account Management</a>
             </div>
         </c:if>

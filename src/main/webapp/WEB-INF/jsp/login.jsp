@@ -30,7 +30,7 @@
                        class="uk-width-1-1 uk-form-large uk-form-width-large
                        ${badEmailClass}"
                        type="text" spellcheck="false" placeholder="E-mail"
-                       value="${requestScope.accountName}">
+                       value="${sessionScope.loginAccountName}">
             </div>
 
             <label id="password-label" class="control-label" for="accountName"></label>
@@ -40,7 +40,7 @@
                        class="uk-width-1-1 uk-form-large uk-form-width-large
                        ${badPasswordClass}"
                        type="password" autocomplete="off" placeholder="Password"
-                       value="${requestScope.isAccountNameEmpty == true && requestScope.isPasswordEmpty == false ? requestScope.password : ""}">
+                       value="${sessionScope.loginIsAccountNameEmpty == true && sessionScope.loginIsPasswordEmpty == false ? sessionScope.loginPassword : ""}">
             </div>
 
             <div class="uk-form-row">

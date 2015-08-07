@@ -1,9 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.servlet.resendEmail;
 
-import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
-import ua.nure.hanzha.SummaryTask4.constants.Pages;
-import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.*;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.enums.EntrantStatus;
@@ -37,12 +34,7 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
 
     private static final String PARAM_ACCOUNT_NAME = "accountName";
     private static final String PARAM_COMMAND = "command";
-    private static final String REQUEST_ATTRIBUTE_IS_USER_EXISTS_BY_ACCOUNT_NAME = "isUserExistsByAccountName";
-    private static final String REQUEST_ATTRIBUTE_IS_ADMIN_TRYING_VERIFY_ACCOUNT = "isAdminTryingVerifyAccount";
-    private static final String REQUEST_ATTRIBUTE_IS_ACTIVE_ACCOUNT = "isActiveAccount";
-    private static final String REQUEST_ATTRIBUTE_IS_BLOCKED_ACCOUNT = "isBlockedAccount";
-    private static final String SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD = "entrantForVerifyAccountResetPassword";
-    private static final String SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD = "userForVerifyAccountResetPassword";
+
     private static final String SESSION_ATTRIBUTE_COMMAND = "command";
 
     private static final String COMMAND_VERIFY_ACCOUNT = "verifyAccount";
@@ -59,22 +51,22 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
         String accountName = request.getParameter(PARAM_ACCOUNT_NAME);
+        System.out.println(accountName);
         String command = request.getParameter(PARAM_COMMAND);
-        request.setAttribute(RequestAttribute.ACCOUNT_NAME, accountName);
-        boolean isAccountNameValid = checkValidationAccountName(request, accountName);
-        boolean isAccountNameEmpty = checkEmptyFields(request, accountName);
+        session.setAttribute(SessionAttribute.RESEND_ACCOUNT_NAME, accountName);
+        boolean isAccountNameValid = checkValidationAccountName(session, accountName);
+        boolean isAccountNameEmpty = checkEmptyFields(session, accountName);
         if (isAccountNameEmpty || !isAccountNameValid) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML);
-            requestDispatcher.forward(request, response);
+            response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
         } else {
             try {
                 User userForResendVerifyMessage = userService.getByEmail(accountName);
                 String userRole = Role.getRole(userForResendVerifyMessage).getName();
                 if (userRole.equals(ROLE_ADMIN) && !command.equals(COMMAND_RESET_PASSWORD)) {
-                    request.setAttribute(REQUEST_ATTRIBUTE_IS_ADMIN_TRYING_VERIFY_ACCOUNT, true);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML);
-                    requestDispatcher.forward(request, response);
+                    session.setAttribute(SessionAttribute.RESEND_IS_ADMIN_TRYING_VERIFY_ACCOUNT, true);
+                    response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                 } else {
                     int userId = userForResendVerifyMessage.getId();
                     Entrant entrantForResendVerifyMessage = entrantService.getByUserId(userId);
@@ -82,46 +74,38 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
                     if (command.equals(COMMAND_VERIFY_ACCOUNT)) {
                         switch (entrantStatus) {
                             case STATUS_ACTIVE:
-                                request.setAttribute(REQUEST_ATTRIBUTE_IS_ACTIVE_ACCOUNT, true);
-                                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML);
-                                requestDispatcher.forward(request, response);
+                                session.setAttribute(SessionAttribute.RESEND_IS_ACTIVE_ACCOUNT, true);
+                                response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                                 break;
                             case STATUS_BLOCKED:
-                                request.setAttribute(REQUEST_ATTRIBUTE_IS_BLOCKED_ACCOUNT, true);
-                                requestDispatcher = request.getRequestDispatcher(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML);
-                                requestDispatcher.forward(request, response);
+                                session.setAttribute(SessionAttribute.RESEND_IS_BLOCKED_ACCOUNT, true);
+                                response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                                 break;
                             case STATUS_NOT_VERIFIED:
-                                HttpSession session = request.getSession(true);
-                                session.setAttribute(SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, entrantForResendVerifyMessage);
-                                session.setAttribute(SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, userForResendVerifyMessage);
+                                session.setAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, entrantForResendVerifyMessage);
+                                session.setAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, userForResendVerifyMessage);
                                 session.setAttribute(SESSION_ATTRIBUTE_COMMAND, command);
-                                requestDispatcher = request.getRequestDispatcher(Pages.CHECK_QUESTION_HTML);
-                                requestDispatcher.forward(request, response);
+                                response.sendRedirect(Pages.CHECK_QUESTION_HTML);
                                 break;
                             default:
                                 throw new ServletSystemException("No statuses are match smth wrong...");
                         }
                     } else if (command.equals(COMMAND_RESET_PASSWORD)) {
                         if (entrantStatus.equals(STATUS_BLOCKED)) {
-                            request.setAttribute(REQUEST_ATTRIBUTE_IS_BLOCKED_ACCOUNT, true);
-                            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML);
-                            requestDispatcher.forward(request, response);
+                            session.setAttribute(SessionAttribute.RESEND_IS_BLOCKED_ACCOUNT, true);
+                            response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                         } else {
-                            HttpSession session = request.getSession(true);
-                            session.setAttribute(SESSION_ATTRIBUTE_ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, entrantForResendVerifyMessage);
-                            session.setAttribute(SESSION_ATTRIBUTE_USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, userForResendVerifyMessage);
+                            session.setAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, entrantForResendVerifyMessage);
+                            session.setAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, userForResendVerifyMessage);
                             session.setAttribute(SESSION_ATTRIBUTE_COMMAND, command);
-                            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.CHECK_QUESTION_HTML);
-                            requestDispatcher.forward(request, response);
+                            response.sendRedirect(Pages.CHECK_QUESTION_HTML);
                         }
                     }
                 }
             } catch (DaoSystemException e) {
                 if (e.getMessage().equals(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE)) {
-                    request.setAttribute(REQUEST_ATTRIBUTE_IS_USER_EXISTS_BY_ACCOUNT_NAME, false);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML);
-                    requestDispatcher.forward(request, response);
+                    session.setAttribute(SessionAttribute.RESEND_IS_USER_EXISTS_BY_ACCOUNT_NAME, false);
+                    response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                 }
             } catch (ServletSystemException e) {
                 e.printStackTrace();
@@ -135,19 +119,23 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
         response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML);
     }
 
-    private boolean checkValidationAccountName(HttpServletRequest request, String accountName) {
+    private boolean checkValidationAccountName(HttpSession session, String accountName) {
         boolean isAccountNameValid = Validation.validateEmail(accountName);
         if (!isAccountNameValid) {
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_VALID, false);
+            session.setAttribute(SessionAttribute.RESEND_IS_ACCOUNT_NAME_VALID, false);
+        } else {
+            session.setAttribute(SessionAttribute.RESEND_IS_ACCOUNT_NAME_VALID, true);
         }
         return isAccountNameValid;
     }
 
-    private boolean checkEmptyFields(HttpServletRequest request, String accountName) {
+    private boolean checkEmptyFields(HttpSession session, String accountName) {
         boolean isAccountNameEmpty = false;
         if (accountName.equals(EMPTY_PARAM)) {
             isAccountNameEmpty = true;
-            request.setAttribute(RequestAttribute.IS_ACCOUNT_NAME_EMPTY, true);
+            session.setAttribute(SessionAttribute.RESEND_IS_ACCOUNT_NAME_EMPTY, true);
+        } else {
+            session.setAttribute(SessionAttribute.RESEND_IS_ACCOUNT_NAME_EMPTY, false);
         }
         return isAccountNameEmpty;
     }

@@ -117,6 +117,15 @@
         <url-pattern>/resetPasswordSuccess.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>BlockAccountView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blockAccount.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BlockAccountView</servlet-name>
+        <url-pattern>/blockAccount.html</url-pattern>
+    </servlet-mapping>
+
 
     <!-- admin pages -->
     <servlet>
@@ -241,18 +250,18 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>BlockEntrantServlet</servlet-name>
-        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.BlockEntrantServlet</servlet-class>
+        <servlet-name>ChangeStatusEntrantServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.ChangeStatusEntrantServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>BlockEntrantServlet</servlet-name>
-        <url-pattern>/admin/blockEntrant.do</url-pattern>
+        <servlet-name>ChangeStatusEntrantServlet</servlet-name>
+        <url-pattern>/admin/changeStatusEntrant.do</url-pattern>
     </servlet-mapping>
     <!--Filters-->
 
     <filter>
         <filter-name>CharsetFilter</filter-name>
-        <filter-class>ua.nure.hanzha.SummaryTask4.filters.CharsetFilter</filter-class>
+        <filter-class>ua.nure.hanzha.SummaryTask4.filter.CharsetFilter</filter-class>
         <init-param>
             <param-name>requestEncoding</param-name>
             <param-value>UTF-8</param-value>
@@ -264,8 +273,17 @@
     </filter-mapping>
 
     <filter>
+        <filter-name>CleanSessionAttributesFilter</filter-name>
+        <filter-class>ua.nure.hanzha.SummaryTask4.filter.CleanSessionAttributesFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CleanSessionAttributesFilter</filter-name>
+        <url-pattern>/index.html</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>SecurityFilter</filter-name>
-        <filter-class>ua.nure.hanzha.SummaryTask4.filters.SecurityFilter</filter-class>
+        <filter-class>ua.nure.hanzha.SummaryTask4.filter.SecurityFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
@@ -285,6 +303,7 @@
         <url-pattern>/verifyAccount.do</url-pattern>
         <url-pattern>/verifyAccount.html</url-pattern>
         <url-pattern>/resetPasswordMessageSent.html</url-pattern>
+        <url-pattern>/blockAccount.html</url-pattern>
         <url-pattern>/checkTicketResetPassword.do</url-pattern>
         <url-pattern>/resetPassword.html</url-pattern>
         <url-pattern>/resetPassword.do</url-pattern>
@@ -296,9 +315,10 @@
         <url-pattern>/index.html</url-pattern>
     </filter-mapping>
 
+
     <filter>
         <filter-name>ResetPasswordCheckInvalidateFilter</filter-name>
-        <filter-class>ua.nure.hanzha.SummaryTask4.filters.ResetPasswordCheckInvalidateFilter</filter-class>
+        <filter-class>ua.nure.hanzha.SummaryTask4.filter.ResetPasswordCheckInvalidateFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ResetPasswordCheckInvalidateFilter</filter-name>

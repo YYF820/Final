@@ -46,21 +46,25 @@
                     <c:choose>
                         <c:when test="${entrant.statusId == 3}">
                             <i class="uk-icon-envelope-o uk-text-danger"></i>
-                            ${entrant.statusId}
                         </c:when>
                         <c:when test="${entrant.statusId == 2}">
                             <i class="uk-icon-unlock uk-text-success"></i>
-                            ${entrant.statusId}
                         </c:when>
                         <c:otherwise>
                             <i class="uk-icon-lock uk-text-danger"></i>
-                            ${entrant.statusId}
                         </c:otherwise>
                     </c:choose>
-                    <c:if test="${entrant.statusId == 2 || entrant.statusId == 3}">
-                        <a href="blockEntrant.do?id="${entrant.id}><i
-                                class="uk-float-right uk-icon-ban  uk-text-danger"></i></a>
-                    </c:if>
+
+                    <c:choose>
+                        <c:when test="${entrant.statusId == 2 || entrant.statusId == 3}">
+                            <a href="<c:url value="/admin/changeStatusEntrant.do?entrantId=${entrant.id}&action=ban"/>"><i
+                                    class="uk-float-right uk-icon-ban  uk-text-danger"></i></a>
+                        </c:when>
+                        <c:when test="${entrant.statusId == 1}">
+                            <a href="<c:url value="/admin/changeStatusEntrant.do?entrantId=${entrant.id}&action=unBan"/>"><i
+                                    class="uk-float-right uk-icon-unlock-alt "></i></a>
+                        </c:when>
+                    </c:choose>
                 </td>
             </tr>
         </c:forEach>
@@ -71,7 +75,7 @@
     <ul class="uk-pagination uk-margin-bottom-remove">
         <c:if test="${sessionScope.currentPage != 1}">
             <li class="uk-pagination-previous">
-                <a href="entrants.do?page=${sessionScope.currentPage - 1}">
+                <a href="<c:url value="/admin/entrants.do?page=${sessionScope.currentPage - 1}"/>">
                     <i class="uk-icon-angle-double-left"></i> Previous
                 </a>
             </li>
@@ -81,7 +85,7 @@
                 <li class="uk-active"><span>${sessionScope.currentPage}</span></li>
             </c:when>
             <c:otherwise>
-                <li><a href="entrants.do?page=1">1</a></li>
+                <li><a href="<c:url value="/admin/entrants.do?page=1"/>">1</a></li>
             </c:otherwise>
         </c:choose>
         <c:if test="${sessionScope.currentPage > 4}">
@@ -95,7 +99,8 @@
                     <li class="uk-active"><span>${i}</span></li>
                 </c:when>
                 <c:otherwise>
-                    <li class="uk-disabled"><span><a href="entrants.do?page=${i}">${i}</a></span></li>
+                    <li class="uk-disabled"><span><a
+                            href="<c:url value="/admin/entrants.do?page=${i}"/>">${i}</a></span></li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
@@ -103,11 +108,13 @@
             <li><span>...</span></li>
         </c:if>
         <c:if test="${sessionScope.currentPage < sessionScope.numberOfPages - 4}">
-            <li><a href="entrants.do?page=${sessionScope.numberOfPages}">${sessionScope.numberOfPages}</a></li>
+            <li>
+                <a href="<c:url value="/admin/entrants.do?page=${sessionScope.numberOfPages}"/>">${sessionScope.numberOfPages}</a>
+            </li>
         </c:if>
         <c:if test="${sessionScope.currentPage lt sessionScope.numberOfPages}">
             <li class="uk-pagination-next">
-                <a href="entrants.do?page=${sessionScope.currentPage + 1}">
+                <a href="<c:url value="/admin/entrants.do?page=${sessionScope.currentPage + 1}"/>">
                     Next <i class="uk-icon-angle-double-right"></i>
                 </a>
             </li>

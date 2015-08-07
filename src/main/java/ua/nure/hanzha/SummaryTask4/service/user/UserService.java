@@ -8,6 +8,8 @@ import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
  */
 public interface UserService {
 
+    User getById(int userId) throws DaoSystemException;
+
     User getByEmail(String email) throws DaoSystemException;
 
     boolean userExistsByAccountName(String accountName) throws DaoSystemException;

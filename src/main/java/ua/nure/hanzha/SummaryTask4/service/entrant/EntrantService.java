@@ -11,7 +11,10 @@ public interface EntrantService {
 
     int getStatusIdByUserId(int userId) throws DaoSystemException;
 
+    Entrant getById(int entrantId) throws DaoSystemException;
+
     Entrant getByUserId(int userId) throws DaoSystemException;
 
     void updateEntrantStatus(int statusId, int entrantId) throws DaoSystemException;
+
 }

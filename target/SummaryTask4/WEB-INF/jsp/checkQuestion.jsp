@@ -31,20 +31,20 @@
                 <p>What school did you study?</p>
             </div>
             <c:if test="${
-            requestScope.isSchoolValid == false ||
-            requestScope.isSchoolEmpty == true ||
-            requestScope.isSchoolCorrect == false}">
+            sessionScope.checkQuestionIsSchoolValid == false ||
+            sessionScope.checkQuestionIsSchoolEmpty == true ||
+            sessionScope.checkQuestionIsSchoolCorrect == false}">
                 <c:set scope="page" var="badSchoolClass" value="uk-form-danger"/>
                 <div class="uk-alert" data-uk-alert>
                     <a href="" class="uk-alert-close uk-close"></a>
                     <c:choose>
-                        <c:when test="${requestScope.isSchoolEmpty == true}">
+                        <c:when test="${sessionScope.checkQuestionIsSchoolEmpty == true}">
                             <p class="uk-text-danger">Please enter your school №.</p>
                         </c:when>
-                        <c:when test="${requestScope.isSchoolValid == false}">
+                        <c:when test="${sessionScope.checkQuestionIsSchoolValid == false}">
                             <p class="uk-text-danger">School № is not valid, you can use number 0-255. </p>
                         </c:when>
-                        <c:when test="${requestScope.isSchoolCorrect == false}">
+                        <c:when test="${sessionScope.checkQuestionIsSchoolCorrect == false}">
                             <p class="uk-text-danger">Wrong answer.</p>
                         </c:when>
                     </c:choose>
@@ -56,11 +56,13 @@
                 <input aria-labelledby="school" id="school" name="school"
                        class="uk-width-1-1 uk-form-large uk-form-width-large ${badSchoolClass}"
                        type="text" spellcheck="false" autocomplete="off" placeholder="School №:"
-                       value="${requestScope.school}">
+                       value="${sessionScope.checkQuestionSchool}">
             </div>
 
-            <div class="uk-form-row">
-                <button class="uk-width-1-1 uk-button uk-button-primary" type="submit">Next</button>
+            <div class="uk-grid uk-form-row uk-align-center uk-margin-bottom-remove">
+                <button class="uk-width-medium-3-5 uk-button uk-button-primary " type="submit">Next</button>
+                <a href="<c:url value="/index.html"/>"
+                   class="uk-width-medium-1-5 uk-button uk-button-success uk-push-2-10">Cancel</a>
             </div>
         </form>
     </div>

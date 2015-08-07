@@ -5,6 +5,7 @@ package ua.nure.hanzha.SummaryTask4.constants;
  */
 public class RequestAttribute {
 
+
     public static final String IS_ACCOUNT_NAME_EXISTS = "isAccountNameExists";
 
     public static final String IS_ACCOUNT_NAME_EMPTY = "isAccountNameEmpty";
@@ -37,7 +38,5 @@ public class RequestAttribute {
 
     public static final String MAIL_INFO_VERIFY_ACCOUNT_BEAN = "mailInfoVerifyAccountBean";
     public static final String MAIL_INFO_RESET_PASSWORD_BEAN = "mailInfoResetPasswordBean";
-    public static final String MAIL_INFO_UPDATED_PASSWORD_BEAN = "mailInfoUpdatedPasswordBean";
-
-
+    public static final String MAIL_INFO_UPDATED_PASSWORD_OR_BLOCKED_BEAN = "mailInfoUpdatedPasswordOrBlockedBean";
 }

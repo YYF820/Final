@@ -16,7 +16,7 @@
 <%@include file="../jspf/topPanel.jspf" %>
 <div class="uk-container uk-container-center uk-width-9-10 uk-text-center uk-margin-top ">
     <div class="uk-grid uk-align-center uk-width-small-1-2 uk-margin-large-top">
-        <c:if test="${requestScope.isMessageSent == true}">
+        <c:if test="${sessionScope.verifyAccountIsMessageSent == true}">
             <p class="uk-text-success uk-text-large uk-text-middle"><i
                     class="uk-icon-check uk-icon-large uk-text-success"></i>&nbspThank you! We have sent verification
                 link
@@ -30,7 +30,7 @@
                     Management</a>
             </div>
         </c:if>
-        <c:if test="${requestScope.isMessageSent == false || requestScope.isMessageSent == null}">
+        <c:if test="${sessionScope.verifyAccountIsMessageSent == false || sessionScope.verifyAccountIsMessageSent == null}">
             <p class="uk-text-danger uk-text-large uk-text-middle"><i
                     class="uk-icon-exclamation-triangle uk-icon-large uk-text-danger"></i>&nbspWe couldn't send you
                 verification email.</p>
