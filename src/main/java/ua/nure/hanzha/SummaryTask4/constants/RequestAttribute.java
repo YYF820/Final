@@ -6,6 +6,7 @@ package ua.nure.hanzha.SummaryTask4.constants;
 public class RequestAttribute {
 
 
+
     public static final String IS_ACCOUNT_NAME_EXISTS = "isAccountNameExists";
 
     public static final String IS_ACCOUNT_NAME_EMPTY = "isAccountNameEmpty";

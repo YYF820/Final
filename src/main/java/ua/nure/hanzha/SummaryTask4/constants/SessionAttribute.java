@@ -95,7 +95,16 @@ public class SessionAttribute {
     public static final String RESET_PASSWORD_IS_UPDATED_PASSWORD = "resetPasswordIsUpdatedPassword";
 
 
-    //========================= ADMIN_BLOCK_ENTRANT ===============================//
+    //========================= ADMIN BLOCK_ENTRANT ===============================//
     public static final String ADMIN_IS_ENTRANT_BLOCKED = "adminIsEntrantBlocked";
-    public static final String ADMIN_COMMAND_BLOCK_USER = "adminCommandBlockUser";
+
+    //========================= ADMIN FACULTIES ===================================//
+    public static final String ADMIN_FACULTIES_INFO_BEANS = "adminFacultiesInfoBeans";
+    public static final String ADMIN_FACULTIES_INFO_BEANS_SORTED = "adminFacultiesInfoBeansSorted";
+    public static final String ADMIN_FACULTIES_INFO_BEANS_SORTED_PAGINATION = "adminFacultiesInfoBeansSortedPagination";
+    public static final String ADMIN_FACULTIES_INFO_BEANS_PAGINATION = "adminFacultiesInfoBeansPagination";
+
+    public static final String ADMIN_SORT_TYPE = "adminSortType";
+    public static final String ADMIN_IS_SORTED_FACULTIES = "adminIsSortedFaculties";
+
 }

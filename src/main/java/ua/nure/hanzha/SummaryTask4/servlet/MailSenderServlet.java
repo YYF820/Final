@@ -132,8 +132,8 @@ public class MailSenderServlet extends HttpServlet {
                 lastName = mailInfoUpdatedPasswordOrBlockedBean.getLastName();
                 patronymic = mailInfoUpdatedPasswordOrBlockedBean.getPatronymic();
                 accountName = mailInfoUpdatedPasswordOrBlockedBean.getAccountName();
-                subjectMail = createSubjectBannedAccount();
-                messageMail = createMessageBannedAccount(firstName, lastName, patronymic);
+                subjectMail = createSubjectUnBannedAccount();
+                messageMail = createMessageUnBannedAccount(firstName, lastName, patronymic);
                 try {
                     MailHelper.sendMail(accountName, subjectMail, messageMail);
                     response.sendRedirect(Pages.ENTRANTS_ADMIN_SERVLET + "?page=" + currentPage);

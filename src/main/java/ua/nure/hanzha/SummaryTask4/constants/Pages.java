@@ -1,7 +1,8 @@
 package ua.nure.hanzha.SummaryTask4.constants;
 
 /**
- * Created by faffi-ubuntu on 31/07/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 31/07/15.
  */
 public class Pages {
 
@@ -25,4 +26,6 @@ public class Pages {
 
     public static final String ENTRANTS_ADMIN_SERVLET = "/admin/entrants.do";
     public static final String ENTRANTS_ADMIN_HTML = "/admin/entrants.html";
+    public static final String FACULTIES_ADMIN_HTML = "/admin/faculties.html";
+    public static final String FACULTIES_ADMIN_SERVLET = "/admin/faculties.do";
 }

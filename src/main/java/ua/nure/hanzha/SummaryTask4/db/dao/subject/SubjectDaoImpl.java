@@ -1,5 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.subject;
 
+import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
@@ -57,6 +58,19 @@ public class SubjectDaoImpl extends AbstractDao<Subject> implements SubjectDao {
                 SqlQueriesHolder.getSqlQuery("subject.select.by.id"),
                 connection
         );
+    }
+
+    @Override
+    public List<Subject> selectAllByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("subject.select.all.by.faculty.id"))) {
+            ps.setInt(1, facultyId);
+            List<Subject> result = executeQuery(ps);
+            if (result.size() > 0) {
+                return result;
+            } else {
+                throw new CrudException(ExceptionMessages.SELECT_EXCEPTION_MESSAGE);
+            }
+        }
     }
 
     @Override

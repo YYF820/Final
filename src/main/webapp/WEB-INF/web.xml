@@ -146,6 +146,24 @@
         <url-pattern>/admin/entrants.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminFacultiesView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/admin/faculties.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminFacultiesView</servlet-name>
+        <url-pattern>/admin/faculties.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminEditFacultyView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/admin/editFaculty.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminEditFacultyView</servlet-name>
+        <url-pattern>/admin/editFaculty.html</url-pattern>
+    </servlet-mapping>
+
 
     <!-- entrant pages -->
     <servlet>
@@ -253,9 +271,28 @@
         <servlet-name>ChangeStatusEntrantServlet</servlet-name>
         <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.ChangeStatusEntrantServlet</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>ChangeStatusEntrantServlet</servlet-name>
         <url-pattern>/admin/changeStatusEntrant.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FacultiesServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.FacultiesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FacultiesServlet</servlet-name>
+        <url-pattern>/admin/faculties.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FacultiesSorterServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.FacultiesSorterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FacultiesSorterServlet</servlet-name>
+        <url-pattern>/admin/facultiesSort.do</url-pattern>
     </servlet-mapping>
     <!--Filters-->
 

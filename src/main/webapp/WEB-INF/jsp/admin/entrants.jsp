@@ -16,7 +16,7 @@
 <%@include file="../../jspf/topPanel.jspf" %>
 <div class="uk-container uk-container-center uk-width-medium-1-1 uk-text-center ">
 
-    <table class="uk-table uk-table-hover uk-table-striped uk-table-condensed uk-width-medium-8-10">
+    <table class="uk-table  uk-table-hover uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
         <caption>Entrants</caption>
         <thead>
         <tr>
@@ -33,7 +33,7 @@
         </thead>
         <tbody>
         <c:forEach var="entrant" items="${sessionScope.entrantsAdmin}">
-            <tr class="uk-table-middle">
+            <tr class="uk-table-middle ${entrant.statusId == 1 ? 'uk-text-danger' : ''}">
                 <td>${entrant.id}</td>
                 <td>${entrant.firstName}</td>
                 <td>${entrant.lastName}</td>

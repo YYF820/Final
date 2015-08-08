@@ -112,6 +112,22 @@
         <role name="admin"/>
     </action>
 
+    <action path="/admin/faculties.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/faculties.html">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/facultiesSort.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/editFaculty.html">
+        <role name="admin"/>
+    </action>
+
     <!-- pages for entrant -->
     <action path="/entrant/index.html">
         <role name="entrant"/>
@@ -120,22 +136,5 @@
     <action path="/logout.do">
         <role name="entrant"/>
     </action>
-
-
-    <!--
-        &lt;!&ndash; uses in ifAuth tag &ndash;&gt;
-        <action path="guest">
-            <role name="guest"/>
-        </action>
-        <action path="user">
-            <role name="client"/>
-            <role name="manager"/>
-        </action>
-        <action path="manager">
-            <role name="manager"/>
-        </action>
-        <action path="client">
-            <role name="client"/>
-        </action>-->
 
 </map>

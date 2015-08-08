@@ -6,6 +6,10 @@ import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminImpl;
+import ua.nure.hanzha.SummaryTask4.db.dao.faculty.FacultyDao;
+import ua.nure.hanzha.SummaryTask4.db.dao.faculty.FacultyDaoImpl;
+import ua.nure.hanzha.SummaryTask4.db.dao.subject.SubjectDao;
+import ua.nure.hanzha.SummaryTask4.db.dao.subject.SubjectDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManager;
@@ -17,8 +21,12 @@ import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminService;
 import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminServiceImpl;
+import ua.nure.hanzha.SummaryTask4.service.faculty.FacultyService;
+import ua.nure.hanzha.SummaryTask4.service.faculty.FacultyServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationService;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationServiceImpl;
+import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
+import ua.nure.hanzha.SummaryTask4.service.subject.SubjectServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserServiceImpl;
 import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReader;
@@ -64,6 +72,8 @@ public class AppInitListener implements ServletContextListener {
         UserDao userDao = new UserDaoImpl();
         EntrantDao entrantDao = new EntrantDaoImpl();
         EntrantInfoAdminDao entrantInfoAdminDao = new EntrantInfoAdminImpl();
+        FacultyDao facultyDao = new FacultyDaoImpl();
+        SubjectDao subjectDao = new SubjectDaoImpl();
 
 
         UserService userService = new UserServiceImpl(txManager, userDao);
@@ -78,7 +88,11 @@ public class AppInitListener implements ServletContextListener {
         EntrantInfoAdminService entrantInfoAdminService = new EntrantInfoAdminServiceImpl(txManager, entrantInfoAdminDao);
         servletContext.setAttribute(AppAttribute.ENTRANT_INFO_ADMIN_SERVICE, entrantInfoAdminService);
 
+        FacultyService facultyService = new FacultyServiceImpl(txManager, facultyDao);
+        servletContext.setAttribute(AppAttribute.FACULTY_SERVICE, facultyService);
 
+        SubjectService subjectService = new SubjectServiceImpl(txManager, subjectDao);
+        servletContext.setAttribute(AppAttribute.SUBJECT_SERVICE, subjectService);
     }
 
     private void setAuthorizationMap(ServletContext servletContext, String fileName) {

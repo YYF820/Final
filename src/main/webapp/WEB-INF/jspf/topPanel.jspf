@@ -47,7 +47,7 @@
     <div class="uk-offcanvas-bar">
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
             <li><a href="<c:url value="/admin/entrants.do"/>">Entrants <i class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
-            <li class="uk-active"><a href="">Faculties <i class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
+            <li class="uk-active"><a href="/admin/faculties.do">Faculties <i class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
             <li><a href="">Final sheet <i class="uk-icon uk-icon-university uk-text-primary"></i></a></li>
             <li class="uk-active"><a class="uk-text-success" href="">life@University</a></li>
         </ul>
