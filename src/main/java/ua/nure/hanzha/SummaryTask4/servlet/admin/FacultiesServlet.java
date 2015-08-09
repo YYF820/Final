@@ -7,7 +7,6 @@ import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Faculty;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
-import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.faculty.FacultyService;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,19 +68,23 @@ public class FacultiesServlet extends HttpServlet {
                 page = Integer.parseInt(request.getParameter(PARAM_PAGE));
             int numberOfRecords = facultiesInfoAdminBeans.size();
             int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / RECORDS_PER_PAGE);
-            List<FacultiesInfoAdminBean> facultiesInfoAdminBeansPagination = new ArrayList<>();
-            copyList(facultiesInfoAdminBeans, facultiesInfoAdminBeansPagination, page, RECORDS_PER_PAGE);
-            session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-            session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-            session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS, facultiesInfoAdminBeans);
-            session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS_PAGINATION, facultiesInfoAdminBeansPagination);
-            session.setAttribute(SessionAttribute.ADMIN_SORT_TYPE, SORT_TYPE_NO_SORT);
-            session.setAttribute(SessionAttribute.ADMIN_IS_SORTED_FACULTIES, true);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.FACULTIES_ADMIN_HTML);
-            requestDispatcher.forward(request, response);
+            if (page > numberOfPages) {
+                page = 1;
+                List<FacultiesInfoAdminBean> facultiesInfoAdminBeansPagination = new ArrayList<>();
+                copyList(facultiesInfoAdminBeans, facultiesInfoAdminBeansPagination, page, RECORDS_PER_PAGE);
+                setUpSessionAttributes(session, numberOfPages, facultiesInfoAdminBeans, facultiesInfoAdminBeansPagination);
+                response.sendRedirect(Pages.FACULTIES_ADMIN_HTML);
+            } else {
+                List<FacultiesInfoAdminBean> facultiesInfoAdminBeansPagination = new ArrayList<>();
+                copyList(facultiesInfoAdminBeans, facultiesInfoAdminBeansPagination, page, RECORDS_PER_PAGE);
+                setUpSessionAttributes(session, numberOfPages, facultiesInfoAdminBeans, facultiesInfoAdminBeansPagination);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.FACULTIES_ADMIN_HTML);
+                requestDispatcher.forward(request, response);
+            }
         } catch (DaoSystemException e) {
             e.printStackTrace();
         }
+
     }
 
     private void copyList(
@@ -99,5 +101,16 @@ public class FacultiesServlet extends HttpServlet {
             System.out.println(i);
             facultiesInfoAdminBeansPagination.add(facultiesInfoAdminBeans.get(i));
         }
+    }
+
+    private void setUpSessionAttributes(HttpSession session, int numberOfPages,
+                                        List<FacultiesInfoAdminBean> facultiesInfoAdminBeans,
+                                        List<FacultiesInfoAdminBean> facultiesInfoAdminBeansPagination) {
+        session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
+        session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
+        session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS, facultiesInfoAdminBeans);
+        session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS_PAGINATION, facultiesInfoAdminBeansPagination);
+        session.setAttribute(SessionAttribute.ADMIN_SORT_TYPE, SORT_TYPE_NO_SORT);
+        session.setAttribute(SessionAttribute.ADMIN_IS_SORTED_FACULTIES, true);
     }
 }

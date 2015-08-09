@@ -12,4 +12,6 @@ import java.util.List;
 public interface FacultyService {
 
     List<Faculty> getAllFaculties() throws DaoSystemException;
+
+    void removeFacultyById(int facultyId) throws DaoSystemException;
 }

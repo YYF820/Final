@@ -89,5 +89,6 @@ public class PrepareInfoEditFacultyServlet extends HttpServlet {
         session.removeAttribute(SessionAttribute.ADMIN_EDIT_TOTAL_SPOTS);
         session.removeAttribute(SessionAttribute.ADMIN_EDIT_BUDGET_SPOTS);
         session.removeAttribute(SessionAttribute.ADMIN_EDIT_TOTAL_LOWER_BUDGET);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_ENOUGH_SUBJECTS);
     }
 }

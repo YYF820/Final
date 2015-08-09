@@ -5,6 +5,7 @@ import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Faculty;
+import ua.nure.hanzha.SummaryTask4.entity.Subject;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
 import ua.nure.hanzha.SummaryTask4.util.StringToIntegerArray;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Dmytro Hanhza
@@ -29,6 +31,8 @@ public class EditFacultyServlet extends HttpServlet {
     private static final String PARAM_FACULTY_NAME = "facultyName";
     private static final String PARAM_TOTAL_SPOTS = "totalSpots";
     private static final String PARAM_BUDGET_SPOTS = "budgetSpots";
+    private static final int MINIMUM_SUBJECTS_PER_FACULTY = 3;
+
 
     private FacultyAdminService facultyAdminService;
 
@@ -59,7 +63,7 @@ public class EditFacultyServlet extends HttpServlet {
                 setUpValuesFields(session, facultyName, totalSpots, budgetSpots);
                 response.sendRedirect(Pages.FACULTY_EDIT_ADMIN_HTML);
             } else {
-                boolean isFacultyNameValid = isFacultyNameValid(session, facultyName);
+                boolean isFacultyNameValid = checkFacultyNameValid(session, facultyName);
                 session.setAttribute(SessionAttribute.ADMIN_EDIT_TOTAL_LOWER_BUDGET, false);
                 if (!facultyName.equals(EMPTY_PARAM) && !isFacultyNameValid) {
                     setUpValuesFields(session, facultyName, totalSpots, budgetSpots);
@@ -68,24 +72,34 @@ public class EditFacultyServlet extends HttpServlet {
                     FacultiesInfoAdminBean facultiesInfoAdminBean =
                             (FacultiesInfoAdminBean) session.getAttribute(SessionAttribute.ADMIN_FACULTY_FOR_EDIT);
                     Faculty facultyForEdit = facultiesInfoAdminBean.getFaculty();
-                    prepareInfoBeforeEdit(facultyForEdit, facultyName, totalSpots, budgetSpots);
-                    Integer[] subjectsIdToAddForService = StringToIntegerArray.convert(subjectsIdToAdd);
-                    Integer[] subjectsIdToDeleteForService = StringToIntegerArray.convert(subjectsIdToDelete);
-                    try {
-                        if (subjectsIdToAddForService != null && subjectsIdToDeleteForService != null) {
-                            facultyAdminService.editFacultyInfoWithSubjects(facultyForEdit, subjectsIdToAddForService, subjectsIdToDeleteForService);
-                        } else if (subjectsIdToAddForService != null) {
-                            facultyAdminService.editFacultyInfoWithoutDelete(facultyForEdit, subjectsIdToAddForService);
-                        } else if (subjectsIdToDeleteForService != null) {
-                            facultyAdminService.editFacultyInfoWithoutAdd(facultyForEdit, subjectsIdToDeleteForService);
-                        } else {
-                            facultyAdminService.editFacultyInfoWithoutSubjects(facultyForEdit);
+                    List<Subject> currentSubjects = facultiesInfoAdminBean.getSubjects();
+                    boolean isEnoughSubjectsForFaculty = checkEnoughSubjectsForFaculty(
+                            session, subjectsIdToAdd,
+                            subjectsIdToDelete, currentSubjects
+                    );
+                    if (!isEnoughSubjectsForFaculty) {
+                        setUpValuesFields(session, facultyName, totalSpots, budgetSpots);
+                        response.sendRedirect(Pages.FACULTY_EDIT_ADMIN_HTML);
+                    } else {
+                        prepareInfoBeforeEdit(facultyForEdit, facultyName, totalSpots, budgetSpots);
+                        Integer[] subjectsIdToAddForService = StringToIntegerArray.convert(subjectsIdToAdd);
+                        Integer[] subjectsIdToDeleteForService = StringToIntegerArray.convert(subjectsIdToDelete);
+                        try {
+                            if (subjectsIdToAddForService != null && subjectsIdToDeleteForService != null) {
+                                facultyAdminService.editFacultyInfoWithSubjects(facultyForEdit, subjectsIdToAddForService, subjectsIdToDeleteForService);
+                            } else if (subjectsIdToAddForService != null) {
+                                facultyAdminService.editFacultyInfoWithoutDelete(facultyForEdit, subjectsIdToAddForService);
+                            } else if (subjectsIdToDeleteForService != null) {
+                                facultyAdminService.editFacultyInfoWithoutAdd(facultyForEdit, subjectsIdToDeleteForService);
+                            } else {
+                                facultyAdminService.editFacultyInfoWithoutSubjects(facultyForEdit);
+                            }
+                        } catch (DaoSystemException e) {
+                            e.printStackTrace();
                         }
-                    } catch (DaoSystemException e) {
-                        e.printStackTrace();
+                        cleanSession(session);
+                        response.sendRedirect(Pages.FACULTIES_ADMIN_SERVLET);
                     }
-                    cleanSession(session);
-                    response.sendRedirect(Pages.FACULTIES_ADMIN_SERVLET);
                 }
             }
         }
@@ -113,7 +127,7 @@ public class EditFacultyServlet extends HttpServlet {
         return false;
     }
 
-    private boolean isFacultyNameValid(HttpSession session, String facultyName) {
+    private boolean checkFacultyNameValid(HttpSession session, String facultyName) {
         boolean isFacultyNameValid = Validation.validateFacultyName(facultyName);
         if (!isFacultyNameValid) {
             session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID, false);
@@ -122,6 +136,45 @@ public class EditFacultyServlet extends HttpServlet {
             session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID, true);
         }
         return true;
+    }
+
+    private boolean checkEnoughSubjectsForFaculty(HttpSession session, String[] subjectsIdToAdd,
+                                                  String[] subjectsIdToDelete, List<Subject> currentSubjects) {
+        if (subjectsIdToAdd == null && subjectsIdToDelete == null) {
+            if (currentSubjects.size() < MINIMUM_SUBJECTS_PER_FACULTY) {
+                session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_ENOUGH_SUBJECTS, false);
+                return false;
+            } else {
+                session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_ENOUGH_SUBJECTS, true);
+                return true;
+            }
+        } else if (subjectsIdToAdd == null || subjectsIdToDelete == null) {
+            if (subjectsIdToAdd == null) {
+                if (currentSubjects.size() - subjectsIdToDelete.length < MINIMUM_SUBJECTS_PER_FACULTY) {
+                    session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_ENOUGH_SUBJECTS, false);
+                    return false;
+                } else {
+                    session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_ENOUGH_SUBJECTS, true);
+                    return true;
+                }
+            } else {
+                if (currentSubjects.size() + subjectsIdToAdd.length < MINIMUM_SUBJECTS_PER_FACULTY) {
+                    session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_ENOUGH_SUBJECTS, false);
+                    return false;
+                } else {
+                    session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_ENOUGH_SUBJECTS, true);
+                    return true;
+                }
+            }
+        } else {
+            if (currentSubjects.size() - subjectsIdToDelete.length + subjectsIdToAdd.length < MINIMUM_SUBJECTS_PER_FACULTY) {
+                session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_ENOUGH_SUBJECTS, false);
+                return false;
+            } else {
+                session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_ENOUGH_SUBJECTS, true);
+                return true;
+            }
+        }
     }
 
     private void prepareInfoBeforeEdit(Faculty facultyForEdit, String facultyName,
@@ -158,6 +211,7 @@ public class EditFacultyServlet extends HttpServlet {
         session.removeAttribute(SessionAttribute.ADMIN_EDIT_IS_ALL_FIELDS_EMPTY);
         session.removeAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID);
         session.removeAttribute(SessionAttribute.ADMIN_EDIT_TOTAL_LOWER_BUDGET);
+        session.removeAttribute(SessionAttribute.ADMIN_EDIT_IS_ENOUGH_SUBJECTS);
     }
 
 

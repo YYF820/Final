@@ -148,6 +148,10 @@
         <role name="admin"/>
     </action>
 
+    <action path="/admin/deleteFaculty.do">
+        <role name="admin"/>
+    </action>
+
     <!-- pages for entrant -->
     <action path="/entrant/index.html">
         <role name="entrant"/>

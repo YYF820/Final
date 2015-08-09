@@ -12,7 +12,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by faffi-ubuntu on 08/08/15.
+ * @author Dmytro Hanhza
+ *         Created by faffi-ubuntu on 08/08/15.
  */
 public class FacultyServiceImpl implements FacultyService {
 
@@ -30,6 +31,17 @@ public class FacultyServiceImpl implements FacultyService {
             @Override
             public List<Faculty> call(Connection connection) throws SQLException, CrudException {
                 return facultyDao.selectAll(connection);
+            }
+        });
+    }
+
+    @Override
+    public void removeFacultyById(final int facultyId) throws DaoSystemException {
+        txManager.doInTransaction(new SqlCallable<Void>() {
+            @Override
+            public Void call(Connection connection) throws SQLException, CrudException {
+                facultyDao.deleteById(facultyId, connection);
+                return null;
             }
         });
     }

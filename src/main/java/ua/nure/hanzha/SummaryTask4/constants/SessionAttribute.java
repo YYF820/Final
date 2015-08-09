@@ -116,6 +116,7 @@ public class SessionAttribute {
     public static final String ADMIN_EDIT_TOTAL_LOWER_BUDGET = "adminEditTotalLowerBudget";
     public static final String ADMIN_EDIT_IS_ALL_FIELDS_EMPTY = "adminEditIsAllFieldsEmpty";
     public static final String ADMIN_EDIT_IS_FACULTY_NAME_VALID = "adminEditIsFacultyNameValid";
+    public static final String ADMIN_EDIT_IS_ENOUGH_SUBJECTS = "adminEditIsEnoughSubjects";
 
     //======================== ADMIN ADD FACULTY ========================================//
     public static final String ADMIN_ADD_ALL_SUBJECTS = "adminAddAllSubjects";
@@ -123,6 +124,14 @@ public class SessionAttribute {
     public static final String ADMIN_ADD_IS_FACULTY_NAME_VALID = "adminAddIsFacultyNameValid";
     public static final String ADMIN_ADD_TOTAL_LOWER_BUDGET = "adminAddTotalLowerBudget";
     public static final String ADMIN_ADD_IS_DUPLICATE_FACULTY_NAME = "adminAddIsDuplicateFacultyName";
+    public static final String ADMIN_ADD_IS_ENOUGH_SUBJECTS = "adminAddIsEnoughSubjects";
+    public static final String ADMIN_ADD_FACULTY_NAME = "adminAddFacultyName";
+    public static final String ADMIN_ADD_TOTAL_SPOTS = "adminAddTotalSpots";
+    public static final String ADMIN_ADD_BUDGET_SPOTS = "adminAddBudgetSpots";
+
+    //======================== ADMIN DELETE FACULTY =======================================//
+    public static final String ADMIN_DELETE_IS_VALID_PARAM_FACULTY_ID = "adminDeleteIsValidParamFacultyId";
+    public static final String ADMIN_DELETE_IS_DELETED = "adminDeleteIsDeleted";
 
 
 }

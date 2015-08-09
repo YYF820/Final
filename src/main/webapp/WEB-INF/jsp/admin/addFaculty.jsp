@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
@@ -24,7 +25,8 @@
         <c:if test="${sessionScope.adminAddIsAnyEmptyFields ||
             sessionScope.adminAddIsFacultyNameValid == false ||
                 sessionScope.adminAddTotalLowerBudget == true ||
-                    sessionScope.adminAddIsDuplicateFacultyName == true}">
+                    sessionScope.adminAddIsDuplicateFacultyName == true ||
+                        sessionScope.adminAddIsEnoughSubjects == false}">
             <div class="uk-alert uk-width-medium-3-5 alertSchoolNumber uk-alert-danger uk-container-center">
                 <c:if test="${sessionScope.adminAddIsAnyEmptyFields}">
                     <p>Please fill all fields.</p>
@@ -38,6 +40,9 @@
                 <c:if test="${sessionScope.adminAddIsDuplicateFacultyName == true}">
                     <p>Choose another faculty name that already exists.</p>
                 </c:if>
+                <c:if test="${sessionScope.adminAddIsEnoughSubjects == false}">
+                    <p>You must choose minimum 3 subjects for Faculty.</p>
+                </c:if>
             </div>
         </c:if>
 
@@ -47,15 +52,15 @@
             <input aria-labelledby="facultyName-label" id="facultyName"
                    name="facultyName"
                    class="uk-form-width-medium uk-container-center"
-                   type="text" autocomplete="off" value="${sessionScope.adminEditFacultyName}"
+                   type="text" autocomplete="off" value="${sessionScope.adminAddFacultyName}"
                    placeholder="Faculty name:">
         </div>
         <div class="uk-form-controls uk-form-controls-text uk-container-center uk-align-center uk-margin-top">
             <select id="totalSpots" class="uk-form-width-medium " name="totalSpots">
-                <option value="${sessionScope.adminEditTotalSpots}">
-                    ${sessionScope.adminEditTotalSpots eq "" || sessionScope.adminEditTotalSpots == null ?
+                <option value="${sessionScope.adminAddTotalSpots}">
+                    ${sessionScope.adminAddTotalSpots eq "" || sessionScope.adminAddTotalSpots == null ?
                             'Select total spots' :
-                            sessionScope.adminEditTotalSpots}
+                            sessionScope.adminAddTotalSpots}
                 </option>
                 <c:forEach var="i" begin="1" end="350" step="1">
                     <option>${i}</option>
@@ -65,10 +70,10 @@
         </div>
         <div class=" uk-width-medium-1-1 uk-form-controls uk-form-controls-text uk-margin-top">
             <select id="budgetSpots" class="uk-form-width-medium" name="budgetSpots">
-                <option value="${sessionScope.adminEditBudgetSpots}">
-                    ${sessionScope.adminEditBudgetSpots eq "" || sessionScope.adminEditBudgetSpots == null ?
+                <option value="${sessionScope.adminAddBudgetSpots}">
+                    ${sessionScope.adminAddBudgetSpots eq "" || sessionScope.adminAddBudgetSpots == null ?
                             'Select budget spots'  :
-                            sessionScope.adminEditBudgetSpots}
+                            sessionScope.adminAddBudgetSpots}
                 </option>
                 <c:forEach var="i" begin="1" end="120" step="1">
                     <option>${i}</option>

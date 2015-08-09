@@ -143,8 +143,14 @@ public class Validation {
     }
 
     public static boolean validateFacultyName(String facultyName) {
-        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,15}(\\s[\\p{Lu}]*[\\p{L}&&[^\\p{Lu}]]{2,15})*$");
+        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,25}(\\s[\\p{Lu}]*[\\p{L}&&[^\\p{Lu}]]{2,25})*$");
         Matcher m = p.matcher(facultyName);
+        return m.matches();
+    }
+
+    public static boolean validateParamFacultyId(String facultyId) {
+        Pattern p = Pattern.compile("^[0-9]+$");
+        Matcher m = p.matcher(facultyId);
         return m.matches();
     }
 }

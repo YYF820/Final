@@ -340,6 +340,14 @@
         <url-pattern>/admin/addFaculty.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DeleteFacultyServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.DeleteFacultyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFacultyServlet</servlet-name>
+        <url-pattern>/admin/deleteFaculty.do</url-pattern>
+    </servlet-mapping>
 
     <!--Filters-->
 

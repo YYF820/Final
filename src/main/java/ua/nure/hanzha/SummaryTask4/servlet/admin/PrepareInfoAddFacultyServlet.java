@@ -34,6 +34,7 @@ public class PrepareInfoAddFacultyServlet extends HttpServlet {
         try {
             List<Subject> allSubjects = subjectService.getAll();
             session.setAttribute(SessionAttribute.ADMIN_ADD_ALL_SUBJECTS, allSubjects);
+            cleanSession(session);
             response.sendRedirect(Pages.FACULTY_ADD_ADMIN_HTML);
         } catch (DaoSystemException e) {
             e.printStackTrace();
@@ -41,6 +42,17 @@ public class PrepareInfoAddFacultyServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         }
+    }
+
+    private void cleanSession(HttpSession session) {
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_ANY_EMPTY_FIELDS);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_FACULTY_NAME_VALID);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_FACULTY_NAME);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_TOTAL_SPOTS);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_BUDGET_SPOTS);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_ENOUGH_SUBJECTS);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_TOTAL_LOWER_BUDGET);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_DUPLICATE_FACULTY_NAME);
     }
 
 }

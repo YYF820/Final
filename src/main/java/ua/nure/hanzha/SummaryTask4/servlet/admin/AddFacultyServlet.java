@@ -28,6 +28,7 @@ public class AddFacultyServlet extends HttpServlet {
     private static final String PARAM_FACULTY_NAME = "facultyName";
     private static final String PARAM_TOTAL_SPOTS = "totalSpots";
     private static final String PARAM_BUDGET_SPOTS = "budgetSpots";
+    private static final int MINIMUM_SUBJECTS_PER_FACULTY = 3;
 
     private FacultyAdminService facultyAdminService;
 
@@ -45,31 +46,39 @@ public class AddFacultyServlet extends HttpServlet {
         String totalSpots = request.getParameter(PARAM_TOTAL_SPOTS);
         String budgetSpots = request.getParameter(PARAM_BUDGET_SPOTS);
         boolean isEmptyAnyField = checkEmpty(session, subjectsIdToAdd, facultyName, totalSpots, budgetSpots);
-        boolean isFacultyNameValid = isFacultyNameValid(session, facultyName);
+        boolean isFacultyNameValid = checkFacultyNameValid(session, facultyName);
         if (isEmptyAnyField || !isFacultyNameValid) {
+            setUpValuesFields(session, facultyName, totalSpots, budgetSpots);
             response.sendRedirect(Pages.FACULTY_ADD_ADMIN_HTML);
         } else {
             int totalSpotsInt = Integer.valueOf(totalSpots);
             int budgetSpotsInt = Integer.valueOf(budgetSpots);
             if (totalSpotsInt < budgetSpotsInt) {
+                setUpValuesFields(session, facultyName, totalSpots, budgetSpots);
                 session.setAttribute(SessionAttribute.ADMIN_ADD_TOTAL_LOWER_BUDGET, true);
                 response.sendRedirect(Pages.FACULTY_ADD_ADMIN_HTML);
             } else {
-                Faculty faculty = prepareForCreate(facultyName, totalSpotsInt, budgetSpotsInt);
-                Integer[] subjectsIdToAddForService = StringToIntegerArray.convert(subjectsIdToAdd);
-                try {
-                    facultyAdminService.addFaculty(faculty, subjectsIdToAddForService);
-                    response.sendRedirect(Pages.FACULTIES_ADMIN_SERVLET);
-                } catch (DaoSystemException e) {
-                    if (e.getCause().getMessage().contains(ExceptionMessages.INSERT_FACULTY_SAME_NAME)) {
-                        session.setAttribute(SessionAttribute.ADMIN_ADD_IS_DUPLICATE_FACULTY_NAME, true);
-                        response.sendRedirect(Pages.FACULTY_ADD_ADMIN_HTML);
+                boolean isEnoughSubjects = checkSubjectsMoreThenThree(session, subjectsIdToAdd);
+                if (!isEnoughSubjects) {
+                    setUpValuesFields(session, facultyName, totalSpots, budgetSpots);
+                    response.sendRedirect(Pages.FACULTY_ADD_ADMIN_HTML);
+                } else {
+                    Faculty faculty = prepareForCreate(facultyName, totalSpotsInt, budgetSpotsInt);
+                    Integer[] subjectsIdToAddForService = StringToIntegerArray.convert(subjectsIdToAdd);
+                    try {
+                        facultyAdminService.addFaculty(faculty, subjectsIdToAddForService);
+                        cleanSession(session);
+                        response.sendRedirect(Pages.FACULTIES_ADMIN_SERVLET);
+                    } catch (DaoSystemException e) {
+                        if (e.getCause().getMessage().contains(ExceptionMessages.INSERT_FACULTY_SAME_NAME)) {
+                            session.setAttribute(SessionAttribute.ADMIN_ADD_IS_DUPLICATE_FACULTY_NAME, true);
+                            setUpValuesFields(session, facultyName, totalSpots, budgetSpots);
+                            response.sendRedirect(Pages.FACULTY_ADD_ADMIN_HTML);
+                        }
                     }
                 }
             }
         }
-
-
     }
 
     private boolean checkEmpty(HttpSession session, String[] subjectsIdToAdd, String... fields) {
@@ -91,7 +100,7 @@ public class AddFacultyServlet extends HttpServlet {
 
     }
 
-    private boolean isFacultyNameValid(HttpSession session, String facultyName) {
+    private boolean checkFacultyNameValid(HttpSession session, String facultyName) {
         if (facultyName.equals(EMPTY_PARAM)) {
             session.setAttribute(SessionAttribute.ADMIN_ADD_IS_FACULTY_NAME_VALID, true);
             return true;
@@ -111,6 +120,15 @@ public class AddFacultyServlet extends HttpServlet {
         session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_DUPLICATE_FACULTY_NAME);
     }
 
+    private void cleanSession(HttpSession session) {
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_ANY_EMPTY_FIELDS);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_FACULTY_NAME_VALID);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_FACULTY_NAME);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_TOTAL_SPOTS);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_BUDGET_SPOTS);
+        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_ENOUGH_SUBJECTS);
+    }
+
     private Faculty prepareForCreate(String facultyName, int totalSpots, int budgetSpots) {
         Faculty faculty = new Faculty();
         faculty.setName(facultyName);
@@ -118,5 +136,23 @@ public class AddFacultyServlet extends HttpServlet {
         faculty.setBudgetSpots(budgetSpots);
         return faculty;
     }
+
+    private boolean checkSubjectsMoreThenThree(HttpSession session, String[] subjectsIdToAdd) {
+        if (subjectsIdToAdd.length < MINIMUM_SUBJECTS_PER_FACULTY) {
+            session.setAttribute(SessionAttribute.ADMIN_ADD_IS_ENOUGH_SUBJECTS, false);
+            return false;
+        } else {
+            session.setAttribute(SessionAttribute.ADMIN_ADD_IS_ENOUGH_SUBJECTS, true);
+            return true;
+        }
+    }
+
+    private void setUpValuesFields(HttpSession session, String facultyName,
+                                   String totalSpots, String budgetSpots) {
+        session.setAttribute(SessionAttribute.ADMIN_ADD_FACULTY_NAME, facultyName);
+        session.setAttribute(SessionAttribute.ADMIN_ADD_TOTAL_SPOTS, totalSpots);
+        session.setAttribute(SessionAttribute.ADMIN_ADD_BUDGET_SPOTS, budgetSpots);
+    }
+
 
 }

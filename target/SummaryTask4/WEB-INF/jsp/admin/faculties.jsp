@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%--
   Created by IntelliJ IDEA.
   User: faffi-ubuntu
@@ -17,8 +18,36 @@
 </c:if>
 <%@include file="../../jspf/topPanel.jspf" %>
 <div class="uk-container uk-container-center uk-width-1-1 uk-text-center ">
+    <c:if test="${sessionScope.adminDeleteIsValidParamFacultyId == false || sessionScope.adminDeleteIsDeleted == false}">
+        <div class="uk-alert uk-alert-danger uk-margin-large-top uk-width-4-5 uk-push-1-10 uk-container-center">
+            <c:choose>
+                <c:when test="${sessionScope.adminDeleteIsValidParamFacultyId == false}">
+                    <p><i class="uk-icon-exclamation uk-text-danger"></i> Check url, wrong value facultyId, example:
+                        facultyId=1,2,3etc
+                    </p>
+                </c:when>
+                <c:when test="${sessionScope.adminDeleteIsDeleted == false}">
+                    <p><i class="uk-icon-exclamation uk-text-danger"></i> Can't delete specified faculty, maybe another
+                        admin deleted
+                        it earlier.</p>
+                </c:when>
+            </c:choose>
+        </div>
+    </c:if>
+
+    <c:if test="${sessionScope.adminDeleteIsDeleted == true}">
+        <div class="uk-alert uk-alert-success uk-margin-large-top uk-width-4-5 uk-push-1-10 uk-container-center">
+            <c:choose>
+                <c:when test="${sessionScope.adminDeleteIsDeleted == true}">
+                    <p>The faculty has been removed successfully <i class="uk-icon-check uk-text-success"></i></p>
+                </c:when>
+            </c:choose>
+        </div>
+    </c:if>
+
+
     <div class="uk-grid uk-margin-top">
-        <div class="uk-width-medium-2-10 uk-margin-large-top">
+        <div class="uk-width-medium-2-10 uk-margin-top">
             <form class="uk-form uk-panel-box " method="POST"
                   action="<c:url value="/admin/facultiesSort.do"/>">
                 <c:if test="${sessionScope.adminIsSortedFaculties == false}">
@@ -114,24 +143,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="faculty"
+                <c:forEach var="facultyInfoBeanPagination"
                            items="${sessionScope.adminSortType == null || sessionScope.adminSortType =='noSort'
                            ? sessionScope.adminFacultiesInfoBeansPagination : sessionScope.adminFacultiesInfoBeansSortedPagination}"
                            varStatus="loop">
                     <tr class="uk-table-middle">
-                        <td>${faculty.faculty.id}</td>
-                        <td>${faculty.faculty.name}</td>
-                        <td>${faculty.faculty.totalSpots}</td>
-                        <td>${faculty.faculty.budgetSpots}</td>
+                        <td>${facultyInfoBeanPagination.faculty.id}</td>
+                        <td>${facultyInfoBeanPagination.faculty.name}</td>
+                        <td>${facultyInfoBeanPagination.faculty.totalSpots}</td>
+                        <td>${facultyInfoBeanPagination.faculty.budgetSpots}</td>
                         <td>
-                            <c:forEach var="subject" items="${faculty.subjects}">
+                            <c:forEach var="subject" items="${facultyInfoBeanPagination.subjects}">
                                 ${subject.name}<br/>
                             </c:forEach>
                         </td>
                         <td class="uk-width-1-10">
                             <a href="<c:url value="/admin/prepareInfoEditFaculty.do?index=${loop.index}"/>"><i
                                     class="uk-icon-edit uk-float-left"></i></a>
-                            <a href=""><i class="uk-icon-remove uk-text-danger uk-float-right"></i></a>
+                            <a href="<c:url value="/admin/deleteFaculty.do?facultyId=${facultyInfoBeanPagination.faculty.id}"/>">
+                                <i class="uk-icon-remove uk-text-danger uk-float-right"></i>
+                            </a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -197,8 +228,8 @@
             </ul>
         </div>
     </div>
-
-
+    <c:remove scope="session" var="adminDeleteIsValidParamFacultyId"/>
+    <c:remove scope="session" var="adminDeleteIsDeleted"/>
 </div>
 </body>
 </html>

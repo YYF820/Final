@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
@@ -49,14 +49,19 @@
 
     <div class="uk-container uk-container-center uk-width-medium-8-10">
         <form class="uk-form uk-margin-top" method="post" action="<c:url value="/admin/editFaculty.do"/>">
-            <c:if test="${sessionScope.adminEditIsAllFieldsEmpty == true || sessionScope.adminEditTotalLowerBudget == true}">
+            <c:if test="${sessionScope.adminEditIsAllFieldsEmpty == true ||
+                sessionScope.adminEditTotalLowerBudget == true ||
+                    sessionScope.adminEditIsEnoughSubjects == false}">
                 <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-text-center uk-align-center alertSchoolNumber">
                     <c:choose>
                         <c:when test="${sessionScope.adminEditIsAllFieldsEmpty == true}">
-                            Please choose minimum one field which you want edit.
+                            <p>Please choose minimum one field which you want edit.</p>
                         </c:when>
                         <c:when test="${sessionScope.adminEditTotalLowerBudget == true}">
-                            Total spots can't be lower then budget spots.
+                            <p>Total spots can't be lower then budget spots.</p>
+                        </c:when>
+                        <c:when test="${sessionScope.adminEditIsEnoughSubjects == false}">
+                            <p>After editing the faculty it must contain at least 3 subjects.</p>
                         </c:when>
                     </c:choose>
                 </div>
