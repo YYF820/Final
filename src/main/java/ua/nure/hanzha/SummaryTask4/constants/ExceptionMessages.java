@@ -10,4 +10,6 @@ public class ExceptionMessages {
     public static final String SELECT_BY_ID_EXCEPTION_MESSAGE = "Nothing by this id...";
     public static final String SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE = "Nothing by this value...";
     public static final String SELECT_EXCEPTION_MESSAGE = "Empty table...";
+    public static final String SQL_EXCEPTION = "SQL Exception";
+    public static final String INSERT_FACULTY_SAME_NAME = "ERROR: duplicate key value violates unique constraint \"faculties_name_key\"";
 }

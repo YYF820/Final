@@ -2,10 +2,12 @@ package ua.nure.hanzha.SummaryTask4.servlet.admin;
 
 import ua.nure.hanzha.SummaryTask4.bean.FacultiesInfoAdminBean;
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Faculty;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
+import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.faculty.FacultyService;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +53,14 @@ public class FacultiesServlet extends HttpServlet {
             List<Faculty> faculties = facultyService.getAllFaculties();
             for (Faculty faculty : faculties) {
                 int facultyId = faculty.getId();
-                List<Subject> subjects = subjectService.getAllByFacultyId(facultyId);
+                List<Subject> subjects = new ArrayList<>();
+                try {
+                    subjects = subjectService.getAllByFacultyId(facultyId);
+                } catch (DaoSystemException e) {
+                    if (e.getMessage().equals(ExceptionMessages.SQL_EXCEPTION)) {
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    }
+                }
                 FacultiesInfoAdminBean facultiesInfoAdminBean = new FacultiesInfoAdminBean();
                 facultiesInfoAdminBean.setFaculty(faculty);
                 facultiesInfoAdminBean.setSubjects(subjects);

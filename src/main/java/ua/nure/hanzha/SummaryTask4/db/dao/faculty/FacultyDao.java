@@ -20,4 +20,6 @@ public interface FacultyDao extends Dao<Faculty> {
 
     Faculty selectById(int id, Connection connection) throws SQLException, CrudException;
 
+    int selectIdByName(String name, Connection connection) throws SQLException, CrudException;
+
 }

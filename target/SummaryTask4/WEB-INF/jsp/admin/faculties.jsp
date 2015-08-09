@@ -106,7 +106,11 @@
                                 sessionScope.adminSortType == 'byBudgetSpotsDesc' ? ' <i class="uk-icon-sort-amount-desc"></i>' : ''}
                     </th>
                     <th>Subjects</th>
-                    <th>Edit</th>
+                    <th>Edit
+                        <a href="<c:url value="/admin/prepareInfoAddFaculty.do"/>">
+                            <i class="uk-icon-plus uk-float-right uk uk-text-success"></i>
+                        </a>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -125,7 +129,7 @@
                             </c:forEach>
                         </td>
                         <td class="uk-width-1-10">
-                            <a href="<c:url value="/admin/editFaculty.html?facultyId=${faculty.faculty.id}&index=${loop.index}"/>"><i
+                            <a href="<c:url value="/admin/prepareInfoEditFaculty.do?index=${loop.index}"/>"><i
                                     class="uk-icon-edit uk-float-left"></i></a>
                             <a href=""><i class="uk-icon-remove uk-text-danger uk-float-right"></i></a>
                         </td>

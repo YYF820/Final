@@ -1,5 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.faculty;
 
+import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
@@ -63,6 +64,20 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
                 SqlQueriesHolder.getSqlQuery("faculty.select.by.id"),
                 connection
         );
+    }
+
+    @Override
+    public int selectIdByName(String name, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("faculty.select.id.by.name"))) {
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int result = rs.getInt(FieldsDataBase.ENTITY_ID);
+                return result;
+            } else {
+                throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
+            }
+        }
     }
 
     @Override

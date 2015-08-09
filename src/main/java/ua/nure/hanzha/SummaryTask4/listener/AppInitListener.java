@@ -8,6 +8,8 @@ import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.faculty.FacultyDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.faculty.FacultyDaoImpl;
+import ua.nure.hanzha.SummaryTask4.db.dao.facultysubject.FacultySubjectDao;
+import ua.nure.hanzha.SummaryTask4.db.dao.facultysubject.FacultySubjectDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.subject.SubjectDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.subject.SubjectDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDao;
@@ -17,6 +19,8 @@ import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManagerImpl;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.security.AuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.security.XmlAuthorizationMap;
+import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
+import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminService;
@@ -74,6 +78,7 @@ public class AppInitListener implements ServletContextListener {
         EntrantInfoAdminDao entrantInfoAdminDao = new EntrantInfoAdminImpl();
         FacultyDao facultyDao = new FacultyDaoImpl();
         SubjectDao subjectDao = new SubjectDaoImpl();
+        FacultySubjectDao facultySubjectDao = new FacultySubjectDaoImpl();
 
 
         UserService userService = new UserServiceImpl(txManager, userDao);
@@ -93,6 +98,9 @@ public class AppInitListener implements ServletContextListener {
 
         SubjectService subjectService = new SubjectServiceImpl(txManager, subjectDao);
         servletContext.setAttribute(AppAttribute.SUBJECT_SERVICE, subjectService);
+
+        FacultyAdminService facultyAdminService = new FacultyAdminServiceImpl(txManager, facultyDao, facultySubjectDao);
+        servletContext.setAttribute(AppAttribute.FACULTY_ADMIN_SERVICE, facultyAdminService);
     }
 
     private void setAuthorizationMap(ServletContext servletContext, String fileName) {

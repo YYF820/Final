@@ -141,4 +141,10 @@ public class Validation {
         Matcher m = p.matcher(ticketResetPassword);
         return m.matches();
     }
+
+    public static boolean validateFacultyName(String facultyName) {
+        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,15}(\\s[\\p{Lu}]*[\\p{L}&&[^\\p{Lu}]]{2,15})*$");
+        Matcher m = p.matcher(facultyName);
+        return m.matches();
+    }
 }

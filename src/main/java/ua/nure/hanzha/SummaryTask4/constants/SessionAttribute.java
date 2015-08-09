@@ -106,5 +106,23 @@ public class SessionAttribute {
 
     public static final String ADMIN_SORT_TYPE = "adminSortType";
     public static final String ADMIN_IS_SORTED_FACULTIES = "adminIsSortedFaculties";
+    public static final String ADMIN_FACULTY_FOR_EDIT = "adminFacultyForEdit";
+    public static final String ADMIN_SUBJECTS_TO_ADD = "adminSubjectsToAdd";
+
+    //======================== ADMIN EDIT FACULTY =====================================//
+    public static final String ADMIN_EDIT_FACULTY_NAME = "adminEditFacultyName";
+    public static final String ADMIN_EDIT_TOTAL_SPOTS = "adminEditTotalSpots";
+    public static final String ADMIN_EDIT_BUDGET_SPOTS = "adminEditBudgetSpots";
+    public static final String ADMIN_EDIT_TOTAL_LOWER_BUDGET = "adminEditTotalLowerBudget";
+    public static final String ADMIN_EDIT_IS_ALL_FIELDS_EMPTY = "adminEditIsAllFieldsEmpty";
+    public static final String ADMIN_EDIT_IS_FACULTY_NAME_VALID = "adminEditIsFacultyNameValid";
+
+    //======================== ADMIN ADD FACULTY ========================================//
+    public static final String ADMIN_ADD_ALL_SUBJECTS = "adminAddAllSubjects";
+    public static final String ADMIN_ADD_IS_ANY_EMPTY_FIELDS = "adminAddIsAnyEmptyFields";
+    public static final String ADMIN_ADD_IS_FACULTY_NAME_VALID = "adminAddIsFacultyNameValid";
+    public static final String ADMIN_ADD_TOTAL_LOWER_BUDGET = "adminAddTotalLowerBudget";
+    public static final String ADMIN_ADD_IS_DUPLICATE_FACULTY_NAME = "adminAddIsDuplicateFacultyName";
+
 
 }

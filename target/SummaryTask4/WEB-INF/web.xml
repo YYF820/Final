@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
 
     <context-param>
@@ -164,6 +164,15 @@
         <url-pattern>/admin/editFaculty.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminAddFacultyView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/admin/addFaculty.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminAddFacultyView</servlet-name>
+        <url-pattern>/admin/addFaculty.html</url-pattern>
+    </servlet-mapping>
+
 
     <!-- entrant pages -->
     <servlet>
@@ -294,6 +303,44 @@
         <servlet-name>FacultiesSorterServlet</servlet-name>
         <url-pattern>/admin/facultiesSort.do</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PrepareInfoEditFacultyServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.PrepareInfoEditFacultyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PrepareInfoEditFacultyServlet</servlet-name>
+        <url-pattern>/admin/prepareInfoEditFaculty.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PrepareInfoAddFacultyServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.PrepareInfoAddFacultyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PrepareInfoAddFacultyServlet</servlet-name>
+        <url-pattern>/admin/prepareInfoAddFaculty.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EditFacultyServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.EditFacultyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditFacultyServlet</servlet-name>
+        <url-pattern>/admin/editFaculty.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddFacultyServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.AddFacultyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddFacultyServlet</servlet-name>
+        <url-pattern>/admin/addFaculty.do</url-pattern>
+    </servlet-mapping>
+
+
     <!--Filters-->
 
     <filter>

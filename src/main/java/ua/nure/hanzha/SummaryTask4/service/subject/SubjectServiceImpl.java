@@ -12,7 +12,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by faffi-ubuntu on 08/08/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 08/08/15.
  */
 public class SubjectServiceImpl implements SubjectService {
 
@@ -30,6 +31,16 @@ public class SubjectServiceImpl implements SubjectService {
             @Override
             public List<Subject> call(Connection connection) throws SQLException, CrudException {
                 return subjectDao.selectAllByFacultyId(facultyId, connection);
+            }
+        });
+    }
+
+    @Override
+    public List<Subject> getAll() throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<List<Subject>>() {
+            @Override
+            public List<Subject> call(Connection connection) throws SQLException, CrudException {
+                return subjectDao.selectAll(connection);
             }
         });
     }

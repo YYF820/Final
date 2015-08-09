@@ -128,6 +128,26 @@
         <role name="admin"/>
     </action>
 
+    <action path="/admin/editFaculty.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/prepareInfoEditFaculty.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/prepareInfoAddFaculty.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/addFaculty.html">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/addFaculty.do">
+        <role name="admin"/>
+    </action>
+
     <!-- pages for entrant -->
     <action path="/entrant/index.html">
         <role name="entrant"/>

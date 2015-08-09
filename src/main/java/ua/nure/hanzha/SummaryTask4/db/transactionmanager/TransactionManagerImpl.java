@@ -31,7 +31,10 @@ public class TransactionManagerImpl implements TransactionManager {
             T result = unitOfWork.call(conn);
             conn.commit();
             return result;
-        } catch (SQLException | CrudException e) {
+        } catch (SQLException e) {
+            JdbcUtils.rollBackQuietly(conn);
+            throw new DaoSystemException("SQL Exception", e);
+        } catch (CrudException e) {
             JdbcUtils.rollBackQuietly(conn);
             throw new DaoSystemException(e.getMessage(), e);
         } finally {
