@@ -159,5 +159,17 @@ public class SessionAttribute {
 
     public static final String ENTRANT_ACCOUNT_SETTINGS_NO_EXTRA_MARKS = "entrantAccountSettingsNoExtraMarks";
     public static final String ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS = "entrantAccountSettingsExtraMarks";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_EMPTY_FIELDS =
+            "entrantAccountSettingsExtraMarksIsEmptyFields";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_CERTIFICATE_POINTS =
+            "entrantAccountSettingsExtraMarksIsValidCertificatePoints";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_EXTRA_POINTS =
+            "entrantAccountSettingsExtraMarksIsValidExtraPoints";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_CERTIFICATE_POINTS =
+            "entrantAccountSettingsExtraMarksCertificatePoints";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_EXTRA_POINTS =
+            "entrantAccountSettingsExtraMarksExtraPoints";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_ENTRANT_ID =
+            "entrantAccountSettingsExtraMarksEntrantId";
 
 }

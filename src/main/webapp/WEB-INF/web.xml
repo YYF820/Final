@@ -202,6 +202,15 @@
         <url-pattern>/entrant/addMarks.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>EntrantAddExtraMarksView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/entrant/addExtraMarks.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EntrantAddExtraMarksView</servlet-name>
+        <url-pattern>/entrant/addExtraMarks.html</url-pattern>
+    </servlet-mapping>
+
     <!--Servlets mapping-->
     <servlet>
         <servlet-name>AuthServlet</servlet-name>
@@ -383,6 +392,15 @@
     <servlet-mapping>
         <servlet-name>AddSubjectsMarksServlet</servlet-name>
         <url-pattern>/entrant/addSubjectsMarks.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddExtraMarksServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.entrant.AddExtraMarksServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddExtraMarksServlet</servlet-name>
+        <url-pattern>/entrant/addExtraMarks.do</url-pattern>
     </servlet-mapping>
 
     <!--Filters-->

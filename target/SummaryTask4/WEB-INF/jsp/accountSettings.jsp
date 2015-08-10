@@ -44,7 +44,7 @@
                     <c:when test="${sessionScope.entrantAccountSettingsNoExtraMarks == true}">
                         <p>You must set up your profile, enter extra scores for school subjects and additional lessons
                             after that you could enroll in the faculties. </p>
-                        <a href="<c:url value="/entrant/addSubjects.html"/>">You can do it here <i
+                        <a href="<c:url value="/entrant/addExtraMarks.html"/>">You can do it here <i
                                 class="uk-icon-external-link"></i></a>
                     </c:when>
                 </c:choose>

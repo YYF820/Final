@@ -155,8 +155,20 @@ public class Validation {
     }
 
     public static boolean validateMark(String mark) {
-        Pattern p = Pattern.compile("([1][0-9][0-9]|[2][0][0])(\\.?\\d{0,2})");
+        Pattern p = Pattern.compile("[1][0-9][0-9](\\.\\d{0,2}|)|200(\\.0{1,2}|)");
         Matcher m = p.matcher(mark);
-        return  m.matches();
+        return m.matches();
+    }
+
+    public static boolean validateCertificatePoints(String certificatePoints) {
+        Pattern p = Pattern.compile("^[3-5][0-9](\\.\\d{0,2}|)|60(\\.0{1,2}|)$");
+        Matcher m = p.matcher(certificatePoints);
+        return m.matches();
+    }
+
+    public static boolean validateExtraPoints(String extraPoints) {
+        Pattern p = Pattern.compile("^[0-9](\\.\\d{0,2}|)|[1][0-9](\\.\\d{0,2}|)|20(\\.[0]{1,2}|)$");
+        Matcher m = p.matcher(extraPoints);
+        return m.matches();
     }
 }

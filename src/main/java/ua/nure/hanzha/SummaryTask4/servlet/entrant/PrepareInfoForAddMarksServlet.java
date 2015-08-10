@@ -27,16 +27,16 @@ public class PrepareInfoForAddMarksServlet extends HttpServlet {
         String[] subjectsIdToAdd = request.getParameterValues(PARAM_SUBJECTS_ID_TO_ADD);
         boolean isFormEmpty = checkIsFormEmpty(session, subjectsIdToAdd);
         if (isFormEmpty) {
-            response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_SUBJECTS);
+            response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_SUBJECTS_HTML);
         } else {
             boolean isCorrectNumberOfSubjects = checkIsCorrectNumberOfSubjects(session, subjectsIdToAdd);
             if (!isCorrectNumberOfSubjects) {
-                response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_SUBJECTS);
+                response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_SUBJECTS_HTML);
             } else {
                 Integer[] subjectsIdToAddInt = StringToDecimalArray.convertToInteger(subjectsIdToAdd);
                 List<Subject> subjectsToAdd = prepareSubjects(session, subjectsIdToAddInt);
                 session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_SUBJECTS_TO_ADD, subjectsToAdd);
-                response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS);
+                response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS_HTML);
             }
         }
     }

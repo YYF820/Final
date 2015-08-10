@@ -12,4 +12,6 @@ import java.util.List;
 public interface ExtraMarkService {
 
     ExtraMark getByEntrantId(int entrantId) throws DaoSystemException;
+
+    void addExtraMark(ExtraMark extraMark) throws DaoSystemException;
 }

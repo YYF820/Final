@@ -183,4 +183,12 @@
         <role name="entrant"/>
     </action>
 
+    <action path="/entrant/addExtraMarks.html">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addExtraMarks.do">
+        <role name="entrant"/>
+    </action>
+
 </map>

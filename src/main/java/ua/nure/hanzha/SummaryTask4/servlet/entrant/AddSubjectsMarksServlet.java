@@ -42,7 +42,7 @@ public class AddSubjectsMarksServlet extends HttpServlet {
         boolean isValidMarks = checkIsValidMarks(session, params);
         if (isAnyEmptyField || !isValidMarks) {
             setUpFields(session, params);
-            response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS);
+            response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS_HTML);
         } else {
             Entrant entrant = (Entrant) session.getAttribute(
                     SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_ENTRANT_TO_ADD_SUBJECTS_MARKS);
@@ -60,7 +60,7 @@ public class AddSubjectsMarksServlet extends HttpServlet {
                     session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_SOMETHING_BAD, true);
                 }
             }
-            response.sendRedirect(Pages.ACCOUNT_SETTINGS);
+            response.sendRedirect(Pages.ACCOUNT_SETTINGS_HTML);
         }
     }
 

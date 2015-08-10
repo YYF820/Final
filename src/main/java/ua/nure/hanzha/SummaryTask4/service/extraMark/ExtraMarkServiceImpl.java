@@ -33,4 +33,15 @@ public class ExtraMarkServiceImpl implements ExtraMarkService {
             }
         });
     }
+
+    @Override
+    public void addExtraMark(final ExtraMark extraMark) throws DaoSystemException {
+        txManager.doInTransaction(new SqlCallable<Void>() {
+            @Override
+            public Void call(Connection connection) throws SQLException, CrudException {
+                extraMarkDao.insert(extraMark, connection);
+                return null;
+            }
+        });
+    }
 }

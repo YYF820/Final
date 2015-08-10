@@ -38,6 +38,7 @@ public class ExtraMarksFilter extends BaseFilter {
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
+        cleanSession(session);
         User user = (User) session.getAttribute(SessionAttribute.ACCOUNT);
         if (Role.getRole(user).getName().equals(Roles.ADMIN)) {
             filterChain.doFilter(request, response);
@@ -57,9 +58,21 @@ public class ExtraMarksFilter extends BaseFilter {
                 filterChain.doFilter(request, response);
             } catch (DaoSystemException e) {
                 e.printStackTrace();
+                session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_ENTRANT_ID, entrantId);
                 session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_NO_EXTRA_MARKS, true);
                 filterChain.doFilter(request, response);
             }
         }
+    }
+
+    private void cleanSession(HttpSession session) {
+        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_CERTIFICATE_POINTS);
+        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_CERTIFICATE_POINTS);
+        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_EXTRA_POINTS);
+        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_EXTRA_POINTS);
+        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_EMPTY_FIELDS);
+        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_ENTRANT_ID);
+        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS);
+        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_NO_EXTRA_MARKS);
     }
 }

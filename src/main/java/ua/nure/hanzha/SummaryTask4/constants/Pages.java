@@ -31,7 +31,8 @@ public class Pages {
     public static final String FACULTY_EDIT_ADMIN_HTML = "/admin/editFaculty.html";
     public static final String FACULTY_ADD_ADMIN_HTML = "/admin/addFaculty.html";
 
-    public static final String ACCOUNT_SETTINGS = "/accountSettings.html";
-    public static final String ENTRANT_ACCOUNT_SETTINGS_ADD_SUBJECTS = "/entrant/addSubjects.html";
-    public static final String ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS = "/entrant/addMarks.html";
+    public static final String ACCOUNT_SETTINGS_HTML = "/accountSettings.html";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_ADD_SUBJECTS_HTML = "/entrant/addSubjects.html";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS_HTML = "/entrant/addMarks.html";
+    public static final String ENTRANT_ACCOUNT_SETTEING_ADD_EXTRA_MARKS_HTML = "/entrant/addExtraMarks.html";
 }
