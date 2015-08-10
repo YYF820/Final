@@ -44,4 +44,14 @@ public class SubjectServiceImpl implements SubjectService {
             }
         });
     }
+
+    @Override
+    public Subject getById(final int id) throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<Subject>() {
+            @Override
+            public Subject call(Connection connection) throws SQLException, CrudException {
+                return subjectDao.selectById(id, connection);
+            }
+        });
+    }
 }

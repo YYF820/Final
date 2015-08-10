@@ -153,4 +153,10 @@ public class Validation {
         Matcher m = p.matcher(facultyId);
         return m.matches();
     }
+
+    public static boolean validateMark(String mark) {
+        Pattern p = Pattern.compile("([1][0-9][0-9]|[2][0][0])(\\.?\\d{0,2})");
+        Matcher m = p.matcher(mark);
+        return  m.matches();
+    }
 }

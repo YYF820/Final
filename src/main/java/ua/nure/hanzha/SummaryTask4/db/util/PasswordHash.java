@@ -146,7 +146,7 @@ public class PasswordHash {
     /**
      * Converts a byte array into a hexadecimal string.
      *
-     * @param array the byte array to convert
+     * @param array the byte array to convertToInteger
      * @return a length*2 character string encoding the byte array
      */
     private static String toHex(byte[] array) {

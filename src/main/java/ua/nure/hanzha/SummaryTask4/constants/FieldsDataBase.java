@@ -55,7 +55,7 @@ public class FieldsDataBase {
 
     public static final String EXTRA_MARK_ENTRANT_ID = "entrant_id";
     public static final String EXTRA_MARK_CERTIFICATE_POINTS = "certificate_points";
-    public static final String EXTRA_MARK_EXTRA_POINTS = "extra_mark";
+    public static final String EXTRA_MARK_EXTRA_POINTS = "extra_points";
 
     //===========================FACULTY SUBJECT FIELDS==========================
 
@@ -66,7 +66,7 @@ public class FieldsDataBase {
 
     public static final String MARK_SUBJECT_ID = "subject_id";
     public static final String MARK_ENTRANT_ID = "entrant_id";
-    public static final String MARK_VALUE = "value";
+    public static final String MARK_VALUE = "mark_value";
 
     //===========================FACULTY ENTRANT FIELDS==========================
 

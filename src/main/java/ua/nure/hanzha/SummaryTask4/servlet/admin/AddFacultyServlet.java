@@ -7,7 +7,7 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Faculty;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
-import ua.nure.hanzha.SummaryTask4.util.StringToIntegerArray;
+import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArray;
 import ua.nure.hanzha.SummaryTask4.validation.Validation;
 
 import javax.servlet.ServletException;
@@ -64,7 +64,7 @@ public class AddFacultyServlet extends HttpServlet {
                     response.sendRedirect(Pages.FACULTY_ADD_ADMIN_HTML);
                 } else {
                     Faculty faculty = prepareForCreate(facultyName, totalSpotsInt, budgetSpotsInt);
-                    Integer[] subjectsIdToAddForService = StringToIntegerArray.convert(subjectsIdToAdd);
+                    Integer[] subjectsIdToAddForService = StringToDecimalArray.convertToInteger(subjectsIdToAdd);
                     try {
                         facultyAdminService.addFaculty(faculty, subjectsIdToAddForService);
                         cleanSession(session);

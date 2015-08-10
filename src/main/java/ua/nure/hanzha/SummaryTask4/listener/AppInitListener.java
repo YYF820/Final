@@ -6,10 +6,14 @@ import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminImpl;
+import ua.nure.hanzha.SummaryTask4.db.dao.extramark.ExtraMarkDao;
+import ua.nure.hanzha.SummaryTask4.db.dao.extramark.ExtraMarkDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.faculty.FacultyDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.faculty.FacultyDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.facultysubject.FacultySubjectDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.facultysubject.FacultySubjectDaoImpl;
+import ua.nure.hanzha.SummaryTask4.db.dao.mark.MarkDao;
+import ua.nure.hanzha.SummaryTask4.db.dao.mark.MarkDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.subject.SubjectDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.subject.SubjectDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDao;
@@ -19,14 +23,18 @@ import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManagerImpl;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.security.AuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.security.XmlAuthorizationMap;
-import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
-import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminService;
 import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminServiceImpl;
+import ua.nure.hanzha.SummaryTask4.service.extraMark.ExtraMarkService;
+import ua.nure.hanzha.SummaryTask4.service.extraMark.ExtraMarkServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.faculty.FacultyService;
 import ua.nure.hanzha.SummaryTask4.service.faculty.FacultyServiceImpl;
+import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
+import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminServiceImpl;
+import ua.nure.hanzha.SummaryTask4.service.mark.MarkService;
+import ua.nure.hanzha.SummaryTask4.service.mark.MarkServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationService;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
@@ -79,6 +87,8 @@ public class AppInitListener implements ServletContextListener {
         FacultyDao facultyDao = new FacultyDaoImpl();
         SubjectDao subjectDao = new SubjectDaoImpl();
         FacultySubjectDao facultySubjectDao = new FacultySubjectDaoImpl();
+        MarkDao markDao = new MarkDaoImpl();
+        ExtraMarkDao extraMarkDao = new ExtraMarkDaoImpl();
 
 
         UserService userService = new UserServiceImpl(txManager, userDao);
@@ -101,6 +111,12 @@ public class AppInitListener implements ServletContextListener {
 
         FacultyAdminService facultyAdminService = new FacultyAdminServiceImpl(txManager, facultyDao, facultySubjectDao);
         servletContext.setAttribute(AppAttribute.FACULTY_ADMIN_SERVICE, facultyAdminService);
+
+        MarkService markService = new MarkServiceImpl(txManager, markDao);
+        servletContext.setAttribute(AppAttribute.MARK_SERVICE, markService);
+
+        ExtraMarkService extraMarkService = new ExtraMarkServiceImpl(txManager, extraMarkDao);
+        servletContext.setAttribute(AppAttribute.EXTRA_MARK_SERVICE, extraMarkService);
     }
 
     private void setAuthorizationMap(ServletContext servletContext, String fileName) {

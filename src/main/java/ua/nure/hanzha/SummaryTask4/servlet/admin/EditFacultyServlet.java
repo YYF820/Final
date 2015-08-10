@@ -8,7 +8,7 @@ import ua.nure.hanzha.SummaryTask4.entity.Faculty;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
-import ua.nure.hanzha.SummaryTask4.util.StringToIntegerArray;
+import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArray;
 import ua.nure.hanzha.SummaryTask4.validation.Validation;
 
 import javax.servlet.ServletException;
@@ -82,8 +82,8 @@ public class EditFacultyServlet extends HttpServlet {
                         response.sendRedirect(Pages.FACULTY_EDIT_ADMIN_HTML);
                     } else {
                         prepareInfoBeforeEdit(facultyForEdit, facultyName, totalSpots, budgetSpots);
-                        Integer[] subjectsIdToAddForService = StringToIntegerArray.convert(subjectsIdToAdd);
-                        Integer[] subjectsIdToDeleteForService = StringToIntegerArray.convert(subjectsIdToDelete);
+                        Integer[] subjectsIdToAddForService = StringToDecimalArray.convertToInteger(subjectsIdToAdd);
+                        Integer[] subjectsIdToDeleteForService = StringToDecimalArray.convertToInteger(subjectsIdToDelete);
                         try {
                             if (subjectsIdToAddForService != null && subjectsIdToDeleteForService != null) {
                                 facultyAdminService.editFacultyInfoWithSubjects(facultyForEdit, subjectsIdToAddForService, subjectsIdToDeleteForService);

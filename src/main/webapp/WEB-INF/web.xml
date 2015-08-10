@@ -126,6 +126,15 @@
         <url-pattern>/blockAccount.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AccountSettingsView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/accountSettings.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccountSettingsView</servlet-name>
+        <url-pattern>/accountSettings.html</url-pattern>
+    </servlet-mapping>
+
 
     <!-- admin pages -->
     <servlet>
@@ -176,12 +185,21 @@
 
     <!-- entrant pages -->
     <servlet>
-        <servlet-name>EntrantIndexView</servlet-name>
-        <jsp-file>/WEB-INF/jsp/entrant/index.jsp</jsp-file>
+        <servlet-name>EntrantAddSubjectsView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/entrant/addSubjects.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>EntrantIndexView</servlet-name>
-        <url-pattern>/entrant/index.html</url-pattern>
+        <servlet-name>EntrantAddSubjectsView</servlet-name>
+        <url-pattern>/entrant/addSubjects.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EntrantAddMarksView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/entrant/addMarks.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EntrantAddMarksView</servlet-name>
+        <url-pattern>/entrant/addMarks.html</url-pattern>
     </servlet-mapping>
 
     <!--Servlets mapping-->
@@ -349,6 +367,24 @@
         <url-pattern>/admin/deleteFaculty.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PrepareInfoForAddMarksServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.entrant.PrepareInfoForAddMarksServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PrepareInfoForAddMarksServlet</servlet-name>
+        <url-pattern>/entrant/prepareInfoForAddMarks.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddSubjectsMarksServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.entrant.AddSubjectsMarksServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddSubjectsMarksServlet</servlet-name>
+        <url-pattern>/entrant/addSubjectsMarks.do</url-pattern>
+    </servlet-mapping>
+
     <!--Filters-->
 
     <filter>
@@ -403,6 +439,7 @@
         <url-pattern>/resetPasswordSessionInvalidated.html</url-pattern>
         <url-pattern>/registration.html</url-pattern>
         <url-pattern>/registration.do</url-pattern>
+        <url-pattern>/accountSettings.html</url-pattern>
 
         <url-pattern>/index.html</url-pattern>
     </filter-mapping>
@@ -416,6 +453,23 @@
         <filter-name>ResetPasswordCheckInvalidateFilter</filter-name>
         <url-pattern>/checkTicketResetPassword.do</url-pattern>
         <url-pattern>/resetPassword.do</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>EnoughSubjectsFilter</filter-name>
+        <filter-class>ua.nure.hanzha.SummaryTask4.filter.EnoughSubjectsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EnoughSubjectsFilter</filter-name>
+        <url-pattern>/accountSettings.html</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>ExtraMarksFilter</filter-name>
+        <filter-class>ua.nure.hanzha.SummaryTask4.filter.ExtraMarksFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ExtraMarksFilter</filter-name>
+        <url-pattern>/accountSettings.html</url-pattern>
     </filter-mapping>
     <!--Listeners-->
 

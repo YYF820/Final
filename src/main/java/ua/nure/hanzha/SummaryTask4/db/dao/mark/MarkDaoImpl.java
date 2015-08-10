@@ -76,18 +76,17 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     }
 
     @Override
-    public void selectBySubjectId(int subjectId, Connection connection) throws SQLException, CrudException {
-        selectById(
+    public List<Mark> selectBySubjectId(int subjectId, Connection connection) throws SQLException, CrudException {
+        return selectByIdMultiRows(
                 subjectId,
                 SqlQueriesHolder.getSqlQuery("mark.select.by.subject.id"),
                 connection
         );
-
     }
 
     @Override
-    public void selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
-        selectById(
+    public List<Mark> selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
+        return selectByIdMultiRows(
                 entrantId,
                 SqlQueriesHolder.getSqlQuery("mark.select.by.entrant.id"),
                 connection
@@ -95,8 +94,8 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     }
 
     @Override
-    public void selectBySubjectIdEntrantId(int subjectId, int entrantId, Connection connection) throws SQLException, CrudException {
-        selectByDoubleId(
+    public Mark selectBySubjectIdEntrantId(int subjectId, int entrantId, Connection connection) throws SQLException, CrudException {
+        return selectByDoubleId(
                 subjectId,
                 entrantId,
                 SqlQueriesHolder.getSqlQuery("mark.select.by.subject.id.and.entrant.id"),

@@ -14,4 +14,6 @@ public interface SubjectService {
     List<Subject> getAllByFacultyId(int facultyId) throws DaoSystemException;
 
     List<Subject> getAll() throws DaoSystemException;
+
+    Subject getById(int id) throws DaoSystemException;
 }

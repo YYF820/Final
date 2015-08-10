@@ -3,7 +3,7 @@
     <u:ifAuthAs role="admin">
         <a href="#adminCanvasId" class="uk-navbar-toggle" data-uk-offcanvas></a>
     </u:ifAuthAs>
-    <a href="<c:url value="/index.html"/>"><img class="uk-navbar-brand" src="../../resources/img/logo.png"/></a>
+    <a href="<c:url value="/index.html"/>"><img class="uk-navbar-brand" src="../../../resources/img/logo.png"/></a>
 
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">
@@ -29,12 +29,16 @@
                 <div class="uk-dropdown uk-dropdown-navbar">
                     <ul class="uk-nav uk-nav-navbar">
                         <u:ifAuthAs role="guest">
-                            <li><a href="<c:url value="/login.html"/>">Log in <i class="uk-icon uk-icon-sign-in"></i></a></li>
-                            <li><a href="">Account Settings</a></li>
+                            <li><a href="<c:url value="/login.html"/>">Log in <i
+                                    class="uk-icon uk-icon-sign-in"></i></a></li>
+                            <li><a href="<c:url value="/login.html"/>">Account Settings <i
+                                    class="uk-icon uk-icon-cog"></i></a></li>
                         </u:ifAuthAs>
                         <u:ifAuth>
-                            <li><a href="<c:url value="/logout.do"/>">Log out <i class="uk-icon uk-icon-sign-out"></i></a></li>
-                            <li><a href="">Account Settings <i class="uk-icon uk-icon-cog"></i></a></li>
+                            <li><a href="<c:url value="/logout.do"/>">Log out <i
+                                    class="uk-icon uk-icon-sign-out"></i></a></li>
+                            <li><a href="<c:url value="/accountSettings.html"/>">Account Settings <i
+                                    class="uk-icon uk-icon-cog"></i></a></li>
                         </u:ifAuth>
                     </ul>
                 </div>
@@ -46,8 +50,10 @@
 <div id="adminCanvasId" class="uk-offcanvas">
     <div class="uk-offcanvas-bar">
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
-            <li><a href="<c:url value="/admin/entrants.do"/>">Entrants <i class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
-            <li class="uk-active"><a href="/admin/faculties.do">Faculties <i class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
+            <li><a href="<c:url value="/admin/entrants.do"/>">Entrants <i
+                    class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
+            <li class="uk-active"><a href="<c:url value="/admin/faculties.do"/>">Faculties <i
+                    class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
             <li><a href="">Final sheet <i class="uk-icon uk-icon-university uk-text-primary"></i></a></li>
             <li class="uk-active"><a class="uk-text-success" href="">life@University</a></li>
         </ul>

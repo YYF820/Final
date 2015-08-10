@@ -7,6 +7,11 @@
         <role name="entrant"/>
         <role name="admin"/>
     </action>
+
+    <action path="/accountSettings.html">
+        <role name="admin"/>
+        <role name="entrant"/>
+    </action>
     <!-- Pages for guest only -->
 
     <action path="/registration.html">
@@ -152,12 +157,29 @@
         <role name="admin"/>
     </action>
 
+
     <!-- pages for entrant -->
     <action path="/entrant/index.html">
         <role name="entrant"/>
     </action>
 
     <action path="/logout.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addSubjects.html">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/prepareInfoForAddMarks.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addMarks.html">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addSubjectsMarks.do">
         <role name="entrant"/>
     </action>
 

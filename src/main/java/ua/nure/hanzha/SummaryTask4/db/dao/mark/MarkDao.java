@@ -25,11 +25,11 @@ public interface MarkDao extends Dao<Mark> {
 
     void deleteBySubjectIdEntrantId(int subjectId, int entrantId, Connection connection) throws SQLException, CrudException;
 
-    void selectBySubjectId(int subjectId, Connection connection) throws SQLException, CrudException;
+    List<Mark> selectBySubjectId(int subjectId, Connection connection) throws SQLException, CrudException;
 
-    void selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
+    List<Mark> selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
 
-    void selectBySubjectIdEntrantId(int subjectId, int entrantId, Connection connection) throws SQLException, CrudException;
+    Mark selectBySubjectIdEntrantId(int subjectId, int entrantId, Connection connection) throws SQLException, CrudException;
 
     List<Mark> selectByMarkValue(double markValue, Connection connection) throws SQLException, CrudException;
 }

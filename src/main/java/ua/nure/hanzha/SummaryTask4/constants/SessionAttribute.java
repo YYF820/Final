@@ -1,7 +1,8 @@
 package ua.nure.hanzha.SummaryTask4.constants;
 
 /**
- * Created by faffi-ubuntu on 02/08/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 02/08/15.
  */
 public class SessionAttribute {
 
@@ -133,5 +134,30 @@ public class SessionAttribute {
     public static final String ADMIN_DELETE_IS_VALID_PARAM_FACULTY_ID = "adminDeleteIsValidParamFacultyId";
     public static final String ADMIN_DELETE_IS_DELETED = "adminDeleteIsDeleted";
 
+
+    //======================== ENTRANT ===================================================//
+    public static final String ENTRANT_ACCOUNT_SETTINGS_ENTRANT_TO_ADD_SUBJECTS_MARKS =
+            "entrantAccountSettingsEntrantToAddSubjectsMarks";
+    public static final String ENTRANT_NO_SUBJECTS_ADDED = "entrantNoSubjectsAdded";
+    public static final String ENTRANT_HOW_MANY_MORE_SUBJECTS_NEED = "entrantHowManyMoreSubjectsNeed";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_BEAN = "entrantAccountSettingsBean";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_ALL_SUBJECTS = "entrantAccountSettingsAllSubjects";
+
+    public static final String ENTRANT_ACCOUNT_SETTINGS_IS_EMPTY_FORM = "entrantAccountSettingsIsEmptyForm";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_IS_CORRECT_NUMBER_OF_SUBJECTS =
+            "entrantAccountSettingsIsCorrectNumberOfSubjects";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_SUBJECTS_TO_ADD = "entrantAccountSettingsIsSubjectsToAdd";
+
+    public static final String ENTRANT_ACCOUNT_SETTINGS_IS_EMPTY_MARKS = "entrantAccountSettingsIsEmptyMarks";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_IS_VALID_MARKS = "entrantAccountSettingsIsValidMarks";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_MARK_FIRST = "entrantAccountSettingsMarkFirst";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_MARK_SECOND = "entrantAccountSettingsMarkSecond";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_MARK_THIRD = "entrantAccountSettingsMarkThird";
+
+    public static final String ENTRANT_ACCOUNT_SETTINGS_SOMETHING_BAD = "entrantAccountSettingsSomethingBad";
+
+
+    public static final String ENTRANT_ACCOUNT_SETTINGS_NO_EXTRA_MARKS = "entrantAccountSettingsNoExtraMarks";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS = "entrantAccountSettingsExtraMarks";
 
 }

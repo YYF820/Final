@@ -97,8 +97,8 @@ public class GeneratorSql {
         pwUsers.println(
                 "INSERT INTO Users VALUES (DEFAULT, \'" +
                         PasswordHash.createHash("t9dnb2mq") + "\', \'" +
-                        "Ganzha" + "\', \'" +
                         "Dmitriy" + "\', \'" +
+                        "Ganzha" + "\', \'" +
                         "Dmytrievich" + "\', \'" +
                         "ganzha.010695@gmail.com" + "\', 1);"
         );
