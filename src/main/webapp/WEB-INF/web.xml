@@ -135,6 +135,15 @@
         <url-pattern>/accountSettings.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>FacultiesView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/faculties.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FacultiesView</servlet-name>
+        <url-pattern>/faculties.html</url-pattern>
+    </servlet-mapping>
+
 
     <!-- admin pages -->
     <servlet>
@@ -211,6 +220,15 @@
         <url-pattern>/entrant/addExtraMarks.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SetUpPrioritiesView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/entrant/setUpPriorities.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SetUpPrioritiesView</servlet-name>
+        <url-pattern>/entrant/setUpPriorities.html</url-pattern>
+    </servlet-mapping>
+
     <!--Servlets mapping-->
     <servlet>
         <servlet-name>AuthServlet</servlet-name>
@@ -257,7 +275,6 @@
         <servlet-name>ResendVerificationOrResetPasswordServlet</servlet-name>
         <url-pattern>/resendVerificationOrResetPassword.do</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>CheckQuestionServlet</servlet-name>
         <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.check.CheckQuestionServlet</servlet-class>
@@ -323,11 +340,11 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>FacultiesSorterServlet</servlet-name>
-        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.FacultiesSorterServlet</servlet-class>
+        <servlet-name>FacultiesSorterAdminServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.FacultiesSorterAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>FacultiesSorterServlet</servlet-name>
+        <servlet-name>FacultiesSorterAdminServlet</servlet-name>
         <url-pattern>/admin/facultiesSort.do</url-pattern>
     </servlet-mapping>
 
@@ -403,6 +420,42 @@
         <url-pattern>/entrant/addExtraMarks.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DeleteFacultyEntrantServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.entrant.DeleteFacultyEntrantServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFacultyEntrantServlet</servlet-name>
+        <url-pattern>/entrant/deleteFaculty.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddFacultyEntrantServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.entrant.AddFacultyEntrantServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddFacultyEntrantServlet</servlet-name>
+        <url-pattern>/entrant/addFaculty.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ConfigurePrioritiesServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.entrant.ConfigurePrioritiesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfigurePrioritiesServlet</servlet-name>
+        <url-pattern>/entrant/configurePriorities.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FacultiesSorterServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.FacultiesSorterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FacultiesSorterServlet</servlet-name>
+        <url-pattern>/facultiesSort.do</url-pattern>
+    </servlet-mapping>
+
     <!--Filters-->
 
     <filter>
@@ -458,6 +511,8 @@
         <url-pattern>/registration.html</url-pattern>
         <url-pattern>/registration.do</url-pattern>
         <url-pattern>/accountSettings.html</url-pattern>
+        <url-pattern>/faculties.html</url-pattern>
+        <url-pattern>/facultiesSort.do</url-pattern>
 
         <url-pattern>/index.html</url-pattern>
     </filter-mapping>
@@ -480,6 +535,7 @@
     <filter-mapping>
         <filter-name>EnoughSubjectsFilter</filter-name>
         <url-pattern>/accountSettings.html</url-pattern>
+        <url-pattern>/faculties.html</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>ExtraMarksFilter</filter-name>
@@ -488,13 +544,22 @@
     <filter-mapping>
         <filter-name>ExtraMarksFilter</filter-name>
         <url-pattern>/accountSettings.html</url-pattern>
+        <url-pattern>/faculties.html</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>FacultiesFilter</filter-name>
+        <filter-class>ua.nure.hanzha.SummaryTask4.filter.FacultiesFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FacultiesFilter</filter-name>
+        <url-pattern>/faculties.html</url-pattern>
     </filter-mapping>
     <!--Listeners-->
 
     <listener>
         <listener-class>ua.nure.hanzha.SummaryTask4.listener.AppInitListener</listener-class>
     </listener>
-
 
     <resource-ref>
         <description>DB Connection</description>

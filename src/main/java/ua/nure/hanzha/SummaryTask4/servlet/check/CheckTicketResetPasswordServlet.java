@@ -2,14 +2,12 @@ package ua.nure.hanzha.SummaryTask4.servlet.check;
 
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
-import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

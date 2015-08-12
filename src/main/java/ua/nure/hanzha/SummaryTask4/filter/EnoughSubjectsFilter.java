@@ -48,10 +48,12 @@ public class EnoughSubjectsFilter extends BaseFilter {
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
         cleanSession(session);
         User user = (User) session.getAttribute(SessionAttribute.ACCOUNT);
-        if (Role.getRole(user).getName().equals(Roles.ADMIN)) {
+        if (user == null) {
+            filterChain.doFilter(request, response);
+        } else if (Role.getRole(user).getName().equals(Roles.ADMIN)) {
             filterChain.doFilter(request, response);
         } else {
             int userId = user.getId();
@@ -62,6 +64,7 @@ public class EnoughSubjectsFilter extends BaseFilter {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 return;
             }
+            session.setAttribute(SessionAttribute.FACULTIES_ENTRANT_ENTITY, entrant);
             int entrantId = entrant.getId();
             try {
                 List<Mark> entrantMarks = markService.getAllMarksByEntrantId(entrantId);

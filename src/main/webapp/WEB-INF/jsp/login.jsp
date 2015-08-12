@@ -14,8 +14,7 @@
     <%@include file="../jspf/header/header.jspf" %>
 </head>
 <body>
-<div class="uk-vertical-align uk-text-center uk-height-1-1">
-
+<div class="uk-vertical-align uk-text-center">
     <div class="uk-vertical-align-middle " style="width: 400px;">
         <img class="uk-margin-bottom logo-login"
              src="<c:url value="/resources/img/mainLogo.png"/>"

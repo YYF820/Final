@@ -2,7 +2,6 @@ package ua.nure.hanzha.SummaryTask4.filter;
 
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.User;
-import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

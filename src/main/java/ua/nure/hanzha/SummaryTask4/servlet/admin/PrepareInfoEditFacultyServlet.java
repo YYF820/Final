@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.servlet.admin;
 
-import ua.nure.hanzha.SummaryTask4.bean.FacultiesInfoAdminBean;
+import ua.nure.hanzha.SummaryTask4.bean.FacultiesInfoBean;
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
@@ -65,16 +65,16 @@ public class PrepareInfoEditFacultyServlet extends HttpServlet {
     }
 
     private void prepareInfoForEdit(String nameOfListForExtractBean, int index, HttpServletResponse response, HttpSession session) throws IOException {
-        List<FacultiesInfoAdminBean> facultiesInfoAdminBeansPagination =
-                (List<FacultiesInfoAdminBean>) session.getAttribute(nameOfListForExtractBean);
-        FacultiesInfoAdminBean facultiesInfoAdminBean = facultiesInfoAdminBeansPagination.get(index);
+        List<FacultiesInfoBean> facultiesInfoBeansPagination =
+                (List<FacultiesInfoBean>) session.getAttribute(nameOfListForExtractBean);
+        FacultiesInfoBean facultiesInfoBean = facultiesInfoBeansPagination.get(index);
 
-        List<Subject> subjectsInFaculty = facultiesInfoAdminBean.getSubjects();
+        List<Subject> subjectsInFaculty = facultiesInfoBean.getSubjects();
         try {
             List<Subject> allSubjects = subjectService.getAll();
             List<Subject> subjectToAdd = subjectsToAdd(subjectsInFaculty, allSubjects);
             session.setAttribute(SessionAttribute.ADMIN_SUBJECTS_TO_ADD, subjectToAdd);
-            session.setAttribute(SessionAttribute.ADMIN_FACULTY_FOR_EDIT, facultiesInfoAdminBean);
+            session.setAttribute(SessionAttribute.ADMIN_FACULTY_FOR_EDIT, facultiesInfoBean);
             cleanSession(session);
             response.sendRedirect(Pages.FACULTY_EDIT_ADMIN_HTML);
         } catch (DaoSystemException e) {

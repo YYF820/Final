@@ -11,7 +11,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * FacultyEntrantDaoImpl extends AbstractDao and implements FacultyEntrantDao.In FacultyEntrantDaoImpl
@@ -147,6 +150,49 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
                 return result;
             } else {
                 throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
+            }
+        }
+    }
+
+    @Override
+    public List<Integer> selectAllPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(
+                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.priority.by.entrant.id"))) {
+            ps.setInt(1, entrantId);
+            List<Integer> result = new ArrayList<>();
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    result.add(resultSet.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY));
+                }
+            }
+            return result;
+        }
+    }
+
+    @Override
+    public Map<Integer, Integer> selectAllFacultyIdPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(
+                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.faculty.id.by.entrant.id"))) {
+            ps.setInt(1, entrantId);
+            Map<Integer, Integer> result = new HashMap<>();
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    result.put(rs.getInt(FieldsDataBase.FACULTY_ENTRANT_FACULTY_ID),
+                            rs.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY));
+                }
+            }
+            return result;
+        }
+    }
+
+    @Override
+    public void updatePriorityByFacultyIdEntrantId(int priority, int facultyId, int entrantId, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("faculty_entrant.update.priority.by.faculty.id.entrant.id"))) {
+            ps.setInt(1, priority);
+            ps.setInt(2, facultyId);
+            ps.setInt(3, entrantId);
+            if (ps.executeUpdate() == 0) {
+                throw new CrudException(ExceptionMessages.UPDATE_EXCEPTION_MESSAGE);
             }
         }
     }

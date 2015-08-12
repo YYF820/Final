@@ -68,7 +68,8 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
 
     @Override
     public int selectIdByName(String name, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("faculty.select.id.by.name"))) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                SqlQueriesHolder.getSqlQuery("faculty.select.id.by.name"))) {
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -76,6 +77,19 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
                 return result;
             } else {
                 throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
+            }
+        }
+    }
+
+    @Override
+    public List<Faculty> selectAllSubjectsMoreThanThree(Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(
+                SqlQueriesHolder.getSqlQuery("faculty.function.select.only.with.subjects.more.than.three"))) {
+            List<Faculty> result = executeQuery(ps);
+            if (result.size() > 0) {
+                return result;
+            } else {
+                throw new CrudException(ExceptionMessages.SELECT_EXCEPTION_MESSAGE);
             }
         }
     }

@@ -40,7 +40,9 @@ public class ExtraMarksFilter extends BaseFilter {
         HttpSession session = request.getSession(false);
         cleanSession(session);
         User user = (User) session.getAttribute(SessionAttribute.ACCOUNT);
-        if (Role.getRole(user).getName().equals(Roles.ADMIN)) {
+        if (user == null) {
+            filterChain.doFilter(request, response);
+        } else if (Role.getRole(user).getName().equals(Roles.ADMIN)) {
             filterChain.doFilter(request, response);
         } else {
             int userId = user.getId();
@@ -57,7 +59,6 @@ public class ExtraMarksFilter extends BaseFilter {
                 session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS, extraMarks);
                 filterChain.doFilter(request, response);
             } catch (DaoSystemException e) {
-                e.printStackTrace();
                 session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_ENTRANT_ID, entrantId);
                 session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_NO_EXTRA_MARKS, true);
                 filterChain.doFilter(request, response);

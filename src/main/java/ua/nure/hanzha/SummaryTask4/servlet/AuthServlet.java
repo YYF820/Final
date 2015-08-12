@@ -1,6 +1,9 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
-import ua.nure.hanzha.SummaryTask4.constants.*;
+import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.Pages;
+import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.Validations;
 import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.enums.EntrantStatus;

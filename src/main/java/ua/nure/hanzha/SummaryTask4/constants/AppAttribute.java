@@ -15,6 +15,7 @@ public class AppAttribute {
     public static final String FACULTY_ADMIN_SERVICE = "facultyAdminService";
     public static final String MARK_SERVICE = "markService";
     public static final String EXTRA_MARK_SERVICE = "extraMarkService";
+    public static final String FACULTY_ENTRANT_SERVICE = "facultyEntrantService";
 
     public static final String AUTHORIZATION_MAP = "authorizationMap";
 

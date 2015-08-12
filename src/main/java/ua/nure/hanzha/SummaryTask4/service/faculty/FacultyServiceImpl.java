@@ -36,12 +36,32 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
+    public List<Faculty> getAllFacultiesSubjectsMoreThanThree() throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<List<Faculty>>() {
+            @Override
+            public List<Faculty> call(Connection connection) throws SQLException, CrudException {
+                return facultyDao.selectAllSubjectsMoreThanThree(connection);
+            }
+        });
+    }
+
+    @Override
     public void removeFacultyById(final int facultyId) throws DaoSystemException {
         txManager.doInTransaction(new SqlCallable<Void>() {
             @Override
             public Void call(Connection connection) throws SQLException, CrudException {
                 facultyDao.deleteById(facultyId, connection);
                 return null;
+            }
+        });
+    }
+
+    @Override
+    public Faculty getByFacultyId(final int facultyId) throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<Faculty>() {
+            @Override
+            public Faculty call(Connection connection) throws SQLException, CrudException {
+                return facultyDao.selectById(facultyId, connection);
             }
         });
     }

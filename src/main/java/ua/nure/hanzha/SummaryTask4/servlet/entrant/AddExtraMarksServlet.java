@@ -41,7 +41,7 @@ public class AddExtraMarksServlet extends HttpServlet {
         boolean isValidFields = checkIsValidFields(session, certificatePoints, extraPoints);
         if (isEmptyFields || !isValidFields) {
             setUpFields(session, certificatePoints, extraPoints);
-            response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTEING_ADD_EXTRA_MARKS_HTML);
+            response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_EXTRA_MARKS_HTML);
         } else {
             int entrantId = (int) session.getAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_ENTRANT_ID);
             ExtraMark extraMark = new ExtraMark();

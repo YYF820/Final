@@ -1,46 +1,34 @@
 <%@ taglib prefix="u" uri="http://SummaryTask4.hanzha.nure.ua" %>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<div class="uk-grid">
-    <div class="uk-width-7-10">
-        <nav class="uk-navbar">
-            <ul class="uk-navbar-nav uk-navbar-attached">
+<div class="uk-width-medium-6-10 uk-container-center">
+    <nav class="uk-navbar">
+        <ul class="uk-navbar-nav uk-navbar-attached uk-margin-left">
 
-                <li class="">
-                    <a href="<c:url value="/index.html"/>">
-                        <img src="../../../resources/img/home.png"> Home
-                    </a>
-                </li>
-                <li>
-                    <a href="index.html">
-                        <img src="../../../resources/img/aboutUs.png"> About us
-                    </a>
-                </li>
-                <li>
-                    <a href="index.html">
-                        <img src="../../../resources/img/faculties.png"> Faculties
-                    </a>
-                </li>
-                <li>
-                    <a href="index.html">
-                        <img src="../../../resources/img/life.png"> life@University
-                    </a>
-                </li>
-                <li>
-                    <a href="index.html">
-                        <img src="../../../resources/img/contact.png"> Contact
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-
-    <div class="uk-width-3-10 uk-panel">
-        <u:ifAuthAs role="guest">
-            <a href="<c:url value="/login.html"/>">Log in</a>
-        </u:ifAuthAs>
-        <u:ifAuth>
-            <p class="uk-margin-top">
-                Welcome, ${sessionScope.account.lastName} ${sessionScope.account.firstName} ${sessionScope.account.patronymic}</p>
-        </u:ifAuth>
-    </div>
+            <li class="">
+                <a href="<c:url value="/index.html"/>">
+                    <img src="../../resources/img/home.png"> Home
+                </a>
+            </li>
+            <li>
+                <a href="index.html">
+                    <img src="../../resources/img/aboutUs.png"> About us
+                </a>
+            </li>
+            <li>
+                <a href="<c:url value="/faculties.html?page=1"/>">
+                    <img src="../../resources/img/faculties.png"> Faculties
+                </a>
+            </li>
+            <li>
+                <a href="index.html">
+                    <img src="../../resources/img/life.png"> life@University
+                </a>
+            </li>
+            <li>
+                <a href="index.html">
+                    <img src="../../resources/img/contact.png"> Contact
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>

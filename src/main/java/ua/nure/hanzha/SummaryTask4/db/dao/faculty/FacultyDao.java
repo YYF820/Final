@@ -6,6 +6,7 @@ import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * FacultyDao implements Dao<Faculty> so we can specify, that return type will be Faculty, where was <T>.
@@ -21,5 +22,7 @@ public interface FacultyDao extends Dao<Faculty> {
     Faculty selectById(int id, Connection connection) throws SQLException, CrudException;
 
     int selectIdByName(String name, Connection connection) throws SQLException, CrudException;
+
+    List<Faculty> selectAllSubjectsMoreThanThree(Connection connection) throws SQLException, CrudException;
 
 }

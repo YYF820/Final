@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.servlet.admin;
 
-import ua.nure.hanzha.SummaryTask4.bean.FacultiesInfoAdminBean;
+import ua.nure.hanzha.SummaryTask4.bean.FacultiesInfoBean;
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
@@ -46,7 +46,7 @@ public class FacultiesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
 
-        List<FacultiesInfoAdminBean> facultiesInfoAdminBeans = new ArrayList<>();
+        List<FacultiesInfoBean> facultiesInfoBeans = new ArrayList<>();
         try {
             List<Faculty> faculties = facultyService.getAllFaculties();
             for (Faculty faculty : faculties) {
@@ -59,25 +59,25 @@ public class FacultiesServlet extends HttpServlet {
                         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                 }
-                FacultiesInfoAdminBean facultiesInfoAdminBean = new FacultiesInfoAdminBean();
-                facultiesInfoAdminBean.setFaculty(faculty);
-                facultiesInfoAdminBean.setSubjects(subjects);
-                facultiesInfoAdminBeans.add(facultiesInfoAdminBean);
+                FacultiesInfoBean facultiesInfoBean = new FacultiesInfoBean();
+                facultiesInfoBean.setFaculty(faculty);
+                facultiesInfoBean.setSubjects(subjects);
+                facultiesInfoBeans.add(facultiesInfoBean);
             }
             if (request.getParameter(PARAM_PAGE) != null)
                 page = Integer.parseInt(request.getParameter(PARAM_PAGE));
-            int numberOfRecords = facultiesInfoAdminBeans.size();
+            int numberOfRecords = facultiesInfoBeans.size();
             int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / RECORDS_PER_PAGE);
             if (page > numberOfPages) {
                 page = 1;
-                List<FacultiesInfoAdminBean> facultiesInfoAdminBeansPagination = new ArrayList<>();
-                copyList(facultiesInfoAdminBeans, facultiesInfoAdminBeansPagination, page, RECORDS_PER_PAGE);
-                setUpSessionAttributes(session, numberOfPages, facultiesInfoAdminBeans, facultiesInfoAdminBeansPagination);
+                List<FacultiesInfoBean> facultiesInfoBeansPagination = new ArrayList<>();
+                copyList(facultiesInfoBeans, facultiesInfoBeansPagination, page, RECORDS_PER_PAGE);
+                setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
                 response.sendRedirect(Pages.FACULTIES_ADMIN_HTML);
             } else {
-                List<FacultiesInfoAdminBean> facultiesInfoAdminBeansPagination = new ArrayList<>();
-                copyList(facultiesInfoAdminBeans, facultiesInfoAdminBeansPagination, page, RECORDS_PER_PAGE);
-                setUpSessionAttributes(session, numberOfPages, facultiesInfoAdminBeans, facultiesInfoAdminBeansPagination);
+                List<FacultiesInfoBean> facultiesInfoBeansPagination = new ArrayList<>();
+                copyList(facultiesInfoBeans, facultiesInfoBeansPagination, page, RECORDS_PER_PAGE);
+                setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.FACULTIES_ADMIN_HTML);
                 requestDispatcher.forward(request, response);
             }
@@ -88,28 +88,28 @@ public class FacultiesServlet extends HttpServlet {
     }
 
     private void copyList(
-            List<FacultiesInfoAdminBean> facultiesInfoAdminBeans,
-            List<FacultiesInfoAdminBean> facultiesInfoAdminBeansPagination,
+            List<FacultiesInfoBean> facultiesInfoBeans,
+            List<FacultiesInfoBean> facultiesInfoBeansPagination,
             int page,
             int recordsPerPage) {
-        facultiesInfoAdminBeansPagination.clear();
+        facultiesInfoBeansPagination.clear();
         int lastElementOnPage = (page - 1) * recordsPerPage + recordsPerPage;
-        if (lastElementOnPage > facultiesInfoAdminBeans.size()) {
-            lastElementOnPage = facultiesInfoAdminBeans.size();
+        if (lastElementOnPage > facultiesInfoBeans.size()) {
+            lastElementOnPage = facultiesInfoBeans.size();
         }
         for (int i = (page - 1) * recordsPerPage; i < lastElementOnPage; i++) {
             System.out.println(i);
-            facultiesInfoAdminBeansPagination.add(facultiesInfoAdminBeans.get(i));
+            facultiesInfoBeansPagination.add(facultiesInfoBeans.get(i));
         }
     }
 
     private void setUpSessionAttributes(HttpSession session, int numberOfPages,
-                                        List<FacultiesInfoAdminBean> facultiesInfoAdminBeans,
-                                        List<FacultiesInfoAdminBean> facultiesInfoAdminBeansPagination) {
+                                        List<FacultiesInfoBean> facultiesInfoBeans,
+                                        List<FacultiesInfoBean> facultiesInfoBeansPagination) {
         session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
         session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-        session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS, facultiesInfoAdminBeans);
-        session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS_PAGINATION, facultiesInfoAdminBeansPagination);
+        session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS, facultiesInfoBeans);
+        session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS_PAGINATION, facultiesInfoBeansPagination);
         session.setAttribute(SessionAttribute.ADMIN_SORT_TYPE, SORT_TYPE_NO_SORT);
         session.setAttribute(SessionAttribute.ADMIN_IS_SORTED_FACULTIES, true);
     }

@@ -1,6 +1,9 @@
 package ua.nure.hanzha.SummaryTask4.servlet.resendEmail;
 
-import ua.nure.hanzha.SummaryTask4.constants.*;
+import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
+import ua.nure.hanzha.SummaryTask4.constants.Pages;
+import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.enums.EntrantStatus;
@@ -11,7 +14,6 @@ import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
 import ua.nure.hanzha.SummaryTask4.validation.Validation;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

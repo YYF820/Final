@@ -7,6 +7,7 @@ import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * FacultySubjectDao implements Dao<T> so we can specify, that return type will be FacultySubject, where was <T>.
@@ -34,4 +35,9 @@ public interface FacultyEntrantDao extends Dao<FacultyEntrant> {
 
     List<FacultyEntrant> selectByPrioritySumMarks(int priority, double sumMarks, Connection connection) throws SQLException, CrudException;
 
+    List<Integer> selectAllPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
+
+    Map<Integer, Integer> selectAllFacultyIdPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
+
+    void updatePriorityByFacultyIdEntrantId(int priority, int facultyId, int entrantId, Connection connection) throws SQLException, CrudException;
 }

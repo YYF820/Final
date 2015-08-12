@@ -1,6 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.servlet.admin;
 
-import ua.nure.hanzha.SummaryTask4.bean.FacultiesInfoAdminBean;
+import ua.nure.hanzha.SummaryTask4.bean.FacultiesInfoBean;
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
@@ -69,10 +69,10 @@ public class EditFacultyServlet extends HttpServlet {
                     setUpValuesFields(session, facultyName, totalSpots, budgetSpots);
                     response.sendRedirect(Pages.FACULTY_EDIT_ADMIN_HTML);
                 } else {
-                    FacultiesInfoAdminBean facultiesInfoAdminBean =
-                            (FacultiesInfoAdminBean) session.getAttribute(SessionAttribute.ADMIN_FACULTY_FOR_EDIT);
-                    Faculty facultyForEdit = facultiesInfoAdminBean.getFaculty();
-                    List<Subject> currentSubjects = facultiesInfoAdminBean.getSubjects();
+                    FacultiesInfoBean facultiesInfoBean =
+                            (FacultiesInfoBean) session.getAttribute(SessionAttribute.ADMIN_FACULTY_FOR_EDIT);
+                    Faculty facultyForEdit = facultiesInfoBean.getFaculty();
+                    List<Subject> currentSubjects = facultiesInfoBean.getSubjects();
                     boolean isEnoughSubjectsForFaculty = checkEnoughSubjectsForFaculty(
                             session, subjectsIdToAdd,
                             subjectsIdToDelete, currentSubjects

@@ -8,7 +8,6 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
-import ua.nure.hanzha.SummaryTask4.exception.ServletSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
 

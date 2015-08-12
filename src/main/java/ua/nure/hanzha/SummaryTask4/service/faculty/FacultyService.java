@@ -13,5 +13,9 @@ public interface FacultyService {
 
     List<Faculty> getAllFaculties() throws DaoSystemException;
 
+    List<Faculty> getAllFacultiesSubjectsMoreThanThree() throws DaoSystemException;
+
     void removeFacultyById(int facultyId) throws DaoSystemException;
+
+    Faculty getByFacultyId(int facultyId) throws DaoSystemException;
 }

@@ -172,4 +172,19 @@ public class SessionAttribute {
     public static final String ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_ENTRANT_ID =
             "entrantAccountSettingsExtraMarksEntrantId";
 
+    //=====================================FACULTIES==============================================//
+    public static final String FACULTIES_IS_ANY_FACULTY = "facultiesIsAnyFaculty";
+    public static final String FACULTIES_INFO_BEANS = "facultiesInfoBeans";
+    public static final String FACULTIES_INFO_BEANS_PAGINATION = "facultiesInfoBeansPagination";
+
+    public static final String FACULTIES_ENTRANT_ENTITY = "facultiesEntrantEntity";
+    public static final String FACULTIES_AVAILABLE_PROPERTIES_LIST = "facultiesAvailablePropertiesList";
+    public static final String FACULTIES_USED_FACULTIES_ID_PRIORITY = "facultiesUsedFacultiesIdPriority";
+    public static final String FACULTIES_ENROLLED_FACULTIES = "facultiesEnrolledFaculties";
+
+    public static final String FACULTIES_IS_ANY_PROBLEMS_UPDATE = "facultiesIsAnyProblemsUpdate";
+    public static final String FACULTIES_IS_SAME_PRIORITIES = "facultiesIsSamePriorities";
+
+    public static final String FACULTIES_SORT_TYPE = "facultiesSortType";
+    public static final String FACULTIES_IS_SORTED = "facultiesIsSorted";
 }

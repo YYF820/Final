@@ -9,6 +9,7 @@ public class Pages {
     public static final String INDEX_HTML = "/index.html";
     public static final String LOGIN_HTML = "/login.html";
     public static final String REGISTRATION_HTML = "/registration.html";
+    public static final String FACULTIES_HTML = "/faculties.html";
 
     public static final String RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML = "/resendVerificationOrResetPassword.html";
     public static final String CHECK_QUESTION_HTML = "/checkQuestion.html";
@@ -34,5 +35,7 @@ public class Pages {
     public static final String ACCOUNT_SETTINGS_HTML = "/accountSettings.html";
     public static final String ENTRANT_ACCOUNT_SETTINGS_ADD_SUBJECTS_HTML = "/entrant/addSubjects.html";
     public static final String ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS_HTML = "/entrant/addMarks.html";
-    public static final String ENTRANT_ACCOUNT_SETTEING_ADD_EXTRA_MARKS_HTML = "/entrant/addExtraMarks.html";
+    public static final String ENTRANT_ACCOUNT_SETTINGS_ADD_EXTRA_MARKS_HTML = "/entrant/addExtraMarks.html";
+
+
 }

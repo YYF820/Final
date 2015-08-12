@@ -8,6 +8,18 @@
         <role name="admin"/>
     </action>
 
+    <action path="/facultiesSort.do">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
+    <action path="/faculties.html">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
     <action path="/accountSettings.html">
         <role name="admin"/>
         <role name="entrant"/>
@@ -188,6 +200,18 @@
     </action>
 
     <action path="/entrant/addExtraMarks.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/deleteFaculty.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addFaculty.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/configurePriorities.do">
         <role name="entrant"/>
     </action>
 

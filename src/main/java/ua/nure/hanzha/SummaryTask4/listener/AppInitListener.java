@@ -10,6 +10,8 @@ import ua.nure.hanzha.SummaryTask4.db.dao.extramark.ExtraMarkDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.extramark.ExtraMarkDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.faculty.FacultyDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.faculty.FacultyDaoImpl;
+import ua.nure.hanzha.SummaryTask4.db.dao.facultyentrant.FacultyEntrantDao;
+import ua.nure.hanzha.SummaryTask4.db.dao.facultyentrant.FacultyEntrantDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.facultysubject.FacultySubjectDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.facultysubject.FacultySubjectDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.mark.MarkDao;
@@ -33,6 +35,8 @@ import ua.nure.hanzha.SummaryTask4.service.faculty.FacultyService;
 import ua.nure.hanzha.SummaryTask4.service.faculty.FacultyServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
 import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminServiceImpl;
+import ua.nure.hanzha.SummaryTask4.service.facultyEntrant.FacultyEntrantService;
+import ua.nure.hanzha.SummaryTask4.service.facultyEntrant.FacultyEntrantServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.mark.MarkService;
 import ua.nure.hanzha.SummaryTask4.service.mark.MarkServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationService;
@@ -89,6 +93,7 @@ public class AppInitListener implements ServletContextListener {
         FacultySubjectDao facultySubjectDao = new FacultySubjectDaoImpl();
         MarkDao markDao = new MarkDaoImpl();
         ExtraMarkDao extraMarkDao = new ExtraMarkDaoImpl();
+        FacultyEntrantDao facultyEntrantDao = new FacultyEntrantDaoImpl();
 
 
         UserService userService = new UserServiceImpl(txManager, userDao);
@@ -117,6 +122,9 @@ public class AppInitListener implements ServletContextListener {
 
         ExtraMarkService extraMarkService = new ExtraMarkServiceImpl(txManager, extraMarkDao);
         servletContext.setAttribute(AppAttribute.EXTRA_MARK_SERVICE, extraMarkService);
+
+        FacultyEntrantService facultyEntrantService = new FacultyEntrantServiceImpl(txManager, facultyEntrantDao);
+        servletContext.setAttribute(AppAttribute.FACULTY_ENTRANT_SERVICE, facultyEntrantService);
     }
 
     private void setAuthorizationMap(ServletContext servletContext, String fileName) {
