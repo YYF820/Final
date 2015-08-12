@@ -3,6 +3,8 @@
     <div class="uk-offcanvas-bar uk-container uk-container-center">
         <form class="uk-form uk-contrast uk-margin-large-top" method="POST"
               action="<c:url value="/facultiesSort.do"/>">
+
+            <p class="uk-h2 uk-text-left">Sort settings <i class="uk-icon-cog uk-text-primary"></i></p>
             <c:if test="${sessionScope.facultiesIsSorted == false}">
                 <div class="uk-panel uk-animation-fade uk-text-middle">
                     <div class="uk-alert uk-alert-danger " data-uk-alert>
@@ -10,11 +12,10 @@
                     </div>
                 </div>
             </c:if>
-            <p class="uk-h2 uk-text-left">Sort settings <i class="uk-icon-cog uk-text-primary"></i></p>
             <div class="uk-form-row uk-margin-top uk-text-left">
                 <label id="sortByNameAsc-label" class="uk-form-label" for="sortByNameAsc-label">
                     <input aria-labelledby="sortByNameAsc-label" name="sort" value="byNameAsc" type="radio"
-                    ${sessionScope.facultiesSortType == 'byNameAsc' ? 'checked' : ''}>
+                    ${sessionScope.facultiesSortType == 'byNameAsc' ? 'checked' : ''} >
                     Sort by name <i class="uk-icon-sort-alpha-asc"></i>
                 </label>
                 <br/>
@@ -65,9 +66,16 @@
 
             </div>
             <div class="uk-form-row uk-margin-top uk-text-left">
-                <a class="uk-button" href="<c:url value="/faculties.html"/>">No sort <i
-                        class="uk-icon-refresh"></i></a>
+                <a class="uk-button" href="<c:url value="/faculties.html?page=1"/>" onclick="changeSortType()">
+                    No sort <i class="uk-icon-refresh"></i>
+                </a>
             </div>
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    function changeSortType() {
+        <c:set value="noSort" scope="session" var="facultiesSortType"/>
+    }
+</script>

@@ -27,7 +27,7 @@
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
                     Sort settings <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
+                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp"%>
             </div>
             <div class="uk-width-medium-6-10">
                 <u:ifAuthAs role="entrant">
@@ -65,7 +65,6 @@
                 <button class="uk-button uk-float-right" data-uk-offcanvas="{target:'#setUpPriorities'}">
                     Configure priorities <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-
                 <%@include file="../jspf/canvas/setUpPriorities.jsp" %>
             </div>
         </div>
@@ -79,7 +78,7 @@
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
                     Sort settings <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
+                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp"%>
             </div>
             <div class="uk-width-medium-6-10">
                 <div class="uk-alert uk-alert-warning uk-margin-top-remove

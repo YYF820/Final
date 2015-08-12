@@ -22,7 +22,6 @@ import java.util.List;
 public class FacultiesSorterServlet extends HttpServlet {
 
     private static final String PARAM_SORT = "sort";
-    private static final String PARAM_PAGE = "page";
     private static final String SORT_TYPE_BY_NAME_ASC = "byNameAsc";
     private static final String SORT_TYPE_BY_NAME_DESC = "byNameDesc";
     private static final String SORT_TYPE_BY_BUDGET_SPOTS_ASC = "byBudgetSpotsAsc";
@@ -30,17 +29,15 @@ public class FacultiesSorterServlet extends HttpServlet {
     private static final String SORT_TYPE_BY_ALL_SPOTS_ASC = "byAllSpotsAsc";
     private static final String SORT_TYPE_BY_ALL_SPOTS_DESC = "byAllSpotsDesc";
 
-    private static final int RECORDS_PER_PAGE = 5;
-    private static int page = 1;
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         List<FacultiesInfoBean> facultiesInfoBeans =
                 (List<FacultiesInfoBean>) session.getAttribute(SessionAttribute.FACULTIES_INFO_BEANS);
         String sortType = request.getParameter(PARAM_SORT);
+        System.out.println(sortType);
         if (sortType == null) {
             session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, false);
-            response.sendRedirect(Pages.FACULTIES_ADMIN_HTML);
+            response.sendRedirect(Pages.FACULTIES_HTML);
         } else {
             switch (sortType) {
                 case SORT_TYPE_BY_NAME_ASC:
@@ -89,7 +86,7 @@ public class FacultiesSorterServlet extends HttpServlet {
                             }
                         }
                     });
-                    session.setAttribute(SessionAttribute.ADMIN_SORT_TYPE, SORT_TYPE_BY_BUDGET_SPOTS_DESC);
+                    session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_BY_BUDGET_SPOTS_DESC);
                     break;
                 case SORT_TYPE_BY_ALL_SPOTS_ASC:
                     Collections.sort(facultiesInfoBeans, new Comparator<FacultiesInfoBean>() {
@@ -126,7 +123,7 @@ public class FacultiesSorterServlet extends HttpServlet {
 
             }
             session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, true);
-            response.sendRedirect(Pages.FACULTIES_HTML);
+            response.sendRedirect(Pages.FACULTIES_HTML + "?page=1");
         }
     }
 

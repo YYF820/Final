@@ -110,7 +110,6 @@ public class FacultiesFilter extends BaseFilter {
             lastElementOnPage = facultiesInfoBeans.size();
         }
         for (int i = (page - 1) * recordsPerPage; i < lastElementOnPage; i++) {
-            System.out.println(i);
             facultiesInfoBeansPagination.add(facultiesInfoBeans.get(i));
         }
     }
@@ -122,31 +121,58 @@ public class FacultiesFilter extends BaseFilter {
         session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
         session.setAttribute(SessionAttribute.FACULTIES_INFO_BEANS, facultiesInfoBeans);
         session.setAttribute(SessionAttribute.FACULTIES_INFO_BEANS_PAGINATION, facultiesInfoBeansPagination);
-        session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_NO_SORT);
         session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, true);
     }
 
 
     private void preparePage(HttpServletResponse response, HttpServletRequest request,
                              HttpSession session, FilterChain filterChain) throws IOException, ServletException {
-        List<FacultiesInfoBean> facultiesInfoBeans = new ArrayList<>();
-        try {
-            List<Faculty> faculties = facultyService.getAllFaculties();
-            for (Faculty faculty : faculties) {
-                int facultyId = faculty.getId();
-                List<Subject> subjects = new ArrayList<>();
-                try {
-                    subjects = subjectService.getAllByFacultyId(facultyId);
-                } catch (DaoSystemException e) {
-                    if (e.getMessage().equals(ExceptionMessages.SQL_EXCEPTION)) {
-                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        String sortType = (String) session.getAttribute(SessionAttribute.FACULTIES_SORT_TYPE);
+        if (sortType == null || sortType.equals(SORT_TYPE_NO_SORT)) {
+            List<FacultiesInfoBean> facultiesInfoBeans = new ArrayList<>();
+            try {
+                List<Faculty> faculties = facultyService.getAllFaculties();
+                for (Faculty faculty : faculties) {
+                    int facultyId = faculty.getId();
+                    List<Subject> subjects = new ArrayList<>();
+                    try {
+                        subjects = subjectService.getAllByFacultyId(facultyId);
+                    } catch (DaoSystemException e) {
+                        if (e.getMessage().equals(ExceptionMessages.SQL_EXCEPTION)) {
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        }
                     }
+                    FacultiesInfoBean facultiesInfoBean = new FacultiesInfoBean();
+                    facultiesInfoBean.setFaculty(faculty);
+                    facultiesInfoBean.setSubjects(subjects);
+                    facultiesInfoBeans.add(facultiesInfoBean);
                 }
-                FacultiesInfoBean facultiesInfoBean = new FacultiesInfoBean();
-                facultiesInfoBean.setFaculty(faculty);
-                facultiesInfoBean.setSubjects(subjects);
-                facultiesInfoBeans.add(facultiesInfoBean);
+                if (request.getParameter(PARAM_PAGE) != null)
+                    page = Integer.parseInt(request.getParameter(PARAM_PAGE));
+                int numberOfRecords = facultiesInfoBeans.size();
+                int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / RECORDS_PER_PAGE);
+                if (page > numberOfPages) {
+                    page = 1;
+                    List<FacultiesInfoBean> facultiesInfoBeansPagination = new ArrayList<>();
+                    copyList(facultiesInfoBeans, facultiesInfoBeansPagination, page, RECORDS_PER_PAGE);
+                    setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
+                } else {
+                    List<FacultiesInfoBean> facultiesInfoBeansPagination = new ArrayList<>();
+                    copyList(facultiesInfoBeans, facultiesInfoBeansPagination, page, RECORDS_PER_PAGE);
+                    setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
+                }
+                session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_NO_SORT);
+                filterChain.doFilter(request, response);
+            } catch (DaoSystemException e) {
+                if (e.getMessage().equals(ExceptionMessages.SQL_EXCEPTION)) {
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                } else {
+                    filterChain.doFilter(request, response);
+                }
             }
+        } else {
+            List<FacultiesInfoBean> facultiesInfoBeans =
+                    (List<FacultiesInfoBean>) session.getAttribute(SessionAttribute.FACULTIES_INFO_BEANS);
             if (request.getParameter(PARAM_PAGE) != null)
                 page = Integer.parseInt(request.getParameter(PARAM_PAGE));
             int numberOfRecords = facultiesInfoBeans.size();
@@ -162,12 +188,6 @@ public class FacultiesFilter extends BaseFilter {
                 setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
             }
             filterChain.doFilter(request, response);
-        } catch (DaoSystemException e) {
-            if (e.getMessage().equals(ExceptionMessages.SQL_EXCEPTION)) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            } else {
-                filterChain.doFilter(request, response);
-            }
         }
     }
 }
