@@ -113,11 +113,11 @@
         <role name="admin"/>
     </action>
 
-    <action path="/admin/entrants.html">
+    <action path="/admin/budgetEntrants.html">
         <role name="admin"/>
     </action>
 
-    <action path="/admin/entrants.do">
+    <action path="/admin/budgetEntrants.do">
         <role name="admin"/>
     </action>
 

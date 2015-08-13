@@ -28,9 +28,13 @@ public interface EntrantFinalSheetDao extends Dao<EntrantFinalSheet> {
 
     EntrantFinalSheet selectByFacultyIdEntrantId(int facultyId, int entrantId, Connection connection) throws SQLException, CrudException;
 
-    List<EntrantFinalSheet> selectByPassed(boolean passed, Connection connection) throws SQLException, CrudException;
+    List<EntrantFinalSheet> selectByEnterUniversityStatusId(int enterUniversityStatusId, Connection connection) throws SQLException, CrudException;
 
     List<EntrantFinalSheet> selectByNumberOfSheet(int numberOfSheet, Connection connection) throws SQLException, CrudException;
 
-    List<EntrantFinalSheet> selectByPassedAndNumberOfSheet(boolean passed, int numberOfSheet, Connection connection) throws SQLException, CrudException;
+    List<EntrantFinalSheet> selectByEnterUniversityStatusIdAndNumberOfSheet(int enterUniversityStatusId, int numberOfSheet, Connection connection) throws SQLException, CrudException;
+
+    Integer selectMaxNumberOfPage(Connection connection) throws SQLException, CrudException;
+
+    Integer selectIncrementedNumberOfPage(Connection connection) throws SQLException;
 }

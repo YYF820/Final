@@ -9,7 +9,7 @@ package ua.nure.hanzha.SummaryTask4.entity;
 public class EntrantFinalSheet implements SkeletonEntity {
     private int facultyId;
     private int entrantId;
-    private boolean passed;
+    private int entrantUniversityStatusId;
     private int numberOfSheet;
 
     public int getFacultyId() {
@@ -28,12 +28,12 @@ public class EntrantFinalSheet implements SkeletonEntity {
         this.entrantId = entrantId;
     }
 
-    public boolean isPassed() {
-        return passed;
+    public int getEntrantUniversityStatusId() {
+        return entrantUniversityStatusId;
     }
 
-    public void setIsPassed(boolean isPassed) {
-        this.passed = isPassed;
+    public void setEntrantUniversityStatusId(int entrantUniversityStatusId) {
+        this.entrantUniversityStatusId = entrantUniversityStatusId;
     }
 
     public int getNumberOfSheet() {
@@ -46,9 +46,9 @@ public class EntrantFinalSheet implements SkeletonEntity {
 
     @Override
     public String toString() {
-        return "Faculty ID: " + facultyId +
-                "Entrant ID: " + entrantId +
-                "Is passed: " + passed +
-                "Number of sheet: " + numberOfSheet;
+        return "\tFaculty ID: " + facultyId +
+                "\tEntrant ID: " + entrantId +
+                "\tentrant university status id: " + entrantUniversityStatusId +
+                "\tNumber of entrant sheet: " + numberOfSheet;
     }
 }

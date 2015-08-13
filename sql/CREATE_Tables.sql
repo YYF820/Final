@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS Entrants_Statuses CASCADE;
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS Faculties_Subjects;
 DROP TABLE IF EXISTS Faculties_Entrants;
+DROP TABLE IF EXISTS Enter_University_Status CASCADE;
 DROP TABLE IF EXISTS Entrants_final_sheets;
 DROP TABLE IF EXISTS Marks;
 DROP TABLE IF EXISTS Extra_Marks;
@@ -105,15 +106,23 @@ CREATE TABLE Marks (
   REFERENCES Entrants (id) ON DELETE CASCADE
 );
 
-CREATE TABLE Entrants_final_sheets (
-  faculty_id      INTEGER NOT NULL,
-  entrant_id      INTEGER NOT NULL,
-  passed          BOOLEAN NOT NULL,
-  number_of_sheet INTEGER NOT NULL,
+CREATE TABLE Enter_University_Status (
+  id   INTEGER NOT NULL,
+  name TEXT    NOT NULL,
+  CONSTRAINT enter_university_status_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE Entrants_Final_Sheets (
+  faculty_id                 INTEGER NOT NULL,
+  entrant_id                 INTEGER NOT NULL,
+  enter_university_status_id INTEGER NOT NULL,
+  number_of_sheet            INTEGER NOT NULL,
   CONSTRAINT faculty_id_fk_sheet FOREIGN KEY (faculty_id)
   REFERENCES Faculties (id) ON DELETE CASCADE,
   CONSTRAINT entrant_id_fk_sheet FOREIGN KEY (entrant_id)
-  REFERENCES Entrants (id) ON DELETE CASCADE
+  REFERENCES Entrants (id) ON DELETE CASCADE,
+  CONSTRAINT enter_university_status_fk FOREIGN KEY (enter_university_status_id)
+  REFERENCES Enter_university_status (id) ON DELETE CASCADE
 );
 
 

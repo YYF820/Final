@@ -4,6 +4,7 @@ import ua.nure.hanzha.SummaryTask4.bean.EntrantFinalSheetBean;
 import ua.nure.hanzha.SummaryTask4.entity.FacultyEntrant;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 /**
@@ -23,5 +24,7 @@ public interface FacultyEntrantService {
     void summAllMarks() throws DaoSystemException;
 
     EntrantFinalSheetBean getEntrantBeanByEntrantId (int entrantId) throws DaoSystemException;
+
+
 
 }

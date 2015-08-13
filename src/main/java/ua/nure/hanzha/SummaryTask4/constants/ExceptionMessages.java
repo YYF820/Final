@@ -1,7 +1,8 @@
 package ua.nure.hanzha.SummaryTask4.constants;
 
 /**
- * Created by faffi-ubuntu on 28/07/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 28/07/15.
  */
 public class ExceptionMessages {
     public static final String INSERT_EXCEPTION_MESSAGE = "Can't insert entity...";
@@ -12,4 +13,5 @@ public class ExceptionMessages {
     public static final String SELECT_EXCEPTION_MESSAGE = "Empty table...";
     public static final String SQL_EXCEPTION = "SQL Exception";
     public static final String INSERT_FACULTY_SAME_NAME = "ERROR: duplicate key value violates unique constraint \"faculties_name_key\"";
+    public static final String NO_ENTRANT_FINAL_SHEETS = "no entrant final sheets";
 }

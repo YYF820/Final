@@ -10,10 +10,7 @@ import ua.nure.hanzha.SummaryTask4.entity.FacultyEntrant;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * FacultyEntrantDaoImpl extends AbstractDao and implements FacultyEntrantDao.In FacultyEntrantDaoImpl
@@ -189,21 +186,22 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
         try (PreparedStatement ps = connection.prepareStatement(
                 SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.entrant.id"))) {
             ps.setInt(1, entrantId);
-            Map<Integer, Integer> priorityFacultyIdPair = new HashMap<>();
+            Map<Integer, Integer> tempMap = new HashMap<>();
             try (ResultSet rs = ps.executeQuery()) {
                 EntrantFinalSheetBean entrantFinalSheetBean = null;
                 if (rs.next()) {
                     entrantFinalSheetBean = new EntrantFinalSheetBean();
                     entrantFinalSheetBean.setEntrantId(entrantId);
                     entrantFinalSheetBean.setSumOfMarks(rs.getDouble(FieldsDataBase.FACULTY_ENTRANT_SUM_MARKS));
-                    priorityFacultyIdPair.put(rs.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY),
+                    tempMap.put(rs.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY),
                             rs.getInt(FieldsDataBase.FACULTY_ENTRANT_FACULTY_ID));
                 }
                 while (rs.next()) {
-                    priorityFacultyIdPair.put(rs.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY),
+                    tempMap.put(rs.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY),
                             rs.getInt(FieldsDataBase.FACULTY_ENTRANT_FACULTY_ID));
                 }
                 if (entrantFinalSheetBean != null) {
+                    Map<Integer, Integer> priorityFacultyIdPair = new TreeMap<>(tempMap);
                     entrantFinalSheetBean.setPriorityFacultyPair(priorityFacultyIdPair);
                     return entrantFinalSheetBean;
                 } else {

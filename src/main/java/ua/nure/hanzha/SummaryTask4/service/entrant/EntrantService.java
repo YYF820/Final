@@ -22,4 +22,6 @@ public interface EntrantService {
 
     List<Integer> getAllIds() throws DaoSystemException;
 
+    Integer getUserIdByEntrantId(int entrantId) throws DaoSystemException;
+
 }

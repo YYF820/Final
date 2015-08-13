@@ -18,6 +18,7 @@ psql $dbname $username << EOF
 	\i /home/faffi-ubuntu/IdeaProjects/SummaryTask4/sql/INSERT_Faculties_Entrants.sql
 	\i /home/faffi-ubuntu/IdeaProjects/SummaryTask4/sql/INSERT_Marks.sql
 	\i /home/faffi-ubuntu/IdeaProjects/SummaryTask4/sql/INSERT_Extra_Marks.sql
-	\i /home/faffi-ubuntu/IdeaProjects/SummaryTask4/sql/INSERT_Entrants_final_sheets.sql
+	\i /home/faffi-ubuntu/IdeaProjects/SummaryTask4/sql/INSERT_Enter_University_Status.sql
 EOF
 echo "OK!"
+

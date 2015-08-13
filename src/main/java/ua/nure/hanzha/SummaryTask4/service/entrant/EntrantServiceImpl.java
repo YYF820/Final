@@ -74,4 +74,14 @@ public class EntrantServiceImpl implements EntrantService {
             }
         });
     }
+
+    @Override
+    public Integer getUserIdByEntrantId(final int entrantId) throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<Integer>() {
+            @Override
+            public Integer call(Connection connection) throws SQLException, CrudException {
+                return entrantDao.selectUserIdByEntrantId(entrantId, connection);
+            }
+        });
+    }
 }

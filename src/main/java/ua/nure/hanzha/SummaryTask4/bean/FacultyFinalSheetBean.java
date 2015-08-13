@@ -1,6 +1,7 @@
 package ua.nure.hanzha.SummaryTask4.bean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Dmytro Hanzha
@@ -9,7 +10,8 @@ import java.util.List;
 public class FacultyFinalSheetBean {
 
     private int facultyId;
-    private List<EntrantFinalSheetBean> entrants;
+    private List<EntrantFinalSheetBean> budgetEntrants;
+    private List<EntrantFinalSheetBean> contractEntrants;
     private int totalSpots;
     private int budgetSpots;
 
@@ -21,12 +23,20 @@ public class FacultyFinalSheetBean {
         this.facultyId = facultyId;
     }
 
-    public List<EntrantFinalSheetBean> getEntrants() {
-        return entrants;
+    public List<EntrantFinalSheetBean> getBudgetEntrants() {
+        return budgetEntrants;
     }
 
-    public void setEntrants(List<EntrantFinalSheetBean> entrants) {
-        this.entrants = entrants;
+    public void setBudgetEntrants(List<EntrantFinalSheetBean> budgetEntrants) {
+        this.budgetEntrants = budgetEntrants;
+    }
+
+    public List<EntrantFinalSheetBean> getContractEntrants() {
+        return contractEntrants;
+    }
+
+    public void setContractEntrants(List<EntrantFinalSheetBean> contractEntrants) {
+        this.contractEntrants = contractEntrants;
     }
 
     public int getTotalSpots() {
@@ -43,5 +53,45 @@ public class FacultyFinalSheetBean {
 
     public void setBudgetSpots(int budgetSpots) {
         this.budgetSpots = budgetSpots;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sbBudgetEntrants = new StringBuilder();
+        for (EntrantFinalSheetBean entrant : budgetEntrants) {
+            sbBudgetEntrants.append("\tEntrant Id:").append(entrant.getEntrantId())
+                    .append("\tFirst name: ").append(entrant.getFirstName())
+                    .append("\tLast name: ").append(entrant.getLastName())
+                    .append("\tPatronymic: ").append(entrant.getPatronymic())
+                    .append("\tsum of marks: ").append(entrant.getSumOfMarks());
+            for (Map.Entry<Integer, Integer> priorityFacultyIdPair : entrant.getPriorityFacultyPair().entrySet()) {
+                if (priorityFacultyIdPair.getValue() == facultyId) {
+                    sbBudgetEntrants.append("\t").append(priorityFacultyIdPair.getKey());
+                }
+            }
+            sbBudgetEntrants.append("\n");
+        }
+
+        StringBuilder sbContractEntrants = new StringBuilder();
+        for (EntrantFinalSheetBean entrant : contractEntrants) {
+            sbContractEntrants.append("\tEntrant Id:").append(entrant.getEntrantId())
+                    .append("\tFirst name: ").append(entrant.getFirstName())
+                    .append("\tLast name: ").append(entrant.getLastName())
+                    .append("\tPatronymic: ").append(entrant.getPatronymic())
+                    .append("\tsum of marks: ").append(entrant.getSumOfMarks());
+            for (Map.Entry<Integer, Integer> priorityFacultyIdPair : entrant.getPriorityFacultyPair().entrySet()) {
+                if (priorityFacultyIdPair.getValue() == facultyId) {
+                    sbContractEntrants.append("\t").append(priorityFacultyIdPair.getKey());
+                }
+            }
+            sbContractEntrants.append("\n");
+        }
+        return "FACULTY id = " + facultyId +
+                " BUDGET LIST SIZE: " + budgetEntrants.size() +
+                " CONTRACT LIST SIZE: " + contractEntrants.size() +
+                " totalSpots = " + totalSpots +
+                " budget spots: " + budgetSpots +
+                "\n\t BUDGET ENTRANTS:\n" + sbBudgetEntrants.toString() +
+                "\tCONTRACT ENTRANTS:\n" + sbContractEntrants;
     }
 }

@@ -1,8 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
-import ua.nure.hanzha.SummaryTask4.bean.MailInfoResetPasswordBean;
-import ua.nure.hanzha.SummaryTask4.bean.MailInfoUpdatedPasswordOrBlockedBean;
-import ua.nure.hanzha.SummaryTask4.bean.MailInfoVerifyAccountBean;
+import ua.nure.hanzha.SummaryTask4.bean.*;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Dmytro Hanzha
@@ -28,6 +27,7 @@ public class MailSenderServlet extends HttpServlet {
     private static final String COMMAND_UPDATED_PASSWORD = "updatedPassword";
     private static final String ADMIN_COMMAND_BAN_USER = "adminCommandBanUser";
     private static final String ADMIN_COMMAND_UN_BAN_USER = "adminCommandUnBanUser";
+    private static final String ADMIN_COMMAND_NOTIFY_ENTRANTS_WHO_PASSED = "notifyEntrantsWhoPassed";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -141,6 +141,11 @@ public class MailSenderServlet extends HttpServlet {
                     response.sendRedirect(Pages.ENTRANTS_ADMIN_SERVLET + "?page=" + currentPage);
                 }
                 break;
+            case ADMIN_COMMAND_NOTIFY_ENTRANTS_WHO_PASSED:
+                UniversityFinalSheetBean universityFinalSheetBean =
+                        (UniversityFinalSheetBean) request.getAttribute(RequestAttribute.UNIVERSITY_FINAL_SHEET_BEAN);
+                List<FacultyFinalSheetBean> allFacultiesFinalSheetBeanList = universityFinalSheetBean.getFacultiesFinalSheetBean();
+
             default:
                 try {
                     response.sendRedirect(Pages.INDEX_HTML);

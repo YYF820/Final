@@ -22,7 +22,7 @@
                 complete!</p>
 
             <div class="uk-margin-top uk-text-left">
-                <p class="">Your e-mail has been verified & your account is active. You can now view pages for entrants
+                <p class="">Your e-mail has been verified & your account is active. You can now view pages for budgetEntrants
                     and
                     your profile!</p>
 
@@ -30,7 +30,7 @@
                 <ul class="uk-list uk-list-line uk-list-space">
                     <li class="uk-margin-left">See your marks.</li>
                     <li class="uk-margin-left">Add scan for your certificate.</li>
-                    <li class="uk-margin-left">In future you will be able to see all entrants information and who and
+                    <li class="uk-margin-left">In future you will be able to see all budgetEntrants information and who and
                         who
                         went to university on a budget.
                     </li>

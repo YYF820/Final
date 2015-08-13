@@ -1,0 +1,57 @@
+package ua.nure.hanzha.SummaryTask4.service.entrantFinalSheet;
+
+import ua.nure.hanzha.SummaryTask4.db.dao.entrantfinalsheet.EntrantFinalSheetDao;
+import ua.nure.hanzha.SummaryTask4.db.transactionmanager.SqlCallable;
+import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManager;
+import ua.nure.hanzha.SummaryTask4.entity.EntrantFinalSheet;
+import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+/**
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 14/08/15.
+ */
+public class EntrantFinalSheetServiceImpl implements EntrantFinalSheetService {
+
+    private TransactionManager txManager;
+    private EntrantFinalSheetDao entrantFinalSheetDao;
+
+    public EntrantFinalSheetServiceImpl(TransactionManager txManager, EntrantFinalSheetDao entrantFinalSheetDao) {
+        this.txManager = txManager;
+        this.entrantFinalSheetDao = entrantFinalSheetDao;
+    }
+
+    @Override
+    public Integer getMaxNumberOfSheet() throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<Integer>() {
+            @Override
+            public Integer call(Connection connection) throws SQLException, CrudException {
+                return entrantFinalSheetDao.selectMaxNumberOfPage(connection);
+            }
+        });
+    }
+
+    @Override
+    public Integer getMaxIncrementedNumberOfSheet() throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<Integer>() {
+            @Override
+            public Integer call(Connection connection) throws SQLException, CrudException {
+                return entrantFinalSheetDao.selectIncrementedNumberOfPage(connection);
+            }
+        });
+    }
+
+    @Override
+    public void addEntrantToFinalSheet(final EntrantFinalSheet entrantFinalSheet) throws DaoSystemException {
+        txManager.doInTransaction(new SqlCallable<Void>() {
+            @Override
+            public Void call(Connection connection) throws SQLException, CrudException {
+                entrantFinalSheetDao.insert(entrantFinalSheet, connection);
+                return null;
+            }
+        });
+    }
+}

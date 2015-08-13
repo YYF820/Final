@@ -141,6 +141,24 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     }
 
     @Override
+    public Integer selectUserIdByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.select.user.id.by.id"))) {
+            ps.setInt(1, entrantId);
+            Integer userId = null;
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    userId = resultSet.getInt(FieldsDataBase.ENTRANT_USER_ID);
+                }
+            }
+            if (userId != null) {
+                return userId;
+            } else {
+                throw new CrudException(ExceptionMessages.SELECT_BY_ID_EXCEPTION_MESSAGE);
+            }
+        }
+    }
+
+    @Override
     public List<Entrant> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
                 SqlQueriesHolder.getSqlQuery("entrant.select.all"),

@@ -11,6 +11,18 @@ public class EntrantFinalSheetBean {
     private int entrantId;
     private double sumOfMarks;
     private Map<Integer, Integer> priorityFacultyPair;
+    private String firstName;
+    private String lastName;
+    private String patronymic;
+    private String accountName;
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
 
     public int getEntrantId() {
         return entrantId;
@@ -26,6 +38,30 @@ public class EntrantFinalSheetBean {
 
     public void setSumOfMarks(double sumOfMarks) {
         this.sumOfMarks = sumOfMarks;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
     }
 
     public Map<Integer, Integer> getPriorityFacultyPair() {

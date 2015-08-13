@@ -28,4 +28,6 @@ public interface EntrantDao extends Dao<Entrant> {
     void updateEntrantStatus(int statusId, int entrantId, Connection connection) throws SQLException, CrudException;
 
     List<Integer> selectAllEntrantsId(Connection connection) throws SQLException;
+
+    Integer selectUserIdByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
 }

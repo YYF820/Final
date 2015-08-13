@@ -6,6 +6,8 @@ import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin.EntrantInfoAdminImpl;
+import ua.nure.hanzha.SummaryTask4.db.dao.entrantfinalsheet.EntrantFinalSheetDao;
+import ua.nure.hanzha.SummaryTask4.db.dao.entrantfinalsheet.EntrantFinalSheetDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.extramark.ExtraMarkDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.extramark.ExtraMarkDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.dao.faculty.FacultyDao;
@@ -27,6 +29,8 @@ import ua.nure.hanzha.SummaryTask4.security.AuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.security.XmlAuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantServiceImpl;
+import ua.nure.hanzha.SummaryTask4.service.entrantFinalSheet.EntrantFinalSheetService;
+import ua.nure.hanzha.SummaryTask4.service.entrantFinalSheet.EntrantFinalSheetServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminService;
 import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.extraMark.ExtraMarkService;
@@ -94,6 +98,7 @@ public class AppInitListener implements ServletContextListener {
         MarkDao markDao = new MarkDaoImpl();
         ExtraMarkDao extraMarkDao = new ExtraMarkDaoImpl();
         FacultyEntrantDao facultyEntrantDao = new FacultyEntrantDaoImpl();
+        EntrantFinalSheetDao entrantFinalSheetDao = new EntrantFinalSheetDaoImpl();
 
 
         UserService userService = new UserServiceImpl(txManager, userDao);
@@ -125,6 +130,9 @@ public class AppInitListener implements ServletContextListener {
 
         FacultyEntrantService facultyEntrantService = new FacultyEntrantServiceImpl(txManager, facultyEntrantDao);
         servletContext.setAttribute(AppAttribute.FACULTY_ENTRANT_SERVICE, facultyEntrantService);
+
+        EntrantFinalSheetService entrantFinalSheetService = new EntrantFinalSheetServiceImpl(txManager, entrantFinalSheetDao);
+        servletContext.setAttribute(AppAttribute.ENTRANT_FINAL_SHEET_SERVICE, entrantFinalSheetService);
     }
 
     private void setAuthorizationMap(ServletContext servletContext, String fileName) {

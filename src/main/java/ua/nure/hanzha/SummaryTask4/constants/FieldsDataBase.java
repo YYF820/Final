@@ -78,6 +78,6 @@ public class FieldsDataBase {
     //===========================FACULTY ENTRANT FIELDS==========================
     public static final String ENTRANT_FINAL_SHEET_FACULTY_ID = "faculty_id";
     public static final String ENTRANT_FINAL_SHEET_ENTRANT_ID = "entrant_id";
-    public static final String ENTRANT_FINAL_SHEET_PASSED = "passed";
+    public static final String ENTRANT_FINAL_SHEET_ENTER_UNIVERSITY_STATUS_ID = "enter_university_status_id";
     public static final String ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET = "number_of_sheet";
 }

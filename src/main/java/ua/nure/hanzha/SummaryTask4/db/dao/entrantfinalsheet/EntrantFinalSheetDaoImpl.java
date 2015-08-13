@@ -7,16 +7,13 @@ import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.EntrantFinalSheet;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 /**
  * EntrantFinalSheetDaoImpl extends AbstractDao and implements EntrantFinalSheetDao.In EntrantFinalSheetDaoImpl
  * I am using realisation from AbstractDao and for methods which in FEntrantFinalSheetDao and doesn't have realisation
- * in AbstractDao I solved here (selectByPassed, selectByNumberOfSheet, selectByPassedAndNumberOfSheet).
+ * in AbstractDao I solved here (selectByEnterUniversityStatusId, selectByNumberOfSheet, selectByEnterUniversityStatusIdAndNumberOfSheet).
  *
  * @author Dmytro Hanzha
  *         Created by faffi-ubuntu on 29/07/15.
@@ -28,15 +25,15 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
         int k = 1;
         preparedStatement.setInt(k++, entity.getFacultyId());
         preparedStatement.setInt(k++, entity.getEntrantId());
-        preparedStatement.setBoolean(k++, entity.isPassed());
+        preparedStatement.setInt(k++, entity.getEntrantUniversityStatusId());
         preparedStatement.setInt(k, entity.getNumberOfSheet());
     }
 
     @Override
     protected void prepareForUpdate(EntrantFinalSheet entity, PreparedStatement preparedStatement) throws SQLException {
         int k = 1;
-        preparedStatement.setBoolean(k++, entity.isPassed());
-        preparedStatement.setInt(k++, entity.getNumberOfSheet());
+        preparedStatement.setInt(k++, entity.getEntrantUniversityStatusId());
+        preparedStatement.setInt(k, entity.getNumberOfSheet());
         preparedStatement.setInt(k++, entity.getFacultyId());
         preparedStatement.setInt(k, entity.getEntrantId());
     }
@@ -46,8 +43,10 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
         EntrantFinalSheet entrantFinalSheet = new EntrantFinalSheet();
         entrantFinalSheet.setFacultyId(resultSet.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_FACULTY_ID));
         entrantFinalSheet.setEntrantId(resultSet.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_ENTRANT_ID));
-        entrantFinalSheet.setIsPassed(resultSet.getBoolean(FieldsDataBase.ENTRANT_FINAL_SHEET_PASSED));
-        entrantFinalSheet.setNumberOfSheet(resultSet.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET));
+        entrantFinalSheet.setEntrantUniversityStatusId
+                (resultSet.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_ENTER_UNIVERSITY_STATUS_ID));
+        entrantFinalSheet.setNumberOfSheet
+                (resultSet.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET));
         return entrantFinalSheet;
     }
 
@@ -108,10 +107,10 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     }
 
     @Override
-    public List<EntrantFinalSheet> selectByPassed(boolean passed, Connection connection) throws SQLException, CrudException {
+    public List<EntrantFinalSheet> selectByEnterUniversityStatusId(int enterUniversityStatusId, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.passed"))) {
-            ps.setBoolean(1, passed);
+                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.enter_university_status_id"))) {
+            ps.setInt(1, enterUniversityStatusId);
             List<EntrantFinalSheet> result = executeQuery(ps);
             if (result.size() > 0) {
                 return result;
@@ -136,16 +135,46 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     }
 
     @Override
-    public List<EntrantFinalSheet> selectByPassedAndNumberOfSheet(boolean passed, int numberOfSheet, Connection connection) throws SQLException, CrudException {
+    public List<EntrantFinalSheet> selectByEnterUniversityStatusIdAndNumberOfSheet(int enterUniversityStatusId, int numberOfSheet, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.passed.and.number_of_sheet"))) {
-            ps.setBoolean(1, passed);
+                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.enter_university_status_id.and.number_of_sheet"))) {
+            ps.setInt(1, enterUniversityStatusId);
             ps.setInt(2, numberOfSheet);
             List<EntrantFinalSheet> result = executeQuery(ps);
             if (result.size() > 0) {
                 return result;
             } else {
                 throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
+            }
+        }
+    }
+
+    @Override
+    public Integer selectMaxNumberOfPage(Connection connection) throws SQLException, CrudException {
+        try (Statement st = connection.createStatement()) {
+            try (ResultSet rs = st.executeQuery(SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.max.number_of_sheet"))) {
+                Integer numberOfPage = null;
+                if (rs.next()) {
+                    numberOfPage = rs.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET);
+                }
+                if (numberOfPage != null) {
+                    return numberOfPage;
+                } else {
+                    throw new CrudException(ExceptionMessages.NO_ENTRANT_FINAL_SHEETS);
+                }
+            }
+        }
+    }
+
+    @Override
+    public Integer selectIncrementedNumberOfPage(Connection connection) throws SQLException {
+        try (Statement st = connection.createStatement()) {
+            try (ResultSet rs = st.executeQuery(SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.max.number_of_sheet"))) {
+                if (rs.next()) {
+                    return rs.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET);
+                } else {
+                    return 1;
+                }
             }
         }
     }

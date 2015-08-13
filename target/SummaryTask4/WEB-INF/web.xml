@@ -157,11 +157,11 @@
 
     <servlet>
         <servlet-name>AdminEntrantsView</servlet-name>
-        <jsp-file>/WEB-INF/jsp/admin/entrants.jsp</jsp-file>
+        <jsp-file>/WEB-INF/jsp/admin/budgetEntrants.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminEntrantsView</servlet-name>
-        <url-pattern>/admin/entrants.html</url-pattern>
+        <url-pattern>/admin/budgetEntrants.html</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -317,7 +317,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>EntrantsServlet</servlet-name>
-        <url-pattern>/admin/entrants.do</url-pattern>
+        <url-pattern>/admin/budgetEntrants.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
