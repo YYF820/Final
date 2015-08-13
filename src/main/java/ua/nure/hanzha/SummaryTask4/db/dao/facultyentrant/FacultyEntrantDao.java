@@ -1,5 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.facultyentrant;
 
+import ua.nure.hanzha.SummaryTask4.bean.EntrantFinalSheetBean;
 import ua.nure.hanzha.SummaryTask4.db.dao.Dao;
 import ua.nure.hanzha.SummaryTask4.entity.FacultyEntrant;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
@@ -39,5 +40,9 @@ public interface FacultyEntrantDao extends Dao<FacultyEntrant> {
 
     Map<Integer, Integer> selectAllFacultyIdPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
 
+    EntrantFinalSheetBean selectEntrantBeanByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
+
     void updatePriorityByFacultyIdEntrantId(int priority, int facultyId, int entrantId, Connection connection) throws SQLException, CrudException;
+
+    void sumAllMarks(Connection connection) throws SQLException;
 }

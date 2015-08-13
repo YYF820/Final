@@ -57,5 +57,9 @@
             <li><a href="">Final sheet <i class="uk-icon uk-icon-university uk-text-primary"></i></a></li>
             <li class="uk-active"><a class="uk-text-success" href="">life@University</a></li>
         </ul>
+        <div class="uk-form-row uk-margin-top uk-text-center">
+            <a class="uk-button uk-button-primary" href="<c:url value="/admin/generateFinalSheet.do"/>">Generate final
+                sheet</a>
+        </div>
     </div>
 </div>

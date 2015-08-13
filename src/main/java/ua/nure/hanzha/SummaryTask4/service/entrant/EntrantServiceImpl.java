@@ -9,6 +9,7 @@ import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by faffi-ubuntu on 02/08/15.
@@ -60,6 +61,16 @@ public class EntrantServiceImpl implements EntrantService {
             public Void call(Connection connection) throws SQLException, CrudException {
                 entrantDao.updateEntrantStatus(statusId, entrantId, connection);
                 return null;
+            }
+        });
+    }
+
+    @Override
+    public List<Integer> getAllIds() throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<List<Integer>>() {
+            @Override
+            public List<Integer> call(Connection connection) throws SQLException, CrudException {
+                return entrantDao.selectAllEntrantsId(connection);
             }
         });
     }

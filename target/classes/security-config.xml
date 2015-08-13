@@ -169,6 +169,10 @@
         <role name="admin"/>
     </action>
 
+    <action path="/admin/generateFinalSheet.do">
+        <role name="admin"/>
+    </action>
+
 
     <!-- pages for entrant -->
     <action path="/entrant/index.html">
@@ -214,5 +218,4 @@
     <action path="/entrant/configurePriorities.do">
         <role name="entrant"/>
     </action>
-
 </map>

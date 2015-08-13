@@ -1,5 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.service.facultyEntrant;
 
+import ua.nure.hanzha.SummaryTask4.bean.EntrantFinalSheetBean;
 import ua.nure.hanzha.SummaryTask4.db.dao.facultyentrant.FacultyEntrantDao;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.SqlCallable;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManager;
@@ -64,6 +65,27 @@ public class FacultyEntrantServiceImpl implements FacultyEntrantService {
             public Void call(Connection connection) throws SQLException, CrudException {
                 facultyEntrantDao.updatePriorityByFacultyIdEntrantId(priority, facultyId, entrantId, connection);
                 return null;
+            }
+        });
+    }
+
+    @Override
+    public void summAllMarks() throws DaoSystemException {
+        txManager.doInTransaction(new SqlCallable<Void>() {
+            @Override
+            public Void call(Connection connection) throws SQLException, CrudException {
+                facultyEntrantDao.sumAllMarks(connection);
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public EntrantFinalSheetBean getEntrantBeanByEntrantId(final int entrantId) throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<EntrantFinalSheetBean>() {
+            @Override
+            public EntrantFinalSheetBean call(Connection connection) throws SQLException, CrudException {
+                return facultyEntrantDao.selectEntrantBeanByEntrantId(entrantId, connection);
             }
         });
     }

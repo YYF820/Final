@@ -73,7 +73,6 @@
         </form>
     </div>
 </div>
-
 <script type="text/javascript">
     function changeSortType() {
         <c:set value="noSort" scope="session" var="facultiesSortType"/>

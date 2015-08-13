@@ -6,6 +6,7 @@ import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * EntrantDao implements Dao<Entrant> so we can specify, that return type will be Entrant, where was <T>.
@@ -25,4 +26,6 @@ public interface EntrantDao extends Dao<Entrant> {
     Entrant selectByUserId(int userId, Connection connection) throws SQLException, CrudException;
 
     void updateEntrantStatus(int statusId, int entrantId, Connection connection) throws SQLException, CrudException;
+
+    List<Integer> selectAllEntrantsId(Connection connection) throws SQLException;
 }

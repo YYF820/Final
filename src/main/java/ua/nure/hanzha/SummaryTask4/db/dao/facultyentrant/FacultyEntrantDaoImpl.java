@@ -1,5 +1,7 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.facultyentrant;
 
+import ua.nure.hanzha.SummaryTask4.bean.EntrantFinalSheetBean;
+import ua.nure.hanzha.SummaryTask4.bean.FacultyFinalSheetBean;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
@@ -7,10 +9,7 @@ import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.FacultyEntrant;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -172,7 +171,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public Map<Integer, Integer> selectAllFacultyIdPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.faculty.id.by.entrant.id"))) {
+                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.faculty.id.priority.by.entrant.id"))) {
             ps.setInt(1, entrantId);
             Map<Integer, Integer> result = new HashMap<>();
             try (ResultSet rs = ps.executeQuery()) {
@@ -186,6 +185,36 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     }
 
     @Override
+    public EntrantFinalSheetBean selectEntrantBeanByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(
+                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.entrant.id"))) {
+            ps.setInt(1, entrantId);
+            Map<Integer, Integer> priorityFacultyIdPair = new HashMap<>();
+            try (ResultSet rs = ps.executeQuery()) {
+                EntrantFinalSheetBean entrantFinalSheetBean = null;
+                if (rs.next()) {
+                    entrantFinalSheetBean = new EntrantFinalSheetBean();
+                    entrantFinalSheetBean.setEntrantId(entrantId);
+                    entrantFinalSheetBean.setSumOfMarks(rs.getDouble(FieldsDataBase.FACULTY_ENTRANT_SUM_MARKS));
+                    priorityFacultyIdPair.put(rs.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY),
+                            rs.getInt(FieldsDataBase.FACULTY_ENTRANT_FACULTY_ID));
+                }
+                while (rs.next()) {
+                    priorityFacultyIdPair.put(rs.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY),
+                            rs.getInt(FieldsDataBase.FACULTY_ENTRANT_FACULTY_ID));
+                }
+                if (entrantFinalSheetBean != null) {
+                    entrantFinalSheetBean.setPriorityFacultyPair(priorityFacultyIdPair);
+                    return entrantFinalSheetBean;
+                } else {
+                    throw new CrudException("Entrant doesn't enroll to any faculty.");
+                }
+            }
+        }
+    }
+
+
+    @Override
     public void updatePriorityByFacultyIdEntrantId(int priority, int facultyId, int entrantId, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("faculty_entrant.update.priority.by.faculty.id.entrant.id"))) {
             ps.setInt(1, priority);
@@ -194,6 +223,13 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
             if (ps.executeUpdate() == 0) {
                 throw new CrudException(ExceptionMessages.UPDATE_EXCEPTION_MESSAGE);
             }
+        }
+    }
+
+    @Override
+    public void sumAllMarks(Connection connection) throws SQLException {
+        try (Statement st = connection.createStatement()) {
+            st.executeQuery(SqlQueriesHolder.getSqlQuery("faculty.entrant.summ.all.marks"));
         }
     }
 

@@ -79,4 +79,5 @@ public class EntrantInfoAdminBean extends Entity {
     public void setStatusId(int statusId) {
         this.statusId = statusId;
     }
+
 }

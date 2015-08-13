@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -122,6 +123,19 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
             ps.setInt(2, entrantId);
             if (ps.executeUpdate() == 0) {
                 throw new CrudException(ExceptionMessages.UPDATE_EXCEPTION_MESSAGE);
+            }
+        }
+    }
+
+    @Override
+    public List<Integer> selectAllEntrantsId(Connection connection) throws SQLException {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.select.all.id"))) {
+            try (ResultSet resultSet = ps.executeQuery()) {
+                List<Integer> result = new ArrayList<>();
+                while (resultSet.next()) {
+                    result.add(resultSet.getInt(FieldsDataBase.ENTITY_ID));
+                }
+                return result;
             }
         }
     }

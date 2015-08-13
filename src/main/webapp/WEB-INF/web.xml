@@ -456,6 +456,15 @@
         <url-pattern>/facultiesSort.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>GenerateFinalSheet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.admin.GenerateFinalSheetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GenerateFinalSheet</servlet-name>
+        <url-pattern>/admin/generateFinalSheet.do</url-pattern>
+    </servlet-mapping>
+
     <!--Filters-->
 
     <filter>

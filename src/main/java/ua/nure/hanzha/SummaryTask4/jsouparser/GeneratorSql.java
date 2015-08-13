@@ -83,7 +83,6 @@ public class GeneratorSql {
             BigInteger randomNumbersForEmail = BigInteger.valueOf(pair.getKey() * prime_email + 1);
             String password = PasswordHash.randomPassword(8);
             String hashPassword = PasswordHash.createHash(password);
-            System.out.println(password + " " + PasswordHash.validatePassword(password, hashPassword));
             String emailGenarated = "entrant" + randomNumbersForEmail + "@gmail.com";
             pwUsers.println(
                     "INSERT INTO Users VALUES (DEFAULT, \'" +
@@ -210,7 +209,6 @@ public class GeneratorSql {
                 int randomPriority = randPriority.nextInt(priority.size());
                 Integer facultyIdInsert = facultyId.get(randomFacultyId);
                 Integer priorityInsert = priority.get(randomPriority);
-
                 pwFacultiesEntrants.println(
                         "INSERT INTO Faculties_Entrants VALUES (" +
                                 facultyIdInsert + ", " +

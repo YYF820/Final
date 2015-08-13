@@ -90,6 +90,19 @@
         </div>
     </u:ifAuthAs>
 
+    <u:ifAuthAs role="admin">
+        <div class="uk-grid uk-text-center uk-margin-top">
+            <div class="uk-width-medium-2-10">
+                <a href="#sortFacultiesEntrant" data-uk-offcanvas></a>
+                <!-- This is a button toggling the off-canvas sidebar -->
+                <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
+                    Sort settings <i class="uk-icon-cog uk-text-primary"></i>
+                </button>
+                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp"%>
+            </div>
+        </div>
+    </u:ifAuthAs>
+
     <c:forEach var="facultyBean" items="${sessionScope.facultiesInfoBeansPagination}" varStatus="counter" step="1">
     <c:choose>
     <c:when test="${counter.index % 2 == 0}">
