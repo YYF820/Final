@@ -4,6 +4,7 @@ import ua.nure.hanzha.SummaryTask4.bean.*;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
+import ua.nure.hanzha.SummaryTask4.entity.EntrantFinalSheet;
 import ua.nure.hanzha.SummaryTask4.exception.ServletSystemException;
 import ua.nure.hanzha.SummaryTask4.mail.MailHelper;
 
@@ -145,7 +146,54 @@ public class MailSenderServlet extends HttpServlet {
                 UniversityFinalSheetBean universityFinalSheetBean =
                         (UniversityFinalSheetBean) request.getAttribute(RequestAttribute.UNIVERSITY_FINAL_SHEET_BEAN);
                 List<FacultyFinalSheetBean> allFacultiesFinalSheetBeanList = universityFinalSheetBean.getFacultiesFinalSheetBean();
-
+                for (FacultyFinalSheetBean facultyFinalSheetBean : allFacultiesFinalSheetBeanList) {
+                    List<EntrantFinalSheetBean> budgetEntrantFinalSheetBeanList = facultyFinalSheetBean.getBudgetEntrants();
+                    for (EntrantFinalSheetBean entrantFinalSheetBean : budgetEntrantFinalSheetBeanList) {
+                        String facultyName = facultyFinalSheetBean.getFacultyName();
+                        firstName = entrantFinalSheetBean.getFirstName();
+                        lastName = entrantFinalSheetBean.getLastName();
+                        patronymic = entrantFinalSheetBean.getPatronymic();
+                        accountName = entrantFinalSheetBean.getAccountName();
+                        subjectMail = createSubjectEnterUniversity();
+                        messageMail = createMessageCongratulationsBudgetEntrant(firstName, lastName, patronymic, facultyName);
+                        try {
+                            MailHelper.sendMail(accountName, subjectMail, messageMail);
+                        } catch (MessagingException e) {
+                            //TODO: LOG4J
+                        }
+                    }
+                    List<EntrantFinalSheetBean> contractEntrantFinalSheetBeanList = facultyFinalSheetBean.getContractEntrants();
+                    for (EntrantFinalSheetBean entrantFinalSheetBean : contractEntrantFinalSheetBeanList) {
+                        String facultyName = facultyFinalSheetBean.getFacultyName();
+                        firstName = entrantFinalSheetBean.getFirstName();
+                        lastName = entrantFinalSheetBean.getLastName();
+                        patronymic = entrantFinalSheetBean.getPatronymic();
+                        accountName = entrantFinalSheetBean.getAccountName();
+                        subjectMail = createSubjectEnterUniversity();
+                        messageMail = createMessageCongratulationsContractEntrant(firstName, lastName, patronymic, facultyName);
+                        try {
+                            MailHelper.sendMail(accountName, subjectMail, messageMail);
+                        } catch (MessagingException e) {
+                            //TODO: LOG4J
+                        }
+                    }
+                }
+                List<EntrantFinalSheetBean> notPassedEntrants = universityFinalSheetBean.getNotPassedEntrants();
+                for (EntrantFinalSheetBean notPassedEntrant : notPassedEntrants) {
+                    firstName = notPassedEntrant.getFirstName();
+                    lastName = notPassedEntrant.getLastName();
+                    patronymic = notPassedEntrant.getPatronymic();
+                    accountName = notPassedEntrant.getAccountName();
+                    subjectMail = createSubjectEnterUniversity();
+                    messageMail = createMessageNotPassedEntrant(firstName, lastName, patronymic);
+                    try {
+                        MailHelper.sendMail(accountName, subjectMail, messageMail);
+                    } catch (MessagingException e) {
+                        //TODO: LOG4J
+                    }
+                }
+                response.sendRedirect(Pages.INDEX_HTML);
+                break;
             default:
                 try {
                     response.sendRedirect(Pages.INDEX_HTML);
@@ -178,6 +226,10 @@ public class MailSenderServlet extends HttpServlet {
         return "Ваша запись была разблокирована.";
     }
 
+    private String createSubjectEnterUniversity() {
+        return "Информация о поступлении";
+    }
+
     private String createMessageVerifyAccount(String firstName, String lastName, String patronymic, String confirmLink) {
         return "Здравствуйте, " + lastName + " " + firstName + " " + patronymic + ".\n\n"
                 + "Добро пожаловать на UniversityAlpha.com\n"
@@ -208,6 +260,28 @@ public class MailSenderServlet extends HttpServlet {
         return "Здравствуйте, " + lastName + " " + firstName + " " + patronymic + ".\n\n"
                 + "Ваша запись была разблокирована.\n\n"
                 + "Спасибо что пользуетесь нашей системой.\n\n";
+    }
+
+    private String createMessageCongratulationsBudgetEntrant(String firstName, String lastName, String patronymic, String facultyName) {
+        return "Уважаемый" + lastName + " " + firstName + " " + patronymic + ".\n" +
+                "Поздравляем Вас с зачислением на бюджетное место дневной формы обучения на факультете" + facultyName + "!\n" +
+                "Желаем успехов в учебе!\n\n" +
+                "\tС уважение University.";
+    }
+
+    private String createMessageCongratulationsContractEntrant(String firstName, String lastName, String patronymic, String facultyName) {
+        return "Уважаемый" + lastName + " " + firstName + " " + patronymic + ".\n" +
+                "Cообщаем Вам что в этом году Вы набрали недостаточное количество баллов для зачисления на бюджетное место дневной формы обучения.\n" +
+                "Предлагаем Вам воспользоваться контрактной формой обучения на факультете" + facultyName + ". " +
+                "По всем вопросам просим обращаться в приемную комиссию.\n\n" +
+                "\tС уважение University.";
+    }
+
+    private String createMessageNotPassedEntrant(String firstName, String lastName, String patronymic) {
+        return "Уважаемый" + lastName + " " + firstName + " " + patronymic + ".\n" +
+                "Cообщаем Вам, что в этом году Вы набрали недостаточное количество баллов для поступления в University.\n" +
+                "По всем вопросам просим обращаться в приемную комиссию.\n\n" +
+                "\tС уважение University.";
     }
 
 }

@@ -10,6 +10,9 @@ import java.util.Map;
 public class FacultyFinalSheetBean {
 
     private int facultyId;
+    private String facultyName;
+
+
     private List<EntrantFinalSheetBean> budgetEntrants;
     private List<EntrantFinalSheetBean> contractEntrants;
     private int totalSpots;
@@ -54,6 +57,15 @@ public class FacultyFinalSheetBean {
     public void setBudgetSpots(int budgetSpots) {
         this.budgetSpots = budgetSpots;
     }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
+    }
+
 
     @Override
     public String toString() {

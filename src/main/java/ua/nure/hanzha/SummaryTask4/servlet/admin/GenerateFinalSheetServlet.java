@@ -83,6 +83,7 @@ public class GenerateFinalSheetServlet extends HttpServlet {
             List<EntrantFinalSheetBean> budgetEntrants = new ArrayList<>();
             List<EntrantFinalSheetBean> contractEntrants = new ArrayList<>();
             facultyFinalSheetBean.setFacultyId(faculty.getId());
+            facultyFinalSheetBean.setFacultyName(faculty.getName());
             facultyFinalSheetBean.setBudgetSpots(faculty.getBudgetSpots());
             facultyFinalSheetBean.setTotalSpots(faculty.getTotalSpots());
             facultyFinalSheetBean.setBudgetEntrants(budgetEntrants);
