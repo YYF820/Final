@@ -105,7 +105,7 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
                     }
                 }
             } catch (DaoSystemException e) {
-                if (e.getMessage().equals(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE)) {
+                if (e.getMessage().equals(ExceptionMessages.SELECT_BY_ID_EXCEPTION_MESSAGE)) {
                     session.setAttribute(SessionAttribute.RESEND_IS_USER_EXISTS_BY_ACCOUNT_NAME, false);
                     response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                 }

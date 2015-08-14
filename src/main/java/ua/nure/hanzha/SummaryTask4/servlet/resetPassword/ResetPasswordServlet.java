@@ -44,7 +44,7 @@ public class ResetPasswordServlet extends HttpServlet {
         String confirmPassword = request.getParameter(PARAM_CONFIRM_PASSWORD);
         boolean isEmpty = checkEmpty(session, password, confirmPassword);
         boolean isEquals = checkEquals(session, password, confirmPassword);
-        boolean isValidPasswords = checkValidationPasswords(request, password, confirmPassword);
+        boolean isValidPasswords = checkValidationPasswords(session, password, confirmPassword);
         if (isEmpty || !isEquals || !isValidPasswords) {
             response.sendRedirect(Pages.RESET_PASSWORD_HTML);
         } else {
@@ -104,14 +104,14 @@ public class ResetPasswordServlet extends HttpServlet {
         return true;
     }
 
-    private boolean checkValidationPasswords(HttpServletRequest request, String password, String confirmPassword) {
+    private boolean checkValidationPasswords(HttpSession session, String password, String confirmPassword) {
         boolean isValidPassword = Validation.validatePassword(password);
         boolean isValidConfirmPassword = Validation.validatePassword(confirmPassword);
         if (!isValidPassword || !isValidConfirmPassword) {
-            request.setAttribute(SessionAttribute.RESET_PASSWORD_IS_PASSWORD_VALID, false);
+            session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_PASSWORD_VALID, false);
             return false;
         }
-        request.setAttribute(SessionAttribute.RESET_PASSWORD_IS_PASSWORD_VALID, true);
+        session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_PASSWORD_VALID, true);
         return true;
     }
 
