@@ -27,38 +27,36 @@
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
                     Sort settings <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp"%>
+                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
             </div>
             <div class="uk-width-medium-6-10">
-                <u:ifAuthAs role="entrant">
-                    <c:choose>
-                        <c:when test="${sessionScope.entrantHowManyMoreSubjectsNeed != 0 && sessionScope.entrantAccountSettingsExtraMarks == null }">
-                            <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
-                                <p>You should set up your account <a href="<c:url value="/accountSettings.html"/>">Account
-                                    settings <i
-                                            class="uk-icon-external-link"></i></a></p>
-                            </div>
-                        </c:when>
-                        <c:when test="${sessionScope.facultiesIsAnyProblemsUpdate == true}">
-                            <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
-                                <p>Some problems while configuring priorities please try again later.</p>
-                            </div>
-                            <c:remove var="facultiesIsAnyProblemsUpdate" scope="session"/>
-                        </c:when>
-                        <c:when test="${sessionScope.facultiesIsAnyProblemsUpdate == false}">
-                            <div class="uk-alert uk-alert-success uk-margin-top-remove uk-margin-bottom-remove alert">
-                                <p>Success configuring priorities <i class="ui-icon-check"></i></p>
-                            </div>
-                            <c:remove var="facultiesIsAnyProblemsUpdate" scope="session"/>
-                        </c:when>
-                        <c:when test="${sessionScope.facultiesIsSamePriorities == true}">
-                            <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
-                                <p>You can't set same priority for 2 or more faculties, please try again.</p>
-                            </div>
-                            <c:remove var="facultiesIsSamePriorities" scope="session"/>
-                        </c:when>
-                    </c:choose>
-                </u:ifAuthAs>
+                <c:choose>
+                    <c:when test="${sessionScope.entrantHowManyMoreSubjectsNeed != 0 || sessionScope.entrantAccountSettingsExtraMarks == null }">
+                        <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
+                            <p>You should set up your account <a href="<c:url value="/accountSettings.html"/>">Account
+                                settings <i
+                                        class="uk-icon-external-link"></i></a></p>
+                        </div>
+                    </c:when>
+                    <c:when test="${sessionScope.facultiesIsAnyProblemsUpdate == true}">
+                        <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
+                            <p>Some problems while configuring priorities please try again later.</p>
+                        </div>
+                        <c:remove var="facultiesIsAnyProblemsUpdate" scope="session"/>
+                    </c:when>
+                    <c:when test="${sessionScope.facultiesIsAnyProblemsUpdate == false}">
+                        <div class="uk-alert uk-alert-success uk-margin-top-remove uk-margin-bottom-remove alert">
+                            <p>Success configuring priorities <i class="ui-icon-check"></i></p>
+                        </div>
+                        <c:remove var="facultiesIsAnyProblemsUpdate" scope="session"/>
+                    </c:when>
+                    <c:when test="${sessionScope.facultiesIsSamePriorities == true}">
+                        <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
+                            <p>You can't set same priority for 2 or more faculties, please try again.</p>
+                        </div>
+                        <c:remove var="facultiesIsSamePriorities" scope="session"/>
+                    </c:when>
+                </c:choose>
             </div>
             <div class="uk-width-medium-2-10">
                 <a href="#setUpPriorities" data-uk-offcanvas></a>
@@ -68,6 +66,14 @@
                 <%@include file="../jspf/canvas/setUpPriorities.jsp" %>
             </div>
         </div>
+        <c:if test="${sessionScope.facultiesIsSorted == false}">
+            <div class="uk-width-medium-1-10 uk-margin-top uk-text-center">
+                <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
+                    <p>Please choose sort option.</p>
+                </div>
+                <c:remove var="facultiesIsSorted" scope="session"/>
+            </div>
+        </c:if>
     </u:ifAuthAs>
 
     <u:ifAuthAs role="guest">
@@ -78,7 +84,8 @@
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
                     Sort settings <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp"%>
+                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
+
             </div>
             <div class="uk-width-medium-6-10">
                 <div class="uk-alert uk-alert-warning uk-margin-top-remove
@@ -88,6 +95,14 @@
                 </div>
             </div>
         </div>
+        <c:if test="${sessionScope.facultiesIsSorted == false}">
+            <div class="uk-width-medium-1-10 uk-margin-top uk-text-center">
+                <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
+                    <p>Please choose sort option.</p>
+                </div>
+                <c:remove var="facultiesIsSorted" scope="session"/>
+            </div>
+        </c:if>
     </u:ifAuthAs>
 
     <u:ifAuthAs role="admin">
@@ -98,8 +113,16 @@
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
                     Sort settings <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp"%>
+                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
             </div>
+            <c:if test="${sessionScope.facultiesIsSorted == false}">
+                <div class="uk-width-medium-6-10">
+                    <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
+                        <p>Please choose sort option.</p>
+                    </div>
+                    <c:remove var="facultiesIsSorted" scope="session"/>
+                </div>
+            </c:if>
         </div>
     </u:ifAuthAs>
 

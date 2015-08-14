@@ -37,5 +37,9 @@ public class Pages {
     public static final String ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS_HTML = "/entrant/addMarks.html";
     public static final String ENTRANT_ACCOUNT_SETTINGS_ADD_EXTRA_MARKS_HTML = "/entrant/addExtraMarks.html";
 
+    public static final String PAGINATION_FINAL_SHEET = "/paginationFinalSheet.do";
+    public static final String PUBLIC_FINAL_SHEET_SERVLET = "/publicFinalSheet.do";
+    public static final String PUBLIC_FINAL_SHEET_HTML = "/finalSheet.html";
+
 
 }

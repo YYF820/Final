@@ -28,7 +28,7 @@
             <th>City</th>
             <th>Region</th>
             <th>School</th>
-            <th>Entrant enterUniversityStatus</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
@@ -85,7 +85,7 @@
                 <li class="uk-active"><span>${sessionScope.currentPage}</span></li>
             </c:when>
             <c:otherwise>
-                <li><a href="<c:url value="/admin/budgetEntrants.do?page=1"/>">1</a></li>
+                <li><a href="<c:url value="/admin/entrants.do?page=1"/>">1</a></li>
             </c:otherwise>
         </c:choose>
         <c:if test="${sessionScope.currentPage > 4}">
@@ -100,7 +100,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="uk-disabled"><span><a
-                            href="<c:url value="/admin/budgetEntrants.do?page=${i}"/>">${i}</a></span></li>
+                            href="<c:url value="/admin/entrants.do?page=${i}"/>">${i}</a></span></li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
@@ -109,12 +109,12 @@
         </c:if>
         <c:if test="${sessionScope.currentPage < sessionScope.numberOfPages - 4}">
             <li>
-                <a href="<c:url value="/admin/budgetEntrants.do?page=${sessionScope.numberOfPages}"/>">${sessionScope.numberOfPages}</a>
+                <a href="<c:url value="/admin/entrants.do?page=${sessionScope.numberOfPages}"/>">${sessionScope.numberOfPages}</a>
             </li>
         </c:if>
         <c:if test="${sessionScope.currentPage lt sessionScope.numberOfPages}">
             <li class="uk-pagination-next">
-                <a href="<c:url value="/admin/budgetEntrants.do?page=${sessionScope.currentPage + 1}"/>">
+                <a href="<c:url value="/admin/entrants.do?page=${sessionScope.currentPage + 1}"/>">
                     Next <i class="uk-icon-angle-double-right"></i>
                 </a>
             </li>

@@ -81,42 +81,44 @@
         </tr>
         </tbody>
     </table>
-    <c:if test="${sessionScope.entrantHowManyMoreSubjectsNeed == 0}">
-        <table class="uk-table uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
-            <caption>
-                Marks
-            </caption>
-            <thead>
-            </thead>
-            <tbody>
-            <c:forEach var="entry" items="${sessionScope.entrantAccountSettingsBean.subjectMark}">
+    <u:ifAuthAs role="entrant">
+        <c:if test="${sessionScope.entrantHowManyMoreSubjectsNeed == 0}">
+            <table class="uk-table uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
+                <caption>
+                    Marks
+                </caption>
+                <thead>
+                </thead>
+                <tbody>
+                <c:forEach var="entry" items="${sessionScope.entrantAccountSettingsBean.subjectMark}">
+                    <tr class="uk-table-middle">
+                        <td>${entry.key}</td>
+                        <td>${entry.value} </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+        <c:if test="${sessionScope.entrantAccountSettingsNoExtraMarks != true}">
+            <table class="uk-table uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
+                <caption>
+                    Extra Marks
+                </caption>
+                <thead>
+                </thead>
+                <tbody>
                 <tr class="uk-table-middle">
-                    <td>${entry.key}</td>
-                    <td>${entry.value} </td>
+                    <td>Certificate Points</td>
+                    <td>${sessionScope.entrantAccountSettingsExtraMarks.certificatePoints}</td>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </c:if>
-    <c:if test="${sessionScope.entrantAccountSettingsNoExtraMarks != true}">
-        <table class="uk-table uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
-            <caption>
-                Extra Marks
-            </caption>
-            <thead>
-            </thead>
-            <tbody>
-            <tr class="uk-table-middle">
-                <td>Certificate Points</td>
-                <td>${sessionScope.entrantAccountSettingsExtraMarks.certificatePoints}</td>
-            </tr>
-            <tr class="uk-table-middle">
-                <td>Extra Points</td>
-                <td>${sessionScope.entrantAccountSettingsExtraMarks.extraPoints}</td>
-            </tr>
-            </tbody>
-        </table>
-    </c:if>
+                <tr class="uk-table-middle">
+                    <td>Extra Points</td>
+                    <td>${sessionScope.entrantAccountSettingsExtraMarks.extraPoints}</td>
+                </tr>
+                </tbody>
+            </table>
+        </c:if>
+    </u:ifAuthAs>
 </div>
 </body>
 </html>

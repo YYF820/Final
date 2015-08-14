@@ -1,12 +1,12 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
 import ua.nure.hanzha.SummaryTask4.bean.ReadyFinalEntrantSheetBean;
-import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
+import ua.nure.hanzha.SummaryTask4.constants.*;
 import ua.nure.hanzha.SummaryTask4.entity.EntrantFinalSheet;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrantFinalSheet.EntrantFinalSheetService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +21,9 @@ import java.util.List;
  */
 public class PublicFinalSheetServlet extends HttpServlet {
 
-    private EntrantFinalSheetService entrantFinalSheetService;
+    private static final String COMMAND_FIND_ALL_ENTRANTS = "findAllEntrants";
 
+    private EntrantFinalSheetService entrantFinalSheetService;
 
     @Override
     public void init() throws ServletException {
@@ -35,9 +36,15 @@ public class PublicFinalSheetServlet extends HttpServlet {
         try {
             List<ReadyFinalEntrantSheetBean> passedEntrants = entrantFinalSheetService.getPassedEntrants();
             session.setAttribute(SessionAttribute.PASSED_ENTRANTS, passedEntrants);
-            response.sendRedirect("/finalSheet.html");
+            response.sendRedirect(Pages.PAGINATION_FINAL_SHEET + "?command=" + COMMAND_FIND_ALL_ENTRANTS);
         } catch (DaoSystemException e) {
-            e.printStackTrace();
+            if (e.getMessage().equals(ExceptionMessages.SELECT_EXCEPTION_MESSAGE)) {
+                request.setAttribute(RequestAttribute.IS_READY_FINAL_SHEET, false);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
+                requestDispatcher.forward(request, response);
+            } else {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
         }
     }
 }

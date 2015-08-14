@@ -19,4 +19,6 @@ public interface EntrantFinalSheetService {
     void addEntrantToFinalSheet(EntrantFinalSheet entrantFinalSheet) throws DaoSystemException;
 
     List<ReadyFinalEntrantSheetBean> getPassedEntrants() throws DaoSystemException;
+
+    ReadyFinalEntrantSheetBean getPassedEntrantByUserId(int userId) throws DaoSystemException;
 }

@@ -121,13 +121,13 @@ public class FacultiesFilter extends BaseFilter {
         session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
         session.setAttribute(SessionAttribute.FACULTIES_INFO_BEANS, facultiesInfoBeans);
         session.setAttribute(SessionAttribute.FACULTIES_INFO_BEANS_PAGINATION, facultiesInfoBeansPagination);
-        session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, true);
     }
 
 
     private void preparePage(HttpServletResponse response, HttpServletRequest request,
                              HttpSession session, FilterChain filterChain) throws IOException, ServletException {
         String sortType = (String) session.getAttribute(SessionAttribute.FACULTIES_SORT_TYPE);
+        Boolean facultiesIsSorted = (Boolean) session.getAttribute(SessionAttribute.FACULTIES_IS_SORTED);
         if (sortType == null || sortType.equals(SORT_TYPE_NO_SORT)) {
             List<FacultiesInfoBean> facultiesInfoBeans = new ArrayList<>();
             try {
@@ -155,10 +155,20 @@ public class FacultiesFilter extends BaseFilter {
                     page = 1;
                     List<FacultiesInfoBean> facultiesInfoBeansPagination = new ArrayList<>();
                     copyList(facultiesInfoBeans, facultiesInfoBeansPagination, page, RECORDS_PER_PAGE);
+                    if (facultiesIsSorted != null && !facultiesIsSorted) {
+                        session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, false);
+                    } else {
+                        session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, true);
+                    }
                     setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
                 } else {
                     List<FacultiesInfoBean> facultiesInfoBeansPagination = new ArrayList<>();
                     copyList(facultiesInfoBeans, facultiesInfoBeansPagination, page, RECORDS_PER_PAGE);
+                    if (facultiesIsSorted != null && !facultiesIsSorted) {
+                        session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, false);
+                    } else {
+                        session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, true);
+                    }
                     setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
                 }
                 session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_NO_SORT);
@@ -181,10 +191,22 @@ public class FacultiesFilter extends BaseFilter {
                 page = 1;
                 List<FacultiesInfoBean> facultiesInfoBeansPagination = new ArrayList<>();
                 copyList(facultiesInfoBeans, facultiesInfoBeansPagination, page, RECORDS_PER_PAGE);
+                if (facultiesIsSorted != null && !facultiesIsSorted) {
+                    session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, false);
+                } else {
+                    session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, true);
+                }
+                setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
                 setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
             } else {
                 List<FacultiesInfoBean> facultiesInfoBeansPagination = new ArrayList<>();
                 copyList(facultiesInfoBeans, facultiesInfoBeansPagination, page, RECORDS_PER_PAGE);
+                if (facultiesIsSorted != null && !facultiesIsSorted) {
+                    session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, false);
+                } else {
+                    session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, true);
+                }
+                setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
                 setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
             }
             filterChain.doFilter(request, response);

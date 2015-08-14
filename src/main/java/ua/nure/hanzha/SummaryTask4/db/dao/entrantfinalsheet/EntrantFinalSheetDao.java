@@ -40,4 +40,6 @@ public interface EntrantFinalSheetDao extends Dao<EntrantFinalSheet> {
     Integer selectIncrementedNumberOfPage(Connection connection) throws SQLException;
 
     List<ReadyFinalEntrantSheetBean> selectPassedEntrants(Connection connection) throws SQLException, CrudException;
+
+    ReadyFinalEntrantSheetBean selectPassedEntrantByUserId(int userId, Connection connection) throws SQLException, CrudException;
 }

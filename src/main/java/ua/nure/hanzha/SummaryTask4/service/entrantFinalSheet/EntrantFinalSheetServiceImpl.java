@@ -66,4 +66,14 @@ public class EntrantFinalSheetServiceImpl implements EntrantFinalSheetService {
             }
         });
     }
+
+    @Override
+    public ReadyFinalEntrantSheetBean getPassedEntrantByUserId(final int userId) throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<ReadyFinalEntrantSheetBean>() {
+            @Override
+            public ReadyFinalEntrantSheetBean call(Connection connection) throws SQLException, CrudException {
+                return entrantFinalSheetDao.selectPassedEntrantByUserId(userId, connection);
+            }
+        });
+    }
 }

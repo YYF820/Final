@@ -7,6 +7,7 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrantInfoAdmin.EntrantInfoAdminService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +47,8 @@ public class EntrantsServlet extends HttpServlet {
             session.setAttribute(SessionAttribute.ENTRANTS_ADMIN, entrantsFixed);
             session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
             session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-            response.sendRedirect(Pages.ENTRANTS_ADMIN_HTML);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.ENTRANTS_ADMIN_HTML);
+            requestDispatcher.forward(request, response);
         } catch (DaoSystemException e) {
             e.printStackTrace();
         }

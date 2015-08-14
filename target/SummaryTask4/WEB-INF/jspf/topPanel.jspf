@@ -48,18 +48,16 @@
 </nav>
 
 <div id="adminCanvasId" class="uk-offcanvas">
-    <div class="uk-offcanvas-bar">
+    <div class="uk-offcanvas-bar uk-contrast">
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
-            <li><a href="<c:url value="/admin/budgetEntrants.do"/>">Entrants <i
+            <li class="uk-nav-header">Admin functions</li>
+            <li><a href="<c:url value="/admin/entrants.do"/>">Entrants <i
                     class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
-            <li class="uk-active"><a href="<c:url value="/admin/faculties.do"/>">Faculties <i
+            <li><a href="<c:url value="/admin/faculties.do"/>">Faculties <i
                     class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
-            <li><a href="">Final sheet <i class="uk-icon uk-icon-university uk-text-primary"></i></a></li>
-            <li class="uk-active"><a class="uk-text-success" href="">life@University</a></li>
+            <li><a class="uk-h3" href="<c:url value="/admin/generateFinalSheet.do"/>" >Generate final
+                sheet <i class="uk-icon-cog uk-icon-spin uk-text-success"></i></a></li>
         </ul>
-        <div class="uk-form-row uk-margin-top uk-text-center">
-            <a class="uk-button uk-button-primary" href="<c:url value="/admin/generateFinalSheet.do"/>">Generate final
-                sheet</a>
-        </div>
     </div>
 </div>
+

@@ -20,13 +20,18 @@
         <role name="admin"/>
     </action>
 
-    <action path="/finalSheet.html">
+    <action path="/paginationFinalSheet.do">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+    <action path="/publicFinalSheet.do">
         <role name="guest"/>
         <role name="entrant"/>
         <role name="admin"/>
     </action>
 
-    <action path="/publicFinalSheet.do">
+    <action path="/finalSheet.html">
         <role name="guest"/>
         <role name="entrant"/>
         <role name="admin"/>
@@ -125,11 +130,11 @@
         <role name="admin"/>
     </action>
 
-    <action path="/admin/budgetEntrants.html">
+    <action path="/admin/entrants.html">
         <role name="admin"/>
     </action>
 
-    <action path="/admin/budgetEntrants.do">
+    <action path="/admin/entrants.do">
         <role name="admin"/>
     </action>
 

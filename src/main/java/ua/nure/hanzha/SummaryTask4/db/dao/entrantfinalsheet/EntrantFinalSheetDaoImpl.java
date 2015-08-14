@@ -190,8 +190,8 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
                 while (rs.next()) {
                     ReadyFinalEntrantSheetBean readyFinalEntrantSheetBean = new ReadyFinalEntrantSheetBean();
                     readyFinalEntrantSheetBean.setFacultyName(rs.getString(FieldsDataBase.FACULTY_NAME));
-                    readyFinalEntrantSheetBean.setFirstName(rs.getString(FieldsDataBase.USER_LAST_NAME));
-                    readyFinalEntrantSheetBean.setLastName(rs.getString(FieldsDataBase.USER_FIRST_NAME));
+                    readyFinalEntrantSheetBean.setFirstName(rs.getString(FieldsDataBase.USER_FIRST_NAME));
+                    readyFinalEntrantSheetBean.setLastName(rs.getString(FieldsDataBase.USER_LAST_NAME));
                     readyFinalEntrantSheetBean.setPatronymic(rs.getString(FieldsDataBase.USER_PATRONYMIC));
                     readyFinalEntrantSheetBean.setSumOfMarks(rs.getDouble(FieldsDataBase.FACULTY_ENTRANT_SUM_MARKS));
                     int enterUniversityStatusId = rs.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_ENTER_UNIVERSITY_STATUS_ID);
@@ -203,6 +203,32 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
                     return result;
                 } else {
                     throw new CrudException(ExceptionMessages.SELECT_EXCEPTION_MESSAGE);
+                }
+            }
+        }
+    }
+
+    @Override
+    public ReadyFinalEntrantSheetBean selectPassedEntrantByUserId(int userId, Connection connection) throws SQLException, CrudException {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("faculty_final_sheet_select.entrant.by.user.id"))) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                ReadyFinalEntrantSheetBean readyFinalEntrantSheetBean = null;
+                if (rs.next()) {
+                    readyFinalEntrantSheetBean = new ReadyFinalEntrantSheetBean();
+                    readyFinalEntrantSheetBean.setFacultyName(rs.getString(FieldsDataBase.FACULTY_NAME));
+                    readyFinalEntrantSheetBean.setFirstName(rs.getString(FieldsDataBase.USER_FIRST_NAME));
+                    readyFinalEntrantSheetBean.setLastName(rs.getString(FieldsDataBase.USER_LAST_NAME));
+                    readyFinalEntrantSheetBean.setPatronymic(rs.getString(FieldsDataBase.USER_PATRONYMIC));
+                    readyFinalEntrantSheetBean.setSumOfMarks(rs.getDouble(FieldsDataBase.FACULTY_ENTRANT_SUM_MARKS));
+                    int enterUniversityStatusId = rs.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_ENTER_UNIVERSITY_STATUS_ID);
+                    readyFinalEntrantSheetBean.setEnterUniversityStatus
+                            (EnterUniversityStatus.getEnterUniversityStatusById(enterUniversityStatusId).getName());
+                }
+                if (readyFinalEntrantSheetBean != null) {
+                    return readyFinalEntrantSheetBean;
+                } else {
+                    throw new CrudException(ExceptionMessages.SELECT_BY_ID_EXCEPTION_MESSAGE);
                 }
             }
         }

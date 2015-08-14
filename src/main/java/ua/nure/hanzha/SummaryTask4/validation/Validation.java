@@ -124,7 +124,7 @@ public class Validation {
         return m.matches();
     }
 
-    private static boolean validateLastName(String lastName) {
+    public static boolean validateLastName(String lastName) {
         Pattern p = Pattern.compile("^[\\p{Lu}](['-]?[\\p{L}&&[^\\p{Lu}]]+){2,15}$");
         Matcher m = p.matcher(lastName);
         return m.matches();

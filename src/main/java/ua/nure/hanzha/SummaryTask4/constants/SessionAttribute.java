@@ -188,6 +188,17 @@ public class SessionAttribute {
     public static final String FACULTIES_SORT_TYPE = "facultiesSortType";
     public static final String FACULTIES_IS_SORTED = "facultiesIsSorted";
 
-
+    //===================================FINAL SHEET==============================================//
     public static final String PASSED_ENTRANTS = "passedEntrants";
+    public static final String PASSED_ENTRANTS_PAGINATION = "passedEntrantsPagination";
+    public static final String FINAL_SHEET_IS_FORM_EMPTY = "finalSheetIsFormEmpty";
+    public static final String FINAL_SHEET_IS_VALID_LAST_NAME = "finalSheetIsValidLastName";
+    public static final String FINAL_SHEET_IS_VALID_FACULTY_NAME = "finalSheetIsValidFacultyName";
+    public static final String FINAL_SHEET_LAST_NAME = "finalSheetLastName";
+    public static final String FINAL_SHEET_FACULTY_NAME = "finalSheetFacultyName";
+
+    public static final String FINAL_SHEET_IS_FOUND_SOMETHING = "finalSheetIsFoundSomething";
+
+
+    public static final String SEARCHED_PASSED_ENTRANTS = "searchedPassedEntrants";
 }

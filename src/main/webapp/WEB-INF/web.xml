@@ -166,11 +166,11 @@
 
     <servlet>
         <servlet-name>AdminEntrantsView</servlet-name>
-        <jsp-file>/WEB-INF/jsp/admin/budgetEntrants.jsp</jsp-file>
+        <jsp-file>/WEB-INF/jsp/admin/entrants.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminEntrantsView</servlet-name>
-        <url-pattern>/admin/budgetEntrants.html</url-pattern>
+        <url-pattern>/admin/entrants.html</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -326,7 +326,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>EntrantsServlet</servlet-name>
-        <url-pattern>/admin/budgetEntrants.do</url-pattern>
+        <url-pattern>/admin/entrants.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -483,6 +483,15 @@
         <url-pattern>/publicFinalSheet.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PaginationFinalSheetServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.PaginationFinalSheetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PaginationFinalSheetServlet</servlet-name>
+        <url-pattern>/paginationFinalSheet.do</url-pattern>
+    </servlet-mapping>
+
     <!--Filters-->
 
     <filter>
@@ -542,7 +551,7 @@
         <url-pattern>/facultiesSort.do</url-pattern>
         <url-pattern>/finalSheet.html</url-pattern>
         <url-pattern>/publicFinalSheet.do</url-pattern>
-
+        <url-pattern>/paginationFinalSheet.do</url-pattern>
         <url-pattern>/index.html</url-pattern>
     </filter-mapping>
 

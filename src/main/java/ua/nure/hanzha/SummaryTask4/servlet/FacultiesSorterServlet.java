@@ -36,6 +36,7 @@ public class FacultiesSorterServlet extends HttpServlet {
         String sortType = request.getParameter(PARAM_SORT);
         System.out.println(sortType);
         if (sortType == null) {
+            System.out.println();
             session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, false);
             response.sendRedirect(Pages.FACULTIES_HTML);
         } else {

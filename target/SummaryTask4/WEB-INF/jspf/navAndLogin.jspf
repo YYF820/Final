@@ -1,5 +1,4 @@
 <%@ taglib prefix="u" uri="http://SummaryTask4.hanzha.nure.ua" %>
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <div class="uk-width-medium-7-10 uk-container-center">
     <nav class="uk-navbar">
         <ul class="uk-navbar-nav uk-navbar-attached uk-margin-left">
