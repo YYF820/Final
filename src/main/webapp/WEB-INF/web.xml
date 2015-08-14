@@ -144,6 +144,15 @@
         <url-pattern>/faculties.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>FinalSheetView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/finalSheet.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FinalSheetView</servlet-name>
+        <url-pattern>/finalSheet.html</url-pattern>
+    </servlet-mapping>
+
 
     <!-- admin pages -->
     <servlet>
@@ -465,6 +474,15 @@
         <url-pattern>/admin/generateFinalSheet.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PublicFinalSheetServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.PublicFinalSheetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PublicFinalSheetServlet</servlet-name>
+        <url-pattern>/publicFinalSheet.do</url-pattern>
+    </servlet-mapping>
+
     <!--Filters-->
 
     <filter>
@@ -522,6 +540,8 @@
         <url-pattern>/accountSettings.html</url-pattern>
         <url-pattern>/faculties.html</url-pattern>
         <url-pattern>/facultiesSort.do</url-pattern>
+        <url-pattern>/finalSheet.html</url-pattern>
+        <url-pattern>/publicFinalSheet.do</url-pattern>
 
         <url-pattern>/index.html</url-pattern>
     </filter-mapping>

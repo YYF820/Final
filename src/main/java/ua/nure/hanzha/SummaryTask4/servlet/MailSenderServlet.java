@@ -263,25 +263,25 @@ public class MailSenderServlet extends HttpServlet {
     }
 
     private String createMessageCongratulationsBudgetEntrant(String firstName, String lastName, String patronymic, String facultyName) {
-        return "Уважаемый" + lastName + " " + firstName + " " + patronymic + ".\n" +
+        return "Уважаемый " + lastName + " " + firstName + " " + patronymic + ".\n" +
                 "Поздравляем Вас с зачислением на бюджетное место дневной формы обучения на факультете" + facultyName + "!\n" +
                 "Желаем успехов в учебе!\n\n" +
-                "\tС уважение University.";
+                "С уважение University.";
     }
 
     private String createMessageCongratulationsContractEntrant(String firstName, String lastName, String patronymic, String facultyName) {
-        return "Уважаемый" + lastName + " " + firstName + " " + patronymic + ".\n" +
+        return "Уважаемый " + lastName + " " + firstName + " " + patronymic + ".\n" +
                 "Cообщаем Вам что в этом году Вы набрали недостаточное количество баллов для зачисления на бюджетное место дневной формы обучения.\n" +
                 "Предлагаем Вам воспользоваться контрактной формой обучения на факультете" + facultyName + ". " +
                 "По всем вопросам просим обращаться в приемную комиссию.\n\n" +
-                "\tС уважение University.";
+                "С уважение University.";
     }
 
     private String createMessageNotPassedEntrant(String firstName, String lastName, String patronymic) {
-        return "Уважаемый" + lastName + " " + firstName + " " + patronymic + ".\n" +
+        return "Уважаемый " + lastName + " " + firstName + " " + patronymic + ".\n" +
                 "Cообщаем Вам, что в этом году Вы набрали недостаточное количество баллов для поступления в University.\n" +
                 "По всем вопросам просим обращаться в приемную комиссию.\n\n" +
-                "\tС уважение University.";
+                "С уважение University.";
     }
 
 }

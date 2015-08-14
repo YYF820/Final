@@ -1,5 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.service.entrantFinalSheet;
 
+import ua.nure.hanzha.SummaryTask4.bean.ReadyFinalEntrantSheetBean;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrantfinalsheet.EntrantFinalSheetDao;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.SqlCallable;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManager;
@@ -9,6 +10,7 @@ import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author Dmytro Hanzha
@@ -51,6 +53,16 @@ public class EntrantFinalSheetServiceImpl implements EntrantFinalSheetService {
             public Void call(Connection connection) throws SQLException, CrudException {
                 entrantFinalSheetDao.insert(entrantFinalSheet, connection);
                 return null;
+            }
+        });
+    }
+
+    @Override
+    public List<ReadyFinalEntrantSheetBean> getPassedEntrants() throws DaoSystemException {
+        return txManager.doInTransaction(new SqlCallable<List<ReadyFinalEntrantSheetBean>>() {
+            @Override
+            public List<ReadyFinalEntrantSheetBean> call(Connection connection) throws SQLException, CrudException {
+                return entrantFinalSheetDao.selectPassedEntrants(connection);
             }
         });
     }

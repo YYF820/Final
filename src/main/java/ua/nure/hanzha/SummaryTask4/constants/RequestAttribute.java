@@ -1,7 +1,8 @@
 package ua.nure.hanzha.SummaryTask4.constants;
 
 /**
- * Created by faffi-ubuntu on 01/08/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 01/08/15.
  */
 public class RequestAttribute {
 

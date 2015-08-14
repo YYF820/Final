@@ -1,5 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.entrantfinalsheet;
 
+import ua.nure.hanzha.SummaryTask4.bean.ReadyFinalEntrantSheetBean;
 import ua.nure.hanzha.SummaryTask4.db.dao.Dao;
 import ua.nure.hanzha.SummaryTask4.entity.EntrantFinalSheet;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
@@ -37,4 +38,6 @@ public interface EntrantFinalSheetDao extends Dao<EntrantFinalSheet> {
     Integer selectMaxNumberOfPage(Connection connection) throws SQLException, CrudException;
 
     Integer selectIncrementedNumberOfPage(Connection connection) throws SQLException;
+
+    List<ReadyFinalEntrantSheetBean> selectPassedEntrants(Connection connection) throws SQLException, CrudException;
 }

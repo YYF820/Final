@@ -28,7 +28,7 @@
             <th>City</th>
             <th>Region</th>
             <th>School</th>
-            <th>Entrant status</th>
+            <th>Entrant enterUniversityStatus</th>
         </tr>
         </thead>
         <tbody>

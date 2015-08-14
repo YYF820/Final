@@ -1,13 +1,16 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.entrantfinalsheet;
 
+import ua.nure.hanzha.SummaryTask4.bean.ReadyFinalEntrantSheetBean;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
 import ua.nure.hanzha.SummaryTask4.entity.EntrantFinalSheet;
+import ua.nure.hanzha.SummaryTask4.enums.EnterUniversityStatus;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -171,9 +174,35 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
         try (Statement st = connection.createStatement()) {
             try (ResultSet rs = st.executeQuery(SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.max.number_of_sheet"))) {
                 if (rs.next()) {
-                    return rs.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET);
+                    return rs.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET) + 1;
                 } else {
                     return 1;
+                }
+            }
+        }
+    }
+
+    @Override
+    public List<ReadyFinalEntrantSheetBean> selectPassedEntrants(Connection connection) throws SQLException, CrudException {
+        try (Statement st = connection.createStatement()) {
+            try (ResultSet rs = st.executeQuery(SqlQueriesHolder.getSqlQuery("faculty_final_sheet_select.entrant.ready.final.sheet"))) {
+                List<ReadyFinalEntrantSheetBean> result = new ArrayList<>();
+                while (rs.next()) {
+                    ReadyFinalEntrantSheetBean readyFinalEntrantSheetBean = new ReadyFinalEntrantSheetBean();
+                    readyFinalEntrantSheetBean.setFacultyName(rs.getString(FieldsDataBase.FACULTY_NAME));
+                    readyFinalEntrantSheetBean.setFirstName(rs.getString(FieldsDataBase.USER_LAST_NAME));
+                    readyFinalEntrantSheetBean.setLastName(rs.getString(FieldsDataBase.USER_FIRST_NAME));
+                    readyFinalEntrantSheetBean.setPatronymic(rs.getString(FieldsDataBase.USER_PATRONYMIC));
+                    readyFinalEntrantSheetBean.setSumOfMarks(rs.getDouble(FieldsDataBase.FACULTY_ENTRANT_SUM_MARKS));
+                    int enterUniversityStatusId = rs.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_ENTER_UNIVERSITY_STATUS_ID);
+                    readyFinalEntrantSheetBean.setEnterUniversityStatus
+                            (EnterUniversityStatus.getEnterUniversityStatusById(enterUniversityStatusId).getName());
+                    result.add(readyFinalEntrantSheetBean);
+                }
+                if (result.size() > 0) {
+                    return result;
+                } else {
+                    throw new CrudException(ExceptionMessages.SELECT_EXCEPTION_MESSAGE);
                 }
             }
         }

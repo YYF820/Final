@@ -20,6 +20,18 @@
         <role name="admin"/>
     </action>
 
+    <action path="/finalSheet.html">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
+    <action path="/publicFinalSheet.do">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
     <action path="/accountSettings.html">
         <role name="admin"/>
         <role name="entrant"/>

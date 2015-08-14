@@ -1,6 +1,6 @@
 <%@ taglib prefix="u" uri="http://SummaryTask4.hanzha.nure.ua" %>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<div class="uk-width-medium-6-10 uk-container-center">
+<div class="uk-width-medium-7-10 uk-container-center">
     <nav class="uk-navbar">
         <ul class="uk-navbar-nav uk-navbar-attached uk-margin-left">
 
@@ -27,6 +27,11 @@
             <li>
                 <a href="index.html">
                     <img src="../../resources/img/contact.png"> Contact
+                </a>
+            </li>
+            <li>
+                <a href="<c:url value="/publicFinalSheet.do"/>">
+                    <img src="../../resources/img/contact.png"> Final Sheet
                 </a>
             </li>
         </ul>

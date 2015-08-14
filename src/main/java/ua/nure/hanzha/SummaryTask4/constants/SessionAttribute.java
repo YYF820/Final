@@ -187,4 +187,7 @@ public class SessionAttribute {
 
     public static final String FACULTIES_SORT_TYPE = "facultiesSortType";
     public static final String FACULTIES_IS_SORTED = "facultiesIsSorted";
+
+
+    public static final String PASSED_ENTRANTS = "passedEntrants";
 }
