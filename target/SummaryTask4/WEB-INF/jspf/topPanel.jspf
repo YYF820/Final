@@ -10,10 +10,10 @@
             <li class="uk-parent" data-uk-dropdown>
                 <a href="" onclick="return false">
                     <c:if test="${fn:split(language,'_')[0]== 'en'}">
-                        <img src="<c:url value="/resources/img/enLocale.png"/>">
+                        <img style="padding-top: 4px" src="<c:url value="/resources/img/enLocale.png"/>">
                     </c:if>
                     <c:if test="${fn:split(language,'_')[0] == 'ru'}">
-                        <img src="<c:url value="/resources/img/russLocale.png"/>">
+                        <img style="padding-top: 4px" src="<c:url value="/resources/img/russLocale.png"/>">
                     </c:if>
                 </a>
 
@@ -36,7 +36,8 @@
 
             <li class="uk-parent" data-uk-dropdown>
                 <u:ifAuthAs role="guest">
-                    <a href="" onclick="return false"><fmt:message key="top.panel.your.account"/> <i class="uk-icon uk-icon-chevron-down"></i></a>
+                    <a href="" onclick="return false"><fmt:message key="top.panel.your.account"/> <i
+                            class="uk-icon uk-icon-chevron-down"></i></a>
                 </u:ifAuthAs>
                 <u:ifAuth>
                     <a href="">
@@ -49,18 +50,32 @@
                 <div class="uk-dropdown uk-dropdown-navbar">
                     <ul class="uk-nav uk-nav-navbar">
                         <u:ifAuthAs role="guest">
-                            <li><a href="<c:url value="/login.html"/>"><fmt:message key="top.panel.log.in"/> <i
-                                    class="uk-icon uk-icon-sign-in"></i></a></li>
-                            <li><a href="<c:url value="/login.html"/>"><fmt:message key="top.panel.account.settings"/>
-                                <i
-                                        class="uk-icon uk-icon-cog"></i></a></li>
+                            <li>
+                                <a href="<c:url value="/login.html"/>">
+                                    <fmt:message key="top.panel.log.in"/>
+                                    <i class="uk-icon uk-icon-sign-in"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<c:url value="/login.html"/>">
+                                    <fmt:message key="top.panel.account.settings"/>
+                                    <i class="uk-icon uk-icon-cog"></i>
+                                </a>
+                            </li>
                         </u:ifAuthAs>
                         <u:ifAuth>
-                            <li><a href="<c:url value="/logout.do"/>"><fmt:message key="top.panel.log.out"/> <i
-                                    class="uk-icon uk-icon-sign-out"></i></a></li>
-                            <li><a href="<c:url value="/accountSettings.html"/>"><fmt:message
-                                    key="top.panel.account.settings"/> <i
-                                    class="uk-icon uk-icon-cog"></i></a></li>
+                            <li>
+                                <a href="<c:url value="/logout.do"/>">
+                                    <fmt:message key="top.panel.log.out"/>
+                                    <i class="uk-icon uk-icon-sign-out"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<c:url value="/accountSettings.html"/>">
+                                    <fmt:message key="top.panel.account.settings"/>
+                                    <i class="uk-icon uk-icon-cog"></i>
+                                </a>
+                            </li>
                         </u:ifAuth>
                     </ul>
                 </div>
@@ -73,13 +88,24 @@
     <div class="uk-offcanvas-bar uk-contrast">
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
             <li class="uk-nav-header"><fmt:message key="top.panel.canvas.admin.header"/></li>
-            <li><a href="<c:url value="/admin/entrants.do"/>"><fmt:message key="top.panel.canvas.admin.entrants"/> <i
-                    class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
-            <li><a href="<c:url value="/admin/faculties.do"/>"><fmt:message key="top.panel.canvas.admin.faculties"/> <i
-                    class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
-            <li><a class="uk-h3" href="<c:url value="/admin/generateFinalSheet.do"/>">
-                <fmt:message key="top.panel.canvas.admin.generate.final.sheet"/>
-                <i class="uk-icon-cog uk-icon-spin uk-text-success"></i></a></li>
+            <li>
+                <a href="<c:url value="/admin/entrants.do"/>">
+                    <fmt:message key="top.panel.canvas.admin.entrants"/>
+                    <i class="uk-icon uk-icon-pencil uk-text-primary"></i>
+                </a>
+            </li>
+            <li>
+                <a href="<c:url value="/admin/faculties.do"/>">
+                    <fmt:message key="top.panel.canvas.admin.faculties"/>
+                    <i class="uk-icon uk-icon-pencil uk-text-primary"></i>
+                </a>
+            </li>
+            <li>
+                <a class="uk-h3" href="<c:url value="/admin/generateFinalSheet.do"/>">
+                    <fmt:message key="top.panel.canvas.admin.generate.final.sheet"/>
+                    <i class="uk-icon-cog uk-icon-spin uk-text-success"></i>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

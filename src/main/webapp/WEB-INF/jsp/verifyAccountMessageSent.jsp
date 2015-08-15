@@ -46,7 +46,7 @@
                     <fmt:message key="verify.account.message.sent.error.faq"/>
                 </p>
                 <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="login.html">
-                    <fmt:message key="verify.account.message.sent.button"/>
+                    <fmt:message key="button.continue.to.account.management"/>
                 </a>
             </div>
         </c:if>

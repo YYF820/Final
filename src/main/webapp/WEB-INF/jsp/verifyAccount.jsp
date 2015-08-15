@@ -25,7 +25,7 @@
                 <p class="uk-text-success"><fmt:message key="verify.account.success.faq"/></p>
                 <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center"
                    href="<c:url value="/login.html"/>">
-                    <fmt:message key="verify.account.button"/>
+                    <fmt:message key="button.continue.to.account.management"/>
                 </a>
             </div>
         </c:if>
@@ -45,7 +45,7 @@
                 </ul>
                 <p class="uk-text-danger"><fmt:message key="verify.account.error.faq"/></p>
                 <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center"
-                   href="<c:url value="/login.html"/>"><fmt:message key="verify.account.button"/></a>
+                   href="<c:url value="/login.html"/>"><fmt:message key="button.continue.to.account.management"/></a>
             </div>
         </c:if>
     </div>

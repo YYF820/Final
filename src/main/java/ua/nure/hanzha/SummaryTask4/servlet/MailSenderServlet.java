@@ -85,11 +85,14 @@ public class MailSenderServlet extends HttpServlet {
                 subjectMail = createSubjectUpdatedPassword();
                 messageMail = createMessageUpdatedPassword(firstName, lastName, patronymic);
                 try {
+                    String language = (String) session.getAttribute(SessionAttribute.LANGUAGE);
+                    session.invalidate();
+                    session = request.getSession(true);
+                    session.setAttribute(SessionAttribute.LANGUAGE, language);
                     MailHelper.sendMail(accountName, subjectMail, messageMail);
                     session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_UPDATED_PASSWORD, true);
                     response.sendRedirect(Pages.RESET_PASSWORD_SUCCESS_HTML);
                 } catch (MessagingException e) {
-                    request.setAttribute(SessionAttribute.RESET_PASSWORD_IS_UPDATED_PASSWORD, false);
                     response.sendRedirect(Pages.RESET_PASSWORD_SUCCESS_HTML);
                 }
                 break;
@@ -279,37 +282,5 @@ public class MailSenderServlet extends HttpServlet {
                 "Cообщаем Вам, что в этом году Вы набрали недостаточное количество баллов для поступления в University.\n" +
                 "По всем вопросам просим обращаться в приемную комиссию.\n\n" +
                 "С уважение University.";
-    }
-
-
-    private void cleanRegistrationForm(HttpSession session) {
-        //=========== CLEAN REGISTRATION FORM ============//
-        SessionCleaner.cleanAttributes(session,
-                SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_VALID,
-                SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_EMPTY,
-                SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_EXISTS,
-                SessionAttribute.REGISTRATION_IS_FIRST_NAME_EMPTY,
-                SessionAttribute.REGISTRATION_IS_FIRST_NAME_VALID,
-                SessionAttribute.REGISTRATION_IS_LAST_NAME_EMPTY,
-                SessionAttribute.REGISTRATION_IS_LAST_NAME_VALID,
-                SessionAttribute.REGISTRATION_IS_PATRONYMIC_EMPTY,
-                SessionAttribute.REGISTRATION_IS_PATRONYMIC_VALID,
-                SessionAttribute.REGISTRATION_IS_CITY_EMPTY,
-                SessionAttribute.REGISTRATION_IS_CITY_VALID,
-                SessionAttribute.REGISTRATION_IS_REGION_EMPTY,
-                SessionAttribute.REGISTRATION_IS_REGION_VALID,
-                SessionAttribute.REGISTRATION_IS_PASSWORD_EMPTY,
-                SessionAttribute.REGISTRATION_IS_PASSWORD_VALID,
-                SessionAttribute.REGISTRATION_IS_SCHOOL_EMPTY,
-                SessionAttribute.REGISTRATION_IS_SCHOOL_VALID,
-                SessionAttribute.REGISTRATION_FIRST_NAME,
-                SessionAttribute.REGISTRATION_LAST_NAME,
-                SessionAttribute.REGISTRATION_PATRONYMIC,
-                SessionAttribute.REGISTRATION_CITY,
-                SessionAttribute.REGISTRATION_REGION,
-                SessionAttribute.REGISTRATION_ACCOUNT_NAME,
-                SessionAttribute.REGISTRATION_PASSWORD,
-                SessionAttribute.REGISTRATION_SCHOOL
-        );
     }
 }

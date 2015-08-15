@@ -7,6 +7,7 @@ import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +27,6 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
 
     private static final String PARAM_TICKET_RESET_PASSWORD = "ticketResetPassword";
 
-
     private static final int STATUS_BLOCKED_ID = 1;
 
 
@@ -39,6 +39,7 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+        //cleanSession(session);
         Long counterBadTicketInserts = (Long) session.getAttribute(SessionAttribute.CHECK_TICKET_COUNTER_BAD_TICKET_INSERTS);
         session.setAttribute(SessionAttribute.CHECK_TICKET_COUNTER_BAD_TICKET_INSERTS, ++counterBadTicketInserts);
         if (counterBadTicketInserts == 3) {
@@ -108,9 +109,16 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
         if (ticketResetPassword.equals(EMPTY_PARAM)) {
             session.setAttribute(SessionAttribute.CHECK_TICKET_IS_EMPTY, true);
             return true;
-        } else {
-            session.setAttribute(SessionAttribute.CHECK_TICKET_IS_EMPTY, false);
         }
         return false;
+    }
+
+    private void cleanSession(HttpSession session) {
+        SessionCleaner.cleanAttributes(
+                session,
+                SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT,
+                SessionAttribute.CHECK_TICKET_IS_EMPTY
+        );
+
     }
 }

@@ -10,11 +10,12 @@
     <c:choose>
         <c:when test="${sessionScope.checkQuestionIsBlockedAccount == true}">
             <p class="uk-text-exclamation-triangle uk-text-large uk-text-middle uk-text-danger"><i
-                    class="uk-icon-check uk-icon-large uk-text-danger"></i>&nbspYou wrote wrong code 3 times, we
-                blocked account, contact our support.</p>
+                    class="uk-icon-check uk-icon-large uk-text-danger"></i>&nbsp
+                <fmt:message key="check.ticket.block.account.subject"/>
+            </p>
             <a href="<c:url value="/index.html"/>">
                 <p class="uk-text-large uk-text-middle">
-                    Back to home page <i class="uk-icon-external-link"></i>
+                    <fmt:message key="check.ticket.block.account.link.home.page"/> <i class="uk-icon-external-link"></i>
                 </p>
             </a>
         </c:when>

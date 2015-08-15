@@ -7,8 +7,8 @@ package ua.nure.hanzha.SummaryTask4.constants;
 public class SessionAttribute {
 
     public static final String ACCOUNT = "account";
-
     public static final String COMMAND = "command";
+    public static final String LANGUAGE = "language";
 
     public static final String ENTRANTS_ADMIN = "entrantsAdmin";
     public static final String NUMBER_OF_PAGES = "numberOfPages";
@@ -84,7 +84,7 @@ public class SessionAttribute {
     public static final String CHECK_TICKET_TICKET_RESET_PASSWORD = "checkTicketTicketResetPassword";
     public static final String CHECK_TICKET_HASH_TICKET_RESET_PASSWORD = "checkTicketHashTicketResetPassword";
     public static final String CHECK_TICKET_COUNTER_BAD_TICKET_INSERTS = "checkTicketCounterBadTicketInserts";
-    public static final String CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT = "checkTicketIsResetPasswordCorrect";
+    public static final String CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT = "checkTicketIsTicketResetPasswordCorrect";
     public static final String CHECK_TICKET_IS_BLOCKED_ACCOUNT = "checkQuestionIsBlockedAccount";
 
     //========================= VERIFY ACCOUNT ===================================//
@@ -177,7 +177,6 @@ public class SessionAttribute {
             "entrantAccountSettingsExtraMarksEntrantId";
 
     //=====================================FACULTIES==============================================//
-    public static final String FACULTIES_IS_ANY_FACULTY = "facultiesIsAnyFaculty";
     public static final String FACULTIES_INFO_BEANS = "facultiesInfoBeans";
     public static final String FACULTIES_INFO_BEANS_PAGINATION = "facultiesInfoBeansPagination";
 
