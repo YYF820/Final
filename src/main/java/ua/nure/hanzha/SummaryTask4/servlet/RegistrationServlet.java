@@ -261,7 +261,6 @@ public class RegistrationServlet extends HttpServlet {
         entrant.setRegion(region);
         entrant.setSchool(Integer.parseInt(school));
         entrant.setEntrantStatus(3);
-        entrant.setWithoutCompetitiveEntry(false);
 
         entrantInfo.put(MAP_KEY_USER, user);
         entrantInfo.put(MAP_KEY_ENTRANT, entrant);

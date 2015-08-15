@@ -16,7 +16,7 @@
                 <a href="#sortFacultiesEntrant" data-uk-offcanvas></a>
                 <!-- This is a button toggling the off-canvas sidebar -->
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
-                    Sort settings <i class="uk-icon-cog uk-text-primary"></i>
+                    <fmt:message key="faculties.public.sort.button"/> <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
                 <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
             </div>
@@ -24,26 +24,32 @@
                 <c:choose>
                     <c:when test="${sessionScope.entrantHowManyMoreSubjectsNeed != 0 || sessionScope.entrantAccountSettingsExtraMarks == null }">
                         <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
-                            <p>You should set up your account <a href="<c:url value="/accountSettings.html"/>">Account
-                                settings <i
-                                        class="uk-icon-external-link"></i></a></p>
+                            <p>
+                                <fmt:message key="faculties.public.alert.need.setup.account"/>
+                                <a href="<c:url value="/accountSettings.html"/>">
+                                    <fmt:message key="faculties.public.alert.account.settings.link"/>
+                                    <i class="uk-icon-external-link"></i>
+                                </a>
+                            </p>
                         </div>
                     </c:when>
                     <c:when test="${sessionScope.facultiesIsAnyProblemsUpdate == true}">
                         <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
-                            <p>Some problems while configuring priorities please try again later.</p>
+                            <p><fmt:message key="faculties.public.alert.server.error.configure.priorities"/></p>
                         </div>
                         <c:remove var="facultiesIsAnyProblemsUpdate" scope="session"/>
                     </c:when>
                     <c:when test="${sessionScope.facultiesIsAnyProblemsUpdate == false}">
                         <div class="uk-alert uk-alert-success uk-margin-top-remove uk-margin-bottom-remove alert">
-                            <p>Success configuring priorities <i class="ui-icon-check"></i></p>
+                            <p><fmt:message key="faculties.public.success.configure.priorities"/>
+                                <i class="ui-icon-check"></i>
+                            </p>
                         </div>
                         <c:remove var="facultiesIsAnyProblemsUpdate" scope="session"/>
                     </c:when>
                     <c:when test="${sessionScope.facultiesIsSamePriorities == true}">
                         <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
-                            <p>You can't set same priority for 2 or more faculties, please try again.</p>
+                            <p><fmt:message key="faculties.public.alert.error.same.priorities"/></p>
                         </div>
                         <c:remove var="facultiesIsSamePriorities" scope="session"/>
                     </c:when>
@@ -52,7 +58,8 @@
             <div class="uk-width-medium-2-10">
                 <a href="#setUpPriorities" data-uk-offcanvas></a>
                 <button class="uk-button uk-float-right" data-uk-offcanvas="{target:'#setUpPriorities'}">
-                    Configure priorities <i class="uk-icon-cog uk-text-primary"></i>
+                    <fmt:message key="faculties.public.configure.priorities"/>
+                    <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
                 <%@include file="../jspf/canvas/setUpPriorities.jsp" %>
             </div>
@@ -60,7 +67,7 @@
         <c:if test="${sessionScope.facultiesIsSorted == false}">
             <div class="uk-width-medium-1-10 uk-margin-top uk-text-center">
                 <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
-                    <p>Please choose sort option.</p>
+                    <p><fmt:message key="faculties.public.alert.no.sort.option"/></p>
                 </div>
                 <c:remove var="facultiesIsSorted" scope="session"/>
             </div>
@@ -73,7 +80,8 @@
                 <a href="#sortFacultiesEntrant" data-uk-offcanvas></a>
                 <!-- This is a button toggling the off-canvas sidebar -->
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
-                    Sort settings <i class="uk-icon-cog uk-text-primary"></i>
+                    <fmt:message key="faculties.public.sort.button"/>
+                    <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
                 <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
 
@@ -81,15 +89,18 @@
             <div class="uk-width-medium-6-10">
                 <div class="uk-alert uk-alert-warning uk-margin-top-remove
              uk-margin-bottom-remove alert">
-                    In order to register on the faculties you must be logged in.
-                    <a href="<c:url value="/login.html"/>">Log in <i class="uk-icon-external-link"></i></a>
+                    <fmt:message key="faculties.public.alert.not.logged.in"/>
+                    <a href="<c:url value="/login.html"/>">
+                        <fmt:message key="faculties.public.log.in"/>
+                        <i class="uk-icon-external-link"></i>
+                    </a>
                 </div>
             </div>
         </div>
         <c:if test="${sessionScope.facultiesIsSorted == false}">
             <div class="uk-width-medium-1-10 uk-margin-top uk-text-center">
                 <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
-                    <p>Please choose sort option.</p>
+                    <p><fmt:message key="faculties.public.alert.no.sort.option"/></p>
                 </div>
                 <c:remove var="facultiesIsSorted" scope="session"/>
             </div>
@@ -102,14 +113,14 @@
                 <a href="#sortFacultiesEntrant" data-uk-offcanvas></a>
                 <!-- This is a button toggling the off-canvas sidebar -->
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
-                    Sort settings <i class="uk-icon-cog uk-text-primary"></i>
+                    <fmt:message key="faculties.public.sort.button"/> <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
                 <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
             </div>
             <c:if test="${sessionScope.facultiesIsSorted == false}">
                 <div class="uk-width-medium-6-10">
                     <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
-                        <p>Please choose sort option.</p>
+                        <p><fmt:message key="faculties.public.alert.no.sort.option"/></p>
                     </div>
                     <c:remove var="facultiesIsSorted" scope="session"/>
                 </div>
@@ -127,7 +138,7 @@
                      alt="">
             </div>
             <div class="uk-width-medium-1-2">
-                <h1>${facultyBean.faculty.name}</h1>
+                <h1><fmt:message key="${fn:toLowerCase(fn:replace(facultyBean.faculty.name, ' ', '.'))}"/></h1>
 
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                     labore
@@ -140,18 +151,20 @@
                     dolore eu
                     fugiat nulla pariatur.</p>
 
-                <h2>Subheading</h2>
+                <h2><fmt:message key="faculties.public.info"/></h2>
 
                 <div class="uk-grid">
 
-                    <p>Total spots: ${facultyBean.faculty.totalSpots} Budget
-                        spots: ${facultyBean.faculty.budgetSpots}
-                        and you must have this subjects:
+                    <p>
+                            <fmt:message key="faculties.public.total.spots"/> ${facultyBean.faculty.totalSpots}
+                            <fmt:message key="faculties.public.budget.spots"/> ${facultyBean.faculty.budgetSpots}
+                            <fmt:message key="faculties.public.message.last.words"/>
+
 
                     <div class="uk-width-medium-2-6 uk-margin-top">
                         <ul>
                             <c:forEach var="subject" items="${facultyBean.subjects}">
-                                <li>${subject.name}</li>
+                                <li><fmt:message key="${subject.name}"/></li>
                             </c:forEach>
                         </ul>
 
@@ -165,7 +178,7 @@
                                     <form class="uk-form" method="post"
                                           action="<c:url value="/entrant/addFaculty.do"/>">
                                         <label class="uk-form-label">
-                                            Select priority:
+                                            <fmt:message key="faculties.public.select.priority"/>
                                             <select name="priority" class="uk-form-small">
                                                 <c:forEach var="priority"
                                                            items="${sessionScope.facultiesAvailablePropertiesList}">
@@ -174,7 +187,8 @@
                                             </select>
                                         </label>
                                         <button class="uk-button uk-button-mini uk-button-primary uk-push-1-10"
-                                                type="submit">Enroll
+                                                type="submit">
+                                            <fmt:message key="faculties.public.button.enroll"/>
                                         </button>
                                         <input type="hidden" name="facultyId" value="${facultyBean.faculty.id}">
                                         <input type="hidden" name="entrantId"
@@ -184,23 +198,22 @@
                             </c:when>
                             <c:when test="${fn:length(sessionScope.facultiesAvailablePropertiesList) == 0 && sessionScope.facultiesUsedFacultiesIdPriority.containsKey(facultyBean.faculty.id) == false}">
                                 <div class="uk-alert uk-alert-warning uk-width-medium-2-5">
-                                    <p>You have already enrolled to the 3 faculties, to enroll you should unsubscribe
-                                        from another faculty</p>
+                                    <p><fmt:message key="faculties.public.entrant.already.three.faculties"/></p>
                                 </div>
                             </c:when>
                             <c:when test="${sessionScope.facultiesUsedFacultiesIdPriority.containsKey(facultyBean.faculty.id) == true}">
                                 <div class="uk-alert uk-alert-success uk-width-medium-2-5">
-                                    <p class="uk-margin-bottom-remove">You are enrolled to this faculty with priority
+                                    <p class="uk-margin-bottom-remove">
+                                        <fmt:message key="faculties.public.entrant.unsubscribe.faculty.start"/>
                                             ${sessionScope.facultiesUsedFacultiesIdPriority[facultyBean.faculty.id]},
-                                        you
-                                        can
-                                        unsubscribe
-                                        from it.</p>
+                                        <fmt:message key="faculties.public.entrant.unsubscribe.faculty.end"/>
+                                    </p>
 
                                     <div class="uk-text-right ">
                                         <a href="<c:url value="/entrant/deleteFaculty.do?entrantId=${sessionScope.facultiesEntrantEntity.id}&facultyId=${facultyBean.faculty.id}"/>"
-                                           class="uk-text-danger">Unsubscribe <i
-                                                class="uk-icon-remove uk-text-danger"></i></a>
+                                           class="uk-text-danger">
+                                            <fmt:message key="faculties.public.entrant.unsubscribe.faculty.link"/>
+                                            <i class="uk-icon-remove uk-text-danger"></i></a>
                                     </div>
                                 </div>
                             </c:when>
@@ -213,7 +226,7 @@
     <c:otherwise>
     <div class="uk-grid ">
         <div class="uk-width-medium-1-2">
-            <h1>${facultyBean.faculty.name}</h1>
+            <h1><fmt:message key="${fn:toLowerCase(fn:replace(facultyBean.faculty.name, ' ', '.'))}"/></h1>
 
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                 labore
@@ -226,18 +239,19 @@
                 dolore eu
                 fugiat nulla pariatur.</p>
 
-            <h2>Subheading</h2>
+            <h2><fmt:message key="faculties.public.info"/></h2>
 
             <div class="uk-grid">
 
-                <p>Total spots: ${facultyBean.faculty.totalSpots} Budget
-                    spots: ${facultyBean.faculty.budgetSpots}
-                    and you must have this subjects:
+                <p>
+                        <fmt:message key="faculties.public.total.spots"/> ${facultyBean.faculty.totalSpots}
+                        <fmt:message key="faculties.public.budget.spots"/> ${facultyBean.faculty.budgetSpots}
+                        <fmt:message key="faculties.public.message.last.words"/>
 
                 <div class="uk-width-medium-2-6">
                     <ul>
                         <c:forEach var="subject" items="${facultyBean.subjects}">
-                            <li>${subject.name}</li>
+                            <li><fmt:message key="${subject.name}"/></li>
                         </c:forEach>
                     </ul>
 
@@ -251,7 +265,7 @@
                                 <form class="uk-form" method="post"
                                       action="<c:url value="/entrant/addFaculty.do"/>">
                                     <label class="uk-form-label">
-                                        Select priority:
+                                        <fmt:message key="faculties.public.select.priority"/>
                                         <select name="priority" class="uk-form-small">
                                             <c:forEach var="priority"
                                                        items="${sessionScope.facultiesAvailablePropertiesList}">
@@ -260,7 +274,8 @@
                                         </select>
                                     </label>
                                     <button class="uk-button uk-button-mini uk-button-primary uk-push-1-10"
-                                            type="submit">Enroll
+                                            type="submit">
+                                        <fmt:message key="faculties.public.button.enroll"/>
                                     </button>
                                     <input type="hidden" name="facultyId" value="${facultyBean.faculty.id}">
                                     <input type="hidden" name="entrantId"
@@ -270,22 +285,22 @@
                         </c:when>
                         <c:when test="${fn:length(sessionScope.facultiesAvailablePropertiesList) == 0 && sessionScope.facultiesUsedFacultiesIdPriority.containsKey(facultyBean.faculty.id) == false}">
                             <div class="uk-alert uk-alert-warning uk-width-medium-2-5">
-                                <p>You have already enrolled to the 3 faculties, to enroll you should unsubscribe
-                                    from another faculty</p>
+                                <p><fmt:message key="faculties.public.entrant.already.three.faculties"/></p>
                             </div>
                         </c:when>
                         <c:when test="${sessionScope.facultiesUsedFacultiesIdPriority.containsKey(facultyBean.faculty.id) == true}">
                             <div class="uk-alert uk-alert-success uk-width-medium-2-5">
-                                <p class="uk-margin-bottom-remove">You are enrolled to this faculty with priority
-                                        ${sessionScope.facultiesUsedFacultiesIdPriority[facultyBean.faculty.id]}, you
-                                    can
-                                    unsubscribe
-                                    from it.</p>
+                                <p class="uk-margin-bottom-remove">
+                                    <fmt:message key="faculties.public.entrant.unsubscribe.faculty.start"/>
+                                        ${sessionScope.facultiesUsedFacultiesIdPriority[facultyBean.faculty.id]},
+                                    <fmt:message key="faculties.public.entrant.unsubscribe.faculty.end"/>
+                                </p>
 
                                 <div class="uk-text-right ">
                                     <a href="<c:url value="/entrant/deleteFaculty.do?entrantId=${sessionScope.facultiesEntrantEntity.id}&facultyId=${facultyBean.faculty.id}"/>"
-                                       class="uk-text-danger">Unsubscribe <i
-                                            class="uk-icon-remove uk-text-danger"></i></a>
+                                       class="uk-text-danger">
+                                        <fmt:message key="faculties.public.entrant.unsubscribe.faculty.link"/>
+                                        <i class="uk-icon-remove uk-text-danger"></i></a>
                                 </div>
                             </div>
                         </c:when>

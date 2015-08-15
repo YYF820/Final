@@ -28,7 +28,6 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
         preparedStatement.setString(k++, entity.getCity());
         preparedStatement.setString(k++, entity.getRegion());
         preparedStatement.setInt(k++, entity.getSchool());
-        preparedStatement.setBoolean(k++, entity.isWithoutCompetitiveEntry());
         preparedStatement.setInt(k, entity.getUserId());
     }
 
@@ -38,7 +37,6 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
         preparedStatement.setString(k++, entity.getCity());
         preparedStatement.setString(k++, entity.getRegion());
         preparedStatement.setInt(k++, entity.getSchool());
-        preparedStatement.setBoolean(k++, entity.isWithoutCompetitiveEntry());
         preparedStatement.setInt(k++, entity.getEntrantStatus());
         preparedStatement.setInt(k++, entity.getUserId());
         preparedStatement.setInt(k, entity.getId());
@@ -51,7 +49,6 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
         entrant.setCity(resultSet.getString(FieldsDataBase.ENTRANT_CITY));
         entrant.setRegion(resultSet.getString(FieldsDataBase.ENTRANT_REGION));
         entrant.setSchool(resultSet.getInt(FieldsDataBase.ENTRANT_SCHOOL));
-        entrant.setWithoutCompetitiveEntry(resultSet.getBoolean(FieldsDataBase.ENTRANT_WITHOUT_COMPETITIVE_ENTRY));
         entrant.setEntrantStatus(resultSet.getInt(FieldsDataBase.ENTRANT_STATUS));
         entrant.setUserId(resultSet.getInt(FieldsDataBase.ENTRANT_USER_ID));
         return entrant;

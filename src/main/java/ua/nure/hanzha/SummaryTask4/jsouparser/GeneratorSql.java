@@ -114,7 +114,6 @@ public class GeneratorSql {
                 String[] arrayInfo = pair.getValue();
                 String city = arrayInfo[0];
                 String region = arrayInfo[1];
-                String without_competitive_entry = entrantInfo.get(6);
                 Random rand = new Random();
                 int random_school = rand.nextInt(182) + 1;
                 pwEntrants.println(
@@ -122,7 +121,6 @@ public class GeneratorSql {
                                 city + "\', \'" +
                                 region + "\', " +
                                 random_school + ", " +
-                                without_competitive_entry + ", " +
                                 "2" + ", " +
                                 k++ + ");"
                 );

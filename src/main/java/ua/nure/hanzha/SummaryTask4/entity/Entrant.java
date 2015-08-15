@@ -11,7 +11,6 @@ public class Entrant extends Entity {
     private String city;
     private String region;
     private int school;
-    private boolean withoutCompetitiveEntry;
     private int entrantStatus;
     private int userId;
 
@@ -39,14 +38,6 @@ public class Entrant extends Entity {
         this.school = school;
     }
 
-    public boolean isWithoutCompetitiveEntry() {
-        return withoutCompetitiveEntry;
-    }
-
-    public void setWithoutCompetitiveEntry(boolean withoutCompetitiveEntry) {
-        this.withoutCompetitiveEntry = withoutCompetitiveEntry;
-    }
-
     public int getEntrantStatus() {
         return entrantStatus;
     }
@@ -68,7 +59,6 @@ public class Entrant extends Entity {
         return "City: " + city +
                 "Region: " + region +
                 "school" + school +
-                "Without competitive entry: " + withoutCompetitiveEntry +
                 "Entrant status: " + entrantStatus +
                 "User id: " + userId;
     }

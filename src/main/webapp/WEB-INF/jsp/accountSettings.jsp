@@ -14,17 +14,17 @@
             <div class="uk-alert-warning uk-alert uk-text-center">
                 <c:choose>
                     <c:when test="${sessionScope.entrantNoSubjectsAdded == true}">
-                        <p>You must set up your profile, enter scores for subjects after that you could enroll in the
-                            faculties. </p>
-                        <a href="<c:url value="/entrant/addSubjects.html"/>">You can do it here <i
-                                class="uk-icon-external-link"></i></a>
+                        <p><fmt:message key="account.settings.warning.marks.body"/></p>
+                        <a href="<c:url value="/entrant/addSubjects.html"/>">
+                            <fmt:message key="account.settings.you.can.do.it.here"/>
+                            <i class="uk-icon-external-link"></i></a>
                     </c:when>
                     <c:when test="${sessionScope.entrantAccountSettingsAllSubjects eq 'noSubjectsInDataBase'}">
-                        <p>Currently there are no subjects that you could add to your profile, sorry about this.</p>
+                        <p><fmt:message key="account.settings.you.can.do.it.here"/></p>
                     </c:when>
                 </c:choose>
                 <c:if test="${sessionScope.entrantAccountSettingsSomethingBad == true}">
-                    <p>Something went wrong, problems with servers please try a bit later.</p>
+                    <p><fmt:message key="account.settings.server.problems"/></p>
                 </c:if>
             </div>
         </c:if>
@@ -34,10 +34,10 @@
             <div class="uk-alert-warning uk-alert uk-text-center">
                 <c:choose>
                     <c:when test="${sessionScope.entrantAccountSettingsNoExtraMarks == true}">
-                        <p>You must set up your profile, enter extra scores for school subjects and additional lessons
-                            after that you could enroll in the faculties. </p>
-                        <a href="<c:url value="/entrant/addExtraMarks.html"/>">You can do it here <i
-                                class="uk-icon-external-link"></i></a>
+                        <p><fmt:message key="account.settings.warning.extra.marks.body"/></p>
+                        <a href="<c:url value="/entrant/addExtraMarks.html"/>">
+                            <fmt:message key="account.settings.you.can.do.it.here"/>
+                            <i class="uk-icon-external-link"></i></a>
                     </c:when>
                 </c:choose>
             </div>
@@ -46,29 +46,29 @@
     <table class="uk-table uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
         <caption>
             <u:ifAuthAs role="admin">
-                Admin
+                <fmt:message key="account.settings.role.admin"/>
             </u:ifAuthAs>
             <u:ifAuthAs role="entrant">
-                Entrant
+                <fmt:message key="account.settings.role.entrant"/>
             </u:ifAuthAs>
         </caption>
         <thead>
         </thead>
         <tbody>
         <tr class="uk-table-middle">
-            <td>First name</td>
-            <td>${sessionScope.account.firstName} </td>
-        </tr>
-        <tr class="uk-table-middle">
-            <td>Last name</td>
+            <td><fmt:message key="last.name"/></td>
             <td>${sessionScope.account.lastName} </td>
         </tr>
         <tr class="uk-table-middle">
-            <td>Patronymic</td>
+            <td><fmt:message key="first.name"/></td>
+            <td>${sessionScope.account.firstName} </td>
+        </tr>
+        <tr class="uk-table-middle">
+            <td><fmt:message key="patronymic"/></td>
             <td>${sessionScope.account.patronymic} </td>
         </tr>
         <tr class="uk-table-middle">
-            <td>Account name</td>
+            <td><fmt:message key="account.name"/></td>
             <td>${sessionScope.account.email} </td>
         </tr>
         </tbody>

@@ -43,7 +43,6 @@ CREATE TABLE Entrants (
   city                      TEXT    NOT NULL,
   region                    TEXT    NOT NULL,
   school                    INTEGER NOT NULL,
-  without_competitive_entry BOOLEAN DEFAULT FALSE,
   entrant_status_id         INTEGER DEFAULT 3,
   user_id                   INTEGER NOT NULL UNIQUE,
   CONSTRAINT entrants_pk PRIMARY KEY (id),
