@@ -140,7 +140,6 @@ public class PaginationFinalSheetServlet extends HttpServlet {
                     }
                 }
                 break;
-
             default:
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 break;
@@ -266,7 +265,7 @@ public class PaginationFinalSheetServlet extends HttpServlet {
                         }
                         if (searchedPassedEntrants.size() == 0) {
                             session.setAttribute(SessionAttribute.FINAL_SHEET_IS_FOUND_SOMETHING, false);
-                            response.sendRedirect(Pages.PUBLIC_FINAL_SHEET_SERVLET);
+                            response.sendRedirect(Pages.PUBLIC_FINAL_SHEET_HTML);
                         } else {
                             session.setAttribute(SessionAttribute.FINAL_SHEET_IS_FOUND_SOMETHING, true);
                             if (request.getParameter(PARAM_PAGE) != null)
