@@ -1,18 +1,17 @@
 <div id="email-id" class="uk-modal" style="z-index: 1">
   <div class="uk-modal-dialog">
-    <a class="uk-modal-close uk-close"></a>
+    <a class="uk-modal-close uk-close uk-text-danger"></a>
 
-    <h3 class="uk-text-danger">Email is not valid.</h3>
+    <h3 class="uk-text-danger"><fmt:message key="login.error.email.not.valid"/></h3>
     <ul class="uk-list uk-list-line">
-      <li>E-mail must contains "@" symbol</li>
-      <li>Tld can not start with dot "."</li>
-      <li>Last tld must contains at least two characters</li>
-      <li>Tld can not start with dot "."</li>
-      <li>E-mail's first character can not start with dot "."</li>
-      <li>E-mail's is only allow character, digit, underscore and dash</li>
-      <li>Double dots "." are not allow</li>
-      <li>E-mail's last character can not end with dot "."</li>
-      <li>Email's tld which has two characters can not contains digit</li>
+      <li><fmt:message key="explanation.not.valid.email.row.1"/></li>
+      <li><fmt:message key="explanation.not.valid.email.row.2"/></li>
+      <li><fmt:message key="explanation.not.valid.email.row.3"/></li>
+      <li><fmt:message key="explanation.not.valid.email.row.4"/></li>
+      <li><fmt:message key="explanation.not.valid.email.row.5"/></li>
+      <li><fmt:message key="explanation.not.valid.email.row.6"/></li>
+      <li><fmt:message key="explanation.not.valid.email.row.7"/></li>
+      <li><fmt:message key="explanation.not.valid.email.row.8"/></li>
     </ul>
   </div>
 </div>

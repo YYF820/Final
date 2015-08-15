@@ -101,13 +101,13 @@ public class Validation {
     }
 
     private static boolean validateCity(String city) {
-        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}+(['-][\\p{Lu}][\\p{L}&&[^\\p{Lu}]]*+)*+$");
+        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}+([' -][\\p{Lu}][\\p{L}&&[^\\p{Lu}]]*+){0,2}$");
         Matcher m = p.matcher(city);
         return m.matches();
     }
 
     private static boolean validateRegion(String region) {
-        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}(?:[', -][\\p{Lu}][\\p{L}&&[^\\p{Lu}]]*+)*+ [\\p{L}&&[^\\p{Lu}]]{2,14}+(?:[', -][\\p{L}&&[^\\p{Lu}]]*+)*+$");
+        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}(?:[' -][\\p{L}&&[^\\p{Lu}]]*+)?$");
         Matcher m = p.matcher(region);
         return m.matches();
     }

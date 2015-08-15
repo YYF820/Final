@@ -7,6 +7,7 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.EntrantFinalSheet;
 import ua.nure.hanzha.SummaryTask4.exception.ServletSystemException;
 import ua.nure.hanzha.SummaryTask4.mail.MailHelper;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -47,12 +48,11 @@ public class MailSenderServlet extends HttpServlet {
                 String messageMail = createMessageVerifyAccount(firstName, lastName, patronymic, verifyLink);
                 try {
                     MailHelper.sendMail(accountName, subjectMail, messageMail);
-                    session.invalidate(); // invalidate session to clean all data in registration form.
-                    request.getSession(true).setAttribute(SessionAttribute.VERIFY_ACCOUNT_IS_MESSAGE_SENT, true);
+                    session.setAttribute(SessionAttribute.VERIFY_ACCOUNT_IS_MESSAGE_SENT, true);
                     response.sendRedirect(Pages.VERIFY_ACCOUNT_MESSAGE_SENT_HTML);
                 } catch (MessagingException e) {
-                    session.invalidate(); // invalidate session to clean all data in registration form.
-                    request.getSession(true).setAttribute(SessionAttribute.VERIFY_ACCOUNT_IS_MESSAGE_SENT, true);
+                    e.printStackTrace();
+                    session.setAttribute(SessionAttribute.VERIFY_ACCOUNT_IS_MESSAGE_SENT, false);
                     response.sendRedirect(Pages.VERIFY_ACCOUNT_MESSAGE_SENT_HTML);
                 }
                 break;
@@ -94,11 +94,8 @@ public class MailSenderServlet extends HttpServlet {
                 }
                 break;
             default:
-                try {
-                    throw new ServletSystemException("bad comand .....");
-                } catch (ServletSystemException e) {
-                    e.printStackTrace();
-                }
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                //TODO log4j
                 break;
         }
 
@@ -284,4 +281,35 @@ public class MailSenderServlet extends HttpServlet {
                 "С уважение University.";
     }
 
+
+    private void cleanRegistrationForm(HttpSession session) {
+        //=========== CLEAN REGISTRATION FORM ============//
+        SessionCleaner.cleanAttributes(session,
+                SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_VALID,
+                SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_EMPTY,
+                SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_EXISTS,
+                SessionAttribute.REGISTRATION_IS_FIRST_NAME_EMPTY,
+                SessionAttribute.REGISTRATION_IS_FIRST_NAME_VALID,
+                SessionAttribute.REGISTRATION_IS_LAST_NAME_EMPTY,
+                SessionAttribute.REGISTRATION_IS_LAST_NAME_VALID,
+                SessionAttribute.REGISTRATION_IS_PATRONYMIC_EMPTY,
+                SessionAttribute.REGISTRATION_IS_PATRONYMIC_VALID,
+                SessionAttribute.REGISTRATION_IS_CITY_EMPTY,
+                SessionAttribute.REGISTRATION_IS_CITY_VALID,
+                SessionAttribute.REGISTRATION_IS_REGION_EMPTY,
+                SessionAttribute.REGISTRATION_IS_REGION_VALID,
+                SessionAttribute.REGISTRATION_IS_PASSWORD_EMPTY,
+                SessionAttribute.REGISTRATION_IS_PASSWORD_VALID,
+                SessionAttribute.REGISTRATION_IS_SCHOOL_EMPTY,
+                SessionAttribute.REGISTRATION_IS_SCHOOL_VALID,
+                SessionAttribute.REGISTRATION_FIRST_NAME,
+                SessionAttribute.REGISTRATION_LAST_NAME,
+                SessionAttribute.REGISTRATION_PATRONYMIC,
+                SessionAttribute.REGISTRATION_CITY,
+                SessionAttribute.REGISTRATION_REGION,
+                SessionAttribute.REGISTRATION_ACCOUNT_NAME,
+                SessionAttribute.REGISTRATION_PASSWORD,
+                SessionAttribute.REGISTRATION_SCHOOL
+        );
+    }
 }

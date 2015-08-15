@@ -1,12 +1,4 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: faffi-ubuntu
-  Date: 02/08/15
-  Time: 20:24
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="../jspf/imports.jspf" %>
 <html>
 <head>
     <%@include file="../jspf/header/header.jspf" %>
@@ -18,16 +10,15 @@
     <div class="uk-grid uk-align-center uk-width-small-1-2 uk-margin-large-top">
         <c:if test="${sessionScope.verifyAccountIsMessageSent == true}">
             <p class="uk-text-success uk-text-large uk-text-middle"><i
-                    class="uk-icon-check uk-icon-large uk-text-success"></i>&nbspThank you! We have sent verification
-                link
-                to your email.</p>
+                    class="uk-icon-check uk-icon-large uk-text-success"></i>&nbsp
+                <fmt:message key="registration.message.sent.success.subject"/>
+            </p>
 
             <div class="uk-margin-top uk-text-left">
-                <p class="uk-text">Click the button below to return to Account Management, where you can log in to
-                    your account after verification account.</p>
-                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="login.html">Continue to
-                    Account
-                    Management</a>
+                <p class="uk-text"><fmt:message key="registration.message.sent.success.body"/></p>
+                <a class="uk-button uk-button-primary uk-width-8-10 uk-align-center" href="login.html">
+                    <fmt:message key="registration.message.sent.success.button"/>
+                </a>
             </div>
         </c:if>
         <c:if test="${sessionScope.verifyAccountIsMessageSent == false || sessionScope.verifyAccountIsMessageSent == null}">

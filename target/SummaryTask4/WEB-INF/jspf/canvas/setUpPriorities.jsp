@@ -1,4 +1,3 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <div id="setUpPriorities" class="uk-offcanvas">
     <div class="uk-offcanvas-bar uk-offcanvas-bar-flip uk-container uk-container-center uk-contrast">
         <form class="uk-form uk-contrast uk-margin-large-top" method="POST"

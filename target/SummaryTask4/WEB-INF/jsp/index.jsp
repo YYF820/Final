@@ -1,15 +1,7 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: faffi-ubuntu
-  Date: 30/07/15
-  Time: 12:41
-  To change this template use File | Settings | File Templates.
---%>
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@include file="../jspf/imports.jspf" %>
 <html>
 <head>
-    <%@include file="../jspf/header/header.jspf"%>
+    <%@include file="../jspf/header/header.jspf" %>
     <title></title>
 </head>
 <body>

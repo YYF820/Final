@@ -1,12 +1,4 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: faffi-ubuntu
-  Date: 08/08/15
-  Time: 18:23
-  To change this template use File | Settings | File Templates.
---%>
+<%@include file="../../jspf/imports.jspf" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

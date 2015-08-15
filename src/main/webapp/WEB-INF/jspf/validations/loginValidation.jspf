@@ -1,4 +1,3 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <c:if test="${sessionScope.loginIsAccountNameEmpty == true || sessionScope.loginIsPasswordEmpty == true ||
 sessionScope.loginIsAccountNameValid == false || sessionScope.loginIsPasswordValid == false ||
 sessionScope.loginIsCorrectAccountNameOrPassword == false || sessionScope.loginIsVerifiedAccount == false ||
@@ -6,21 +5,21 @@ sessionScope.loginIsBlocked == true}">
     <div class="uk-panel uk-panel-box uk-panel-box-primary uk-padding-bottom-remove uk-animation-fade">
         <c:if test="${sessionScope.loginIsVerifiedAccount == false}">
             <div class="uk-width-1-1">
-                <h3 class="uk-text-danger">Please verify your account, we sent you email.</h3>
+                <h3 class="uk-text-danger"><fmt:message key="login.error.verify.account"/></h3>
             </div>
             <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
             <c:set scope="page" var="badPasswordClass" value="uk-form-danger"/>
         </c:if>
         <c:if test="${sessionScope.loginIsBlocked == true}">
             <div class="uk-width-1-1">
-                <h3 class="uk-text-danger">Your account is blocked.</h3>
+                <h3 class="uk-text-danger"><fmt:message key="login.error.blocked.account"/></h3>
 
-                <p>You can contact our
-                    <a href="" class="uk-text-success uk-link-reset">
-                        support  <i class=" uk-icon-external-link "></i>
+                <p><fmt:message key="login.error.contact"/>
+                    <a href="" class="uk-text-success">
+                        <fmt:message key="login.error.support"/> <i class=" uk-icon-external-link "></i>
                     </a>
 
-                    for more information.
+                    <fmt:message key="login.error.for.more.information"/>
                 </p>
             </div>
             <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
@@ -28,47 +27,49 @@ sessionScope.loginIsBlocked == true}">
         </c:if>
         <c:if test="${sessionScope.loginIsCorrectAccountNameOrPassword == false}">
             <div class="uk-width-1-1">
-                <h3 class="uk-text-danger">The username or password is incorrect. Please try again.</h3>
+                <h3 class="uk-text-danger"><fmt:message key="login.error.incorrect.email.password"/></h3>
             </div>
             <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
             <c:set scope="page" var="badPasswordClass" value="uk-form-danger"/>
         </c:if>
         <c:if test="${sessionScope.loginIsAccountNameEmpty == true}">
             <div class="uk-width-1-1">
-                <h3 class="uk-text-danger">Please enter your Email.</h3>
+                <p class="uk-text-danger"><fmt:message key="login.error.please.enter.account.name"/></p>
             </div>
             <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
         </c:if>
         <c:if test="${sessionScope.loginIsPasswordEmpty == true}">
             <div class="uk-width-1-1">
-                <h3 class="uk-text-danger">Please enter your password.</h3>
+                <p class="uk-text-danger"><fmt:message key="login.error.please.enter.password"/></p>
             </div>
             <c:set scope="page" var="badPasswordClass" value="uk-form-danger"/>
         </c:if>
         <c:if test="${sessionScope.loginIsAccountNameValid == false && sessionScope.loginIsAccountNameEmpty == false}">
-            <h3 class="uk-panel-title uk-text-left uk-margin-top">Email is not valid
-                <a href="#email-id" class="uk-align-right" data-uk-modal="{bgclose:false, center:true}">
-                    <i class="uk-icon-question"></i>
-                </a>
-            </h3>
-            <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
+            <div>
+                <p class="uk-text-middle uk-text-danger"><fmt:message key="login.error.email.not.valid"/>
+                    <a href="#email-id" class="" data-uk-modal="{center:true}">
+                        <i class="uk-icon-info-circle"></i>
+                    </a>
+                </p>
+                <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
+            </div>
         </c:if>
         <c:if test="${sessionScope.loginIsPasswordValid == false && sessionScope.loginIsPasswordEmpty == false}">
-            <h3 class="uk-panel-title uk-text-left">Password is not valid
-                <a href="#password-id" class="uk-align-right" data-uk-modal="{bgclose:false, center:true}">
-                    <i class="uk-icon-question"></i>
-                </a>
-            </h3>
+            <div>
+                <p class="uk-text-middle uk-text-danger"><fmt:message key="login.error.password.not.valid"/>
+                    <a href="#password-id" class="" data-uk-modal="{center:true}">
+                        <i class="uk-icon-info-circle"></i>
+                    </a>
+                </p>
+            </div>
 
             <div id="password-id" class="uk-modal">
                 <div class="uk-modal-dialog">
-                    <a class="uk-modal-close uk-close"></a>
+                    <a class="uk-modal-close uk-close uk-text-danger"></a>
 
-                    <h3 class="uk-text-danger">Password is not valid.</h3>
+                    <h3 class="uk-text-danger"><fmt:message key="login.error.password.not.valid"/></h3>
 
-                    <p class="uk-text-left-small">Password must contains letters and at least one digit,
-                        length: 6-20
-                        characters.
+                    <p class="uk-text-left-small"><fmt:message key="explanation.not.valid.password"/>
                     </p>
                 </div>
             </div>

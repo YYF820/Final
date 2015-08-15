@@ -39,11 +39,6 @@ public class AuthServlet extends HttpServlet {
     private static final String PARAM_ACCOUNT_NAME = "accountName";
     private static final String PARAM_PASSWORD = "password";
 
-    private static final String SESSION_ATTRIBUTE_LOGIN_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD = "loginIsCorrectAccountNameOrPassword";
-    private static final String SESSION_ATTRIBUTE_LOGIN_IS_VERIFIED_ACCOUNT = "loginIsVerifiedAccount";
-    private static final String SESSION_ATTRIBUTE_LOGIN_IS_BLOCKED = "loginIsBlocked";
-
-
     private UserService userService;
     private EntrantService entrantService;
 
@@ -83,11 +78,11 @@ public class AuthServlet extends HttpServlet {
                                 response.sendRedirect(Pages.INDEX_HTML);
                                 break;
                             case ENTRANT_STATUS_NOT_VERIFIED:
-                                session.setAttribute(SESSION_ATTRIBUTE_LOGIN_IS_VERIFIED_ACCOUNT, false);
+                                session.setAttribute(SessionAttribute.LOGIN_IS_VERIFIED_ACCOUNT, false);
                                 response.sendRedirect(Pages.LOGIN_HTML);
                                 break;
                             case ENTRANT_STATUS_BLOCKED:
-                                session.setAttribute(SESSION_ATTRIBUTE_LOGIN_IS_BLOCKED, true);
+                                session.setAttribute(SessionAttribute.LOGIN_IS_BLOCKED, true);
                                 response.sendRedirect(Pages.LOGIN_HTML);
                                 break;
                             default:
@@ -95,11 +90,11 @@ public class AuthServlet extends HttpServlet {
                         }
                     }
                 } else {
-                    session.setAttribute(SESSION_ATTRIBUTE_LOGIN_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD, false);
+                    session.setAttribute(SessionAttribute.LOGIN_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD, false);
                     response.sendRedirect(Pages.LOGIN_HTML);
                 }
             } catch (DaoSystemException e) {
-                session.setAttribute(SESSION_ATTRIBUTE_LOGIN_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD, false);
+                session.setAttribute(SessionAttribute.LOGIN_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD, false);
                 response.sendRedirect(Pages.LOGIN_HTML);
             }
         }

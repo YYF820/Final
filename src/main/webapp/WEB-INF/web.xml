@@ -10,6 +10,11 @@
         <param-value>/security-config.xml</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>LOCALES</param-name>
+        <param-value>/WEB-INF/locales.properties</param-value>
+    </context-param>
+
     <!-- JSP mapping-->
     <jsp-config>
         <jsp-property-group>

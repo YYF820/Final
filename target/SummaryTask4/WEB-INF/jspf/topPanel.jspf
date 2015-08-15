@@ -1,21 +1,42 @@
-<%@ taglib prefix="u" uri="http://SummaryTask4.hanzha.nure.ua" %>
 <nav class="uk-navbar">
     <u:ifAuthAs role="admin">
         <a href="#adminCanvasId" class="uk-navbar-toggle" data-uk-offcanvas></a>
     </u:ifAuthAs>
-    <a href="<c:url value="/index.html"/>"><img class="uk-navbar-brand" src="../../../resources/img/logo.png"/></a>
+
+    <a href="<c:url value="/index.html"/>"><img class="uk-navbar-brand" src="../../resources/img/logo.png"/></a>
 
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="" onclick="return false">
+                    <c:if test="${fn:split(language,'_')[0]== 'en'}">
+                        <img src="<c:url value="/resources/img/enLocale.png"/>">
+                    </c:if>
+                    <c:if test="${fn:split(language,'_')[0] == 'ru'}">
+                        <img src="<c:url value="/resources/img/russLocale.png"/>">
+                    </c:if>
+                </a>
+
+                <div class="uk-dropdown uk-dropdown-navbar" style="width: 63px">
+                    <ul class="uk-nav uk-nav-navbar">
+                        <li><a onclick="setLocale('ru');"><img src="<c:url value="/resources/img/russLocale.png"/>"></a>
+                        </li>
+                        <li><a onclick="setLocale('en');"><img src="<c:url value="/resources/img/enLocale.png"/>"></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <u:ifAuthAs role="guest">
-                <li><a href="">Support</a></li>
+                <li><a href=""><fmt:message key="top.panel.support"/> </a></li>
+
             </u:ifAuthAs>
             <u:ifAuthAs role="entrant">
-                <li><a href="">Support</a></li>
+                <li><a href=""><fmt:message key="top.panel.support"/></a></li>
             </u:ifAuthAs>
+
             <li class="uk-parent" data-uk-dropdown>
                 <u:ifAuthAs role="guest">
-                    <a href="">Your Account <i class="uk-icon uk-icon-chevron-down"></i></a>
+                    <a href="" onclick="return false"><fmt:message key="top.panel.your.account"/> <i class="uk-icon uk-icon-chevron-down"></i></a>
                 </u:ifAuthAs>
                 <u:ifAuth>
                     <a href="">
@@ -25,19 +46,20 @@
                         </p>
                     </a>
                 </u:ifAuth>
-
                 <div class="uk-dropdown uk-dropdown-navbar">
                     <ul class="uk-nav uk-nav-navbar">
                         <u:ifAuthAs role="guest">
-                            <li><a href="<c:url value="/login.html"/>">Log in <i
+                            <li><a href="<c:url value="/login.html"/>"><fmt:message key="top.panel.log.in"/> <i
                                     class="uk-icon uk-icon-sign-in"></i></a></li>
-                            <li><a href="<c:url value="/login.html"/>">Account Settings <i
-                                    class="uk-icon uk-icon-cog"></i></a></li>
+                            <li><a href="<c:url value="/login.html"/>"><fmt:message key="top.panel.account.settings"/>
+                                <i
+                                        class="uk-icon uk-icon-cog"></i></a></li>
                         </u:ifAuthAs>
                         <u:ifAuth>
-                            <li><a href="<c:url value="/logout.do"/>">Log out <i
+                            <li><a href="<c:url value="/logout.do"/>"><fmt:message key="top.panel.log.out"/> <i
                                     class="uk-icon uk-icon-sign-out"></i></a></li>
-                            <li><a href="<c:url value="/accountSettings.html"/>">Account Settings <i
+                            <li><a href="<c:url value="/accountSettings.html"/>"><fmt:message
+                                    key="top.panel.account.settings"/> <i
                                     class="uk-icon uk-icon-cog"></i></a></li>
                         </u:ifAuth>
                     </ul>
@@ -50,13 +72,14 @@
 <div id="adminCanvasId" class="uk-offcanvas">
     <div class="uk-offcanvas-bar uk-contrast">
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
-            <li class="uk-nav-header">Admin functions</li>
-            <li><a href="<c:url value="/admin/entrants.do"/>">Entrants <i
+            <li class="uk-nav-header"><fmt:message key="top.panel.canvas.admin.header"/></li>
+            <li><a href="<c:url value="/admin/entrants.do"/>"><fmt:message key="top.panel.canvas.admin.entrants"/> <i
                     class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
-            <li><a href="<c:url value="/admin/faculties.do"/>">Faculties <i
+            <li><a href="<c:url value="/admin/faculties.do"/>"><fmt:message key="top.panel.canvas.admin.faculties"/> <i
                     class="uk-icon uk-icon-pencil uk-text-primary"></i></a></li>
-            <li><a class="uk-h3" href="<c:url value="/admin/generateFinalSheet.do"/>" >Generate final
-                sheet <i class="uk-icon-cog uk-icon-spin uk-text-success"></i></a></li>
+            <li><a class="uk-h3" href="<c:url value="/admin/generateFinalSheet.do"/>">
+                <fmt:message key="top.panel.canvas.admin.generate.final.sheet"/>
+                <i class="uk-icon-cog uk-icon-spin uk-text-success"></i></a></li>
         </ul>
     </div>
 </div>

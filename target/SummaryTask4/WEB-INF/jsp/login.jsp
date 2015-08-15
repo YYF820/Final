@@ -1,12 +1,4 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: faffi-ubuntu
-  Date: 30/07/15
-  Time: 18:03
-  To change this template use File | Settings | File Templates.
---%>
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@include file="../jspf/imports.jspf" %>
 <html>
 <head>
     <link rel="stylesheet" href="<c:url value="/resources/stylesheets/customCss/logo.css"/>"/>
@@ -14,8 +6,9 @@
     <%@include file="../jspf/header/header.jspf" %>
 </head>
 <body>
-<div class="uk-vertical-align uk-text-center">
-    <div class="uk-vertical-align-middle " style="width: 400px;">
+    <%@include file="../jspf/topPanel.jspf"%>
+    <div class="uk-container-center uk-text-center uk-width-8-10">
+    <div class="uk-container-center uk-text-center uk-width-medium-4-10 uk-margin-large-top">
         <img class="uk-margin-bottom logo-login"
              src="<c:url value="/resources/img/mainLogo.png"/>"
              alt="">
@@ -28,7 +21,7 @@
                 <input aria-labelledby="accountName-label" id="accountName" name="accountName"
                        class="uk-width-1-1 uk-form-large uk-form-width-large
                        ${badEmailClass}"
-                       type="text" spellcheck="false" placeholder="E-mail"
+                       type="text" spellcheck="false" placeholder="<fmt:message key="login.field.email"/>"
                        value="${sessionScope.loginAccountName}">
             </div>
 
@@ -38,33 +31,34 @@
                 <input aria-labelledby="password-label" id="password" name="password"
                        class="uk-width-1-1 uk-form-large uk-form-width-large
                        ${badPasswordClass}"
-                       type="password" autocomplete="off" placeholder="Password"
+                       type="password" autocomplete="off" placeholder="<fmt:message key="login.field.password"/>"
                        value="${sessionScope.loginIsAccountNameEmpty == true && sessionScope.loginIsPasswordEmpty == false ? sessionScope.loginPassword : ""}">
             </div>
 
             <div class="uk-form-row">
-                <button class="uk-width-1-1 uk-button uk-button-primary uk-button-large" type="submit">Log in</button>
+                <button class="uk-width-1-1 uk-button uk-button-primary uk-button-large" type="submit">
+                    <fmt:message key="login.submit"/>
+                </button>
             </div>
             <div class="uk-form-row">
                 <a href="<c:url value="/registration.html"/>" class="uk-width-2-3 uk-button uk-button-success">
-                    Create Account <i class="uk-icon-external-link"></i>
+                    <fmt:message key="login.create.account"/> <i class="uk-icon-external-link"></i>
                 </a>
             </div>
 
             <div class="uk-form-row uk-text-small">
                 <a class="uk-link uk-link-muted uk-float-left"
                    href="<c:url value="/resendVerificationOrResetPassword.html?command=verifyAccount"/>">
-                    Resent verification message <i class="uk-icon-external-link"></i>
+                    <fmt:message key="login.resend.verification.message"/> <i class="uk-icon-external-link"></i>
                 </a>
                 <a class="uk-link uk-link-muted uk-float-right"
                    href="<c:url value="/resendVerificationOrResetPassword.html?command=resetPassword"/>">
-                    Forgot Password? <i class="uk-icon-external-link"></i>
+                    <fmt:message key="login.forgot.password"/> <i class="uk-icon-external-link"></i>
                 </a>
             </div>
         </form>
-
     </div>
-</div>
+    </div>
 <%@include file="../jspf/modals/accountNameRules.jspf" %>
 </body>
 </html>

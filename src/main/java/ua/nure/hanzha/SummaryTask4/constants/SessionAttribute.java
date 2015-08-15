@@ -27,6 +27,10 @@ public class SessionAttribute {
     public static final String LOGIN_ACCOUNT_NAME = "loginAccountName";
     public static final String LOGIN_PASSWORD = "loginPassword";
 
+    public static final String LOGIN_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD = "loginIsCorrectAccountNameOrPassword";
+    public static final String LOGIN_IS_VERIFIED_ACCOUNT = "loginIsVerifiedAccount";
+    public static final String LOGIN_IS_BLOCKED = "loginIsBlocked";
+
     //================REGISTRATION FORM==================//
     public static final String REGISTRATION_IS_ACCOUNT_NAME_EXISTS = "registrationIsAccountNameExists";
     public static final String REGISTRATION_IS_ACCOUNT_NAME_EMPTY = "registrationIsAccountNameEmpty";
