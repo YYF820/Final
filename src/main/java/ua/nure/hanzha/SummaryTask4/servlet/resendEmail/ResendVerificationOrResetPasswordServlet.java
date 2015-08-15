@@ -12,6 +12,7 @@ import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.exception.ServletSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 import ua.nure.hanzha.SummaryTask4.validation.Validation;
 
 import javax.servlet.ServletException;
@@ -54,8 +55,8 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
+        cleanSession(session);
         String accountName = request.getParameter(PARAM_ACCOUNT_NAME);
-        System.out.println(accountName);
         String command = request.getParameter(PARAM_COMMAND);
         session.setAttribute(SessionAttribute.RESEND_ACCOUNT_NAME, accountName);
         boolean isAccountNameValid = checkValidationAccountName(session, accountName);
@@ -67,6 +68,7 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
                 User userForResendVerifyMessage = userService.getByEmail(accountName);
                 String userRole = Role.getRole(userForResendVerifyMessage).getName();
                 if (userRole.equals(ROLE_ADMIN) && !command.equals(COMMAND_RESET_PASSWORD)) {
+                    System.out.println(1);
                     session.setAttribute(SessionAttribute.RESEND_IS_ADMIN_TRYING_VERIFY_ACCOUNT, true);
                     response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                 } else {
@@ -105,7 +107,9 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
                     }
                 }
             } catch (DaoSystemException e) {
-                if (e.getMessage().equals(ExceptionMessages.SELECT_BY_ID_EXCEPTION_MESSAGE)) {
+                e.printStackTrace();
+                if (e.getMessage().equals(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE) ||
+                        e.getMessage().equals(ExceptionMessages.SELECT_BY_ID_EXCEPTION_MESSAGE)) {
                     session.setAttribute(SessionAttribute.RESEND_IS_USER_EXISTS_BY_ACCOUNT_NAME, false);
                     response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                 }
@@ -125,8 +129,6 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
         boolean isAccountNameValid = Validation.validateEmail(accountName);
         if (!isAccountNameValid) {
             session.setAttribute(SessionAttribute.RESEND_IS_ACCOUNT_NAME_VALID, false);
-        } else {
-            session.setAttribute(SessionAttribute.RESEND_IS_ACCOUNT_NAME_VALID, true);
         }
         return isAccountNameValid;
     }
@@ -136,10 +138,20 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
         if (accountName.equals(EMPTY_PARAM)) {
             isAccountNameEmpty = true;
             session.setAttribute(SessionAttribute.RESEND_IS_ACCOUNT_NAME_EMPTY, true);
-        } else {
-            session.setAttribute(SessionAttribute.RESEND_IS_ACCOUNT_NAME_EMPTY, false);
         }
         return isAccountNameEmpty;
+    }
+
+    private void cleanSession(HttpSession session) {
+        SessionCleaner.cleanAttributes(
+                session,
+                SessionAttribute.RESEND_IS_ACCOUNT_NAME_EMPTY,
+                SessionAttribute.RESEND_IS_ACCOUNT_NAME_VALID,
+                SessionAttribute.RESEND_IS_ACTIVE_ACCOUNT,
+                SessionAttribute.RESEND_IS_BLOCKED_ACCOUNT,
+                SessionAttribute.RESEND_IS_ADMIN_TRYING_VERIFY_ACCOUNT,
+                SessionAttribute.RESEND_IS_USER_EXISTS_BY_ACCOUNT_NAME
+        );
     }
 }
 

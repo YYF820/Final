@@ -26,7 +26,7 @@
                             <c:when test="${sessionScope.registrationIsLastNameEmpty == true}">
                                 <c:set scope="page" var="lastNameSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger"><fmt:message
-                                        key="registration.error.please.enter.last.name"/></p>
+                                        key="registration.error.empty.last.name"/></p>
                             </c:when>
                             <c:when test="${sessionScope.registrationIsLastNameValid == false}">
                                 <c:set scope="page" var="lastNameSuccessClass" value="uk-form-danger"/>
@@ -54,7 +54,7 @@
                             <c:when test="${sessionScope.registrationIsFirstNameEmpty == true}">
                                 <c:set scope="page" var="firstNameSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger"><fmt:message
-                                        key="registration.error.please.enter.first.name"/></p>
+                                        key="registration.error.empty.first.name"/></p>
                             </c:when>
                             <c:when test="${sessionScope.registrationIsFirstNameValid == false}">
                                 <c:set scope="page" var="firstNameSuccessClass" value="uk-form-danger"/>
@@ -85,7 +85,7 @@
                             <c:when test="${sessionScope.registrationIsPatronymicEmpty == true}">
                                 <c:set scope="page" var="patronymicSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger"><fmt:message
-                                        key="registration.error.please.enter.patronymic"/></p>
+                                        key="registration.error.empty.patronymic"/></p>
                             </c:when>
                             <c:when test="${sessionScope.registrationIsPatronymicValid == false}">
                                 <c:set scope="page" var="patronymicSuccessClass" value="uk-form-danger"/>
@@ -147,7 +147,7 @@
                     <div class="uk-alert uk-width-1-1 " data-uk-alert>
                         <c:choose>
                             <c:when test="${sessionScope.registrationIsCityEmpty == true}">
-                                <p class="uk-text-danger"><fmt:message key="registration.error.please.enter.city"/></p>
+                                <p class="uk-text-danger"><fmt:message key="registration.error.empty.city"/></p>
                             </c:when>
                             <c:when test="${sessionScope.registrationIsCityValid == false}">
                                 <p class="uk-text-danger">
@@ -183,7 +183,7 @@
                         <c:choose>
                             <c:when test="${sessionScope.registrationIsRegionEmpty == true}">
                                 <p class="uk-text-danger"><fmt:message
-                                        key="registration.error.please.enter.region"/></p>
+                                        key="registration.error.empty.region"/></p>
                             </c:when>
                             <c:when test="${sessionScope.registrationIsRegionValid == false}">
                                 <p class="uk-text-danger">
@@ -218,7 +218,7 @@
                     <div class="uk-alert uk-width-1-1 " data-uk-alert>
                         <c:choose>
                             <c:when test="${sessionScope.registrationIsAccountNameEmpty == true}">
-                                <p class="uk-text-danger"><fmt:message key="registration.error.please.enter.email"/></p>
+                                <p class="uk-text-danger"><fmt:message key="registration.error.empty.email"/></p>
                             </c:when>
                             <c:when test="${sessionScope.registrationIsAccountNameExregistrationIsts == true}">
                                 <p class="uk-text-danger">This email is already in use.
@@ -261,7 +261,7 @@
                             <c:when test="${sessionScope.registrationIsPasswordEmpty == true}">
                                 <c:set scope="page" var="passwordSuccessClass" value="uk-form-danger"/>
                                 <p class="uk-text-danger"><fmt:message
-                                        key="registration.error.please.enter.password"/></p>
+                                        key="registration.error.empty.password"/></p>
                             </c:when>
                             <c:when test="${sessionScope.registrationIsPasswordValid == false}">
                                 <c:set scope="page" var="passwordSuccessClass" value="uk-form-danger"/>
@@ -300,7 +300,7 @@
                         <c:choose>
                             <c:when test="${sessionScope.registrationIsSchoolEmpty == true}">
                                 <p class="uk-text-danger"><fmt:message
-                                        key="registration.error.please.enter.school"/></p>
+                                        key="registration.error.empty.school"/></p>
                             </c:when>
                             <c:when test="${sessionScope.registrationIsSchoolValid == false}">
                                 <p class="uk-text-danger uk-margin-bottom-remove">
@@ -324,7 +324,7 @@
                 </button>
                 <a href="<c:url value="/index.html"/>"
                    class="uk-width-1-5 uk-button-large uk-button uk-button-success">
-                    <fmt:message key="registration.cancel"/>
+                    <fmt:message key="button.cancel"/>
                 </a>
             </div>
         </div>

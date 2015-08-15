@@ -34,13 +34,13 @@ sessionScope.loginIsBlocked == true}">
         </c:if>
         <c:if test="${sessionScope.loginIsAccountNameEmpty == true}">
             <div class="uk-width-1-1">
-                <p class="uk-text-danger"><fmt:message key="login.error.please.enter.account.name"/></p>
+                <p class="uk-text-danger"><fmt:message key="login.error.empty.account.name"/></p>
             </div>
             <c:set scope="page" var="badEmailClass" value="uk-form-danger"/>
         </c:if>
         <c:if test="${sessionScope.loginIsPasswordEmpty == true}">
             <div class="uk-width-1-1">
-                <p class="uk-text-danger"><fmt:message key="login.error.please.enter.password"/></p>
+                <p class="uk-text-danger"><fmt:message key="login.error.empty.password"/></p>
             </div>
             <c:set scope="page" var="badPasswordClass" value="uk-form-danger"/>
         </c:if>

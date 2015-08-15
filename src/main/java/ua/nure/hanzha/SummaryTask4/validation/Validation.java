@@ -113,7 +113,7 @@ public class Validation {
     }
 
     public static boolean validateSchool(String school) {
-        Pattern p = Pattern.compile("^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$");
+        Pattern p = Pattern.compile("^[1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-5][0-5]$");
         Matcher m = p.matcher(school);
         return m.matches();
     }
