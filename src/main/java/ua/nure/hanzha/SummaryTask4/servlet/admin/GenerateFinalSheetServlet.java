@@ -98,10 +98,13 @@ public class GenerateFinalSheetServlet extends HttpServlet {
         try {
             for (Integer entrantId : enrolledEntrantsId) {
                 EntrantFinalSheetBean enrolledEntrant = facultyEntrantService.getEntrantBeanByEntrantId(entrantId);
-                enrolledEntrantsFinalSheetBeans.add(enrolledEntrant);
+                if (enrolledEntrant != null) {
+                    enrolledEntrantsFinalSheetBeans.add(enrolledEntrant);
+                }
             }
             for (EntrantFinalSheetBean enrolledEntrantsFinalSheetBean : enrolledEntrantsFinalSheetBeans) {
                 int entrantId = enrolledEntrantsFinalSheetBean.getEntrantId();
+                System.out.println(entrantId);
                 int userId = entrantService.getUserIdByEntrantId(entrantId);
                 User user = userService.getById(userId);
                 enrolledEntrantsFinalSheetBean.setFirstName(user.getFirstName());

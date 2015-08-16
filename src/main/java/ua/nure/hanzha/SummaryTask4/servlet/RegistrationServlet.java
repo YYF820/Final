@@ -80,12 +80,15 @@ public class RegistrationServlet extends HttpServlet {
         int counterOfEmptyFields = checkFormEmptyFields(session, firstName, lastName, patronymic, accountName, city, region, password, school);
         int counterOfBadValidations = checkFormBadValidations(session, validationsRegisterForm);
         if (counterOfBadValidations != 0 || counterOfEmptyFields != 0) {
+            System.out.println("NOT VALID");
             setUpAttrForFields(session, firstName, lastName, patronymic, accountName, city, region, password, school);
             response.sendRedirect(Pages.REGISTRATION_HTML);
         } else {
             try {
+
                 boolean isUserExists = userService.userExistsByAccountName(accountName);
                 if (!isUserExists) {
+                    System.out.println("VALID");
                     Map<String, Entity> infoForRegistration = prepareEntities(firstName, lastName, patronymic, accountName, city, region, password, school);
                     User userInfo = (User) infoForRegistration.get(MAP_KEY_USER);
                     Entrant entrantInfo = (Entrant) infoForRegistration.get(MAP_KEY_ENTRANT);
@@ -97,6 +100,7 @@ public class RegistrationServlet extends HttpServlet {
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.MAIL_SENDER_SERVLET);
                     requestDispatcher.forward(request, response);
                 } else {
+                    System.out.println("NOT VALID TWO");
                     setUpAttrForFields(session, firstName, lastName, patronymic, accountName, city, region, password, school);
                     request.setAttribute(SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_EXISTS, true);
                     response.sendRedirect(Pages.REGISTRATION_HTML);

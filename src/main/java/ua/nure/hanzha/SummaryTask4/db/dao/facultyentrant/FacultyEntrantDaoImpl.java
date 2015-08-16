@@ -181,13 +181,13 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     }
 
     @Override
-    public EntrantFinalSheetBean selectEntrantBeanByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
+    public EntrantFinalSheetBean selectEntrantBeanByEntrantId(int entrantId, Connection connection) throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement(
                 SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.entrant.id"))) {
             ps.setInt(1, entrantId);
             Map<Integer, Integer> tempMap = new HashMap<>();
+            EntrantFinalSheetBean entrantFinalSheetBean = null;
             try (ResultSet rs = ps.executeQuery()) {
-                EntrantFinalSheetBean entrantFinalSheetBean = null;
                 if (rs.next()) {
                     entrantFinalSheetBean = new EntrantFinalSheetBean();
                     entrantFinalSheetBean.setEntrantId(entrantId);
@@ -204,7 +204,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
                     entrantFinalSheetBean.setPriorityFacultyPair(priorityFacultyIdPair);
                     return entrantFinalSheetBean;
                 } else {
-                    throw new CrudException("Entrant doesn't enroll to any faculty.");
+                    return null;
                 }
             }
         }

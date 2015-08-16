@@ -40,7 +40,7 @@ public interface FacultyEntrantDao extends Dao<FacultyEntrant> {
 
     Map<Integer, Integer> selectAllFacultyIdPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
 
-    EntrantFinalSheetBean selectEntrantBeanByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException;
+    EntrantFinalSheetBean selectEntrantBeanByEntrantId(int entrantId, Connection connection) throws SQLException;
 
     void updatePriorityByFacultyIdEntrantId(int priority, int facultyId, int entrantId, Connection connection) throws SQLException, CrudException;
 

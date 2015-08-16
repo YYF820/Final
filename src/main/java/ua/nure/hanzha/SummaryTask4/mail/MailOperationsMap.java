@@ -117,9 +117,6 @@ public class MailOperationsMap {
                             String subjectMail = MailMessagesCreator.createSubjectUpdatedPassword();
                             String messageMail = MailMessagesCreator.createMessageUpdatedPassword(firstName, lastName, patronymic);
                             try {
-                                String language = (String) session.getAttribute(SessionAttribute.LANGUAGE);
-                                session.invalidate();
-                                session.setAttribute(SessionAttribute.LANGUAGE, language);
                                 MailHelper.sendMail(accountName, subjectMail, messageMail);
                                 session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_UPDATED_PASSWORD, true);
                                 response.sendRedirect(Pages.RESET_PASSWORD_SUCCESS_HTML);
@@ -186,6 +183,9 @@ public class MailOperationsMap {
                             UniversityFinalSheetBean universityFinalSheetBean =
                                     (UniversityFinalSheetBean) request.getAttribute(RequestAttribute.UNIVERSITY_FINAL_SHEET_BEAN);
                             List<FacultyFinalSheetBean> allFacultiesFinalSheetBeanList = universityFinalSheetBean.getFacultiesFinalSheetBean();
+                            for (FacultyFinalSheetBean facultyFinalSheetBean : allFacultiesFinalSheetBeanList) {
+                                System.out.println("mail : " + facultyFinalSheetBean);
+                            }
                             for (FacultyFinalSheetBean facultyFinalSheetBean : allFacultiesFinalSheetBeanList) {
                                 List<EntrantFinalSheetBean> budgetEntrantFinalSheetBeanList = facultyFinalSheetBean.getBudgetEntrants();
                                 for (EntrantFinalSheetBean entrantFinalSheetBean : budgetEntrantFinalSheetBeanList) {
