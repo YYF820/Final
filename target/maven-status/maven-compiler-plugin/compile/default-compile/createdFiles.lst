@@ -37,7 +37,6 @@ ua/nure/hanzha/SummaryTask4/exception/ServletSystemException.class
 ua/nure/hanzha/SummaryTask4/tag/IfAuth.class
 ua/nure/hanzha/SummaryTask4/db/dao/entrantfinalsheet/EntrantFinalSheetDaoImpl.class
 ua/nure/hanzha/SummaryTask4/servlet/VerifyAccountServlet.class
-ua/nure/hanzha/SummaryTask4/util/TimeWorker.class
 ua/nure/hanzha/SummaryTask4/servlet/entrant/DeleteFacultyEntrantServlet.class
 ua/nure/hanzha/SummaryTask4/servlet/MailSenderServlet.class
 ua/nure/hanzha/SummaryTask4/util/StringToDecimalArray.class
@@ -45,7 +44,6 @@ ua/nure/hanzha/SummaryTask4/servlet/entrant/PrepareInfoForAddMarksServlet.class
 ua/nure/hanzha/SummaryTask4/db/dao/mark/MarkDaoImpl.class
 ua/nure/hanzha/SummaryTask4/filter/ResetPasswordCheckInvalidateFilter.class
 ua/nure/hanzha/SummaryTask4/tag/IfAuthAs.class
-ua/nure/hanzha/SummaryTask4/db/datasource/BaseDataSource.class
 ua/nure/hanzha/SummaryTask4/filter/CharsetFilter.class
 ua/nure/hanzha/SummaryTask4/bean/FacultyFinalSheetBean.class
 ua/nure/hanzha/SummaryTask4/servlet/admin/PrepareInfoAddFacultyServlet.class

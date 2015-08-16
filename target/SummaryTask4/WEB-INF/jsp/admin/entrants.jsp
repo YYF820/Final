@@ -9,26 +9,26 @@
 <div class="uk-container uk-container-center uk-width-medium-1-1 uk-text-center ">
 
     <table class="uk-table  uk-table-hover uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
-        <caption>Entrants</caption>
+        <caption><fmt:message key="head.entrants"/></caption>
         <thead>
         <tr>
             <th>id</th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Patronymic</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>Region</th>
-            <th>School</th>
-            <th>Status</th>
+            <th><fmt:message key="last.name"/></th>
+            <th><fmt:message key="first.name"/></th>
+            <th><fmt:message key="patronymic"/></th>
+            <th><fmt:message key="account.name"/></th>
+            <th><fmt:message key="city"/></th>
+            <th><fmt:message key="region"/></th>
+            <th><fmt:message key="school"/></th>
+            <th><fmt:message key="status"/></th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="entrant" items="${sessionScope.entrantsAdmin}">
             <tr class="uk-table-middle ${entrant.statusId == 1 ? 'uk-text-danger' : ''}">
                 <td>${entrant.id}</td>
-                <td>${entrant.firstName}</td>
                 <td>${entrant.lastName}</td>
+                <td>${entrant.firstName}</td>
                 <td>${entrant.patronymic}</td>
                 <td>${entrant.email}</td>
                 <td>${entrant.city}</td>
@@ -68,7 +68,7 @@
         <c:if test="${sessionScope.currentPage != 1}">
             <li class="uk-pagination-previous">
                 <a href="<c:url value="/admin/budgetEntrants.do?page=${sessionScope.currentPage - 1}"/>">
-                    <i class="uk-icon-angle-double-left"></i> Previous
+                    <i class="uk-icon-angle-double-left"></i> <fmt:message key="button.previous.page"/>
                 </a>
             </li>
         </c:if>
@@ -107,7 +107,7 @@
         <c:if test="${sessionScope.currentPage lt sessionScope.numberOfPages}">
             <li class="uk-pagination-next">
                 <a href="<c:url value="/admin/entrants.do?page=${sessionScope.currentPage + 1}"/>">
-                    Next <i class="uk-icon-angle-double-right"></i>
+                    <fmt:message key="button.next.page"/> <i class="uk-icon-angle-double-right"></i>
                 </a>
             </li>
         </c:if>

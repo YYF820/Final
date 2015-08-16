@@ -32,6 +32,7 @@
             maxActive="50"
             maxIdle="20"
             maxWait="10000"
+            defaultAutoCommit="false"
             driverClassName="org.postgresql.Driver"
             url="jdbc:postgresql://localhost:5432/summarytask4"
             username="faffi-ubuntu"

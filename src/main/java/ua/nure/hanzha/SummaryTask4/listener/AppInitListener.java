@@ -25,6 +25,9 @@ import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManager;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManagerImpl;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.mail.MailManager;
+import ua.nure.hanzha.SummaryTask4.mail.MailManagerImpl;
+import ua.nure.hanzha.SummaryTask4.mail.MailOperationsMap;
 import ua.nure.hanzha.SummaryTask4.security.AuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.security.XmlAuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
@@ -80,6 +83,7 @@ public class AppInitListener implements ServletContextListener {
         setAuthorizationMap(servletContext, securityConfigName);
 
         setUpServices(servletContext, txManager);
+        setUpMailManager(servletContext);
         System.out.println("INITIALAIZED");
     }
 
@@ -145,5 +149,8 @@ public class AppInitListener implements ServletContextListener {
         }
     }
 
-
+    private void setUpMailManager(ServletContext servletContext) {
+        MailManager mailManager = new MailManagerImpl();
+        servletContext.setAttribute(AppAttribute.MAIL_MANAGER, mailManager);
+    }
 }

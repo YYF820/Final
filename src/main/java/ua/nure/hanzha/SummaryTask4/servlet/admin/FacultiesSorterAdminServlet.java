@@ -133,12 +133,7 @@ public class FacultiesSorterAdminServlet extends HttpServlet {
             int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / RECORDS_PER_PAGE);
             List<FacultiesInfoBean> facultiesInfoBeansSortedPagination = new ArrayList<>();
             copyList(facultiesInfoBeans, facultiesInfoBeansSortedPagination, page, RECORDS_PER_PAGE);
-            session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-            session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-            session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS_SORTED, facultiesInfoBeans);
-            session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS_SORTED_PAGINATION, facultiesInfoBeansSortedPagination);
-            session.setAttribute(SessionAttribute.ADMIN_IS_SORTED_FACULTIES, true);
-            session.setAttribute("isFromPost", true);
+            setUpAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansSortedPagination);
             response.sendRedirect(Pages.FACULTIES_ADMIN_HTML);
         }
 
@@ -183,6 +178,17 @@ public class FacultiesSorterAdminServlet extends HttpServlet {
             System.out.println(i);
             facultiesInfoBeansPagination.add(facultiesInfoBeans.get(i));
         }
+    }
+
+    private void setUpAttributes(HttpSession session, int numberOfPages,
+                                 List<FacultiesInfoBean> facultiesInfoBeans,
+                                 List<FacultiesInfoBean> facultiesInfoBeansSortedPagination) {
+        session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
+        session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
+        session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS_SORTED, facultiesInfoBeans);
+        session.setAttribute(SessionAttribute.ADMIN_FACULTIES_INFO_BEANS_SORTED_PAGINATION, facultiesInfoBeansSortedPagination);
+        session.setAttribute(SessionAttribute.ADMIN_IS_SORTED_FACULTIES, true);
+        session.setAttribute("isFromPost", true);
     }
 
 

@@ -37,7 +37,8 @@
                 ${sessionScope.entrantAccountSettingsExtraMarksIsValidCertificatePoints == false ?
                     'uk-form-danger' : sessionScope.entrantAccountSettingsExtraMarksIsValidCertificatePoints == true ?
                         'uk-form-success' : ''}"
-                       type="text" spellcheck="false" placeholder="<fmt:message key="account.settings.add.extra.marks.certificate.points"/>"
+                       type="text" spellcheck="false"
+                       placeholder="<fmt:message key="account.settings.add.extra.marks.certificate.points"/>"
                        value="${sessionScope.entrantAccountSettingsExtraMarksCertificatePoints}">
             </div>
             <c:if test="${sessionScope.entrantAccountSettingsExtraMarksIsValidCertificatePoints == false &&
@@ -56,13 +57,14 @@
                 ${sessionScope.entrantAccountSettingsExtraMarksIsValidExtraPoints == false ?
                     'uk-form-danger' : sessionScope.entrantAccountSettingsExtraMarksIsValidExtraPoints == true ?
                         'uk-form-success' : ''} "
-                       type="text" spellcheck="false" placeholder="<fmt:message key="account.settings.add.extra.marks.additional.points.placeholder"/>"
+                       type="text" spellcheck="false"
+                       placeholder="<fmt:message key="account.settings.add.extra.marks.additional.points.placeholder"/>"
                        value="${sessionScope.entrantAccountSettingsExtraMarksExtraPoints}">
             </div>
             <c:if test="${sessionScope.entrantAccountSettingsExtraMarksIsValidExtraPoints == false &&
                             sessionScope.entrantAccountSettingsExtraMarksExtraPoints != ''}">
             <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-width-medium-2-5">
-            <fmt:message key="account.settings.add.extra.marks.additional.points"/>
+                <fmt:message key="account.settings.add.extra.marks.additional.points"/>
                 </div>
         </div>
         </c:if>

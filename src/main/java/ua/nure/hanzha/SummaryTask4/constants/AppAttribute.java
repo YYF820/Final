@@ -19,5 +19,6 @@ public class AppAttribute {
     public static final String ENTRANT_FINAL_SHEET_SERVICE = "entrantFinalSheetService";
 
     public static final String AUTHORIZATION_MAP = "authorizationMap";
+    public static final String MAIL_MANAGER = "mailManager";
 
 }

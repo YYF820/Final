@@ -498,7 +498,6 @@
     </servlet-mapping>
 
     <!--Filters-->
-
     <filter>
         <filter-name>CharsetFilter</filter-name>
         <filter-class>ua.nure.hanzha.SummaryTask4.filter.CharsetFilter</filter-class>
@@ -510,15 +509,6 @@
     <filter-mapping>
         <filter-name>CharsetFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>CleanSessionAttributesFilter</filter-name>
-        <filter-class>ua.nure.hanzha.SummaryTask4.filter.CleanSessionAttributesFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>CleanSessionAttributesFilter</filter-name>
-        <url-pattern>/index.html</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -594,10 +584,13 @@
         <filter-name>FacultiesFilter</filter-name>
         <filter-class>ua.nure.hanzha.SummaryTask4.filter.FacultiesFilter</filter-class>
     </filter>
+
     <filter-mapping>
         <filter-name>FacultiesFilter</filter-name>
         <url-pattern>/faculties.html</url-pattern>
     </filter-mapping>
+
+
     <!--Listeners-->
 
     <listener>
