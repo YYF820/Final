@@ -1,5 +1,5 @@
 /*! UIkit 2.21.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
-(function(UI) {
+(function (UI) {
 
     "use strict";
 
@@ -11,12 +11,12 @@
             'cls': 'uk-margin-small-top'
         },
 
-        boot: function() {
+        boot: function () {
 
             // init code
-            UI.ready(function(context) {
+            UI.ready(function (context) {
 
-                UI.$("[data-uk-margin]", context).each(function() {
+                UI.$("[data-uk-margin]", context).each(function () {
 
                     var ele = UI.$(this), obj;
 
@@ -27,7 +27,7 @@
             });
         },
 
-        init: function() {
+        init: function () {
 
             var $this = this;
 
@@ -35,13 +35,13 @@
 
             if (!this.columns.length) return;
 
-            UI.$win.on('resize orientationchange', (function() {
+            UI.$win.on('resize orientationchange', (function () {
 
-                var fn = function() {
+                var fn = function () {
                     $this.process();
                 };
 
-                UI.$(function() {
+                UI.$(function () {
                     fn();
                     UI.$win.on("load", fn);
                 });
@@ -49,12 +49,12 @@
                 return UI.Utils.debounce(fn, 20);
             })());
 
-            UI.$html.on("changed.uk.dom", function(e) {
-                $this.columns  = $this.element.children();
+            UI.$html.on("changed.uk.dom", function (e) {
+                $this.columns = $this.element.children();
                 $this.process();
             });
 
-            this.on("display.uk.check", function(e) {
+            this.on("display.uk.check", function (e) {
                 $this.columns = $this.element.children();
                 if (this.element.is(":visible")) this.process();
             }.bind(this));
@@ -62,7 +62,7 @@
             stacks.push(this);
         },
 
-        process: function() {
+        process: function () {
 
             var $this = this;
 
@@ -71,7 +71,7 @@
             return this;
         },
 
-        revert: function() {
+        revert: function () {
             this.columns.removeClass(this.options.cls);
             return this;
         }
@@ -80,15 +80,15 @@
 
     // responsive element e.g. iframes
 
-    (function(){
+    (function () {
 
-        var elements = [], check = function(ele) {
+        var elements = [], check = function (ele) {
 
             if (!ele.is(':visible')) return;
 
-            var width  = ele.parent().width(),
+            var width = ele.parent().width(),
                 iwidth = ele.data('width'),
-                ratio  = (width / iwidth),
+                ratio = (width / iwidth),
                 height = Math.floor(ratio * ele.data('height'));
 
             ele.css({'height': (width < iwidth) ? height : ele.data('height')});
@@ -98,12 +98,12 @@
 
             defaults: {},
 
-            boot: function() {
+            boot: function () {
 
                 // init code
-                UI.ready(function(context) {
+                UI.ready(function (context) {
 
-                    UI.$("iframe.uk-responsive-width, [data-uk-responsive]", context).each(function() {
+                    UI.$("iframe.uk-responsive-width, [data-uk-responsive]", context).each(function () {
 
                         var ele = UI.$(this), obj;
 
@@ -114,7 +114,7 @@
                 });
             },
 
-            init: function() {
+            init: function () {
 
                 var ele = this.element;
 
@@ -122,10 +122,10 @@
 
                     ele.data({
 
-                        'width' : ele.attr('width'),
+                        'width': ele.attr('width'),
                         'height': ele.attr('height')
 
-                    }).on('display.uk.check', function(){
+                    }).on('display.uk.check', function () {
                         check(ele);
                     });
 
@@ -136,9 +136,9 @@
             }
         });
 
-        UI.$win.on('resize load', UI.Utils.debounce(function(){
+        UI.$win.on('resize load', UI.Utils.debounce(function () {
 
-            elements.forEach(function(ele){
+            elements.forEach(function (ele) {
                 check(ele);
             });
 
@@ -147,10 +147,9 @@
     })();
 
 
-
     // helper
 
-    UI.Utils.stackMargin = function(elements, options) {
+    UI.Utils.stackMargin = function (elements, options) {
 
         options = UI.$.extend({
             'cls': 'uk-margin-small-top'
@@ -160,13 +159,13 @@
 
         elements = UI.$(elements).removeClass(options.cls);
 
-        var skip         = false,
+        var skip = false,
             firstvisible = elements.filter(":visible:first"),
-            offset       = firstvisible.length ? (firstvisible.position().top + firstvisible.outerHeight()) - 1 : false; // (-1): weird firefox bug when parent container is display:flex
+            offset = firstvisible.length ? (firstvisible.position().top + firstvisible.outerHeight()) - 1 : false; // (-1): weird firefox bug when parent container is display:flex
 
         if (offset === false) return;
 
-        elements.each(function() {
+        elements.each(function () {
 
             var column = UI.$(this);
 
@@ -184,23 +183,23 @@
         });
     };
 
-    UI.Utils.matchHeights = function(elements, options) {
+    UI.Utils.matchHeights = function (elements, options) {
 
         elements = UI.$(elements).css('min-height', '');
-        options  = UI.$.extend({ row : true }, options);
+        options = UI.$.extend({row: true}, options);
 
-        var matchHeights = function(group){
+        var matchHeights = function (group) {
 
             if (group.length < 2) return;
 
             var max = 0;
 
-            group.each(function() {
+            group.each(function () {
                 max = Math.max(max, UI.$(this).outerHeight());
-            }).each(function() {
+            }).each(function () {
 
                 var element = UI.$(this),
-                    height  = max - (element.css('box-sizing') == 'border-box' ? 0 : (element.outerHeight() - element.height()));
+                    height = max - (element.css('box-sizing') == 'border-box' ? 0 : (element.outerHeight() - element.height()));
 
                 element.css('min-height', height + 'px');
             });
@@ -210,18 +209,18 @@
 
             elements.first().width(); // force redraw
 
-            setTimeout(function(){
+            setTimeout(function () {
 
                 var lastoffset = false, group = [];
 
-                elements.each(function() {
+                elements.each(function () {
 
                     var ele = UI.$(this), offset = ele.offset().top;
 
                     if (offset != lastoffset && group.length) {
 
                         matchHeights(UI.$(group));
-                        group  = [];
+                        group = [];
                         offset = ele.offset().top;
                     }
 

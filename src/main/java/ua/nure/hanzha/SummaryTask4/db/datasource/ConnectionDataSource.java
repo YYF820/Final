@@ -8,9 +8,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Created by faffi-ubuntu on 28/07/15.
+ * @author Dmytro Hanhza
+ *         Created by faffi-ubuntu on 28/07/15.
  */
-public class ConnectionDataSource extends BaseDataSource {
+public class ConnectionDataSource {
 
     private static ConnectionDataSource instance;
     private static DataSource dataSource;
@@ -38,7 +39,6 @@ public class ConnectionDataSource extends BaseDataSource {
         }
     }
 
-    @Override
     public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }

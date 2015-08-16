@@ -1,17 +1,17 @@
 <div id="email-id" class="uk-modal" style="z-index: 1">
-  <div class="uk-modal-dialog">
-    <a class="uk-modal-close uk-close uk-text-danger"></a>
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close uk-text-danger"></a>
 
-    <h3 class="uk-text-danger"><fmt:message key="login.error.email.not.valid"/></h3>
-    <ul class="uk-list uk-list-line">
-      <li><fmt:message key="explanation.not.valid.email.row.1"/></li>
-      <li><fmt:message key="explanation.not.valid.email.row.2"/></li>
-      <li><fmt:message key="explanation.not.valid.email.row.3"/></li>
-      <li><fmt:message key="explanation.not.valid.email.row.4"/></li>
-      <li><fmt:message key="explanation.not.valid.email.row.5"/></li>
-      <li><fmt:message key="explanation.not.valid.email.row.6"/></li>
-      <li><fmt:message key="explanation.not.valid.email.row.7"/></li>
-      <li><fmt:message key="explanation.not.valid.email.row.8"/></li>
-    </ul>
-  </div>
+        <h3 class="uk-text-danger"><fmt:message key="login.error.email.not.valid"/></h3>
+        <ul class="uk-list uk-list-line">
+            <li><fmt:message key="explanation.not.valid.email.row.1"/></li>
+            <li><fmt:message key="explanation.not.valid.email.row.2"/></li>
+            <li><fmt:message key="explanation.not.valid.email.row.3"/></li>
+            <li><fmt:message key="explanation.not.valid.email.row.4"/></li>
+            <li><fmt:message key="explanation.not.valid.email.row.5"/></li>
+            <li><fmt:message key="explanation.not.valid.email.row.6"/></li>
+            <li><fmt:message key="explanation.not.valid.email.row.7"/></li>
+            <li><fmt:message key="explanation.not.valid.email.row.8"/></li>
+        </ul>
+    </div>
 </div>

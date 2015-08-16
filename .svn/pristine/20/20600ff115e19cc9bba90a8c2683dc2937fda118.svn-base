@@ -1,0 +1,5 @@
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<link rel="stylesheet" href="<c:url value="/resources/stylesheets/uikit/css/uikit.almost-flat.min.css"/>"/>
+<script src="<c:url value="/resources/js/jquery-2.1.4.js"/>"></script>
+<script src="<c:url value="/resources/stylesheets/uikit/js/uikit.min.js"/>"></script>
+<script src="<c:url value="/resources/js/script.js"/>"></script>

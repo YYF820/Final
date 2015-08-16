@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/sql/CREATE_Function_Select_Faculties.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/CREATE_Function_Sum_Marks.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/CREATE_Tables.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/CREATE_Triggers.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Enter_University_Status.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Entrants.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Entrants_Statuses.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Extra_Marks.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Faculties.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Faculties_Entrants.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Faculties_Subjects.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Marks.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Roles.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Subjects.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/INSERT_Users.sql" dialect="PostgreSQL" />
+  </component>
+</project>

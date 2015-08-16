@@ -22,7 +22,7 @@ function transformToAssocArray(prmstr) {
     return params;
 }
 
-function setLocale(locale){
+function setLocale(locale) {
     var params = getSearchParameters();
     params["language"] = locale;
     window.location = window.location.href.replace(/[\?#].*|$/, transformToQueryParams(params));

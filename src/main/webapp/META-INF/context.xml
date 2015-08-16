@@ -39,16 +39,16 @@
             />
 
     <!--Resource for HEROKU DEPLOY -->
-  <!--  <Resource
-            name="jdbc/practice9"
-            auth="Container"
-            type="javax.sql.DataSource"
-            maxActive="100"
+    <!--  <Resource
+              name="jdbc/practice9"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxActive="100"
 
-            maxIdle="30"
-            maxWait="10000"
-            driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://us-cdbr-iron-east-02.cleardb.net/heroku_a01422aebde0fe6?user=ba86fc3cf1bd2e&amp;password=69783127"
-            />-->
+              maxIdle="30"
+              maxWait="10000"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://us-cdbr-iron-east-02.cleardb.net/heroku_a01422aebde0fe6?user=ba86fc3cf1bd2e&amp;password=69783127"
+              />-->
 
 </Context>

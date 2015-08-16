@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<%@include file="../../jspf/topPanel.jspf"%>
+<%@include file="../../jspf/topPanel.jspf" %>
 <div class="uk-container-center uk-text-center uk-width-8-10">
     <div class="uk-container-center uk-text-center uk-width-medium-4-10 uk-margin-large-top">
         <p class="uk-text-danger uk-text-large uk-text-middle"><i

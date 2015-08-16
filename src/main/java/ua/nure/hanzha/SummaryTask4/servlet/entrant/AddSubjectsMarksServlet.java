@@ -39,32 +39,38 @@ public class AddSubjectsMarksServlet extends HttpServlet {
                 (List<Subject>) session.getAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_SUBJECTS_TO_ADD);
         String[] params = getParameters(request, session, subjectsToAdd);
         boolean isAnyEmptyField = checkEmptyFields(session, params);
-        boolean isValidMarks = checkIsValidMarks(session, params);
-        if (isAnyEmptyField || !isValidMarks) {
+        if (isAnyEmptyField) {
             setUpFields(session, params);
             response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS_HTML);
         } else {
-            Entrant entrant = (Entrant) session.getAttribute(
-                    SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_ENTRANT_TO_ADD_SUBJECTS_MARKS);
-            int entrantId = entrant.getId();
-            Double[] marks = StringToDecimalArray.convertToDouble(params);
-            for (int i = 0; i < subjectsToAdd.size(); i++) {
-                Mark mark = new Mark();
-                mark.setEntrantId(entrantId);
-                mark.setSubjectId(subjectsToAdd.get(i).getId());
-                mark.setMarkValue(marks[i]);
-                try {
-                    markService.addMark(mark);
-                } catch (DaoSystemException e) {
-                    e.printStackTrace();
-                    session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_SOMETHING_BAD, true);
+            boolean isValidMarks = checkIsValidMarks(session, params);
+            if (!isValidMarks) {
+                setUpFields(session, params);
+                response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS_HTML);
+            } else {
+                Entrant entrant = (Entrant) session.getAttribute(
+                        SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_ENTRANT_TO_ADD_SUBJECTS_MARKS);
+                int entrantId = entrant.getId();
+                Double[] marks = StringToDecimalArray.convertToDouble(params);
+                for (int i = 0; i < subjectsToAdd.size(); i++) {
+                    Mark mark = new Mark();
+                    mark.setEntrantId(entrantId);
+                    mark.setSubjectId(subjectsToAdd.get(i).getId());
+                    mark.setMarkValue(marks[i]);
+                    try {
+                        markService.addMark(mark);
+                    } catch (DaoSystemException e) {
+                        e.printStackTrace();
+                        session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_SOMETHING_BAD, true);
+                    }
                 }
+                response.sendRedirect(Pages.ACCOUNT_SETTINGS_HTML);
             }
-            response.sendRedirect(Pages.ACCOUNT_SETTINGS_HTML);
         }
     }
 
     //check for any one empty field
+
     private boolean checkEmptyFields(HttpSession session, String[] params) {
         boolean flag = false;
         for (String param : params) {

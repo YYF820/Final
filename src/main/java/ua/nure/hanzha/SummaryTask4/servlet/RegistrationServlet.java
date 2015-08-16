@@ -107,7 +107,8 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect(Pages.REGISTRATION_HTML);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.REGISTRATION_HTML);
+        requestDispatcher.forward(request, response);
     }
 
     private int checkFormBadValidations(HttpSession session, Map<String, Boolean> validationsRegisterForm) {

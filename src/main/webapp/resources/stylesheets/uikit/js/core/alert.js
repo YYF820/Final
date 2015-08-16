@@ -1,5 +1,5 @@
 /*! UIkit 2.21.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
-(function(UI) {
+(function (UI) {
 
     "use strict";
 
@@ -11,10 +11,10 @@
             "trigger": ".uk-alert-close"
         },
 
-        boot: function() {
+        boot: function () {
 
             // init code
-            UI.$html.on("click.alert.uikit", "[data-uk-alert]", function(e) {
+            UI.$html.on("click.alert.uikit", "[data-uk-alert]", function (e) {
 
                 var ele = UI.$(this);
 
@@ -30,31 +30,31 @@
             });
         },
 
-        init: function() {
+        init: function () {
 
             var $this = this;
 
-            this.on("click", this.options.trigger, function(e) {
+            this.on("click", this.options.trigger, function (e) {
                 e.preventDefault();
                 $this.close();
             });
         },
 
-        close: function() {
+        close: function () {
 
-            var element       = this.trigger("close.uk.alert"),
+            var element = this.trigger("close.uk.alert"),
                 removeElement = function () {
                     this.trigger("closed.uk.alert").remove();
                 }.bind(this);
 
             if (this.options.fade) {
                 element.css("overflow", "hidden").css("max-height", element.height()).animate({
-                    "height"         : 0,
-                    "opacity"        : 0,
-                    "padding-top"    : 0,
-                    "padding-bottom" : 0,
-                    "margin-top"     : 0,
-                    "margin-bottom"  : 0
+                    "height": 0,
+                    "opacity": 0,
+                    "padding-top": 0,
+                    "padding-bottom": 0,
+                    "margin-top": 0,
+                    "margin-bottom": 0
                 }, this.options.duration, removeElement);
             } else {
                 removeElement();

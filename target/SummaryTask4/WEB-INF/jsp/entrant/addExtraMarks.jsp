@@ -16,13 +16,13 @@
          alt="">
 
     <div class="uk-alert uk-alert-warning">
-        <p class="uk-h3">Enter your marks in the appropriate fields</p>
+        <p class="uk-h3"><fmt:message key="account.settings.add.extra.marks"/></p>
     </div>
 
     <c:if test="${sessionScope.entrantAccountSettingsExtraMarksIsEmptyFields == true}">
         <div class="uk-alert uk-alert-danger uk-text-center uk-animation-fade">
             <c:if test="${sessionScope.entrantAccountSettingsExtraMarksIsEmptyFields == true}">
-                <p>Please fill all fields.</p>
+                <p><fmt:message key="account.settings.add.extra.marks.empty.extra.marks"/></p>
             </c:if>
         </div>
     </c:if>
@@ -37,13 +37,13 @@
                 ${sessionScope.entrantAccountSettingsExtraMarksIsValidCertificatePoints == false ?
                     'uk-form-danger' : sessionScope.entrantAccountSettingsExtraMarksIsValidCertificatePoints == true ?
                         'uk-form-success' : ''}"
-                       type="text" spellcheck="false" placeholder="Certificate points:"
+                       type="text" spellcheck="false" placeholder="<fmt:message key="account.settings.add.extra.marks.certificate.points"/>"
                        value="${sessionScope.entrantAccountSettingsExtraMarksCertificatePoints}">
             </div>
             <c:if test="${sessionScope.entrantAccountSettingsExtraMarksIsValidCertificatePoints == false &&
                             sessionScope.entrantAccountSettingsExtraMarksCertificatePoints != ''}">
                 <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-width-medium-2-5">
-                    Certificate points not valid, 30-60 you can use dot example 30.50 or 60.
+                    <fmt:message key="account.settings.add.extra.marks.certificate.points.not.valid"/>
                 </div>
             </c:if>
         </div>
@@ -56,20 +56,24 @@
                 ${sessionScope.entrantAccountSettingsExtraMarksIsValidExtraPoints == false ?
                     'uk-form-danger' : sessionScope.entrantAccountSettingsExtraMarksIsValidExtraPoints == true ?
                         'uk-form-success' : ''} "
-                       type="text" spellcheck="false" placeholder="Extra points:"
+                       type="text" spellcheck="false" placeholder="<fmt:message key="account.settings.add.extra.marks.additional.points.placeholder"/>"
                        value="${sessionScope.entrantAccountSettingsExtraMarksExtraPoints}">
             </div>
             <c:if test="${sessionScope.entrantAccountSettingsExtraMarksIsValidExtraPoints == false &&
                             sessionScope.entrantAccountSettingsExtraMarksExtraPoints != ''}">
-                <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-width-medium-2-5">
-                    Certificate points not valid, 0-20 you can use dot example 10.50, 12, 20.
+            <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-width-medium-2-5">
+            <fmt:message key="account.settings.add.extra.marks.additional.points"/>
                 </div>
-            </c:if>
         </div>
+        </c:if>
         <div class="uk-grid uk-width-medium-1-1 uk-form-row uk-container-center uk-margin-bottom-remove uk-margin-top">
-            <button class="uk-width-medium-3-5 uk-button uk-button-primary" type="submit">Save</button>
+            <button class="uk-width-medium-3-5 uk-button uk-button-primary" type="submit">
+                <fmt:message key="button.save"/>
+            </button>
             <a href="<c:url value="/accountSettings.html"/>"
-               class="uk-width-medium-1-5 uk-button uk-button-success uk-push-2-10">Cancel</a>
+               class="uk-width-medium-1-5 uk-button uk-button-success uk-push-2-10">
+                <fmt:message key="button.cancel"/>
+            </a>
         </div>
     </form>
 </div>

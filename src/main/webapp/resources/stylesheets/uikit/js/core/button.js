@@ -1,5 +1,5 @@
 /*! UIkit 2.21.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
-(function(UI) {
+(function (UI) {
 
     "use strict";
 
@@ -9,16 +9,16 @@
             "target": ".uk-button"
         },
 
-        boot: function() {
+        boot: function () {
 
             // init code
-            UI.$html.on("click.buttonradio.uikit", "[data-uk-button-radio]", function(e) {
+            UI.$html.on("click.buttonradio.uikit", "[data-uk-button-radio]", function (e) {
 
                 var ele = UI.$(this);
 
                 if (!ele.data("buttonRadio")) {
 
-                    var obj    = UI.buttonRadio(ele, UI.Utils.options(ele.attr("data-uk-button-radio"))),
+                    var obj = UI.buttonRadio(ele, UI.Utils.options(ele.attr("data-uk-button-radio"))),
                         target = UI.$(e.target);
 
                     if (target.is(obj.options.target)) {
@@ -28,14 +28,14 @@
             });
         },
 
-        init: function() {
+        init: function () {
 
             var $this = this;
 
             // Init ARIA
             this.find($this.options.target).attr('aria-checked', 'false').filter(".uk-active").attr('aria-checked', 'true');
 
-            this.on("click", this.options.target, function(e) {
+            this.on("click", this.options.target, function (e) {
 
                 var ele = UI.$(this);
 
@@ -53,7 +53,7 @@
 
         },
 
-        getSelected: function() {
+        getSelected: function () {
             return this.find(".uk-active");
         }
     });
@@ -64,14 +64,14 @@
             "target": ".uk-button"
         },
 
-        boot: function() {
+        boot: function () {
 
-            UI.$html.on("click.buttoncheckbox.uikit", "[data-uk-button-checkbox]", function(e) {
+            UI.$html.on("click.buttoncheckbox.uikit", "[data-uk-button-checkbox]", function (e) {
                 var ele = UI.$(this);
 
                 if (!ele.data("buttonCheckbox")) {
 
-                    var obj    = UI.buttonCheckbox(ele, UI.Utils.options(ele.attr("data-uk-button-checkbox"))),
+                    var obj = UI.buttonCheckbox(ele, UI.Utils.options(ele.attr("data-uk-button-checkbox"))),
                         target = UI.$(e.target);
 
                     if (target.is(obj.options.target)) {
@@ -81,14 +81,14 @@
             });
         },
 
-        init: function() {
+        init: function () {
 
             var $this = this;
 
             // Init ARIA
             this.find($this.options.target).attr('aria-checked', 'false').filter(".uk-active").attr('aria-checked', 'true');
 
-            this.on("click", this.options.target, function(e) {
+            this.on("click", this.options.target, function (e) {
                 var ele = UI.$(this);
 
                 if (ele.is('a[href="#"]')) e.preventDefault();
@@ -103,7 +103,7 @@
 
         },
 
-        getSelected: function() {
+        getSelected: function () {
             return this.find(".uk-active");
         }
     });
@@ -113,9 +113,9 @@
 
         defaults: {},
 
-        boot: function() {
+        boot: function () {
 
-            UI.$html.on("click.button.uikit", "[data-uk-button]", function(e) {
+            UI.$html.on("click.button.uikit", "[data-uk-button]", function (e) {
                 var ele = UI.$(this);
 
                 if (!ele.data("button")) {
@@ -126,14 +126,14 @@
             });
         },
 
-        init: function() {
+        init: function () {
 
             var $this = this;
 
             // Init ARIA
             this.element.attr('aria-pressed', this.element.hasClass("uk-active"));
 
-            this.on("click", function(e) {
+            this.on("click", function (e) {
 
                 if ($this.element.is('a[href="#"]')) e.preventDefault();
 
@@ -143,7 +143,7 @@
 
         },
 
-        toggle: function() {
+        toggle: function () {
             this.element.toggleClass("uk-active");
 
             // Update ARIA

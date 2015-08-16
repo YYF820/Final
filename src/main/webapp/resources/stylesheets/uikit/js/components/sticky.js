@@ -1,5 +1,5 @@
 /*! UIkit 2.21.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
-(function(addon) {
+(function (addon) {
 
     var component;
 
@@ -8,39 +8,41 @@
     }
 
     if (typeof define == "function" && define.amd) {
-        define("uikit-sticky", ["uikit"], function(){
+        define("uikit-sticky", ["uikit"], function () {
             return component || addon(UIkit);
         });
     }
 
-})(function(UI){
+})(function (UI) {
 
     "use strict";
 
-    var $win         = UI.$win,
-        $doc         = UI.$doc,
-        sticked      = [];
+    var $win = UI.$win,
+        $doc = UI.$doc,
+        sticked = [];
 
     UI.component('sticky', {
 
         defaults: {
-            top          : 0,
-            bottom       : 0,
-            animation    : '',
-            clsinit      : 'uk-sticky-init',
-            clsactive    : 'uk-active',
-            getWidthFrom : '',
-            boundary     : false,
-            media        : false,
-            target       : false,
-            disabled     : false
+            top: 0,
+            bottom: 0,
+            animation: '',
+            clsinit: 'uk-sticky-init',
+            clsactive: 'uk-active',
+            getWidthFrom: '',
+            boundary: false,
+            media: false,
+            target: false,
+            disabled: false
         },
 
-        boot: function() {
+        boot: function () {
 
             // should be more efficient than using $win.scroll(checkscrollposition):
-            UI.$doc.on('scrolling.uk.document', function() { checkscrollposition(); });
-            UI.$win.on('resize orientationchange', UI.Utils.debounce(function() {
+            UI.$doc.on('scrolling.uk.document', function () {
+                checkscrollposition();
+            });
+            UI.$win.on('resize orientationchange', UI.Utils.debounce(function () {
 
                 if (!sticked.length) return;
 
@@ -53,15 +55,15 @@
             }, 100));
 
             // init code
-            UI.ready(function(context) {
+            UI.ready(function (context) {
 
-                setTimeout(function(){
+                setTimeout(function () {
 
-                    UI.$("[data-uk-sticky]", context).each(function(){
+                    UI.$("[data-uk-sticky]", context).each(function () {
 
                         var $ele = UI.$(this);
 
-                        if(!$ele.data("sticky")) {
+                        if (!$ele.data("sticky")) {
                             UI.sticky($ele, UI.Utils.options($ele.attr('data-uk-sticky')));
                         }
                     });
@@ -71,9 +73,9 @@
             });
         },
 
-        init: function() {
+        init: function () {
 
-            var wrapper  = UI.$('<div class="uk-sticky-placeholder"></div>'), boundary = this.options.boundary, boundtoparent;
+            var wrapper = UI.$('<div class="uk-sticky-placeholder"></div>'), boundary = this.options.boundary, boundtoparent;
 
             this.wrapper = this.element.css('margin', 0).wrap(wrapper).parent();
 
@@ -83,7 +85,7 @@
 
                 if (boundary === true) {
 
-                    boundary      = this.wrapper.parent();
+                    boundary = this.wrapper.parent();
                     boundtoparent = true;
 
                 } else if (typeof boundary === "string") {
@@ -92,23 +94,23 @@
             }
 
             this.sticky = {
-                self          : this,
-                options       : this.options,
-                element       : this.element,
-                currentTop    : null,
-                wrapper       : this.wrapper,
-                init          : false,
-                getWidthFrom  : this.options.getWidthFrom || this.wrapper,
-                boundary      : boundary,
-                boundtoparent : boundtoparent,
-                reset         : function(force) {
+                self: this,
+                options: this.options,
+                element: this.element,
+                currentTop: null,
+                wrapper: this.wrapper,
+                init: false,
+                getWidthFrom: this.options.getWidthFrom || this.wrapper,
+                boundary: boundary,
+                boundtoparent: boundtoparent,
+                reset: function (force) {
 
-                    var finalize = function() {
-                        this.element.css({"position":"", "top":"", "width":"", "left":"", "margin":"0"});
+                    var finalize = function () {
+                        this.element.css({"position": "", "top": "", "width": "", "left": "", "margin": "0"});
                         this.element.removeClass([this.options.animation, 'uk-animation-reverse', this.options.clsactive].join(' '));
 
                         this.currentTop = null;
-                        this.animate    = false;
+                        this.animate = false;
                     }.bind(this);
 
 
@@ -116,17 +118,17 @@
 
                         this.animate = true;
 
-                        this.element.removeClass(this.options.animation).one(UI.support.animation.end, function(){
+                        this.element.removeClass(this.options.animation).one(UI.support.animation.end, function () {
                             finalize();
                         }).width(); // force redraw
 
-                        this.element.addClass(this.options.animation+' '+'uk-animation-reverse');
+                        this.element.addClass(this.options.animation + ' ' + 'uk-animation-reverse');
                     } else {
                         finalize();
                     }
                 },
 
-                check: function() {
+                check: function () {
 
                     if (this.options.disabled) {
                         return false;
@@ -134,7 +136,7 @@
 
                     if (this.options.media) {
 
-                        switch(typeof(this.options.media)) {
+                        switch (typeof(this.options.media)) {
                             case 'number':
                                 if (window.innerWidth < this.options.media) {
                                     return false;
@@ -148,40 +150,40 @@
                         }
                     }
 
-                    var scrollTop      = $win.scrollTop(),
+                    var scrollTop = $win.scrollTop(),
                         documentHeight = $doc.height(),
-                        dwh            = documentHeight - window.innerHeight,
-                        extra          = (scrollTop > dwh) ? dwh - scrollTop : 0,
-                        elementTop     = this.wrapper.offset().top,
-                        etse           = elementTop - this.options.top - extra;
+                        dwh = documentHeight - window.innerHeight,
+                        extra = (scrollTop > dwh) ? dwh - scrollTop : 0,
+                        elementTop = this.wrapper.offset().top,
+                        etse = elementTop - this.options.top - extra;
 
-                    return (scrollTop  >= etse);
+                    return (scrollTop >= etse);
                 }
             };
 
             sticked.push(this.sticky);
         },
 
-        update: function() {
+        update: function () {
             checkscrollposition(this.sticky);
         },
 
-        enable: function() {
+        enable: function () {
             this.options.disabled = false;
             this.update();
         },
 
-        disable: function(force) {
+        disable: function (force) {
             this.options.disabled = true;
             this.sticky.reset(force);
         },
 
-        computeWrapper: function() {
+        computeWrapper: function () {
 
             this.wrapper.css({
-                'height' : this.element.css('position') != 'absolute' ? this.element.outerHeight() : '',
-                'float'  : this.element.css("float") != "none" ? this.element.css("float") : '',
-                'margin' : this.element.css("margin")
+                'height': this.element.css('position') != 'absolute' ? this.element.outerHeight() : '',
+                'float': this.element.css("float") != "none" ? this.element.css("float") : '',
+                'margin': this.element.css("margin")
             });
         }
     });
@@ -192,11 +194,11 @@
 
         if (!stickies.length || $win.scrollTop() < 0) return;
 
-        var scrollTop       = $win.scrollTop(),
-            documentHeight  = $doc.height(),
-            windowHeight    = $win.height(),
-            dwh             = documentHeight - windowHeight,
-            extra           = (scrollTop > dwh) ? dwh - scrollTop : 0,
+        var scrollTop = $win.scrollTop(),
+            documentHeight = $doc.height(),
+            windowHeight = $win.height(),
+            dwh = documentHeight - windowHeight,
+            extra = (scrollTop > dwh) ? dwh - scrollTop : 0,
             newTop, containerBottom, stickyHeight, sticky;
 
         for (var i = 0; i < stickies.length; i++) {
@@ -240,10 +242,10 @@
                 if (sticky.currentTop != newTop) {
 
                     sticky.element.css({
-                        "position" : "fixed",
-                        "top"      : newTop,
-                        "width"    : (typeof sticky.getWidthFrom !== 'undefined') ? UI.$(sticky.getWidthFrom).width() : sticky.element.width(),
-                        "left"     : sticky.wrapper.offset().left
+                        "position": "fixed",
+                        "top": newTop,
+                        "width": (typeof sticky.getWidthFrom !== 'undefined') ? UI.$(sticky.getWidthFrom).width() : sticky.element.width(),
+                        "left": sticky.wrapper.offset().left
                     });
 
                     if (!sticky.init) {
@@ -256,14 +258,14 @@
 
                             if ($target.length) {
 
-                                setTimeout((function($target, sticky){
+                                setTimeout((function ($target, sticky) {
 
-                                    return function() {
+                                    return function () {
 
                                         sticky.element.width(); // force redraw
 
-                                        var offset       = $target.offset(),
-                                            maxoffset    = offset.top + $target.outerHeight(),
+                                        var offset = $target.offset(),
+                                            maxoffset = offset.top + $target.outerHeight(),
                                             stickyOffset = sticky.element.offset(),
                                             stickyHeight = sticky.element.outerHeight(),
                                             stickyMaxOffset = stickyOffset.top + stickyHeight;

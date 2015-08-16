@@ -2,7 +2,7 @@
 /*
  * Based on Nestable jQuery Plugin - Copyright (c) 2012 David Bushell - http://dbushell.com/
  */
-(function(addon) {
+(function (addon) {
 
     var component;
 
@@ -11,66 +11,66 @@
     }
 
     if (typeof define == "function" && define.amd) {
-        define("uikit-nestable", ["uikit"], function(){
+        define("uikit-nestable", ["uikit"], function () {
             return component || addon(UIkit);
         });
     }
 
-})(function(UI) {
+})(function (UI) {
 
     "use strict";
 
-    var hasTouch     = 'ontouchstart' in window,
-        html         = UI.$html,
+    var hasTouch = 'ontouchstart' in window,
+        html = UI.$html,
         touchedlists = [],
-        $win         = UI.$win,
+        $win = UI.$win,
         draggingElement, dragSource;
 
-    var eStart  = hasTouch ? 'touchstart'  : 'mousedown',
-        eMove   = hasTouch ? 'touchmove'   : 'mousemove',
-        eEnd    = hasTouch ? 'touchend'    : 'mouseup',
+    var eStart = hasTouch ? 'touchstart' : 'mousedown',
+        eMove = hasTouch ? 'touchmove' : 'mousemove',
+        eEnd = hasTouch ? 'touchend' : 'mouseup',
         eCancel = hasTouch ? 'touchcancel' : 'mouseup';
 
 
     UI.component('nestable', {
 
         defaults: {
-            listBaseClass   : 'uk-nestable',
-            listClass       : 'uk-nestable-list',
-            listItemClass   : 'uk-nestable-item',
-            dragClass       : 'uk-nestable-dragged',
-            movingClass     : 'uk-nestable-moving',
-            handleClass     : '',
-            collapsedClass  : 'uk-collapsed',
+            listBaseClass: 'uk-nestable',
+            listClass: 'uk-nestable-list',
+            listItemClass: 'uk-nestable-item',
+            dragClass: 'uk-nestable-dragged',
+            movingClass: 'uk-nestable-moving',
+            handleClass: '',
+            collapsedClass: 'uk-collapsed',
             placeholderClass: 'uk-nestable-placeholder',
-            noDragClass     : 'uk-nestable-nodrag',
-            group           : false,
-            maxDepth        : 10,
-            threshold       : 20,
-            idlethreshold   : 10
+            noDragClass: 'uk-nestable-nodrag',
+            group: false,
+            maxDepth: 10,
+            threshold: 20,
+            idlethreshold: 10
         },
 
-        boot: function() {
+        boot: function () {
 
             // adjust document scrolling
-            UI.$html.on('mousemove touchmove', function(e) {
+            UI.$html.on('mousemove touchmove', function (e) {
 
                 if (draggingElement) {
 
                     var top = draggingElement.offset().top;
 
                     if (top < UI.$win.scrollTop()) {
-                        UI.$win.scrollTop(UI.$win.scrollTop() - Math.ceil(draggingElement.height()/2));
-                    } else if ( (top + draggingElement.height()) > (window.innerHeight + UI.$win.scrollTop()) ) {
-                        UI.$win.scrollTop(UI.$win.scrollTop() + Math.ceil(draggingElement.height()/2));
+                        UI.$win.scrollTop(UI.$win.scrollTop() - Math.ceil(draggingElement.height() / 2));
+                    } else if ((top + draggingElement.height()) > (window.innerHeight + UI.$win.scrollTop())) {
+                        UI.$win.scrollTop(UI.$win.scrollTop() + Math.ceil(draggingElement.height() / 2));
                     }
                 }
             });
 
             // init code
-            UI.ready(function(context) {
+            UI.ready(function (context) {
 
-                UI.$("[data-uk-nestable]", context).each(function(){
+                UI.$("[data-uk-nestable]", context).each(function () {
 
                     var ele = UI.$(this);
 
@@ -81,14 +81,14 @@
             });
         },
 
-        init: function() {
+        init: function () {
 
             var $this = this;
 
-            Object.keys(this.options).forEach(function(key){
+            Object.keys(this.options).forEach(function (key) {
 
-                if(String(key).indexOf('Class')!=-1) {
-                    $this.options['_'+key] = '.' + $this.options[key];
+                if (String(key).indexOf('Class') != -1) {
+                    $this.options['_' + key] = '.' + $this.options[key];
                 }
             });
 
@@ -99,11 +99,11 @@
             this.reset();
             this.element.data('nestable-group', this.options.group || UI.Utils.uid('nestable-group'));
 
-            this.find(this.options._listItemClass).each(function() {
+            this.find(this.options._listItemClass).each(function () {
                 $this.setParent(UI.$(this));
             });
 
-            this.on('click', '[data-nestable-action]', function(e) {
+            this.on('click', '[data-nestable-action]', function (e) {
 
                 if ($this.dragEl || (!hasTouch && e.button !== 0)) {
                     return;
@@ -113,7 +113,7 @@
 
                 var target = UI.$(e.currentTarget),
                     action = target.data('nestableAction'),
-                    item   = target.closest($this.options._listItemClass);
+                    item = target.closest($this.options._listItemClass);
 
                 if (action === 'collapse') {
                     $this.collapseItem(item);
@@ -126,7 +126,7 @@
                 }
             });
 
-            var onStartEvent = function(e) {
+            var onStartEvent = function (e) {
 
                 var handle = UI.$(e.target);
 
@@ -157,7 +157,7 @@
                     e = evt.originalEvent.touches[0];
                 }
 
-                $this.delayMove = function(evt) {
+                $this.delayMove = function (evt) {
 
                     evt.preventDefault();
                     $this.dragStart(e);
@@ -166,14 +166,14 @@
                     $this.delayMove = false;
                 };
 
-                $this.delayMove.x         = parseInt(e.pageX, 10);
-                $this.delayMove.y         = parseInt(e.pageY, 10);
+                $this.delayMove.x = parseInt(e.pageX, 10);
+                $this.delayMove.y = parseInt(e.pageY, 10);
                 $this.delayMove.threshold = $this.options.idlethreshold;
 
                 e.preventDefault();
             };
 
-            var onMoveEvent = function(e) {
+            var onMoveEvent = function (e) {
 
                 if (e.originalEvent && e.originalEvent.touches) {
                     e = e.originalEvent.touches[0];
@@ -195,7 +195,7 @@
                 }
             };
 
-            var onEndEvent = function(e) {
+            var onEndEvent = function (e) {
 
                 if ($this.dragEl) {
                     e.preventDefault();
@@ -219,20 +219,20 @@
 
         },
 
-        serialize: function() {
+        serialize: function () {
 
             var data,
                 depth = 0,
-                list  = this,
-                step  = function(level, depth) {
+                list = this,
+                step = function (level, depth) {
 
-                    var array = [ ], items = level.children(list.options._listItemClass);
+                    var array = [], items = level.children(list.options._listItemClass);
 
-                    items.each(function() {
+                    items.each(function () {
 
-                        var li    = UI.$(this),
-                            item  = {}, attribute,
-                            sub   = li.children(list.options._listClass);
+                        var li = UI.$(this),
+                            item = {}, attribute,
+                            sub = li.children(list.options._listClass);
 
                         for (var i = 0; i < li[0].attributes.length; i++) {
                             attribute = li[0].attributes[i];
@@ -256,19 +256,23 @@
             return data;
         },
 
-        list: function(options) {
+        list: function (options) {
 
-            var data  = [],
-                list  = this,
+            var data = [],
+                list = this,
                 depth = 0,
-                step  = function(level, depth, parent) {
+                step = function (level, depth, parent) {
 
                     var items = level.children(options._listItemClass);
 
-                    items.each(function(index) {
-                        var li   = UI.$(this),
-                            item = UI.$.extend({parent_id: (parent ? parent : null), depth: depth, order: index}, li.data()),
-                            sub  = li.children(options._listClass);
+                    items.each(function (index) {
+                        var li = UI.$(this),
+                            item = UI.$.extend({
+                                parent_id: (parent ? parent : null),
+                                depth: depth,
+                                order: index
+                            }, li.data()),
+                            sub = li.children(options._listClass);
 
                         data.push(item);
 
@@ -285,88 +289,88 @@
             return data;
         },
 
-        reset: function() {
+        reset: function () {
 
             this.mouse = {
-                offsetX   : 0,
-                offsetY   : 0,
-                startX    : 0,
-                startY    : 0,
-                lastX     : 0,
-                lastY     : 0,
-                nowX      : 0,
-                nowY      : 0,
-                distX     : 0,
-                distY     : 0,
-                dirAx     : 0,
-                dirX      : 0,
-                dirY      : 0,
-                lastDirX  : 0,
-                lastDirY  : 0,
-                distAxX   : 0,
-                distAxY   : 0
+                offsetX: 0,
+                offsetY: 0,
+                startX: 0,
+                startY: 0,
+                lastX: 0,
+                lastY: 0,
+                nowX: 0,
+                nowY: 0,
+                distX: 0,
+                distY: 0,
+                dirAx: 0,
+                dirX: 0,
+                dirY: 0,
+                lastDirX: 0,
+                lastDirY: 0,
+                distAxX: 0,
+                distAxY: 0
             };
-            this.moving     = false;
-            this.dragEl     = null;
+            this.moving = false;
+            this.dragEl = null;
             this.dragRootEl = null;
-            this.dragDepth  = 0;
+            this.dragDepth = 0;
             this.hasNewRoot = false;
-            this.pointEl    = null;
+            this.pointEl = null;
 
-            for (var i=0; i<touchedlists.length; i++) {
+            for (var i = 0; i < touchedlists.length; i++) {
                 this.checkEmptyList(touchedlists[i]);
             }
 
             touchedlists = [];
         },
 
-        toggleItem: function(li) {
-            this[li.hasClass(this.options.collapsedClass) ? "expandItem":"collapseItem"](li);
+        toggleItem: function (li) {
+            this[li.hasClass(this.options.collapsedClass) ? "expandItem" : "collapseItem"](li);
         },
 
-        expandItem: function(li) {
+        expandItem: function (li) {
             li.removeClass(this.options.collapsedClass);
         },
 
-        collapseItem: function(li) {
+        collapseItem: function (li) {
             var lists = li.children(this.options._listClass);
             if (lists.length) {
                 li.addClass(this.options.collapsedClass);
             }
         },
 
-        expandAll: function() {
+        expandAll: function () {
             var list = this;
-            this.find(list.options._listItemClass).each(function() {
+            this.find(list.options._listItemClass).each(function () {
                 list.expandItem(UI.$(this));
             });
         },
 
-        collapseAll: function() {
+        collapseAll: function () {
             var list = this;
-            this.find(list.options._listItemClass).each(function() {
+            this.find(list.options._listItemClass).each(function () {
                 list.collapseItem(UI.$(this));
             });
         },
 
-        setParent: function(li) {
+        setParent: function (li) {
 
             if (li.children(this.options._listClass).length) {
                 li.addClass("uk-parent");
             }
         },
 
-        unsetParent: function(li) {
-            li.removeClass('uk-parent '+this.options.collapsedClass);
+        unsetParent: function (li) {
+            li.removeClass('uk-parent ' + this.options.collapsedClass);
             li.children(this.options._listClass).remove();
         },
 
-        dragStart: function(e) {
+        dragStart: function (e) {
 
-            var mouse    = this.mouse,
-                target   = UI.$(e.target),
+            var mouse = this.mouse,
+                target = UI.$(e.target),
                 dragItem = target.closest(this.options._listItemClass),
-                offset   = dragItem.offset();
+                offset = dragItem.offset();
 
             this.placeEl = dragItem;
 
@@ -389,15 +393,15 @@
             UI.$body.append(this.dragEl);
 
             this.dragEl.css({
-                left : offset.left,
-                top  : offset.top
+                left: offset.left,
+                top: offset.top
             });
 
             // total depth of dragging item
             var i, depth, items = this.dragEl.find(this.options._listItemClass);
 
             for (i = 0; i < items.length; i++) {
-                depth = UI.$(items[i]).parents(this.options._listClass+','+this.options._listBaseClass).length;
+                depth = UI.$(items[i]).parents(this.options._listClass + ',' + this.options._listBaseClass).length;
                 if (depth > this.dragDepth) {
                     this.dragDepth = depth;
                 }
@@ -406,21 +410,21 @@
             html.addClass(this.options.movingClass);
         },
 
-        dragStop: function(e) {
+        dragStop: function (e) {
 
-            var el       = this.placeEl,
-                root     = this.placeEl.parents(this.options._listBaseClass+':first');
+            var el = this.placeEl,
+                root = this.placeEl.parents(this.options._listBaseClass + ':first');
 
             this.placeEl.removeClass(this.options.placeholderClass);
             this.dragEl.remove();
 
             if (this.element[0] !== root[0]) {
 
-                root.trigger('change.uk.nestable',[el, "added", root, root.data('nestable')]);
+                root.trigger('change.uk.nestable', [el, "added", root, root.data('nestable')]);
                 this.element.trigger('change.uk.nestable', [el, "removed", this.element, this]);
 
             } else {
-                this.element.trigger('change.uk.nestable',[el, "moved", this.element, this]);
+                this.element.trigger('change.uk.nestable', [el, "moved", this.element, this]);
             }
 
             this.trigger('stop.uk.nestable', [this, el]);
@@ -430,23 +434,23 @@
             html.removeClass(this.options.movingClass);
         },
 
-        dragMove: function(e) {
+        dragMove: function (e) {
             var list, parent, prev, next, depth,
-                opt      = this.options,
-                mouse    = this.mouse,
+                opt = this.options,
+                mouse = this.mouse,
                 maxDepth = this.dragRootEl ? this.dragRootEl.data('nestable').options.maxDepth : opt.maxDepth;
 
             this.dragEl.css({
-                left : e.pageX - mouse.offsetX,
-                top  : e.pageY - mouse.offsetY
+                left: e.pageX - mouse.offsetX,
+                top: e.pageY - mouse.offsetY
             });
 
             // mouse position last events
             mouse.lastX = mouse.nowX;
             mouse.lastY = mouse.nowY;
             // mouse position this events
-            mouse.nowX  = e.pageX;
-            mouse.nowY  = e.pageY;
+            mouse.nowX = e.pageX;
+            mouse.nowY = e.pageY;
             // distance mouse moved between events
             mouse.distX = mouse.nowX - mouse.lastX;
             mouse.distY = mouse.nowY - mouse.lastY;
@@ -457,11 +461,11 @@
             mouse.dirX = mouse.distX === 0 ? 0 : mouse.distX > 0 ? 1 : -1;
             mouse.dirY = mouse.distY === 0 ? 0 : mouse.distY > 0 ? 1 : -1;
             // axis mouse is now moving on
-            var newAx   = Math.abs(mouse.distX) > Math.abs(mouse.distY) ? 1 : 0;
+            var newAx = Math.abs(mouse.distX) > Math.abs(mouse.distY) ? 1 : 0;
 
             // do nothing on first move
             if (!mouse.moving) {
-                mouse.dirAx  = newAx;
+                mouse.dirAx = newAx;
                 mouse.moving = true;
                 return;
             }
@@ -497,7 +501,7 @@
                     list = prev.find(opt._listClass).last();
 
                     // check if depth limit has reached
-                    depth = this.placeEl.parents(opt._listClass+','+opt._listBaseClass).length;
+                    depth = this.placeEl.parents(opt._listClass + ',' + opt._listBaseClass).length;
 
                     if (depth + this.dragDepth <= maxDepth) {
 
@@ -561,8 +565,8 @@
 
             // find parent list of item under cursor
             var pointElRoot = this.element,
-                tmpRoot     = this.pointEl.closest(this.options._listBaseClass),
-                isNewRoot   = pointElRoot[0] !== this.pointEl.closest(this.options._listBaseClass)[0];
+                tmpRoot = this.pointEl.closest(this.options._listBaseClass),
+                isNewRoot = pointElRoot[0] !== this.pointEl.closest(this.options._listBaseClass)[0];
 
             /**
              * move vertical
@@ -577,7 +581,7 @@
                 }
 
                 // check depth limit
-                depth = this.dragDepth - 1 + this.pointEl.parents(opt._listClass+','+opt._listBaseClass).length;
+                depth = this.dragDepth - 1 + this.pointEl.parents(opt._listClass + ',' + opt._listBaseClass).length;
 
                 if (depth > maxDepth) {
                     return;
@@ -610,9 +614,9 @@
             }
         },
 
-        checkEmptyList: function(list) {
+        checkEmptyList: function (list) {
 
-            list  = list ? UI.$(list) : this.element;
+            list = list ? UI.$(list) : this.element;
 
             if (!list.children().length) {
                 list.html('');

@@ -306,6 +306,7 @@
                                 <p class="uk-text-danger uk-margin-bottom-remove">
                                     <fmt:message key="registration.error.not.valid.school.number"/>
                                 </p>
+
                                 <p class="uk-text-center-small uk-margin-top-remove">
                                     <fmt:message key="registration.error.explanation.not.valid.school.number"/>
                                 </p>

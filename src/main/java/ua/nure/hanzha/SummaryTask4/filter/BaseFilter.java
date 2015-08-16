@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by faffi-ubuntu on 01/08/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 01/08/15.
  */
 public abstract class BaseFilter implements Filter {
     @Override

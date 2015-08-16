@@ -77,14 +77,14 @@
         <c:if test="${sessionScope.entrantHowManyMoreSubjectsNeed == 0}">
             <table class="uk-table uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
                 <caption>
-                    Marks
+                    <fmt:message key="account.settings.table.marks"/>
                 </caption>
                 <thead>
                 </thead>
                 <tbody>
                 <c:forEach var="entry" items="${sessionScope.entrantAccountSettingsBean.subjectMark}">
                     <tr class="uk-table-middle">
-                        <td>${entry.key}</td>
+                        <td><fmt:message key="${entry.key}"/></td>
                         <td>${entry.value} </td>
                     </tr>
                 </c:forEach>
@@ -94,17 +94,17 @@
         <c:if test="${sessionScope.entrantAccountSettingsNoExtraMarks != true}">
             <table class="uk-table uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
                 <caption>
-                    Extra Marks
+                    <fmt:message key="account.settings.table.extra.marks"/>
                 </caption>
                 <thead>
                 </thead>
                 <tbody>
                 <tr class="uk-table-middle">
-                    <td>Certificate Points</td>
+                    <td><fmt:message key="account.settings.add.extra.marks.certificate.points"/></td>
                     <td>${sessionScope.entrantAccountSettingsExtraMarks.certificatePoints}</td>
                 </tr>
                 <tr class="uk-table-middle">
-                    <td>Extra Points</td>
+                    <td><fmt:message key="account.settings.add.extra.marks.additional.points.placeholder"/></td>
                     <td>${sessionScope.entrantAccountSettingsExtraMarks.extraPoints}</td>
                 </tr>
                 </tbody>

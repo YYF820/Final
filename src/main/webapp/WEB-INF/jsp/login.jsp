@@ -6,8 +6,8 @@
     <%@include file="../jspf/header/header.jspf" %>
 </head>
 <body>
-    <%@include file="../jspf/topPanel.jspf"%>
-    <div class="uk-container-center uk-text-center uk-width-8-10">
+<%@include file="../jspf/topPanel.jspf" %>
+<div class="uk-container-center uk-text-center uk-width-8-10">
     <div class="uk-container-center uk-text-center uk-width-medium-4-10 uk-margin-large-top">
         <img class="uk-margin-bottom logo-login"
              src="<c:url value="/resources/img/mainLogo.png"/>"
@@ -58,7 +58,7 @@
             </div>
         </form>
     </div>
-    </div>
+</div>
 <%@include file="../jspf/modals/accountNameRules.jspf" %>
 </body>
 </html>

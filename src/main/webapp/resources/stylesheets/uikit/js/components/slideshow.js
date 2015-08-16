@@ -1,5 +1,5 @@
 /*! UIkit 2.21.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
-(function(addon) {
+(function (addon) {
 
     var component;
 
@@ -8,12 +8,12 @@
     }
 
     if (typeof define == "function" && define.amd) {
-        define("uikit-slideshow", ["uikit"], function() {
+        define("uikit-slideshow", ["uikit"], function () {
             return component || addon(UIkit);
         });
     }
 
-})(function(UI) {
+})(function (UI) {
 
     "use strict";
 
@@ -22,18 +22,18 @@
     UI.component('slideshow', {
 
         defaults: {
-            animation          : "fade",
-            duration           : 500,
-            height             : "auto",
-            start              : 0,
-            autoplay           : false,
-            autoplayInterval   : 7000,
-            videoautoplay      : true,
-            videomute          : true,
-            slices             : 15,
-            pauseOnHover       : true,
-            kenburns           : false,
-            kenburnsanimations : [
+            animation: "fade",
+            duration: 500,
+            height: "auto",
+            start: 0,
+            autoplay: false,
+            autoplayInterval: 7000,
+            videoautoplay: true,
+            videomute: true,
+            slices: 15,
+            pauseOnHover: true,
+            kenburns: false,
+            kenburnsanimations: [
                 'uk-animation-middle-left',
                 'uk-animation-top-right',
                 'uk-animation-bottom-left',
@@ -43,16 +43,16 @@
             ],
         },
 
-        current  : false,
-        interval : null,
-        hovering : false,
+        current: false,
+        interval: null,
+        hovering: false,
 
-        boot: function() {
+        boot: function () {
 
             // init code
-            UI.ready(function(context) {
+            UI.ready(function (context) {
 
-                UI.$('[data-uk-slideshow]', context).each(function() {
+                UI.$('[data-uk-slideshow]', context).each(function () {
 
                     var slideshow = UI.$(this);
 
@@ -63,21 +63,21 @@
             });
         },
 
-        init: function() {
+        init: function () {
 
             var $this = this, canvas, kbanimduration;
 
-            this.container     = this.element.hasClass('uk-slideshow') ? this.element : UI.$(this.find('.uk-slideshow'));
-            this.slides        = this.container.children();
-            this.slidesCount   = this.slides.length;
-            this.current       = this.options.start;
-            this.animating     = false;
-            this.triggers      = this.find('[data-uk-slideshow-item]');
+            this.container = this.element.hasClass('uk-slideshow') ? this.element : UI.$(this.find('.uk-slideshow'));
+            this.slides = this.container.children();
+            this.slidesCount = this.slides.length;
+            this.current = this.options.start;
+            this.animating = false;
+            this.triggers = this.find('[data-uk-slideshow-item]');
             this.fixFullscreen = navigator.userAgent.match(/(iPad|iPhone|iPod)/g) && this.container.hasClass('uk-slideshow-fullscreen'); // viewport unit fix for height:100vh - should be fixed in iOS 8
 
             if (this.options.kenburns) {
 
-                kbanimduration = this.options.kenburns === true ? '15s': this.options.kenburns;
+                kbanimduration = this.options.kenburns === true ? '15s' : this.options.kenburns;
 
                 if (!String(kbanimduration).match(/(ms|s)$/)) {
                     kbanimduration += 'ms';
@@ -88,7 +88,7 @@
                 }
             }
 
-            this.slides.each(function(index) {
+            this.slides.each(function (index) {
 
                 var slide = UI.$(this),
                     media = slide.children('img,video,iframe').eq(0);
@@ -100,21 +100,21 @@
 
                     var placeholder;
 
-                    switch(media[0].nodeName) {
+                    switch (media[0].nodeName) {
                         case 'IMG':
 
-                            var cover = UI.$('<div class="uk-cover-background uk-position-cover"></div>').css({'background-image':'url('+ media.attr('src') + ')'});
+                            var cover = UI.$('<div class="uk-cover-background uk-position-cover"></div>').css({'background-image': 'url(' + media.attr('src') + ')'});
 
-                            media.css({'width': '100%','height': 'auto'});
+                            media.css({'width': '100%', 'height': 'auto'});
                             slide.prepend(cover).data('cover', cover);
                             break;
 
                         case 'IFRAME':
 
-                            var src = media[0].src, iframeId = 'sw-'+(++playerId);
+                            var src = media[0].src, iframeId = 'sw-' + (++playerId);
 
                             media
-                                .attr('src', '').on('load', function(){
+                                .attr('src', '').on('load', function () {
 
                                     if (index !== $this.current || (index == $this.current && !$this.options.videoautoplay)) {
                                         $this.pausemedia(media);
@@ -124,8 +124,8 @@
 
                                         $this.mutemedia(media);
 
-                                        var inv = setInterval((function(ic) {
-                                            return function() {
+                                        var inv = setInterval((function (ic) {
+                                            return function () {
                                                 $this.mutemedia(media);
                                                 if (++ic >= 4) clearInterval(inv);
                                             }
@@ -135,11 +135,11 @@
                                 })
                                 .data('slideshow', $this)  // add self-reference for the vimeo-ready listener
                                 .attr('data-player-id', iframeId)  // add frameId for the vimeo-ready listener
-                                .attr('src', [src, (src.indexOf('?') > -1 ? '&':'?'), 'enablejsapi=1&api=1&player_id='+iframeId].join(''))
+                                .attr('src', [src, (src.indexOf('?') > -1 ? '&' : '?'), 'enablejsapi=1&api=1&player_id=' + iframeId].join(''))
                                 .addClass('uk-position-absolute');
 
                             // disable pointer events
-                            if(!UI.support.touch) media.css('pointer-events', 'none');
+                            if (!UI.support.touch) media.css('pointer-events', 'none');
 
                             placeholder = true;
 
@@ -159,7 +159,7 @@
 
                     if (placeholder) {
 
-                        canvas  = UI.$('<canvas></canvas>').attr({'width': media[0].width, 'height': media[0].height});
+                        canvas = UI.$('<canvas></canvas>').attr({'width': media[0].width, 'height': media[0].height});
                         var img = UI.$('<img style="width:100%;height:auto;">').attr('src', canvas[0].toDataURL());
 
                         slide.prepend(img);
@@ -179,7 +179,7 @@
                 }
             });
 
-            this.on("click.uikit.slideshow", '[data-uk-slideshow-item]', function(e) {
+            this.on("click.uikit.slideshow", '[data-uk-slideshow-item]', function (e) {
 
                 e.preventDefault();
 
@@ -187,10 +187,10 @@
 
                 if ($this.current == slide) return;
 
-                switch(slide) {
+                switch (slide) {
                     case 'next':
                     case 'previous':
-                        $this[slide=='next' ? 'next':'previous']();
+                        $this[slide == 'next' ? 'next' : 'previous']();
                         break;
                     default:
                         $this.show(parseInt(slide, 10));
@@ -201,9 +201,9 @@
 
             // Set start slide
             this.slides.attr('aria-hidden', 'true').eq(this.current).addClass('uk-active').attr('aria-hidden', 'false');
-            this.triggers.filter('[data-uk-slideshow-item="'+this.current+'"]').addClass('uk-active');
+            this.triggers.filter('[data-uk-slideshow-item="' + this.current + '"]').addClass('uk-active');
 
-            UI.$win.on("resize load", UI.Utils.debounce(function() {
+            UI.$win.on("resize load", UI.Utils.debounce(function () {
                 $this.resize();
 
                 if ($this.fixFullscreen) {
@@ -213,7 +213,7 @@
             }, 100));
 
             // chrome image load fix
-            setTimeout(function(){
+            setTimeout(function () {
                 $this.resize();
             }, 80);
 
@@ -231,15 +231,19 @@
             }
 
             this.container.on({
-                mouseenter: function() { if ($this.options.pauseOnHover) $this.hovering = true;  },
-                mouseleave: function() { $this.hovering = false; }
+                mouseenter: function () {
+                    if ($this.options.pauseOnHover) $this.hovering = true;
+                },
+                mouseleave: function () {
+                    $this.hovering = false;
+                }
             });
 
-            this.on('swipeRight swipeLeft', function(e) {
-                $this[e.type=='swipeLeft' ? 'next' : 'previous']();
+            this.on('swipeRight swipeLeft', function (e) {
+                $this[e.type == 'swipeLeft' ? 'next' : 'previous']();
             });
 
-            this.on('display.uk.check', function(){
+            this.on('display.uk.check', function () {
                 if ($this.element.is(":visible")) {
 
                     $this.resize();
@@ -253,7 +257,7 @@
         },
 
 
-        resize: function() {
+        resize: function () {
 
             if (this.container.hasClass('uk-slideshow-fullscreen')) return;
 
@@ -263,7 +267,7 @@
 
                 height = 0;
 
-                this.slides.css('height', '').each(function() {
+                this.slides.css('height', '').each(function () {
                     height = Math.max(height, UI.$(this).height());
                 });
             }
@@ -272,20 +276,20 @@
             this.slides.css('height', height);
         },
 
-        show: function(index, direction) {
+        show: function (index, direction) {
 
             if (this.animating || this.current == index) return;
 
             this.animating = true;
 
-            var $this        = this,
-                current      = this.slides.eq(this.current),
-                next         = this.slides.eq(index),
-                dir          = direction ? direction : this.current < index ? -1 : 1,
+            var $this = this,
+                current = this.slides.eq(this.current),
+                next = this.slides.eq(index),
+                dir = direction ? direction : this.current < index ? -1 : 1,
                 currentmedia = current.data('media'),
-                animation    = Animations[this.options.animation] ? this.options.animation : 'fade',
-                nextmedia    = next.data('media'),
-                finalize     = function() {
+                animation = Animations[this.options.animation] ? this.options.animation : 'fade',
+                nextmedia = next.data('media'),
+                finalize = function () {
 
                     if (!$this.animating) return;
 
@@ -301,7 +305,7 @@
                     current.removeClass("uk-active").attr('aria-hidden', 'true');
 
                     $this.animating = false;
-                    $this.current   = index;
+                    $this.current = index;
 
                     UI.Utils.checkDisplay(next, '[class*="uk-animation-"]:not(.uk-cover-background.uk-position-cover)');
 
@@ -316,63 +320,63 @@
             }
 
             current = UI.$(current);
-            next    = UI.$(next);
+            next = UI.$(next);
 
             Animations[animation].apply(this, [current, next, dir]).then(finalize);
 
             $this.triggers.removeClass('uk-active');
-            $this.triggers.filter('[data-uk-slideshow-item="'+index+'"]').addClass('uk-active');
+            $this.triggers.filter('[data-uk-slideshow-item="' + index + '"]').addClass('uk-active');
         },
 
-        applyKenBurns: function(slide) {
+        applyKenBurns: function (slide) {
 
             if (!this.hasKenBurns(slide)) {
                 return;
             }
 
             var animations = this.options.kenburnsanimations,
-                index      = this.kbindex || 0;
+                index = this.kbindex || 0;
 
 
             slide.data('cover').attr('class', 'uk-cover-background uk-position-cover').width();
             slide.data('cover').addClass(['uk-animation-scale', 'uk-animation-reverse', animations[index].trim()].join(' '));
 
-            this.kbindex = animations[index + 1] ? (index+1):0;
+            this.kbindex = animations[index + 1] ? (index + 1) : 0;
         },
 
-        hasKenBurns: function(slide) {
+        hasKenBurns: function (slide) {
             return (this.options.kenburns && slide.data('cover'));
         },
 
-        next: function() {
+        next: function () {
             this.show(this.slides[this.current + 1] ? (this.current + 1) : 0);
         },
 
-        previous: function() {
+        previous: function () {
             this.show(this.slides[this.current - 1] ? (this.current - 1) : (this.slides.length - 1));
         },
 
-        start: function() {
+        start: function () {
 
             this.stop();
 
             var $this = this;
 
-            this.interval = setInterval(function() {
+            this.interval = setInterval(function () {
                 if (!$this.hovering) $this.next();
             }, this.options.autoplayInterval);
 
         },
 
-        stop: function() {
+        stop: function () {
             if (this.interval) clearInterval(this.interval);
         },
 
-        playmedia: function(media) {
+        playmedia: function (media) {
 
             if (!(media && media[0])) return;
 
-            switch(media[0].nodeName) {
+            switch (media[0].nodeName) {
                 case 'VIDEO':
 
                     if (!this.options.videomute) {
@@ -392,9 +396,9 @@
             }
         },
 
-        pausemedia: function(media) {
+        pausemedia: function (media) {
 
-            switch(media[0].nodeName) {
+            switch (media[0].nodeName) {
                 case 'VIDEO':
                     media[0].pause();
                     break;
@@ -404,9 +408,9 @@
             }
         },
 
-        mutemedia: function(media) {
+        mutemedia: function (media) {
 
-            switch(media[0].nodeName) {
+            switch (media[0].nodeName) {
                 case 'VIDEO':
                     media[0].muted = true;
                     break;
@@ -419,21 +423,21 @@
 
     Animations = {
 
-        'none': function() {
+        'none': function () {
 
             var d = UI.$.Deferred();
             d.resolve();
             return d.promise();
         },
 
-        'scroll': function(current, next, dir) {
+        'scroll': function (current, next, dir) {
 
             var d = UI.$.Deferred();
 
-            current.css('animation-duration', this.options.duration+'ms');
-            next.css('animation-duration', this.options.duration+'ms');
+            current.css('animation-duration', this.options.duration + 'ms');
+            next.css('animation-duration', this.options.duration + 'ms');
 
-            next.css('opacity', 1).one(UI.support.animation.end, function() {
+            next.css('opacity', 1).one(UI.support.animation.end, function () {
 
                 current.removeClass(dir === 1 ? 'uk-slideshow-scroll-backward-out' : 'uk-slideshow-scroll-forward-out');
                 next.css('opacity', '').removeClass(dir === 1 ? 'uk-slideshow-scroll-backward-in' : 'uk-slideshow-scroll-forward-in');
@@ -448,14 +452,14 @@
             return d.promise();
         },
 
-        'swipe': function(current, next, dir) {
+        'swipe': function (current, next, dir) {
 
             var d = UI.$.Deferred();
 
-            current.css('animation-duration', this.options.duration+'ms');
-            next.css('animation-duration', this.options.duration+'ms');
+            current.css('animation-duration', this.options.duration + 'ms');
+            next.css('animation-duration', this.options.duration + 'ms');
 
-            next.css('opacity', 1).one(UI.support.animation.end, function() {
+            next.css('opacity', 1).one(UI.support.animation.end, function () {
 
                 current.removeClass(dir === 1 ? 'uk-slideshow-swipe-backward-out' : 'uk-slideshow-swipe-forward-out');
                 next.css('opacity', '').removeClass(dir === 1 ? 'uk-slideshow-swipe-backward-in' : 'uk-slideshow-swipe-forward-in');
@@ -470,16 +474,16 @@
             return d.promise();
         },
 
-        'scale': function(current, next, dir) {
+        'scale': function (current, next, dir) {
 
             var d = UI.$.Deferred();
 
-            current.css('animation-duration', this.options.duration+'ms');
-            next.css('animation-duration', this.options.duration+'ms');
+            current.css('animation-duration', this.options.duration + 'ms');
+            next.css('animation-duration', this.options.duration + 'ms');
 
             next.css('opacity', 1);
 
-            current.one(UI.support.animation.end, function() {
+            current.one(UI.support.animation.end, function () {
 
                 current.removeClass('uk-slideshow-scale-out');
                 next.css('opacity', '');
@@ -493,16 +497,16 @@
             return d.promise();
         },
 
-        'fade': function(current, next, dir) {
+        'fade': function (current, next, dir) {
 
             var d = UI.$.Deferred();
 
-            current.css('animation-duration', this.options.duration+'ms');
-            next.css('animation-duration', this.options.duration+'ms');
+            current.css('animation-duration', this.options.duration + 'ms');
+            next.css('animation-duration', this.options.duration + 'ms');
 
             next.css('opacity', 1);
 
-            current.one(UI.support.animation.end, function() {
+            current.one(UI.support.animation.end, function () {
 
                 current.removeClass('uk-slideshow-fade-out');
                 next.css('opacity', '');
@@ -528,13 +532,13 @@
 
             try {
                 data = JSON.parse(data);
-            } catch(err) {
+            } catch (err) {
                 data = {};
             }
         }
 
         if (e.origin && e.origin.indexOf('vimeo') > -1 && data.event == 'ready' && data.player_id) {
-            iframe = UI.$('[data-player-id="'+ data.player_id+'"]');
+            iframe = UI.$('[data-player-id="' + data.player_id + '"]');
 
             if (iframe.length) {
                 iframe.data('slideshow').mutemedia(iframe);

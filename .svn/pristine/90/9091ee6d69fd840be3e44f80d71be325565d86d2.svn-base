@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<map>
+    <!-- Pages for every one -->
+    <action path="/index.html">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
+    <action path="/facultiesSort.do">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
+    <action path="/faculties.html">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
+    <action path="/paginationFinalSheet.do">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+    <action path="/publicFinalSheet.do">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
+    <action path="/finalSheet.html">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
+    <action path="/accountSettings.html">
+        <role name="admin"/>
+        <role name="entrant"/>
+    </action>
+    <!-- Pages for guest only -->
+
+    <action path="/registration.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/registration.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/login.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/auth.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resendVerificationOrResetPassword.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resendVerificationOrResetPassword.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/checkQuestion.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/checkQuestion.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/mail.send">
+        <role name="guest"/>
+        <rolen name="admin"/>
+    </action>
+
+    <action path="/verifyAccountMessageSent.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/verifyAccount.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/verifyAccount.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPasswordMessageSent.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/blockAccount.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/checkTicketResetPassword.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPassword.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPassword.do">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPasswordSuccess.html">
+        <role name="guest"/>
+    </action>
+
+    <action path="/resetPasswordSessionInvalidated.html">
+        <role name="guest"/>
+    </action>
+
+
+    <!-- pages for admin -->
+    <action path="/admin/index.html">
+        <role name="admin"/>
+    </action>
+
+    <action path="/logout.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/entrants.html">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/entrants.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/changeStatusEntrant.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/mail.send">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/faculties.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/faculties.html">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/facultiesSort.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/editFaculty.html">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/editFaculty.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/prepareInfoEditFaculty.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/prepareInfoAddFaculty.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/addFaculty.html">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/addFaculty.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/deleteFaculty.do">
+        <role name="admin"/>
+    </action>
+
+    <action path="/admin/generateFinalSheet.do">
+        <role name="admin"/>
+    </action>
+
+
+    <!-- pages for entrant -->
+    <action path="/entrant/index.html">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/logout.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addSubjects.html">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/prepareInfoForAddMarks.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addMarks.html">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addSubjectsMarks.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addExtraMarks.html">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addExtraMarks.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/deleteFaculty.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/addFaculty.do">
+        <role name="entrant"/>
+    </action>
+
+    <action path="/entrant/configurePriorities.do">
+        <role name="entrant"/>
+    </action>
+</map>

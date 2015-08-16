@@ -1,0 +1,15 @@
+.row-margin, .uk-panel {
+  margin-bottom: 5px;
+}
+
+.registrationNormalizeButton {
+  padding: 0px;
+}
+
+.alertSchoolNumber {
+  padding: 4px 6px;
+}
+
+.alertBlockSchoolNumber {
+  padding-left: 15px;
+}
