@@ -1,59 +1,59 @@
 <form class="uk-form uk-panel-box " method="POST"
       action="<c:url value="/paginationFinalSheet.do"/>">
-  <div class="uk-text-center">
-    <p class="uk-h3"><fmt:message key="final.sheet.search"/> <i class="uk-icon-search"></i></p>
-  </div>
-  <c:if test="${sessionScope.finalSheetIsFormEmpty == true}">
-    <div class="uk-panel uk-animation-fade uk-text-center ">
-      <div class="uk-alert uk-alert-danger " data-uk-alert>
-        <p><fmt:message key="final.sheet.fill.minimum.one.field"/></p>
-      </div>
+    <div class="uk-text-center">
+        <p class="uk-h3"><fmt:message key="final.sheet.search"/> <i class="uk-icon-search"></i></p>
     </div>
-  </c:if>
-  <c:if test="${sessionScope.finalSheetIsValidLastName == false}">
-    <div class="uk-panel uk-animation-fade uk-text-center uk-margin-top">
-      <div class="uk-alert uk-alert-danger " data-uk-alert>
-        <p><fmt:message key="final.sheet.not.valid.last.name"/></p>
-      </div>
+    <c:if test="${sessionScope.finalSheetIsFormEmpty == true}">
+        <div class="uk-panel uk-animation-fade uk-text-center ">
+            <div class="uk-alert uk-alert-danger " data-uk-alert>
+                <p><fmt:message key="final.sheet.fill.minimum.one.field"/></p>
+            </div>
+        </div>
+    </c:if>
+    <c:if test="${sessionScope.finalSheetIsValidLastName == false}">
+        <div class="uk-panel uk-animation-fade uk-text-center uk-margin-top">
+            <div class="uk-alert uk-alert-danger " data-uk-alert>
+                <p><fmt:message key="final.sheet.not.valid.last.name"/></p>
+            </div>
+        </div>
+    </c:if>
+    <c:if test="${sessionScope.finalSheetIsValidFacultyName == false}">
+        <div class="uk-panel uk-animation-fade uk-text-center uk-margin-top">
+            <div class="uk-alert uk-alert-danger " data-uk-alert>
+                <p><fmt:message key="final.sheet.not.valid.faculty.name"/></p>
+            </div>
+        </div>
+    </c:if>
+    <div class="uk-width-1-1 uk-margin-top">
+        <input name="lastName"
+               class="uk-width-1-1"
+               type="text" spellcheck="false" autocomplete="off"
+               value="${sessionScope.finalSheetLastName}"
+               placeholder="<fmt:message key="last.name"/>">
     </div>
-  </c:if>
-  <c:if test="${sessionScope.finalSheetIsValidFacultyName == false}">
-    <div class="uk-panel uk-animation-fade uk-text-center uk-margin-top">
-      <div class="uk-alert uk-alert-danger " data-uk-alert>
-        <p><fmt:message key="final.sheet.not.valid.faculty.name"/></p>
-      </div>
+    <div class="uk-width-1-1 uk-margin-top">
+        <input name="facultyName"
+               class="uk-width-1-1"
+               type="text" spellcheck="false" autocomplete="off"
+               value="${sessionScope.finalSheetFacultyName}"
+               placeholder="<fmt:message key="faculty.name"/>">
     </div>
-  </c:if>
-  <div class="uk-width-1-1 uk-margin-top">
-    <input name="lastName"
-           class="uk-width-1-1"
-           type="text" spellcheck="false" autocomplete="off"
-           value="${sessionScope.finalSheetLastName}"
-           placeholder="<fmt:message key="last.name"/>">
-  </div>
-  <div class="uk-width-1-1 uk-margin-top">
-    <input name="facultyName"
-           class="uk-width-1-1"
-           type="text" spellcheck="false" autocomplete="off"
-           value="${sessionScope.finalSheetFacultyName}"
-           placeholder="<fmt:message key="faculty.name"/>">
-  </div>
-  <div class="uk-form-row uk-margin-top uk-text-left">
-    <button class="uk-width-medium-3-5 uk-button uk-button-primary " type="submit">
-      <fmt:message key="button.find"/>
-    </button>
-  </div>
-  <u:ifAuthAs role="entrant">
     <div class="uk-form-row uk-margin-top uk-text-left">
-      <a class="uk-button uk-button-success"
-         href="<c:url value="/paginationFinalSheet.do?command=findMe"/>">
-        <fmt:message key="button.find.me"/>
-        <i class="uk-icon-user"></i></a>
+        <button class="uk-width-medium-3-5 uk-button uk-button-primary " type="submit">
+            <fmt:message key="button.find"/>
+        </button>
     </div>
-  </u:ifAuthAs>
-  <div class="uk-form-row uk-margin-top uk-text-left">
-    <a class="uk-button" href="
+    <u:ifAuthAs role="entrant">
+        <div class="uk-form-row uk-margin-top uk-text-left">
+            <a class="uk-button uk-button-success"
+               href="<c:url value="/paginationFinalSheet.do?command=findMe"/>">
+                <fmt:message key="button.find.me"/>
+                <i class="uk-icon-user"></i></a>
+        </div>
+    </u:ifAuthAs>
+    <div class="uk-form-row uk-margin-top uk-text-left">
+        <a class="uk-button" href="
                         <c:url value="/paginationFinalSheet.do?command=findAllEntrants&page=${sessionScope.currentPage}"/>">
-      Reset <i class="uk-icon-refresh"></i></a>
-  </div>
+            Reset <i class="uk-icon-refresh"></i></a>
+    </div>
 </form>

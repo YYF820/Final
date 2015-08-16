@@ -33,9 +33,7 @@ public class FacultiesSorterServlet extends HttpServlet {
         List<FacultiesInfoBean> facultiesInfoBeans =
                 (List<FacultiesInfoBean>) session.getAttribute(SessionAttribute.FACULTIES_INFO_BEANS);
         String sortType = request.getParameter(PARAM_SORT);
-        System.out.println(sortType);
         if (sortType == null) {
-            System.out.println();
             session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, false);
             response.sendRedirect(Pages.FACULTIES_HTML);
         } else {
@@ -47,7 +45,7 @@ public class FacultiesSorterServlet extends HttpServlet {
                             return o1.getFaculty().getName().compareTo(o2.getFaculty().getName());
                         }
                     });
-                    session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_BY_NAME_ASC);
+                    session.setAttribute(SessionAttribute.FACULTIES_PUBLIC_SORT_TYPE, SORT_TYPE_BY_NAME_ASC);
                     break;
                 case SORT_TYPE_BY_NAME_DESC:
                     Collections.sort(facultiesInfoBeans, new Comparator<FacultiesInfoBean>() {
@@ -56,7 +54,7 @@ public class FacultiesSorterServlet extends HttpServlet {
                             return o2.getFaculty().getName().compareTo(o1.getFaculty().getName());
                         }
                     });
-                    session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_BY_NAME_DESC);
+                    session.setAttribute(SessionAttribute.FACULTIES_PUBLIC_SORT_TYPE, SORT_TYPE_BY_NAME_DESC);
                     break;
                 case SORT_TYPE_BY_BUDGET_SPOTS_ASC:
                     Collections.sort(facultiesInfoBeans, new Comparator<FacultiesInfoBean>() {
@@ -71,7 +69,7 @@ public class FacultiesSorterServlet extends HttpServlet {
                             }
                         }
                     });
-                    session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_BY_BUDGET_SPOTS_ASC);
+                    session.setAttribute(SessionAttribute.FACULTIES_PUBLIC_SORT_TYPE, SORT_TYPE_BY_BUDGET_SPOTS_ASC);
                     break;
                 case SORT_TYPE_BY_BUDGET_SPOTS_DESC:
                     Collections.sort(facultiesInfoBeans, new Comparator<FacultiesInfoBean>() {
@@ -86,7 +84,7 @@ public class FacultiesSorterServlet extends HttpServlet {
                             }
                         }
                     });
-                    session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_BY_BUDGET_SPOTS_DESC);
+                    session.setAttribute(SessionAttribute.FACULTIES_PUBLIC_SORT_TYPE, SORT_TYPE_BY_BUDGET_SPOTS_DESC);
                     break;
                 case SORT_TYPE_BY_ALL_SPOTS_ASC:
                     Collections.sort(facultiesInfoBeans, new Comparator<FacultiesInfoBean>() {
@@ -101,7 +99,7 @@ public class FacultiesSorterServlet extends HttpServlet {
                             }
                         }
                     });
-                    session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_BY_ALL_SPOTS_ASC);
+                    session.setAttribute(SessionAttribute.FACULTIES_PUBLIC_SORT_TYPE, SORT_TYPE_BY_ALL_SPOTS_ASC);
                     break;
                 case SORT_TYPE_BY_ALL_SPOTS_DESC:
                     Collections.sort(facultiesInfoBeans, new Comparator<FacultiesInfoBean>() {
@@ -116,7 +114,7 @@ public class FacultiesSorterServlet extends HttpServlet {
                             }
                         }
                     });
-                    session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_BY_ALL_SPOTS_DESC);
+                    session.setAttribute(SessionAttribute.FACULTIES_PUBLIC_SORT_TYPE, SORT_TYPE_BY_ALL_SPOTS_DESC);
                     break;
                 default:
                     break;

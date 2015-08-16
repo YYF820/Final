@@ -28,7 +28,7 @@
     <c:when test="${sessionScope.finalSheetIsFoundSomething == false}">
         <div class="uk-grid uk-container-center uk-margin-top">
             <div class="uk-width-medium-2-10 uk-margin-top">
-                <%@include file="../jspf/finalSheetSearchForm.jspf"%>
+                <%@include file="../jspf/finalSheetSearchForm.jspf" %>
             </div>
             <div class="uk-container uk-container-center uk-width-8-10 uk-text-center uk-margin-top ">
                 <div class="uk-align-center uk-width-small-1-2 uk-margin-large-top">
@@ -49,10 +49,10 @@
     <c:when test="${requestScope.commandFind eq 'findAllEntrants' || requestScope.commandFind == null}">
         <div class="uk-grid uk-container-center uk-margin-top">
             <div class="uk-width-medium-2-10 uk-margin-top">
-                <%@include file="../jspf/finalSheetSearchForm.jspf"%>
+                <%@include file="../jspf/finalSheetSearchForm.jspf" %>
             </div>
             <div class="uk-width-medium-7-10 uk-text-center ">
-                <%@include file="../jspf/finalSheetTable.jspf"%>
+                <%@include file="../jspf/finalSheetTable.jspf" %>
                 <ul class="uk-pagination uk-margin-bottom-remove">
                     <c:if test="${sessionScope.currentPage != 1}">
                         <li class="uk-pagination-previous">
@@ -115,7 +115,7 @@
     <c:when test="${requestScope.commandFind eq 'findMe'}">
         <div class="uk-grid uk-container-center uk-margin-top">
             <div class="uk-width-medium-2-10 uk-margin-top">
-                <%@include file="../jspf/finalSheetSearchForm.jspf"%>
+                <%@include file="../jspf/finalSheetSearchForm.jspf" %>
             </div>
             <c:choose>
                 <c:when test="${requestScope.isPassedEntrantFinalSheet == false}">
@@ -129,7 +129,7 @@
                 </c:when>
                 <c:otherwise>
                     <div class="uk-width-medium-7-10 uk-text-center ">
-                        <%@include file="../jspf/finalSheetTable.jspf"%>
+                        <%@include file="../jspf/finalSheetTable.jspf" %>
                     </div>
                 </c:otherwise>
             </c:choose>
@@ -138,10 +138,10 @@
     <c:when test="${requestScope.commandFind eq 'search'}">
         <div class="uk-grid uk-container-center uk-margin-top">
             <div class="uk-width-medium-2-10 uk-margin-top">
-                <%@include file="../jspf/finalSheetSearchForm.jspf"%>
+                <%@include file="../jspf/finalSheetSearchForm.jspf" %>
             </div>
             <div class="uk-width-medium-7-10 uk-text-center ">
-                <%@include file="../jspf/finalSheetTable.jspf"%>
+                <%@include file="../jspf/finalSheetTable.jspf" %>
                 <ul class="uk-pagination uk-margin-bottom-remove">
                     <c:if test="${sessionScope.currentPage != 1}">
                         <li class="uk-pagination-previous">

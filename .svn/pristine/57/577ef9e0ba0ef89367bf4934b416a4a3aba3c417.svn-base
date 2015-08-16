@@ -1,0 +1,349 @@
+#user fields
+first.name = First name
+last.name = Last name
+patronymic = Patronymic
+account.name = Account name
+city = City
+region = Region
+school = School \u2116
+status = Status
+summary.marks = Summary marks
+enter.status = Status
+faculty.name = Faculty name
+subjects = Subjects
+
+#enter statuses
+budget = Budget
+contract = Contract
+
+#head tables
+head.entrants = Entrants
+head.faculties = Faculties
+
+
+#error explanation email not valid
+explanation.not.valid.email.row.1 = E-mail must contains "@" symbol
+explanation.not.valid.email.row.2 = Top Level Domain can not start with dot "."
+explanation.not.valid.email.row.3 = Last Top Level Domain must contains at least two characters
+explanation.not.valid.email.row.4 = E-mail's first character can not start with dot "."
+explanation.not.valid.email.row.5 = E-mail's is only allow character, digit, underscore and dash
+explanation.not.valid.email.row.6 = Double dots "." are not allow
+explanation.not.valid.email.row.7 = E-mail's last character can not end with dot "."
+explanation.not.valid.email.row.8 = Email's Top Level Domain which has two characters can not contains digit
+
+#error explanation password not valid
+explanation.not.valid.password = Password must contains letters and at least one digit, length: 6-20 characters
+
+#buttons
+button.next = Next
+button.next.page = Next
+button.previous.page = Previous
+button.cancel = Cancel
+button.continue.to.account.management = Continue to Account Management
+button.save.new.password = Save new password
+button.sort = Sort
+button.no.sort = No sort
+button.save = Save
+button.edit = Edit
+button.update = Update
+button.create = Create
+button.find = Find
+button.find.me = Find me
+
+
+#top panel
+top.panel.support= Support
+top.panel.your.account = Your account
+top.panel.log.in = Log In
+top.panel.log.out = Log Out
+top.panel.account.settings = Account Settings
+top.panel.canvas.admin.header = Admin Functions
+top.panel.canvas.admin.entrants = Entrants
+top.panel.canvas.admin.faculties = Faculties
+top.panel.canvas.admin.generate.final.sheet = Generate final sheet
+
+#nav panel
+nav.panel.home = Home
+nav.panel.about.us = About Us
+nav.panel.faculties = Faculties
+nav.panel.life.university = Life@university
+nav.panel.contact = Contact
+nav.panel.final.sheet = Final Sheet
+
+
+#login page
+login.field.email = E-mail
+login.field.password = Password
+login.submit = Log in
+login.create.account = Create Account
+login.resend.verification.message = Resend verification message
+login.forgot.password = Forgot Password?
+
+login.error.verify.account = Please verify your account, we sent you email
+login.error.blocked.account = Your account is blocked
+login.error.contact = You can contact our
+login.error.support = support
+login.error.for.more.information = for more information
+login.error.incorrect.email.password = The username or password is incorrect. Please try again.
+login.error.empty.account.name = Please enter your E-mail
+login.error.empty.password = Please enter your password
+login.error.email.not.valid = Email is not valid
+login.error.password.not.valid = Password is not valid
+
+
+#registration page
+registration.field.last.name = Last Name
+registration.field.first.name = First Name
+registration.field.patronymic = Patronymic
+registration.field.city = City
+registration.field.region = Region
+registration.field.email = E-mail
+registration.field.password = Password
+registration.field.school = School \u2116
+registration.submit = Create Account
+
+registration.error.empty.last.name = Please enter your Last name
+registration.error.empty.first.name = Please enter your First name
+registration.error.empty.patronymic = Please enter your Patronymic name
+registration.error.empty.city = Please enter your City
+registration.error.empty.region = Please enter your Region
+registration.error.empty.email = Please enter your Email
+registration.error.empty.password = Please enter your Password
+registration.error.empty.school = Please enter your School \u2116
+
+registration.error.not.valid.last.name = Last name is not valid
+registration.error.not.valid.first.name = First name is not valid
+registration.error.not.valid.patronymic = Patronymic name is not valid
+registration.error.not.valid.city = City is not valid
+registration.error.not.valid.region = Region is not valid
+registration.error.not.valid.email = Email is not valid
+registration.error.not.valid.password = Password is not valid
+registration.error.not.valid.school.number = School \u2116 is not valid
+
+
+registration.error.explanation.not.valid.last.name = Last name starts with uppercase letter<br/>\
+                                                        Last name can contain '- <br/>\
+                                                            Last name's length 2-15 letters
+registration.error.explanation.not.valid.first.name = First name starts with uppercase letter<br/>\
+                                                        First name can contain '- <br/>\
+                                                            First name's length 2-15 letters
+registration.error.explanation.not.valid.patronymic = Patronymic starts with uppercase letter<br/>\
+                                                        Patronymic can contain '- <br/>\
+                                                            Patronymic length 2-15 letters
+registration.error.explanation.not.valid.city = City starts with uppercase letter<br/>\
+                                                    City can be one word or 2 words with '- and space<br/>\
+                                                        Example: "Saint-Petersburg"
+registration.error.explanation.not.valid.region = First letter of first word must starts with uppercase letter<br/>\
+                                                    Second word starts with lowercase letter<br/>\
+                                                        Example: "Texas state"
+registration.error.explanation.not.valid.school.number = School \u2116 can be from 1 to 255
+
+#verify account message sent
+verify.account.message.sent.success.subject = Thank you! We have sent verification link to your email!
+verify.account.message.sent.success.faq = Click the button below to return to Account Management, \
+                                                    where you can log in to your account after verification account.
+
+verify.account.message.sent.error.subject = We couldn't send you verification email!
+verify.account.message.sent.error.body.list.start = An error has occurred, possibly for one of the following reasons:
+verify.account.message.sent.error.body.list.first = Problems with our servers.
+verify.account.message.sent.error.body.list.second = Problems with the servers, the company that owns your email.
+verify.account.message.sent.error.body.list.third = Please try again, as this may be a temporary issue.
+verify.account.message.sent.error.faq = Click the button below to return to Account Management, \
+                                            where you can request another copy of the verification e-mail.
+verify.account.message.sent.button = Continue to Account Management
+
+#verify account
+verify.account.success.subject =  Thank you! Your email verification is complete!
+verify.account.success.body.start = Your e-mail has been verified & your account is active. You can now view pages for for registered users and your profile!
+verify.account.success.body.list.start = On your profile you can:
+verify.account.success.body.list.first = Fill out your profile with marks for enrolling on faculties.
+verify.account.success.body.list.second = In future you will be able to see final sheet with information who went to university on a budget and contract.
+verify.account.success.faq = Click the button below to return to Account Management, where you can try new things.
+
+verify.account.error.subject =  Account Verification Error!
+verify.account.error.body.list.start = An error has occurred, possibly for one of the following reasons:
+verify.account.error.body.list.first = This account has already been verified.
+verify.account.error.body.list.second = The verification link you clicked on is expired or invalid.
+verify.account.error.body.list.third = The account verification attempt was unsuccessful. Please try again, as this may be a temporary issue.
+verify.account.error.faq = Click the button below to return to Account Management, \
+                                where you can request another copy of the verification e-mail.
+
+
+
+#check email question page
+check.email.question.warning.first = Please enter your email.
+check.email.question.warning.second = We will send you message with verifying link.
+check.email.question.empty.email = Please enter your Email
+check.email.question.not.valid.email = Email is not valid.
+check.email.question.wrong.email = Wrong e-mail, try again.
+check.email.question.admin.access = The administrator does not need to verify account.
+check.email.question.already.verified = Your account is already verified,
+check.email.question.already.verified.want.login = want to log in ?
+check.email.question.blocked = Your account is blocked, contact our administrator.
+
+#check school number question page
+check.school.number.question.warning.first = Please answer question to verify it's your email
+check.school.number.question.warning.second = What school did you study?
+check.school.number.question.empty.school.number = Please enter your school \u2116.
+check.school.number.question.not.valid.school.number = School \u2116 is not valid, you can use numbers 1-255.
+check.school.number.question.wrong.school.number = Wrong answer.
+check.school.number.question.school.number = School \u2116
+
+#check ticket reset password
+check.ticket.reset.password.message.sent.subject = Thank you! We have sent verification code to your email!
+check.ticket.reset.password.warning = Please enter code from email in the form below to reset password.
+check.ticket.reset.password.danger.first = You've got
+check.ticket.reset.password.danger.second = tries and 10 minutes, failing that account will be blocked.
+check.ticket.reset.password.empty.code = Please enter code.
+check.ticket.reset.password.wrong.code = Wrong code.
+check.ticket.reset.password.code = Code
+
+check.ticket.reset.password.error.subject = We couldn't send you verification code to your email or 10 minutes expired!
+check.ticket.reset.password.error.body.list.start = An error has occurred, possibly for one of the following reasons:
+check.ticket.reset.password.error.body.list.first = Problems with servers.
+check.ticket.reset.password.error.body.list.second = Code expired.
+check.ticket.reset.password.error.body.list.third = Please try again, as this may be a temporary issue.
+check.ticket.reset.password.error.faq = Click the button below to return to Account Management, where you can resend verification code to recover password.
+
+#check ticket block account page after bad input 3 times code
+check.ticket.block.account.subject = You wrote wrong code 3 times, we blocked account, contact our support.
+check.ticket.block.account.link.home.page = Back to home page
+
+#reset password page
+reset.password.subject = Thank you! Code is correct now set up new password!
+reset.password.warning = Please enter new password and confirm it in the form below.
+reset.password.password = Password
+reset.password.confirm.password = Confirm Password
+reset.password.empty.password = Please enter password.
+reset.password.passwords.not.same = Passwords not same.
+reset.password.not.valid.password.subject  = Password or confirm password is not valid.
+reset.password.not.valid.password.explanation = Password must contains letters and at least one digit, length: 6-20 characters.
+
+#reset password success page
+reset.password.success.subject = Thank you! Password was changed.
+reset.password.success.want.to.login = Want to log in?
+
+#reset password session invalidated page
+reset.password.session.invalidated.subject = Your code for reset password is expired.
+reset.password.session.invalidated.faq = Click the button below to return to Account Management, where you can resend verification code to recover password.
+
+#account settings
+account.settings.warning.marks.body = You must set up your profile, enter scores for subjects after that you could enroll in the faculties.
+account.settings.warning.extra.marks.body = You must set up your profile, enter extra scores for school subjects and additional lessons after that you could enroll in the faculties.
+account.settings.you.can.do.it.here = You can do it here
+
+account.settings.server.problems = Something went wrong, problems with servers please try a bit later.
+account.settings.role.admin = Admin
+account.settings.role.entrant = Entrant
+
+account.settings.table.marks = Marks
+account.settings.table.extra.marks = Extra Marks
+
+account.settings.add.subjects.warning = Select the subjects for which you have the highest scores
+account.settings.add.subjects.choose.three.subjects = Please choose 3 subjects.
+
+account.settings.add.marks.warning = Enter your marks in the appropriate fields
+account.settings.add.marks.empty.marks = Please enter all marks.
+account.settings.add.marks.not.valid.marks = Not valid marks, mark should be 100-200 and can \
+                                                        has dot and 2 more digits example: 155.5 or 155.55
+
+account.settings.add.extra.marks = Enter your extra marks in the appropriate fields
+account.settings.add.extra.marks.empty.extra.marks = Please fill all fields.
+account.settings.add.extra.marks.certificate.points.not.valid = Certificate points not valid, 30-60 you can use dot example 30.50 or 60.
+account.settings.add.extra.marks.additional.points = Certificate points not valid, 0-20 you can use dot example 10.50, 12, 20.
+account.settings.add.extra.marks.certificate.points = Certificate points
+account.settings.add.extra.marks.additional.points.placeholder = Additional points
+
+
+
+#faculties public page
+faculties.public.sort.button = Sort settings
+faculties.public.configure.priorities = Configure priorities
+faculties.public.success.configure.priorities = Success configuring priorities
+faculties.public.alert.need.setup.account = You should set up your account
+faculties.public.alert.account.settings.link = Account settings
+faculties.public.alert.server.error.configure.priorities = Some problems while configuring priorities please try again later.
+faculties.public.alert.error.same.priorities = You can't set same priority for 2 or more faculties, please try again.
+faculties.public.alert.no.sort.option = Please choose sort option.
+faculties.public.alert.not.logged.in = In order to register on the faculties you must be logged in.
+faculties.public.entrant.already.three.faculties =You have already enrolled to the 3 faculties, to enroll you should unsubscribe from another faculty
+faculties.public.entrant.unsubscribe.faculty.start = You are enrolled to this faculty with priority
+faculties.public.entrant.unsubscribe.faculty.end = you can unsubscribe from it.
+faculties.public.entrant.unsubscribe.faculty.link = Unsubscribe
+faculties.public.total.spots = Total spots:
+faculties.public.budget.spots = Budget spots:
+faculties.public.message.last.words = and you had to hand over these subjects:
+faculties.public.select.priority = Select priority
+faculties.public.button.enroll = Enroll
+faculties.public.info = Information
+faculties.public.log.in = Log in
+
+
+#faculties admin page
+faculties.admin.faculty.removed.success = The faculty has been removed successfully!
+
+faculties.admin.edit.subjects.head = You can change information about this faculty.
+faculties.admin.edit.subjects.to.delete.head = Subjects to delete
+faculties.admin.edit.subjects.to.add.head = Subjects to add
+faculties.admin.edit.select.total.spots = Select total spots
+faculties.admin.edit.select.budget.spots = Select budget spots
+faculties.admin.edit.error.empty.form = Please choose minimum one field which you want edit.
+faculties.admin.edit.error.check.spots = Total spots can't be lower then budget spots.
+faculties.admin.edit.error.minimum.three.subjects = After editing the faculty it must contain at least 3 subjects.
+
+faculties.admin.add.head = You can add new Faculty
+faculties.admin.add.error.fill.all.fields = Please fill all fields.
+faculties.admin.add.error.not.valid.faculty.name = Faculty name is not valid.
+faculties.admin.add.error.check.spots = Total spots can't be lower then budget spots.
+faculties.admin.add.error.exists.faculty.name = Choose another faculty name that already exists.
+faculties.admin.add.error.minimum.three.subjects = You must choose minimum 3 subjects for Faculty.
+
+#final sheet
+final.sheet.not.ready.head = At the moment final sheet is not ready.
+final.sheet.not.ready.body = Coming soon...
+final.sheet.search = Search
+final.sheet.fill.minimum.one.field = Please fill minimum one field.
+final.sheet.not.valid.last.name = Last name is not valid.
+final.sheet.not.valid.faculty.name = Faculty name is not valid.
+final.sheet.nothing.by.search.head = Nothing by your search
+final.sheet.nothing.by.search.body = Ooops... can't find anything.
+
+#sort settings
+sort.settings = Sort settings
+please.choose.sort.option = Please choose sort option.
+sort.by.name = Sort by name
+sort.by.budget.spots = Sort by budget spots
+sort.by.total.spots = Sort by all spots
+
+#configure priorities settings
+configure.priorities = Configure priorities
+configure.priorities.same.priorities = Priority can't be repeated
+configure.priorities.not.enrolled.on.faculty = To configure the priorities, you must enroll in the faculties
+
+
+#subjects
+ukr.lang = Ukrainian language
+mathematics = Mathematics
+physics = Physics
+eng.lang = English language
+
+#faculties
+computer.science = Computer science
+software.engineering = Software Engineering
+design.and.operation.of.electronic.devices = Design and Operation of Electronic Devices
+telecommunication.systems = Telecommunication Systems
+informatics = Informatics
+
+
+
+
+
+
+
+
+
+
+
+
+
+

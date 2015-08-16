@@ -188,7 +188,7 @@ public class SessionAttribute {
     public static final String FACULTIES_IS_ANY_PROBLEMS_UPDATE = "facultiesIsAnyProblemsUpdate";
     public static final String FACULTIES_IS_SAME_PRIORITIES = "facultiesIsSamePriorities";
 
-    public static final String FACULTIES_SORT_TYPE = "facultiesSortType";
+    public static final String FACULTIES_PUBLIC_SORT_TYPE = "facultiesPublicSortType";
     public static final String FACULTIES_IS_SORTED = "facultiesIsSorted";
 
     //===================================FINAL SHEET==============================================//

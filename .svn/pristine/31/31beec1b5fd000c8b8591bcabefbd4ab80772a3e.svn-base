@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="4106411890">
+    <data-source source="LOCAL" name="SummaryTask4 - @localhost" uuid="e8f0bdcb-5633-4ce6-83af-8251e9b93cc5">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/summarytask4</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>

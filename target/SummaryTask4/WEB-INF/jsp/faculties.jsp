@@ -13,12 +13,13 @@
     <u:ifAuthAs role="entrant">
         <div class="uk-grid uk-text-center uk-margin-top">
             <div class="uk-width-medium-2-10">
+
                 <a href="#sortFacultiesEntrant" data-uk-offcanvas></a>
                 <!-- This is a button toggling the off-canvas sidebar -->
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
                     <fmt:message key="faculties.public.sort.button"/> <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
+                <%@include file="../jspf/canvas/sortFacultiesEntrant.jspf" %>
             </div>
             <div class="uk-width-medium-6-10">
                 <c:choose>
@@ -61,7 +62,7 @@
                     <fmt:message key="faculties.public.configure.priorities"/>
                     <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-                <%@include file="../jspf/canvas/setUpPriorities.jsp" %>
+                <%@include file="../jspf/canvas/setUpPriorities.jspf" %>
             </div>
         </div>
         <c:if test="${sessionScope.facultiesIsSorted == false}">
@@ -83,7 +84,7 @@
                     <fmt:message key="faculties.public.sort.button"/>
                     <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
+                <%@include file="../jspf/canvas/sortFacultiesEntrant.jspf" %>
 
             </div>
             <div class="uk-width-medium-6-10">
@@ -115,7 +116,7 @@
                 <button class="uk-button uk-float-left" data-uk-offcanvas="{target:'#sortFacultiesEntrant'}">
                     <fmt:message key="faculties.public.sort.button"/> <i class="uk-icon-cog uk-text-primary"></i>
                 </button>
-                <%@include file="../jspf/canvas/sortFacultiesEntrant.jsp" %>
+                <%@include file="../jspf/canvas/sortFacultiesEntrant.jspf" %>
             </div>
             <c:if test="${sessionScope.facultiesIsSorted == false}">
                 <div class="uk-width-medium-6-10">
@@ -127,9 +128,10 @@
             </c:if>
         </div>
     </u:ifAuthAs>
-
     <c:forEach var="facultyBean" items="${sessionScope.facultiesInfoBeansPagination}" varStatus="counter" step="1">
+    <c:out value="${sessionScope.facultiesPublicSortType}"/>
     <c:choose>
+
     <c:when test="${counter.index % 2 == 0}">
         <div class="uk-grid uk-margin-large-top" data-uk-grid-margin="">
             <div class="uk-width-medium-1-2">

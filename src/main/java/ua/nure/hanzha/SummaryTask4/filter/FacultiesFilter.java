@@ -35,6 +35,7 @@ public class FacultiesFilter extends BaseFilter {
     private static final String PARAM_PAGE = "page";
     private static final int RECORDS_PER_PAGE = 2;
     private static final String SORT_TYPE_NO_SORT = "noSort";
+    private static final String COMMAND = "command";
     private static int page = 1;
 
 
@@ -128,9 +129,11 @@ public class FacultiesFilter extends BaseFilter {
 
     private void preparePage(HttpServletResponse response, HttpServletRequest request,
                              HttpSession session, FilterChain filterChain) throws IOException, ServletException {
-        String sortType = (String) session.getAttribute(SessionAttribute.FACULTIES_SORT_TYPE);
         Boolean facultiesIsSorted = (Boolean) session.getAttribute(SessionAttribute.FACULTIES_IS_SORTED);
-        if (sortType == null || sortType.equals(SORT_TYPE_NO_SORT)) {
+        String sortType = (String) session.getAttribute(SessionAttribute.FACULTIES_PUBLIC_SORT_TYPE);
+        String reset = (String) request.getAttribute(COMMAND);
+        if (sortType == null || sortType.equals(SORT_TYPE_NO_SORT) ||
+                (reset != null && reset.equals(SORT_TYPE_NO_SORT))) {
             List<FacultiesInfoBean> facultiesInfoBeans = new ArrayList<>();
             try {
                 List<Faculty> faculties = facultyService.getAllFaculties();
@@ -173,16 +176,15 @@ public class FacultiesFilter extends BaseFilter {
                     }
                     setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
                 }
-                session.setAttribute(SessionAttribute.FACULTIES_SORT_TYPE, SORT_TYPE_NO_SORT);
-                filterChain.doFilter(request, response);
+                session.setAttribute(SessionAttribute.FACULTIES_PUBLIC_SORT_TYPE, SORT_TYPE_NO_SORT);
             } catch (DaoSystemException e) {
                 if (e.getMessage().equals(ExceptionMessages.SQL_EXCEPTION)) {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                } else {
-                    filterChain.doFilter(request, response);
                 }
             }
+            filterChain.doFilter(request, response);
         } else {
+            System.out.println(2);
             List<FacultiesInfoBean> facultiesInfoBeans =
                     (List<FacultiesInfoBean>) session.getAttribute(SessionAttribute.FACULTIES_INFO_BEANS);
             if (request.getParameter(PARAM_PAGE) != null)
@@ -199,7 +201,6 @@ public class FacultiesFilter extends BaseFilter {
                     session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, true);
                 }
                 setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
-                setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
             } else {
                 List<FacultiesInfoBean> facultiesInfoBeansPagination = new ArrayList<>();
                 copyList(facultiesInfoBeans, facultiesInfoBeansPagination, page, RECORDS_PER_PAGE);
@@ -208,7 +209,6 @@ public class FacultiesFilter extends BaseFilter {
                 } else {
                     session.setAttribute(SessionAttribute.FACULTIES_IS_SORTED, true);
                 }
-                setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
                 setUpSessionAttributes(session, numberOfPages, facultiesInfoBeans, facultiesInfoBeansPagination);
             }
             filterChain.doFilter(request, response);
