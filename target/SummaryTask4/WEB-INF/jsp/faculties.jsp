@@ -138,7 +138,7 @@
                      alt="">
             </div>
             <div class="uk-width-medium-1-2">
-                <h1><fmt:message key="${fn:toLowerCase(fn:replace(facultyBean.faculty.name, ' ', '.'))}"/></h1>
+                <h1>${facultyBean.faculty.name}</h1>
 
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                     labore
@@ -226,7 +226,7 @@
     <c:otherwise>
     <div class="uk-grid ">
         <div class="uk-width-medium-1-2">
-            <h1><fmt:message key="${fn:toLowerCase(fn:replace(facultyBean.faculty.name, ' ', '.'))}"/></h1>
+            <h1>${facultyBean.faculty.name}</h1>
 
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                 labore
