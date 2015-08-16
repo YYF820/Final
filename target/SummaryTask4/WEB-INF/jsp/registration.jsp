@@ -205,22 +205,24 @@
                 <label id="accountName-label" class="control-label" for="accountName"></label>
                 <input aria-labelledby="accountName-label" id="accountName" name="accountName"
                        class="uk-width-1-1
-                       ${(sessionScope.registrationIsAccountNameEmpty == false && sessionScope.registrationIsAccountNameValid == true) && (sessionScope.registrationIsAccountNameExregistrationIsts == false || sessionScope.registrationIsAccountNameExregistrationIsts == null) ||
-                       (sessionScope.registrationIsAccountNameEmpty == null && sessionScope.registrationIsAccountNameValid == null && sessionScope.registrationIsAccountNameExregistrationIsts == null) ? 'uk-push-1-2' : ''}
+                       ${(sessionScope.registrationIsAccountNameEmpty == false && sessionScope.registrationIsAccountNameValid == true) && (sessionScope.registrationIsAccountNameExists == false || sessionScope.registrationIsAccountNameExists == null) ||
+                       (sessionScope.registrationIsAccountNameEmpty == null && sessionScope.registrationIsAccountNameValid == null && sessionScope.registrationIsAccountNameExists == null) ? 'uk-push-1-2' : ''}
                        uk-form-large uk-form-width-large
-                       ${sessionScope.registrationIsAccountNameEmpty == true || sessionScope.registrationIsAccountNameValid == false || sessionScope.registrationIsAccountNameExregistrationIsts == true ? 'uk-form-danger' : ''}
-                       ${sessionScope.registrationIsAccountNameEmpty == false && sessionScope.registrationIsAccountNameValid == true && (sessionScope.registrationIsAccountNameExregistrationIsts == false || sessionScope.registrationIsAccountNameExregistrationIsts == null) ? 'uk-form-success' : ''}"
+                       ${sessionScope.registrationIsAccountNameEmpty == true || sessionScope.registrationIsAccountNameValid == false || sessionScope.registrationIsAccountNameExists == true ? 'uk-form-danger' : ''}
+                       ${sessionScope.registrationIsAccountNameEmpty == false && sessionScope.registrationIsAccountNameValid == true && (sessionScope.registrationIsAccountNameExists == false || sessionScope.registrationIsAccountNameExists == null) ? 'uk-form-success' : ''}"
                        type="text" value="${sessionScope.registrationAccountName}" autocomplete="off"
                        placeholder="<fmt:message key="registration.field.email"/>">
             </div>
-            <c:if test="${sessionScope.registrationIsAccountNameEmpty == true || sessionScope.registrationIsAccountNameValid == false || sessionScope.registrationIsAccountNameExregistrationIsts == true}">
+            <c:if test="${sessionScope.registrationIsAccountNameEmpty == true ||
+            sessionScope.registrationIsAccountNameValid == false ||
+            sessionScope.registrationIsAccountNameExists == true}">
                 <div class="uk-width-medium-1-2 uk-animation-fade ">
                     <div class="uk-alert uk-width-1-1 " data-uk-alert>
                         <c:choose>
                             <c:when test="${sessionScope.registrationIsAccountNameEmpty == true}">
                                 <p class="uk-text-danger"><fmt:message key="registration.error.empty.email"/></p>
                             </c:when>
-                            <c:when test="${sessionScope.registrationIsAccountNameExregistrationIsts == true}">
+                            <c:when test="${sessionScope.registrationIsAccountNameExists == true}">
                                 <p class="uk-text-danger">This email is already in use.
                                     <a href="<c:url value="/login.html"/>" class="uk-text-success">Want to log in?</a>
                                 </p>

@@ -1,5 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.validation;
 
+import ua.nure.hanzha.SummaryTask4.bean.RegistrationBean;
 import ua.nure.hanzha.SummaryTask4.constants.Validations;
 
 import java.util.HashMap;
@@ -49,19 +50,18 @@ public class Validation {
     }
 
     public static Map<String, Boolean> validateRegistrationForm(
-            String firstName, String lastName, String patronymic,
-            String accountName, String city, String region, String password, String school) {
+            RegistrationBean registrationBean) {
 
         Map<String, Boolean> validations = new HashMap<>();
 
-        Boolean isFirstNameValid = validateFirstName(firstName);
-        Boolean isLastNameValid = validateLastName(lastName);
-        Boolean isPatronymicValid = validatePatronymic(patronymic);
-        Boolean isAccountNameValid = validateEmail(accountName);
-        Boolean isCityValid = validateCity(city);
-        Boolean isRegionValid = validateRegion(region);
-        Boolean isPasswordValid = validatePassword(password);
-        Boolean isSchoolValid = validateSchool(school);
+        Boolean isFirstNameValid = validateFirstName(registrationBean.getFirstName());
+        Boolean isLastNameValid = validateLastName(registrationBean.getLastName());
+        Boolean isPatronymicValid = validatePatronymic(registrationBean.getPatronymic());
+        Boolean isAccountNameValid = validateEmail(registrationBean.getAccountName());
+        Boolean isCityValid = validateCity(registrationBean.getCity());
+        Boolean isRegionValid = validateRegion(registrationBean.getRegion());
+        Boolean isPasswordValid = validatePassword(registrationBean.getPassword());
+        Boolean isSchoolValid = validateSchool(registrationBean.getSchool());
 
         validations.put(Validations.MAP_KEY_IS_FIRST_NAME_VALID, isFirstNameValid);
         validations.put(Validations.MAP_KEY_IS_LAST_NAME_VALID, isLastNameValid);
