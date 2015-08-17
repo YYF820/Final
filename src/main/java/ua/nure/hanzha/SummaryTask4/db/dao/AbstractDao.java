@@ -1,9 +1,11 @@
 package ua.nure.hanzha.SummaryTask4.db.dao;
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.entity.Entity;
 import ua.nure.hanzha.SummaryTask4.entity.SkeletonEntity;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.util.ClassName;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.List;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public abstract class AbstractDao<T extends SkeletonEntity> implements Dao<T> {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassName.getCurrentClassName());
 
     protected void insert(T entity, String sql, Connection connection) throws SQLException, CrudException {
         if (entity instanceof Entity) {

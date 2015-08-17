@@ -122,7 +122,8 @@
                     <div class="uk-container uk-container-center uk-width-8-10 uk-text-center uk-margin-top ">
                         <div class="uk-align-center uk-width-small-1-2 uk-margin-large-top">
                             <p class="uk-text-warning uk-text-large uk-text-middle"><i
-                                    class="uk-icon-exclamation-triangle uk-icon-large uk-text-warning"></i>&nbspSorry! You have
+                                    class="uk-icon-exclamation-triangle uk-icon-large uk-text-warning"></i>&nbspSorry!
+                                You have
                                 not entered the university this year.
                             </p>
                         </div>
@@ -130,7 +131,30 @@
                 </c:when>
                 <c:otherwise>
                     <div class="uk-width-medium-7-10 uk-text-center ">
-                        <%@include file="../jspf/finalSheetTable.jspf" %>
+                        <table class="uk-table  uk-table-hover uk-table-striped uk-table-condensed uk-animation-fade uk-panel-box uk-panel-box-primary">
+                            <caption>Final sheet</caption>
+                            <thead>
+                            <tr>
+                                <th><fmt:message key="faculty.name"/></th>
+                                <th><fmt:message key="last.name"/></th>
+                                <th><fmt:message key="first.name"/></th>
+                                <th><fmt:message key="patronymic"/></th>
+                                <th><fmt:message key="summary.marks"/></th>
+                                <th><fmt:message key="enter.status"/></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="uk-table-middle">
+                                <td>${requestScope.passedEntrantByUserId.facultyName}</td>
+                                <td>${requestScope.passedEntrantByUserId.lastName}</td>
+                                <td>${requestScope.passedEntrantByUserId.firstName}</td>
+                                <td>${requestScope.passedEntrantByUserId.patronymic}</td>
+                                <td>${requestScope.passedEntrantByUserId.sumOfMarks}</td>
+                                <td><fmt:message
+                                        key="${requestScope.passedEntrantByUserId.enterUniversityStatus}"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </c:otherwise>
             </c:choose>

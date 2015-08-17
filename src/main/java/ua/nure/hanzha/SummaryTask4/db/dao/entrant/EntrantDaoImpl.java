@@ -22,6 +22,7 @@ import java.util.List;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
+
     @Override
     protected void prepareForInsert(Entrant entity, PreparedStatement preparedStatement) throws SQLException {
         int k = 1;

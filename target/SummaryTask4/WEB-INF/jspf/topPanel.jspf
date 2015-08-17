@@ -15,13 +15,18 @@
                     <c:if test="${fn:split(language,'_')[0] == 'ru'}">
                         <img style="padding-top: 4px" src="<c:url value="/resources/img/russLocale.png"/>">
                     </c:if>
+                    <c:if test="${fn:split(language,'_')[0] == 'ua'}">
+                        <img style="padding-top: 4px" src="<c:url value="/resources/img/uaLocale.png"/>">
+                    </c:if>
                 </a>
 
                 <div class="uk-dropdown uk-dropdown-navbar" style="width: 63px">
                     <ul class="uk-nav uk-nav-navbar">
+                        <li><a onclick="setLocale('en');"><img src="<c:url value="/resources/img/enLocale.png"/>"></a>
+                        </li>
                         <li><a onclick="setLocale('ru');"><img src="<c:url value="/resources/img/russLocale.png"/>"></a>
                         </li>
-                        <li><a onclick="setLocale('en');"><img src="<c:url value="/resources/img/enLocale.png"/>"></a>
+                        <li><a onclick="setLocale('ua');"><img src="<c:url value="/resources/img/uaLocale.png"/>"></a>
                         </li>
                     </ul>
                 </div>
