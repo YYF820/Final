@@ -97,7 +97,6 @@ public class EditFacultyServlet extends HttpServlet {
                         } catch (DaoSystemException e) {
                             e.printStackTrace();
                         }
-                        cleanSession(session);
                         response.sendRedirect(Pages.FACULTIES_ADMIN_SERVLET);
                     }
                 }
@@ -128,13 +127,14 @@ public class EditFacultyServlet extends HttpServlet {
     }
 
     private boolean checkFacultyNameValid(HttpSession session, String facultyName) {
-        boolean isFacultyNameValid = Validation.validateFacultyName(facultyName);
-        if (!isFacultyNameValid) {
-            session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID, false);
-            return false;
-        } else {
-            session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID, true);
+        if (!facultyName.equals(EMPTY_PARAM)) {
+            boolean isFacultyNameValid = Validation.validateFacultyName(facultyName);
+            if (!isFacultyNameValid) {
+                session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID, false);
+                return false;
+            }
         }
+        session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID, true);
         return true;
     }
 
@@ -195,16 +195,6 @@ public class EditFacultyServlet extends HttpServlet {
         session.setAttribute(SessionAttribute.ADMIN_EDIT_FACULTY_NAME, facultyName);
         session.setAttribute(SessionAttribute.ADMIN_EDIT_TOTAL_SPOTS, totalSpots);
         session.setAttribute(SessionAttribute.ADMIN_EDIT_BUDGET_SPOTS, budgetSpots);
-    }
-
-    private void cleanSession(HttpSession session) {
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_IS_ALL_FIELDS_EMPTY);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_FACULTY_NAME);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_TOTAL_SPOTS);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_BUDGET_SPOTS);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_TOTAL_LOWER_BUDGET);
-        session.removeAttribute(SessionAttribute.ADMIN_FACULTY_FOR_EDIT);
     }
 
     private void cleanSessionPrg(HttpSession session) {

@@ -53,11 +53,11 @@
             <select id="totalSpots" class="uk-form-width-medium " name="totalSpots">
                 <option value="${sessionScope.adminAddTotalSpots}">
                     <c:choose>
-                        <c:when test="${sessionScope.adminEditTotalSpots eq '' || sessionScope.adminEditTotalSpots == null}">
+                        <c:when test="${sessionScope.adminEditTotalSpots eq '' || sessionScope.adminAddTotalSpots == null}">
                             <fmt:message key="faculties.admin.edit.select.total.spots"/>
                         </c:when>
                         <c:otherwise>
-                            ${sessionScope.adminEditTotalSpots}
+                            ${sessionScope.adminAddTotalSpots}
                         </c:otherwise>
                     </c:choose>
                 </option>
@@ -71,11 +71,11 @@
             <select id="budgetSpots" class="uk-form-width-medium" name="budgetSpots">
                 <option value="${sessionScope.adminAddBudgetSpots}">
                     <c:choose>
-                        <c:when test="${sessionScope.adminEditBudgetSpots eq '' || sessionScope.adminEditBudgetSpots == null}">
+                        <c:when test="${sessionScope.adminEditBudgetSpots eq '' || sessionScope.adminAddBudgetSpots == null}">
                             <fmt:message key="faculties.admin.edit.select.budget.spots"/>
                         </c:when>
                         <c:otherwise>
-                            ${sessionScope.adminEditBudgetSpots}
+                            ${sessionScope.adminAddBudgetSpots}
                         </c:otherwise>
                     </c:choose>
                 </option>

@@ -66,11 +66,11 @@ public class EntrantServiceImpl implements EntrantService {
     }
 
     @Override
-    public List<Integer> getAllIds() throws DaoSystemException {
+    public List<Integer> getAllIdsActiveStatus() throws DaoSystemException {
         return txManager.doInTransaction(new SqlCallable<List<Integer>>() {
             @Override
             public List<Integer> call(Connection connection) throws SQLException, CrudException {
-                return entrantDao.selectAllEntrantsId(connection);
+                return entrantDao.selectAllEntrantsIdStatusActive(connection);
             }
         });
     }

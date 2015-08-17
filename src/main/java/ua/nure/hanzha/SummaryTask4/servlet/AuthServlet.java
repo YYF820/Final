@@ -51,6 +51,7 @@ public class AuthServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
+        cleanBadAttributes(session);
         String email = request.getParameter(PARAM_ACCOUNT_NAME);
         String password = request.getParameter(PARAM_PASSWORD);
         session.setAttribute(SessionAttribute.LOGIN_ACCOUNT_NAME, email);
@@ -139,5 +140,8 @@ public class AuthServlet extends HttpServlet {
         return k;
     }
 
+    private void cleanBadAttributes(HttpSession session) {
+        session.removeAttribute(SessionAttribute.LOGIN_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD);
+    }
 
 }

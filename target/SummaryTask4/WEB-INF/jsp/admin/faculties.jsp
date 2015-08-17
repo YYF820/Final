@@ -65,14 +65,6 @@
                 </div>
 
                 <div class="uk-form-row uk-margin-top uk-text-left">
-                    <label id="sortByNumberOfBudgetSpotsAsc-label" class="uk-form-label"
-                           for="sortByNumberOfBudgetSpotsAsc-label">
-                        <input aria-labelledby="sortByNumberOfBudgetSpotsAsc-label" name="sort"
-                               value="byBudgetSpotsAsc" type="radio"
-                        ${sessionScope.adminSortType == 'byBudgetSpotsAsc' ? 'checked' : ''}>
-                        <fmt:message key="sort.by.budget.spots"/> <i class="uk-icon-sort-amount-asc"></i>
-                    </label>
-                    <br/>
                     <label id="sortByNumberOfBudgetSpotsDesc-label" class="uk-form-label"
                            for="sortByNumberOfBudgetSpotsDesc-label">
                         <input aria-labelledby="sortByNumberOfBudgetSpotsDesc-label" name="sort"
@@ -80,23 +72,31 @@
                         ${sessionScope.adminSortType == 'byBudgetSpotsDesc' ? 'checked' : ''}>
                         <fmt:message key="sort.by.budget.spots"/> <i class="uk-icon-sort-amount-desc"></i>
                     </label>
+                    <br/>
+                    <label id="sortByNumberOfBudgetSpotsAsc-label" class="uk-form-label"
+                           for="sortByNumberOfBudgetSpotsAsc-label">
+                        <input aria-labelledby="sortByNumberOfBudgetSpotsAsc-label" name="sort"
+                               value="byBudgetSpotsAsc" type="radio"
+                        ${sessionScope.adminSortType == 'byBudgetSpotsAsc' ? 'checked' : ''}>
+                        <fmt:message key="sort.by.budget.spots"/> <i class="uk-icon-sort-amount-asc"></i>
+                    </label>
                 </div>
 
                 <div class="uk-form-row uk-margin-top uk-text-left">
-                    <label id="sortByNumberOfAllSpotsAsc-label" class="uk-form-label"
-                           for="sortByNumberOfAllSpotsAsc-label">
-                        <input aria-labelledby="sortByNumberOfAllSpotsAsc-label" name="sort"
-                               value="byAllSpotsAsc" type="radio"
-                        ${sessionScope.adminSortType == 'byAllSpotsAsc' ? 'checked' : ''}>
-                        <fmt:message key="sort.by.total.spots"/> <i class="uk-icon-sort-amount-asc"></i>
-                    </label>
-                    <br/>
                     <label id="sortByNumberOfAllSpotsDesc-label" class="uk-form-label"
                            for="sortByNumberOfAllSpotsDesc-label">
                         <input aria-labelledby="sortByNumberOfAllSpotsDesc-label" name="sort"
                                value="byAllSpotsDesc" type="radio"
                         ${sessionScope.adminSortType == 'byAllSpotsDesc' ? 'checked' : ''}>
                         <fmt:message key="sort.by.total.spots"/> <i class="uk-icon-sort-amount-desc"></i>
+                    </label>
+                    <br/>
+                    <label id="sortByNumberOfAllSpotsAsc-label" class="uk-form-label"
+                           for="sortByNumberOfAllSpotsAsc-label">
+                        <input aria-labelledby="sortByNumberOfAllSpotsAsc-label" name="sort"
+                               value="byAllSpotsAsc" type="radio"
+                        ${sessionScope.adminSortType == 'byAllSpotsAsc' ? 'checked' : ''}>
+                        <fmt:message key="sort.by.total.spots"/> <i class="uk-icon-sort-amount-asc"></i>
                     </label>
                 </div>
                 <div class="uk-form-row uk-margin-top uk-text-left">

@@ -40,7 +40,7 @@ public class AddFacultyServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        cleanSessionPrg(session);
+        cleanSession(session);
         String[] subjectsIdToAdd = request.getParameterValues(PARAM_SUBJECTS_ID_TO_ADD);
         String facultyName = request.getParameter(PARAM_FACULTY_NAME);
         String totalSpots = request.getParameter(PARAM_TOTAL_SPOTS);
@@ -67,7 +67,6 @@ public class AddFacultyServlet extends HttpServlet {
                     Integer[] subjectsIdToAddForService = StringToDecimalArray.convertToInteger(subjectsIdToAdd);
                     try {
                         facultyAdminService.addFaculty(faculty, subjectsIdToAddForService);
-                        cleanSession(session);
                         response.sendRedirect(Pages.FACULTIES_ADMIN_SERVLET);
                     } catch (DaoSystemException e) {
                         if (e.getCause().getMessage().contains(ExceptionMessages.INSERT_FACULTY_SAME_NAME)) {
@@ -113,11 +112,6 @@ public class AddFacultyServlet extends HttpServlet {
             session.setAttribute(SessionAttribute.ADMIN_ADD_IS_FACULTY_NAME_VALID, true);
         }
         return true;
-    }
-
-    private void cleanSessionPrg(HttpSession session) {
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_TOTAL_LOWER_BUDGET);
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_DUPLICATE_FACULTY_NAME);
     }
 
     private void cleanSession(HttpSession session) {

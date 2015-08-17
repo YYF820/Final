@@ -122,8 +122,9 @@
                     <div class="uk-container uk-container-center uk-width-8-10 uk-text-center uk-margin-top ">
                         <div class="uk-align-center uk-width-small-1-2 uk-margin-large-top">
                             <p class="uk-text-warning uk-text-large uk-text-middle"><i
-                                    class="uk-icon-exclamation-triangle uk-icon-large uk-text-warning"></i>&nbspYou
-                                didn't pass this year.</p>
+                                    class="uk-icon-exclamation-triangle uk-icon-large uk-text-warning"></i>&nbspSorry! You have
+                                not entered the university this year.
+                            </p>
                         </div>
                     </div>
                 </c:when>

@@ -228,7 +228,7 @@ public class MailOperationsMap {
                                 //TODO: LOG4J
                             }
                         }
-                        response.sendRedirect(Pages.PUBLIC_FINAL_SHEET_SERVLET);
+                        response.sendRedirect(Pages.PUBLIC_FINAL_SHEET_SERVLET + "?page=1");
                         return null;
                     }
                 }

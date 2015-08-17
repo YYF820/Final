@@ -129,7 +129,6 @@
         </div>
     </u:ifAuthAs>
     <c:forEach var="facultyBean" items="${sessionScope.facultiesInfoBeansPagination}" varStatus="counter" step="1">
-    <c:out value="${sessionScope.facultiesPublicSortType}"/>
     <c:choose>
 
     <c:when test="${counter.index % 2 == 0}">

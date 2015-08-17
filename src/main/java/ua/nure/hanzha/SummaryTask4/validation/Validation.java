@@ -107,7 +107,7 @@ public class Validation {
     }
 
     public static boolean validateRegion(String region) {
-        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}(?:[' -][\\p{L}&&[^\\p{Lu}]]*+)?$");
+        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}(?:[' -][\\p{L}&&[^\\p{Lu}]]{2,14})$");
         Matcher m = p.matcher(region);
         return m.matches();
     }

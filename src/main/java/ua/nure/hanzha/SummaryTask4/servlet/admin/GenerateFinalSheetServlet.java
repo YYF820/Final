@@ -57,7 +57,7 @@ public class GenerateFinalSheetServlet extends HttpServlet {
             facultyEntrantService.summAllMarks();
             List<Faculty> allFaculties = facultyService.getAllFacultiesSubjectsMoreThanThree();
             List<FacultyFinalSheetBean> allFacultiesFinalSheetBeans = prepareFaculties(allFaculties);
-            List<Integer> enrolledEntrantsId = entrantService.getAllIds();
+            List<Integer> enrolledEntrantsId = entrantService.getAllIdsActiveStatus();
             List<EntrantFinalSheetBean> enrolledEntrantsFinalSheetBeans = prepareEntrants(enrolledEntrantsId, response);
             sortEnrolledEntrants(enrolledEntrantsFinalSheetBeans);
             List<EntrantFinalSheetBean> notPassedEntrants = new ArrayList<>();

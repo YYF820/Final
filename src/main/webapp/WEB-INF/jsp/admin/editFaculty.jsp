@@ -25,9 +25,7 @@
         <tbody>
         <tr class="uk-table-middle">
             <td>${sessionScope.adminFacultyForEdit.faculty.id} </td>
-            <td><fmt:message
-                    key="${fn:toLowerCase(fn:replace(sessionScope.adminFacultyForEdit.faculty.name,' ', '.'))}"/>
-            </td>
+            <td>${sessionScope.adminFacultyForEdit.faculty.name}</td>
             <td>${sessionScope.adminFacultyForEdit.faculty.totalSpots} </td>
             <td>${sessionScope.adminFacultyForEdit.faculty.budgetSpots}
             </td>

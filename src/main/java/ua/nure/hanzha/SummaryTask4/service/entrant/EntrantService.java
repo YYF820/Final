@@ -19,7 +19,7 @@ public interface EntrantService {
 
     void updateEntrantStatus(int statusId, int entrantId) throws DaoSystemException;
 
-    List<Integer> getAllIds() throws DaoSystemException;
+    List<Integer> getAllIdsActiveStatus() throws DaoSystemException;
 
     Integer getUserIdByEntrantId(int entrantId) throws DaoSystemException;
 

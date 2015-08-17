@@ -21,7 +21,7 @@ import java.util.List;
 public class PublicFinalSheetServlet extends HttpServlet {
 
     private static final String COMMAND_FIND_ALL_ENTRANTS = "findAllEntrants";
-
+    private static final String PARAM_PAGE = "page";
     private EntrantFinalSheetService entrantFinalSheetService;
 
     @Override
@@ -32,10 +32,21 @@ public class PublicFinalSheetServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
+        Integer page;
+        if (request.getParameter(PARAM_PAGE) != null) {
+            page = Integer.parseInt(request.getParameter(PARAM_PAGE));
+            request.setAttribute(PARAM_PAGE, page);
+        }
         try {
             List<ReadyFinalEntrantSheetBean> passedEntrants = entrantFinalSheetService.getPassedEntrants();
             session.setAttribute(SessionAttribute.PASSED_ENTRANTS, passedEntrants);
-            response.sendRedirect(Pages.PAGINATION_FINAL_SHEET + "?command=" + COMMAND_FIND_ALL_ENTRANTS);
+            if (request.getParameter(PARAM_PAGE) != null) {
+                page = Integer.parseInt(request.getParameter(PARAM_PAGE));
+                response.sendRedirect(Pages.PAGINATION_FINAL_SHEET + "?page=" + page + "&command=" + COMMAND_FIND_ALL_ENTRANTS);
+            } else {
+                response.sendRedirect(Pages.PAGINATION_FINAL_SHEET + "?command=" + COMMAND_FIND_ALL_ENTRANTS);
+
+            }
         } catch (DaoSystemException e) {
             if (e.getMessage().equals(ExceptionMessages.SELECT_EXCEPTION_MESSAGE)) {
                 request.setAttribute(RequestAttribute.IS_READY_FINAL_SHEET, false);

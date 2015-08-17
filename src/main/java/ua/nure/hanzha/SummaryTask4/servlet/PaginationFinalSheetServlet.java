@@ -68,15 +68,13 @@ public class PaginationFinalSheetServlet extends HttpServlet {
                         page = 1;
                         List<ReadyFinalEntrantSheetBean> passedEntrantsPagination = new ArrayList<>();
                         copyList(passedEntrants, passedEntrantsPagination, page, RECORDS_PER_PAGE);
-                        setUpSessionAttributes(session, request, numberOfPages, passedEntrantsPagination);
-                        request.setAttribute(RequestAttribute.COMMAND_FIND, COMMAND_FIND_ALL_ENTRANTS);
+                        setAttrFindAllCommand(session, request, numberOfPages, passedEntrantsPagination);
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                         requestDispatcher.forward(request, response);
                     } else {
                         List<ReadyFinalEntrantSheetBean> passedEntrantsPagination = new ArrayList<>();
                         copyList(passedEntrants, passedEntrantsPagination, page, RECORDS_PER_PAGE);
-                        setUpSessionAttributes(session, request, numberOfPages, passedEntrantsPagination);
-                        request.setAttribute(RequestAttribute.COMMAND_FIND, COMMAND_FIND_ALL_ENTRANTS);
+                        setAttrFindAllCommand(session, request, numberOfPages, passedEntrantsPagination);
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                         requestDispatcher.forward(request, response);
                     }
@@ -95,8 +93,10 @@ public class PaginationFinalSheetServlet extends HttpServlet {
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                         requestDispatcher.forward(request, response);
                     } catch (DaoSystemException e) {
+                        e.printStackTrace();
                         if (e.getMessage().equals(ExceptionMessages.SELECT_BY_ID_EXCEPTION_MESSAGE)) {
                             request.setAttribute(RequestAttribute.IS_PASSED_ENTRANT_FINAL_SHEET, false);
+                            request.setAttribute(RequestAttribute.COMMAND_FIND, COMMAND_FIND_ME);
                             RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                             requestDispatcher.forward(request, response);
                         } else {
@@ -121,20 +121,13 @@ public class PaginationFinalSheetServlet extends HttpServlet {
                         page = 1;
                         List<ReadyFinalEntrantSheetBean> searchedPassedEntrantsPagination = new ArrayList<>();
                         copyList(searchedPassedEntrants, searchedPassedEntrantsPagination, page, RECORDS_PER_PAGE);
-                        session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-                        session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-                        session.setAttribute(SessionAttribute.SEARCHED_PASSED_ENTRANTS, searchedPassedEntrants);
-                        session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, searchedPassedEntrantsPagination);
-                        request.setAttribute(RequestAttribute.COMMAND_FIND, SEARCH_COMMAND);
+                        setAttrSearchCommand(session, request, numberOfPages, searchedPassedEntrants, searchedPassedEntrantsPagination);
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                         requestDispatcher.forward(request, response);
                     } else {
                         List<ReadyFinalEntrantSheetBean> searchedPassedEntrantsPagination = new ArrayList<>();
                         copyList(searchedPassedEntrants, searchedPassedEntrantsPagination, page, RECORDS_PER_PAGE);
-                        session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-                        session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-                        session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, searchedPassedEntrantsPagination);
-                        request.setAttribute(RequestAttribute.COMMAND_FIND, SEARCH_COMMAND);
+                        setAttrSearchCommand(session, request, numberOfPages, searchedPassedEntrants, searchedPassedEntrantsPagination);
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                         requestDispatcher.forward(request, response);
                     }
@@ -188,22 +181,14 @@ public class PaginationFinalSheetServlet extends HttpServlet {
                                 page = 1;
                                 List<ReadyFinalEntrantSheetBean> searchedPassedEntrantsPagination = new ArrayList<>();
                                 copyList(searchedPassedEntrants, searchedPassedEntrantsPagination, page, RECORDS_PER_PAGE);
-                                session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-                                session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-                                session.setAttribute(SessionAttribute.SEARCHED_PASSED_ENTRANTS, searchedPassedEntrants);
-                                session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, searchedPassedEntrantsPagination);
-                                request.setAttribute(RequestAttribute.COMMAND_FIND, SEARCH_COMMAND);
+                                setAttrSearchCommand(session, request, numberOfPages, searchedPassedEntrants, searchedPassedEntrantsPagination);
                                 setUpFields(session, facultyName, lastName);
                                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                                 requestDispatcher.forward(request, response);
                             } else {
                                 List<ReadyFinalEntrantSheetBean> searchedPassedEntrantsPagination = new ArrayList<>();
                                 copyList(searchedPassedEntrants, searchedPassedEntrantsPagination, page, RECORDS_PER_PAGE);
-                                session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-                                session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-                                session.setAttribute(SessionAttribute.SEARCHED_PASSED_ENTRANTS, searchedPassedEntrants);
-                                session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, searchedPassedEntrantsPagination);
-                                request.setAttribute(RequestAttribute.COMMAND_FIND, SEARCH_COMMAND);
+                                setAttrSearchCommand(session, request, numberOfPages, searchedPassedEntrants, searchedPassedEntrantsPagination);
                                 setUpFields(session, facultyName, lastName);
                                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                                 requestDispatcher.forward(request, response);
@@ -232,22 +217,14 @@ public class PaginationFinalSheetServlet extends HttpServlet {
                                 page = 1;
                                 List<ReadyFinalEntrantSheetBean> searchedPassedEntrantsPagination = new ArrayList<>();
                                 copyList(searchedPassedEntrants, searchedPassedEntrantsPagination, page, RECORDS_PER_PAGE);
-                                session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-                                session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-                                session.setAttribute(SessionAttribute.SEARCHED_PASSED_ENTRANTS, searchedPassedEntrants);
-                                session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, searchedPassedEntrantsPagination);
-                                request.setAttribute(RequestAttribute.COMMAND_FIND, SEARCH_COMMAND);
+                                setAttrSearchCommand(session, request, numberOfPages, searchedPassedEntrants, searchedPassedEntrantsPagination);
                                 setUpFields(session, facultyName, lastName);
                                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                                 requestDispatcher.forward(request, response);
                             } else {
                                 List<ReadyFinalEntrantSheetBean> searchedPassedEntrantsPagination = new ArrayList<>();
                                 copyList(searchedPassedEntrants, searchedPassedEntrantsPagination, page, RECORDS_PER_PAGE);
-                                session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-                                session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-                                session.setAttribute(SessionAttribute.SEARCHED_PASSED_ENTRANTS, searchedPassedEntrants);
-                                session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, searchedPassedEntrantsPagination);
-                                request.setAttribute(RequestAttribute.COMMAND_FIND, SEARCH_COMMAND);
+                                setAttrSearchCommand(session, request, numberOfPages, searchedPassedEntrants, searchedPassedEntrantsPagination);
                                 setUpFields(session, facultyName, lastName);
                                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                                 requestDispatcher.forward(request, response);
@@ -276,22 +253,14 @@ public class PaginationFinalSheetServlet extends HttpServlet {
                                 page = 1;
                                 List<ReadyFinalEntrantSheetBean> searchedPassedEntrantsPagination = new ArrayList<>();
                                 copyList(searchedPassedEntrants, searchedPassedEntrantsPagination, page, RECORDS_PER_PAGE);
-                                session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-                                session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-                                session.setAttribute(SessionAttribute.SEARCHED_PASSED_ENTRANTS, searchedPassedEntrants);
-                                session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, searchedPassedEntrantsPagination);
-                                request.setAttribute(RequestAttribute.COMMAND_FIND, SEARCH_COMMAND);
+                                setAttrSearchCommand(session, request, numberOfPages, searchedPassedEntrants, searchedPassedEntrantsPagination);
                                 setUpFields(session, facultyName, lastName);
                                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                                 requestDispatcher.forward(request, response);
                             } else {
                                 List<ReadyFinalEntrantSheetBean> searchedPassedEntrantsPagination = new ArrayList<>();
                                 copyList(searchedPassedEntrants, searchedPassedEntrantsPagination, page, RECORDS_PER_PAGE);
-                                session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-                                session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
-                                session.setAttribute(SessionAttribute.SEARCHED_PASSED_ENTRANTS, searchedPassedEntrants);
-                                session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, searchedPassedEntrantsPagination);
-                                request.setAttribute(RequestAttribute.COMMAND_FIND, SEARCH_COMMAND);
+                                setAttrSearchCommand(session, request, numberOfPages, searchedPassedEntrants, searchedPassedEntrantsPagination);
                                 setUpFields(session, facultyName, lastName);
                                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.PUBLIC_FINAL_SHEET_HTML);
                                 requestDispatcher.forward(request, response);
@@ -318,13 +287,25 @@ public class PaginationFinalSheetServlet extends HttpServlet {
         }
     }
 
-    private void setUpSessionAttributes(HttpSession session, HttpServletRequest request,
-                                        int numberOfPages,
-                                        List<ReadyFinalEntrantSheetBean> passedEntrantsPagination) {
+    private void setAttrSearchCommand(HttpSession session,
+                                      HttpServletRequest request, int numberOfPages,
+                                      List<ReadyFinalEntrantSheetBean> searchedPassedEntrants,
+                                      List<ReadyFinalEntrantSheetBean> searchedPassedEntrantsPagination) {
+        session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
+        session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
+        session.setAttribute(SessionAttribute.SEARCHED_PASSED_ENTRANTS, searchedPassedEntrants);
+        session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, searchedPassedEntrantsPagination);
+        request.setAttribute(RequestAttribute.COMMAND_FIND, SEARCH_COMMAND);
+    }
+
+
+    private void setAttrFindAllCommand(HttpSession session, HttpServletRequest request,
+                                       int numberOfPages,
+                                       List<ReadyFinalEntrantSheetBean> passedEntrantsPagination) {
         session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
         session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
         session.setAttribute(SessionAttribute.PASSED_ENTRANTS_PAGINATION, passedEntrantsPagination);
-
+        request.setAttribute(RequestAttribute.COMMAND_FIND, COMMAND_FIND_ALL_ENTRANTS);
     }
 
     private boolean checkIsFormEmpty(HttpSession session, String... fields) {

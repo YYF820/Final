@@ -125,8 +125,8 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     }
 
     @Override
-    public List<Integer> selectAllEntrantsId(Connection connection) throws SQLException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.select.all.id"))) {
+    public List<Integer> selectAllEntrantsIdStatusActive(Connection connection) throws SQLException {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.select.all.id.status.active"))) {
             try (ResultSet resultSet = ps.executeQuery()) {
                 List<Integer> result = new ArrayList<>();
                 while (resultSet.next()) {
