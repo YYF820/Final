@@ -47,7 +47,7 @@ public class MailOperationsMap {
         return mailOperationsMap;
     }
 
-    public static void initMailOperationsMap(final HttpSession session, final HttpServletRequest request, final HttpServletResponse response) {
+    public static void initMailCallabeMap(final HttpSession session, final HttpServletRequest request, final HttpServletResponse response) {
         mailCallableMap = new HashMap<>();
         mailCallableMap.put(
                 COMMAND_VERIFY_ACCOUNT,

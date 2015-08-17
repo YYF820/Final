@@ -30,14 +30,14 @@ public class MailSenderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         String command = (String) session.getAttribute(SessionAttribute.COMMAND);
-        MailOperationsMap.initMailOperationsMap(session, request, response);
+        MailOperationsMap.initMailCallabeMap(session, request, response);
         mailManager.sendMail(MailOperationsMap.getMailCallable(command));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         String command = (String) session.getAttribute(SessionAttribute.COMMAND);
-        MailOperationsMap.initMailOperationsMap(session, request, response);
+        MailOperationsMap.initMailCallabeMap(session, request, response);
         mailManager.sendMail(MailOperationsMap.getMailCallable(command));
     }
 }

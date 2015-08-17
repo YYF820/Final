@@ -11,8 +11,10 @@ import ua.nure.hanzha.SummaryTask4.enums.Role;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
+import ua.nure.hanzha.SummaryTask4.servlet.callable.auth.AuthOperationsMap;
 import ua.nure.hanzha.SummaryTask4.validation.Validation;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,10 +34,6 @@ public class AuthServlet extends HttpServlet {
 
     private static final String ROLE_ADMIN = "admin";
 
-    private static final String ENTRANT_STATUS_NOT_VERIFIED = "notverified";
-    private static final String ENTRANT_STATUS_BLOCKED = "blocked";
-    private static final String ENTRANT_STATUS_ACTIVE = "active";
-
     private static final String PARAM_ACCOUNT_NAME = "accountName";
     private static final String PARAM_PASSWORD = "password";
 
@@ -46,6 +44,7 @@ public class AuthServlet extends HttpServlet {
     public void init() throws ServletException {
         userService = (UserService) getServletContext().getAttribute(AppAttribute.USER_SERVICE);
         entrantService = (EntrantService) getServletContext().getAttribute(AppAttribute.ENTRANT_SERVICE);
+        AuthOperationsMap.getInstance();
 
     }
 
@@ -56,10 +55,10 @@ public class AuthServlet extends HttpServlet {
         String password = request.getParameter(PARAM_PASSWORD);
         session.setAttribute(SessionAttribute.LOGIN_ACCOUNT_NAME, email);
         session.setAttribute(SessionAttribute.LOGIN_PASSWORD, password);
-        int numberOfEmptyFields = checkEmpty(email, password, session);
+        boolean isEmptyAnyField = checkEmpty(email, password, session);
         Map<String, Boolean> validationsEmailPassword = Validation.validateLoginAction(email, password);
-        int numberOfBadValidations = checkValidations(validationsEmailPassword, session);
-        if (numberOfEmptyFields != 0 || numberOfBadValidations != 0) {
+        boolean isValidFields = checkValidations(validationsEmailPassword, session);
+        if (isEmptyAnyField || !isValidFields) {
             response.sendRedirect(Pages.LOGIN_HTML);
         } else {
             try {
@@ -70,25 +69,10 @@ public class AuthServlet extends HttpServlet {
                         session.setAttribute(SessionAttribute.ACCOUNT, user);
                         response.sendRedirect(Pages.INDEX_HTML);
                     } else {
-                        int userId = user.getId();
-                        int statusId = entrantService.getStatusIdByUserId(userId);
+                        int statusId = entrantService.getStatusIdByUserId(user.getId());
                         String status = EntrantStatus.getEntrantStatusById(statusId).getName();
-                        switch (status) {
-                            case ENTRANT_STATUS_ACTIVE:
-                                session.setAttribute(SessionAttribute.ACCOUNT, user);
-                                response.sendRedirect(Pages.INDEX_HTML);
-                                break;
-                            case ENTRANT_STATUS_NOT_VERIFIED:
-                                session.setAttribute(SessionAttribute.LOGIN_IS_VERIFIED_ACCOUNT, false);
-                                response.sendRedirect(Pages.LOGIN_HTML);
-                                break;
-                            case ENTRANT_STATUS_BLOCKED:
-                                session.setAttribute(SessionAttribute.LOGIN_IS_BLOCKED, true);
-                                response.sendRedirect(Pages.LOGIN_HTML);
-                                break;
-                            default:
-                                throw new DaoSystemException("BAD ROLES");
-                        }
+                        AuthOperationsMap.initAuthCallableMap(session, response, user);
+                        AuthOperationsMap.getAuthCallable(status).call();
                     }
                 } else {
                     session.setAttribute(SessionAttribute.LOGIN_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD, false);
@@ -103,41 +87,42 @@ public class AuthServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect(Pages.LOGIN_HTML);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.LOGIN_HTML);
+        requestDispatcher.forward(request, response);
     }
 
-    private int checkValidations(Map<String, Boolean> validationsEmailPassword, HttpSession session) {
-        int k = 0;
+    private boolean checkValidations(Map<String, Boolean> validationsEmailPassword, HttpSession session) {
+        boolean isValid = true;
         if (!validationsEmailPassword.get(Validations.MAP_KEY_IS_ACCOUNT_NAME_VALID)) {
-            k++;
+            isValid = false;
             session.setAttribute(SessionAttribute.LOGIN_IS_ACCOUNT_NAME_VALID, false);
         } else {
             session.setAttribute(SessionAttribute.LOGIN_IS_ACCOUNT_NAME_VALID, true);
         }
         if (!validationsEmailPassword.get(Validations.MAP_KEY_IS_PASSWORD_VALID)) {
-            k++;
+            isValid = false;
             session.setAttribute(SessionAttribute.LOGIN_IS_PASSWORD_VALID, false);
         } else {
             session.setAttribute(SessionAttribute.LOGIN_IS_PASSWORD_VALID, true);
         }
-        return k;
+        return isValid;
     }
 
-    private int checkEmpty(String accountName, String password, HttpSession session) {
-        int k = 0;
+    private boolean checkEmpty(String accountName, String password, HttpSession session) {
+        boolean isEmpty = false;
         if (accountName.equals(EMPTY_PARAM)) {
+            isEmpty = true;
             session.setAttribute(SessionAttribute.LOGIN_IS_ACCOUNT_NAME_EMPTY, true);
-            k++;
         } else {
             session.setAttribute(SessionAttribute.LOGIN_IS_ACCOUNT_NAME_EMPTY, false);
         }
         if (password.equals(EMPTY_PARAM)) {
+            isEmpty = true;
             session.setAttribute(SessionAttribute.LOGIN_IS_PASSWORD_EMPTY, true);
-            k++;
         } else {
             session.setAttribute(SessionAttribute.LOGIN_IS_PASSWORD_EMPTY, false);
         }
-        return k;
+        return isEmpty;
     }
 
     private void cleanBadAttributes(HttpSession session) {
