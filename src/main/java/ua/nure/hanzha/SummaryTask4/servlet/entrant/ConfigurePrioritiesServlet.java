@@ -65,10 +65,11 @@ public class ConfigurePrioritiesServlet extends HttpServlet {
             session.setAttribute(SessionAttribute.FACULTIES_IS_ANY_PROBLEMS_UPDATE, false);
             response.sendRedirect(Pages.FACULTIES_HTML);
         } catch (DaoSystemException e) {
-            e.printStackTrace();
             if (e.getMessage().equals(ExceptionMessages.UPDATE_EXCEPTION_MESSAGE)) {
                 session.setAttribute(SessionAttribute.FACULTIES_IS_ANY_PROBLEMS_UPDATE, true);
                 response.sendRedirect(Pages.FACULTIES_HTML);
+            } else {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         }
     }

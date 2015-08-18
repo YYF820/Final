@@ -113,6 +113,7 @@ public class SessionAttribute {
     public static final String ADMIN_IS_SORTED_FACULTIES = "adminIsSortedFaculties";
     public static final String ADMIN_FACULTY_FOR_EDIT = "adminFacultyForEdit";
     public static final String ADMIN_SUBJECTS_TO_ADD = "adminSubjectsToAdd";
+    public static final String ADMIN_FACULTIES_IS_FROM_POST = "isFromPost";
 
     //======================== ADMIN EDIT FACULTY =====================================//
     public static final String ADMIN_EDIT_FACULTY_NAME = "adminEditFacultyName";

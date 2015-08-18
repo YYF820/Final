@@ -50,12 +50,12 @@ public class FacultiesServlet extends HttpServlet {
         try {
             List<Faculty> faculties = facultyService.getAllFaculties();
             for (Faculty faculty : faculties) {
-                int facultyId = faculty.getId();
                 List<Subject> subjects = new ArrayList<>();
                 try {
-                    subjects = subjectService.getAllByFacultyId(facultyId);
+                    subjects = subjectService.getAllByFacultyId(faculty.getId());
                 } catch (DaoSystemException e) {
                     if (e.getMessage().equals(ExceptionMessages.SQL_EXCEPTION)) {
+                        //SQLException problems connection etc.
                         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                 }

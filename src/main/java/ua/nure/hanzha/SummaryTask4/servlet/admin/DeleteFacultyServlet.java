@@ -30,7 +30,6 @@ public class DeleteFacultyServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        System.out.println(1);
         session.removeAttribute(SessionAttribute.ADMIN_DELETE_IS_VALID_PARAM_FACULTY_ID);
         String facultyId = request.getParameter(PARAM_FACULTY_ID);
         if (!checkFacultyIdIsValid(session, facultyId)) {

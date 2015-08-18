@@ -105,19 +105,19 @@ public class EditFacultyServlet extends HttpServlet {
     }
 
     private boolean checkEmpty(HttpSession session, String[] subjectsIdToAdd, String[] subjectsIdToDelete, String... fields) {
-        int k = 0;
+        int counterEmptyFields = 0;
         for (String field : fields) {
             if (field.equals(EMPTY_PARAM)) {
-                k++;
+                counterEmptyFields++;
             }
         }
         if (subjectsIdToAdd == null) {
-            k++;
+            counterEmptyFields++;
         }
         if (subjectsIdToDelete == null) {
-            k++;
+            counterEmptyFields++;
         }
-        if (k == fields.length + 2) {
+        if (counterEmptyFields == fields.length + 2) {
             session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_ALL_FIELDS_EMPTY, true);
             return true;
         } else {

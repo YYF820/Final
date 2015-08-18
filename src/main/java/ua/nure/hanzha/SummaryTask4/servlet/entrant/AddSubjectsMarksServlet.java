@@ -50,17 +50,15 @@ public class AddSubjectsMarksServlet extends HttpServlet {
             } else {
                 Entrant entrant = (Entrant) session.getAttribute(
                         SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_ENTRANT_TO_ADD_SUBJECTS_MARKS);
-                int entrantId = entrant.getId();
                 Double[] marks = StringToDecimalArray.convertToDouble(params);
                 for (int i = 0; i < subjectsToAdd.size(); i++) {
                     Mark mark = new Mark();
-                    mark.setEntrantId(entrantId);
+                    mark.setEntrantId(entrant.getId());
                     mark.setSubjectId(subjectsToAdd.get(i).getId());
                     mark.setMarkValue(marks[i]);
                     try {
                         markService.addMark(mark);
                     } catch (DaoSystemException e) {
-                        e.printStackTrace();
                         session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_SOMETHING_BAD, true);
                     }
                 }
@@ -81,7 +79,6 @@ public class AddSubjectsMarksServlet extends HttpServlet {
         }
         if (flag) {
             session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_EMPTY_MARKS, true);
-
         } else {
             session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_EMPTY_MARKS, false);
         }

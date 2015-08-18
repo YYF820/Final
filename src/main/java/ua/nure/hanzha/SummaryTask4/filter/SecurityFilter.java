@@ -55,6 +55,5 @@ public class SecurityFilter extends BaseFilter {
             }
         }
         filterChain.doFilter(request, response);
-
     }
 }

@@ -9,9 +9,10 @@ import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.enums.EntrantStatus;
 import ua.nure.hanzha.SummaryTask4.enums.Role;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
-import ua.nure.hanzha.SummaryTask4.exception.ServletSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
+import ua.nure.hanzha.SummaryTask4.servlet.callable.checkEmail.CheckEmailStatusCallable;
+import ua.nure.hanzha.SummaryTask4.servlet.callable.checkEmail.CheckEmailStatusOperationsMap;
 import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 import ua.nure.hanzha.SummaryTask4.validation.Validation;
 
@@ -31,13 +32,10 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
     private static final String EMPTY_PARAM = "";
 
     private static final String ROLE_ADMIN = "admin";
-    private static final String STATUS_ACTIVE = "active";
-    private static final String STATUS_BLOCKED = "blocked";
-    private static final String STATUS_NOT_VERIFIED = "notverified";
 
     private static final String PARAM_ACCOUNT_NAME = "accountName";
     private static final String PARAM_COMMAND = "command";
-
+    private static final String STATUS_BLOCKED = "blocked";
     private static final String SESSION_ATTRIBUTE_COMMAND = "command";
 
     private static final String COMMAND_VERIFY_ACCOUNT = "verifyAccount";
@@ -51,6 +49,7 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
     public void init() throws ServletException {
         userService = (UserService) getServletContext().getAttribute(AppAttribute.USER_SERVICE);
         entrantService = (EntrantService) getServletContext().getAttribute(AppAttribute.ENTRANT_SERVICE);
+        CheckEmailStatusOperationsMap.getInstance();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,34 +66,26 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
             try {
                 User userForResendVerifyMessage = userService.getByEmail(accountName);
                 String userRole = Role.getRole(userForResendVerifyMessage).getName();
-                if (userRole.equals(ROLE_ADMIN) && !command.equals(COMMAND_RESET_PASSWORD)) {
-                    System.out.println(1);
+                if (userRole.equals(ROLE_ADMIN) && command != null && !command.equals(COMMAND_RESET_PASSWORD)) {
                     session.setAttribute(SessionAttribute.RESEND_IS_ADMIN_TRYING_VERIFY_ACCOUNT, true);
                     response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                 } else {
                     int userId = userForResendVerifyMessage.getId();
                     Entrant entrantForResendVerifyMessage = entrantService.getByUserId(userId);
                     String entrantStatus = EntrantStatus.getEntrantStatus(entrantForResendVerifyMessage).getName();
-                    if (command.equals(COMMAND_VERIFY_ACCOUNT)) {
-                        switch (entrantStatus) {
-                            case STATUS_ACTIVE:
-                                session.setAttribute(SessionAttribute.RESEND_IS_ACTIVE_ACCOUNT, true);
-                                response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
-                                break;
-                            case STATUS_BLOCKED:
-                                session.setAttribute(SessionAttribute.RESEND_IS_BLOCKED_ACCOUNT, true);
-                                response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
-                                break;
-                            case STATUS_NOT_VERIFIED:
-                                session.setAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, entrantForResendVerifyMessage);
-                                session.setAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, userForResendVerifyMessage);
-                                session.setAttribute(SESSION_ATTRIBUTE_COMMAND, command);
-                                response.sendRedirect(Pages.CHECK_QUESTION_HTML);
-                                break;
-                            default:
-                                throw new ServletSystemException("No statuses are match smth wrong...");
+                    if (command != null && command.equals(COMMAND_VERIFY_ACCOUNT)) {
+                        CheckEmailStatusOperationsMap.initCheckEmailCallableMap(session, response,
+                                userForResendVerifyMessage, entrantForResendVerifyMessage);
+                        CheckEmailStatusCallable checkEmailStatusCallable =
+                                CheckEmailStatusOperationsMap.getCheckEmailStatusCallable(entrantStatus);
+                        if (checkEmailStatusCallable != null) {
+                            cleanSession(session);
+                            checkEmailStatusCallable.call(entrantStatus);
+                        } else {
+                            //UNSUPPORTED STATUS
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                         }
-                    } else if (command.equals(COMMAND_RESET_PASSWORD)) {
+                    } else if (command != null && command.equals(COMMAND_RESET_PASSWORD)) {
                         if (entrantStatus.equals(STATUS_BLOCKED)) {
                             session.setAttribute(SessionAttribute.RESEND_IS_BLOCKED_ACCOUNT, true);
                             response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
@@ -102,23 +93,24 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
                             session.setAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, entrantForResendVerifyMessage);
                             session.setAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, userForResendVerifyMessage);
                             session.setAttribute(SESSION_ATTRIBUTE_COMMAND, command);
+                            cleanSession(session);
                             response.sendRedirect(Pages.CHECK_QUESTION_HTML);
                         }
+                    } else {
+                        //UNSUPPORTED COMMAND
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                 }
             } catch (DaoSystemException e) {
-                e.printStackTrace();
                 if (e.getMessage().equals(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE) ||
                         e.getMessage().equals(ExceptionMessages.SELECT_BY_ID_EXCEPTION_MESSAGE)) {
                     session.setAttribute(SessionAttribute.RESEND_IS_USER_EXISTS_BY_ACCOUNT_NAME, false);
                     response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
+                } else {
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 }
-            } catch (ServletSystemException e) {
-                e.printStackTrace();
             }
         }
-
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -150,7 +142,8 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
                 SessionAttribute.RESEND_IS_ACTIVE_ACCOUNT,
                 SessionAttribute.RESEND_IS_BLOCKED_ACCOUNT,
                 SessionAttribute.RESEND_IS_ADMIN_TRYING_VERIFY_ACCOUNT,
-                SessionAttribute.RESEND_IS_USER_EXISTS_BY_ACCOUNT_NAME
+                SessionAttribute.RESEND_IS_USER_EXISTS_BY_ACCOUNT_NAME,
+                SessionAttribute.RESEND_ACCOUNT_NAME
         );
     }
 }

@@ -7,6 +7,7 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,10 +32,6 @@ public class PrepareInfoEditFacultyServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         subjectService = (SubjectService) getServletContext().getAttribute(AppAttribute.SUBJECT_SERVICE);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -78,17 +75,21 @@ public class PrepareInfoEditFacultyServlet extends HttpServlet {
             cleanSession(session);
             response.sendRedirect(Pages.FACULTY_EDIT_ADMIN_HTML);
         } catch (DaoSystemException e) {
-            e.printStackTrace();
+            //NO SUBJECTS IN DATABASE CrudException | SQLException problems connection etc.
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
     private void cleanSession(HttpSession session) {
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_IS_ALL_FIELDS_EMPTY);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_FACULTY_NAME);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_TOTAL_SPOTS);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_BUDGET_SPOTS);
-        session.removeAttribute(SessionAttribute.ADMIN_EDIT_TOTAL_LOWER_BUDGET);
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_ENOUGH_SUBJECTS);
+        SessionCleaner.cleanAttributes(
+                session,
+                SessionAttribute.ADMIN_EDIT_IS_ALL_FIELDS_EMPTY,
+                SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID,
+                SessionAttribute.ADMIN_EDIT_FACULTY_NAME,
+                SessionAttribute.ADMIN_EDIT_TOTAL_SPOTS,
+                SessionAttribute.ADMIN_EDIT_BUDGET_SPOTS,
+                SessionAttribute.ADMIN_EDIT_TOTAL_LOWER_BUDGET,
+                SessionAttribute.ADMIN_ADD_IS_ENOUGH_SUBJECTS
+        );
     }
 }

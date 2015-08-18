@@ -13,6 +13,7 @@ import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.mark.MarkService;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -88,7 +89,6 @@ public class EnoughSubjectsFilter extends BaseFilter {
                     }
                     EntrantAccountSettingsBean entrantAccountSettingsBean = new EntrantAccountSettingsBean();
                     entrantAccountSettingsBean.setSubjectMark(subjectMark);
-                    System.out.println(2);
                     session.setAttribute(SessionAttribute.ENTRANT_HOW_MANY_MORE_SUBJECTS_NEED, 0);
                     session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_BEAN, entrantAccountSettingsBean);
                     filterChain.doFilter(request, response);
@@ -112,18 +112,20 @@ public class EnoughSubjectsFilter extends BaseFilter {
     }
 
     private void cleanSession(HttpSession session) {
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_ALL_SUBJECTS);
-        session.removeAttribute(SessionAttribute.ENTRANT_NO_SUBJECTS_ADDED);
-        session.removeAttribute(SessionAttribute.ENTRANT_HOW_MANY_MORE_SUBJECTS_NEED);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_BEAN);
-
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_EMPTY_FORM);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_EMPTY_MARKS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_VALID_MARKS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_MARK_FIRST);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_MARK_SECOND);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_MARK_THIRD);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_CORRECT_NUMBER_OF_SUBJECTS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_SUBJECTS_TO_ADD);
+        SessionCleaner.cleanAttributes(
+                session,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_ALL_SUBJECTS,
+                SessionAttribute.ENTRANT_NO_SUBJECTS_ADDED,
+                SessionAttribute.ENTRANT_HOW_MANY_MORE_SUBJECTS_NEED,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_BEAN,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_EMPTY_FORM,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_EMPTY_MARKS,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_VALID_MARKS,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_MARK_FIRST,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_MARK_SECOND,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_MARK_THIRD,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_IS_CORRECT_NUMBER_OF_SUBJECTS,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_SUBJECTS_TO_ADD
+        );
     }
 }

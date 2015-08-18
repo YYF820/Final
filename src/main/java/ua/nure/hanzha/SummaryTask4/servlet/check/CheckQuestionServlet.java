@@ -5,6 +5,7 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.servlet.callable.checkQuestion.CheckQuestionCallable;
 import ua.nure.hanzha.SummaryTask4.servlet.callable.checkQuestion.CheckQuestionOperationsMap;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 import ua.nure.hanzha.SummaryTask4.validation.Validation;
 
 import javax.servlet.RequestDispatcher;
@@ -49,6 +50,7 @@ public class CheckQuestionServlet extends HttpServlet {
                 CheckQuestionOperationsMap.initCheckQuestionCallableMap(session, request, response);
                 CheckQuestionCallable checkQuestionCallable = CheckQuestionOperationsMap.getCheckQuestionCallable(command);
                 if (checkQuestionCallable != null) {
+                    cleanSession(session);
                     checkQuestionCallable.call();
                 } else {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -81,6 +83,14 @@ public class CheckQuestionServlet extends HttpServlet {
             session.setAttribute(SessionAttribute.CHECK_QUESTION_IS_SCHOOL_EMPTY, false);
         }
         return isSchoolNumberEmpty;
+    }
+
+    private void cleanSession(HttpSession session) {
+        SessionCleaner.cleanAttributes(
+                session,
+                SessionAttribute.CHECK_QUESTION_IS_SCHOOL_EMPTY,
+                SessionAttribute.CHECK_QUESTION_IS_SCHOOL_VALID,
+                SessionAttribute.CHECK_QUESTION_SCHOOL);
     }
 
 }

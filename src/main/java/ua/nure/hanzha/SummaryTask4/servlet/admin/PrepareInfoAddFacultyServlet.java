@@ -1,12 +1,12 @@
 package ua.nure.hanzha.SummaryTask4.servlet.admin;
 
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
-import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,22 +37,23 @@ public class PrepareInfoAddFacultyServlet extends HttpServlet {
             cleanSession(session);
             response.sendRedirect(Pages.FACULTY_ADD_ADMIN_HTML);
         } catch (DaoSystemException e) {
-            e.printStackTrace();
-            if (e.getMessage().equals(ExceptionMessages.SQL_EXCEPTION)) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            }
+            //NO SUBJECTS IN DATABASE CrudException | SQLException problems connection etc.
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
     private void cleanSession(HttpSession session) {
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_ANY_EMPTY_FIELDS);
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_FACULTY_NAME_VALID);
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_FACULTY_NAME);
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_TOTAL_SPOTS);
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_BUDGET_SPOTS);
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_ENOUGH_SUBJECTS);
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_TOTAL_LOWER_BUDGET);
-        session.removeAttribute(SessionAttribute.ADMIN_ADD_IS_DUPLICATE_FACULTY_NAME);
+        SessionCleaner.cleanAttributes(
+                session,
+                SessionAttribute.ADMIN_ADD_IS_ANY_EMPTY_FIELDS,
+                SessionAttribute.ADMIN_ADD_IS_FACULTY_NAME_VALID,
+                SessionAttribute.ADMIN_ADD_FACULTY_NAME,
+                SessionAttribute.ADMIN_ADD_TOTAL_SPOTS,
+                SessionAttribute.ADMIN_ADD_BUDGET_SPOTS,
+                SessionAttribute.ADMIN_ADD_IS_ENOUGH_SUBJECTS,
+                SessionAttribute.ADMIN_ADD_TOTAL_LOWER_BUDGET,
+                SessionAttribute.ADMIN_ADD_IS_DUPLICATE_FACULTY_NAME
+        );
     }
 
 }

@@ -49,6 +49,7 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
                 int entrantId = entrantForBlock.getId();
                 blockAccount(session, request, response, entrantId);
             } else {
+                cleanSession(session);
                 session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, true);
                 response.sendRedirect(Pages.RESET_PASSWORD_HTML);
             }
@@ -64,6 +65,7 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
                     session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, false);
                     response.sendRedirect(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML + "?" + PARAM_TICKET_RESET_PASSWORD + "=" + ticketResetPassword);
                 } else {
+                    cleanSession(session);
                     session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, true);
                     response.sendRedirect(Pages.RESET_PASSWORD_HTML);
                 }
@@ -93,5 +95,9 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
         } catch (DaoSystemException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private void cleanSession(HttpSession session) {
+        session.removeAttribute(SessionAttribute.CHECK_TICKET_IS_EMPTY);
     }
 }

@@ -11,7 +11,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by faffi-ubuntu on 05/08/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 05/08/15.
  */
 public class ResetPasswordCheckInvalidateFilter extends BaseFilter {
 

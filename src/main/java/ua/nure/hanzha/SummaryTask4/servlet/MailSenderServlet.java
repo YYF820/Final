@@ -1,9 +1,8 @@
 package ua.nure.hanzha.SummaryTask4.servlet;
 
-import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
-import ua.nure.hanzha.SummaryTask4.mail.MailManager;
-import ua.nure.hanzha.SummaryTask4.mail.MailOperationsMap;
+import ua.nure.hanzha.SummaryTask4.servlet.callable.mail.MailCallable;
+import ua.nure.hanzha.SummaryTask4.servlet.callable.mail.MailOperationsMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,11 +18,8 @@ import java.io.IOException;
 public class MailSenderServlet extends HttpServlet {
 
 
-    private MailManager mailManager;
-
     @Override
     public void init() throws ServletException {
-        mailManager = (MailManager) getServletContext().getAttribute(AppAttribute.MAIL_MANAGER);
         MailOperationsMap.getInstance();
     }
 
@@ -31,13 +27,25 @@ public class MailSenderServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String command = (String) session.getAttribute(SessionAttribute.COMMAND);
         MailOperationsMap.initMailCallabeMap(session, request, response);
-        mailManager.sendMail(MailOperationsMap.getMailCallable(command));
+        MailCallable mailCallable = MailOperationsMap.getMailCallable(command);
+        if (mailCallable != null) {
+            mailCallable.call();
+        } else {
+            //UNSUPPORTED MAIL SEND COMMAND
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         String command = (String) session.getAttribute(SessionAttribute.COMMAND);
         MailOperationsMap.initMailCallabeMap(session, request, response);
-        mailManager.sendMail(MailOperationsMap.getMailCallable(command));
+        MailCallable mailCallable = MailOperationsMap.getMailCallable(command);
+        if (mailCallable != null) {
+            mailCallable.call();
+        } else {
+            //UNSUPPORTED MAIL SEND COMMAND
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 }

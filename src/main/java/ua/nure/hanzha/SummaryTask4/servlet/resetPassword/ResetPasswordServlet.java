@@ -6,6 +6,7 @@ import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 import ua.nure.hanzha.SummaryTask4.validation.Validation;
 
 import javax.servlet.RequestDispatcher;
@@ -49,16 +50,12 @@ public class ResetPasswordServlet extends HttpServlet {
             response.sendRedirect(Pages.RESET_PASSWORD_HTML);
         } else {
             User userForUpdatePassword = (User) session.getAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
-            int userId = userForUpdatePassword.getId();
             String hashPassword = PasswordHash.createHash(password);
             try {
-                userService.updatePasswordById(userId, hashPassword);
+                userService.updatePasswordById(userForUpdatePassword.getId(), hashPassword);
                 session.setAttribute(SESSION_ATTRIBUTE_COMMAND, COMMAND_UPDATED_PASSWORD);
-                String firstName = userForUpdatePassword.getFirstName();
-                String lastName = userForUpdatePassword.getLastName();
-                String patronymic = userForUpdatePassword.getPatronymic();
-                String accountName = userForUpdatePassword.getEmail();
-                prepareInfoUpdatedPasswordEmail(request, firstName, lastName, patronymic, accountName);
+                prepareInfoUpdatedPasswordEmail(request, userForUpdatePassword);
+                cleanSession(session);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.MAIL_SENDER_SERVLET);
                 requestDispatcher.forward(request, response);
             } catch (DaoSystemException e) {
@@ -115,16 +112,24 @@ public class ResetPasswordServlet extends HttpServlet {
         return true;
     }
 
-    private void prepareInfoUpdatedPasswordEmail(HttpServletRequest request, String firstName, String lastName,
-                                                 String patronymic, String accountName) {
+    private void prepareInfoUpdatedPasswordEmail(HttpServletRequest request, User user) {
 
         MailInfoUpdatedPasswordOrBlockedBean mailInfoUpdatedPasswordOrBlockedBean = new MailInfoUpdatedPasswordOrBlockedBean();
 
-        mailInfoUpdatedPasswordOrBlockedBean.setFirstName(firstName);
-        mailInfoUpdatedPasswordOrBlockedBean.setLastName(lastName);
-        mailInfoUpdatedPasswordOrBlockedBean.setPatronymic(patronymic);
-        mailInfoUpdatedPasswordOrBlockedBean.setAccountName(accountName);
+        mailInfoUpdatedPasswordOrBlockedBean.setFirstName(user.getFirstName());
+        mailInfoUpdatedPasswordOrBlockedBean.setLastName(user.getLastName());
+        mailInfoUpdatedPasswordOrBlockedBean.setPatronymic(user.getPatronymic());
+        mailInfoUpdatedPasswordOrBlockedBean.setAccountName(user.getEmail());
 
         request.setAttribute(RequestAttribute.MAIL_INFO_UPDATED_PASSWORD_OR_BLOCKED_BEAN, mailInfoUpdatedPasswordOrBlockedBean);
+    }
+
+    private void cleanSession(HttpSession session) {
+        SessionCleaner.cleanAttributes(
+                session,
+                SessionAttribute.RESET_PASSWORD_IS_CONFIRM_PASSWORD_EMPTY,
+                SessionAttribute.RESET_PASSWORD_IS_SAME_PASSWORDS,
+                SessionAttribute.RESET_PASSWORD_IS_PASSWORD_VALID
+        );
     }
 }

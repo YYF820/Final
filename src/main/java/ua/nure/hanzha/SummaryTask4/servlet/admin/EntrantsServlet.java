@@ -24,6 +24,8 @@ import java.util.List;
 public class EntrantsServlet extends HttpServlet {
 
     private static final String PARAM_PAGE = "page";
+    private static final int RECORDS_PER_PAGE = 20;
+    private static int page = 1;
 
     private EntrantInfoAdminService entrantInfoAdminService;
 
@@ -35,18 +37,13 @@ public class EntrantsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<EntrantInfoAdminBean> entrants = entrantInfoAdminService.getEntrantsForAdmin();
-            int page = 1;
-            int recordsPerPage = 20;
             if (request.getParameter(PARAM_PAGE) != null)
                 page = Integer.parseInt(request.getParameter(PARAM_PAGE));
             int numberOfRecords = entrants.size();
-            int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
+            int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / RECORDS_PER_PAGE);
             List<EntrantInfoAdminBean> entrantsFixed = new ArrayList<>(20);
-            copyList(entrants, entrantsFixed, page, recordsPerPage);
-            HttpSession session = request.getSession(false);
-            session.setAttribute(SessionAttribute.ENTRANTS_ADMIN, entrantsFixed);
-            session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
-            session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
+            copyList(entrants, entrantsFixed, page, RECORDS_PER_PAGE);
+            setUpSessionAttr(request.getSession(false), entrantsFixed, numberOfPages, page);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.ENTRANTS_ADMIN_HTML);
             requestDispatcher.forward(request, response);
         } catch (DaoSystemException e) {
@@ -65,5 +62,12 @@ public class EntrantsServlet extends HttpServlet {
             System.out.println(i);
             entrantsPagination.add(entrants.get(i));
         }
+    }
+
+    private void setUpSessionAttr(HttpSession session, List<EntrantInfoAdminBean> entrantsFixed,
+                                  int numberOfPages, int page) {
+        session.setAttribute(SessionAttribute.ENTRANTS_ADMIN, entrantsFixed);
+        session.setAttribute(SessionAttribute.NUMBER_OF_PAGES, numberOfPages);
+        session.setAttribute(SessionAttribute.CURRENT_PAGE, page);
     }
 }

@@ -95,10 +95,4 @@ public class AddExtraMarksServlet extends HttpServlet {
         session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_EXTRA_POINTS, extraPoints);
     }
 
-    private void cleanSession(HttpSession session) {
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_EMPTY_FIELDS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_CERTIFICATE_POINTS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_EXTRA_POINTS);
-    }
-
 }

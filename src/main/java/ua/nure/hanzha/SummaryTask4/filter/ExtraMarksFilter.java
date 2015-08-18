@@ -10,6 +10,7 @@ import ua.nure.hanzha.SummaryTask4.enums.Role;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.extraMark.ExtraMarkService;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -67,13 +68,16 @@ public class ExtraMarksFilter extends BaseFilter {
     }
 
     private void cleanSession(HttpSession session) {
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_CERTIFICATE_POINTS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_CERTIFICATE_POINTS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_EXTRA_POINTS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_EXTRA_POINTS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_EMPTY_FIELDS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_ENTRANT_ID);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS);
-        session.removeAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_NO_EXTRA_MARKS);
+        SessionCleaner.cleanAttributes(
+                session,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_CERTIFICATE_POINTS,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_CERTIFICATE_POINTS,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_EXTRA_POINTS,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_EXTRA_POINTS,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_EMPTY_FIELDS,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_ENTRANT_ID,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS,
+                SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_NO_EXTRA_MARKS
+        );
     }
 }
