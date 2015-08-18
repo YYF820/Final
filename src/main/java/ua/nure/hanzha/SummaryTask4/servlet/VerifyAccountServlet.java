@@ -51,11 +51,9 @@ public class VerifyAccountServlet extends HttpServlet {
         } else {
             try {
                 User userForConfirm = userService.getByEmail(accountName);
-                int userId = userForConfirm.getId();
-                Entrant entrant = entrantService.getByUserId(userId);
-                int entrantId = entrant.getId();
+                Entrant entrant = entrantService.getByUserId(userForConfirm.getId());
                 int activeStatusId = EntrantStatus.ACTIVE.ordinal() + 1;
-                entrantService.updateEntrantStatus(activeStatusId, entrantId);
+                entrantService.updateEntrantStatus(activeStatusId, entrant.getId());
                 TicketsWriterReader.removePair(ticket);
                 request.setAttribute(SessionAttribute.VERIFY_ACCOUNT_ACCOUNT_NAME, accountName);
                 session.setAttribute(SessionAttribute.VERIFY_ACCOUNT_IS_VERIFIED_ACCOUNT, true);

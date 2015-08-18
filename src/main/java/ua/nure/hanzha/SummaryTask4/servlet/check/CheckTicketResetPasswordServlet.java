@@ -7,7 +7,6 @@ import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
-import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,66 +38,37 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        //cleanSession(session);
         Long counterBadTicketInserts = (Long) session.getAttribute(SessionAttribute.CHECK_TICKET_COUNTER_BAD_TICKET_INSERTS);
         session.setAttribute(SessionAttribute.CHECK_TICKET_COUNTER_BAD_TICKET_INSERTS, ++counterBadTicketInserts);
         if (counterBadTicketInserts == 3) {
             String ticketResetPassword = request.getParameter(PARAM_TICKET_RESET_PASSWORD);
             boolean checkEmpty = checkEmpty(session, ticketResetPassword);
-            if (checkEmpty) {
+            String hashTicketResetPassword = (String) session.getAttribute(SessionAttribute.CHECK_TICKET_HASH_TICKET_RESET_PASSWORD);
+            if (checkEmpty || !PasswordHash.validatePassword(ticketResetPassword, hashTicketResetPassword)) {
                 Entrant entrantForBlock = (Entrant) session.getAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
                 int entrantId = entrantForBlock.getId();
-                try {
-                    System.out.println(1);
-                    entrantService.updateEntrantStatus(STATUS_BLOCKED_ID, entrantId);
-                    session.invalidate();
-                    request.getSession(true).setAttribute(SessionAttribute.CHECK_TICKET_IS_BLOCKED_ACCOUNT, true);
-                    response.sendRedirect(Pages.RESET_PASSWORD_BLOCK_ACCOUNT);
-                } catch (DaoSystemException e) {
-                    e.printStackTrace();
-                }
+                blockAccount(session, request, response, entrantId);
             } else {
-                Entrant entrantForBlock = (Entrant) session.getAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
-                int entrantId = entrantForBlock.getId();
-                String hashTicketResetPassword = (String) session.getAttribute(SessionAttribute.CHECK_TICKET_HASH_TICKET_RESET_PASSWORD);
-                if (!PasswordHash.validatePassword(ticketResetPassword, hashTicketResetPassword)) {
-                    try {
-                        System.out.println(2);
-                        entrantService.updateEntrantStatus(STATUS_BLOCKED_ID, entrantId);
-                        session.invalidate();
-                        request.getSession(true).setAttribute(SessionAttribute.CHECK_TICKET_IS_BLOCKED_ACCOUNT, true);
-                        response.sendRedirect(Pages.RESET_PASSWORD_BLOCK_ACCOUNT);
-                    } catch (DaoSystemException e) {
-                        //TODO: no entrant by id, add 500 page maybe your account was deleted.
-                        e.printStackTrace();
-                    }
-                } else {
-                    System.out.println(3);
-                    session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, true);
-                    response.sendRedirect(Pages.RESET_PASSWORD_HTML);
-                }
+                session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, true);
+                response.sendRedirect(Pages.RESET_PASSWORD_HTML);
             }
         } else {
             String ticketResetPassword = request.getParameter(PARAM_TICKET_RESET_PASSWORD);
             session.setAttribute(SessionAttribute.CHECK_TICKET_TICKET_RESET_PASSWORD, ticketResetPassword);
             boolean checkEmpty = checkEmpty(session, ticketResetPassword);
             if (checkEmpty) {
-                System.out.println(4);
                 response.sendRedirect(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML + "?" + PARAM_TICKET_RESET_PASSWORD + "=" + ticketResetPassword);
             } else {
                 String hashTicketResetPassword = (String) session.getAttribute(SessionAttribute.CHECK_TICKET_HASH_TICKET_RESET_PASSWORD);
                 if (!PasswordHash.validatePassword(ticketResetPassword, hashTicketResetPassword)) {
-                    System.out.println(5);
                     session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, false);
                     response.sendRedirect(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML + "?" + PARAM_TICKET_RESET_PASSWORD + "=" + ticketResetPassword);
                 } else {
-                    System.out.println(6);
                     session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, true);
                     response.sendRedirect(Pages.RESET_PASSWORD_HTML);
                 }
             }
         }
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -113,12 +83,15 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
         return false;
     }
 
-    private void cleanSession(HttpSession session) {
-        SessionCleaner.cleanAttributes(
-                session,
-                SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT,
-                SessionAttribute.CHECK_TICKET_IS_EMPTY
-        );
-
+    private void blockAccount(HttpSession session, HttpServletRequest request,
+                              HttpServletResponse response, int entrantId) throws IOException {
+        try {
+            entrantService.updateEntrantStatus(STATUS_BLOCKED_ID, entrantId);
+            session.invalidate();
+            request.getSession(true).setAttribute(SessionAttribute.CHECK_TICKET_IS_BLOCKED_ACCOUNT, true);
+            response.sendRedirect(Pages.RESET_PASSWORD_BLOCK_ACCOUNT);
+        } catch (DaoSystemException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 }

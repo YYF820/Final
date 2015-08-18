@@ -70,7 +70,6 @@ public class AuthServlet extends HttpServlet {
                     } else {
                         int statusId = entrantService.getStatusIdByUserId(user.getId());
                         String status = EntrantStatus.getEntrantStatusById(statusId).getName();
-                        System.out.println(status);
                         AuthOperationsMap.initAuthCallableMap(session, response, user);
                         AuthOperationsMap.getAuthCallable(status).call();
                     }
