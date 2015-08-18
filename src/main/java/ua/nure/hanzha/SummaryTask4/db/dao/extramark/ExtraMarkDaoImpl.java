@@ -1,10 +1,12 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.extramark;
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.ExtraMark;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +22,7 @@ import java.util.List;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class ExtraMarkDaoImpl extends AbstractDao<ExtraMark> implements ExtraMarkDao {
+
     @Override
     protected void prepareForInsert(ExtraMark entity, PreparedStatement preparedStatement) throws SQLException {
         int k = 1;

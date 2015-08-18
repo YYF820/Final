@@ -1,5 +1,8 @@
 package ua.nure.hanzha.SummaryTask4.db.util;
 
+import org.apache.log4j.Logger;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +18,9 @@ import java.util.Properties;
  * @author Dmytro Hanzha
  */
 public final class SqlQueriesUtilities {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
+
     //===========================SINGLETON
     private static Properties properties;
 
@@ -31,7 +37,7 @@ public final class SqlQueriesUtilities {
             properties = new Properties();
             properties.load(in);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("loadSqlQueries : ", e);
         }
     }
 

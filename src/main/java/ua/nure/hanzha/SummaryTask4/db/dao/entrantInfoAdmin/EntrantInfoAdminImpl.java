@@ -13,7 +13,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by faffi-ubuntu on 06/08/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 06/08/15.
  */
 public class EntrantInfoAdminImpl extends AbstractDao<EntrantInfoAdminBean> implements EntrantInfoAdminDao {
     @Override

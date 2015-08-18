@@ -1,11 +1,13 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.subject;
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +23,9 @@ import java.util.List;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class SubjectDaoImpl extends AbstractDao<Subject> implements SubjectDao {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
+
     @Override
     protected void prepareForInsert(Subject entity, PreparedStatement preparedStatement) throws SQLException {
         int k = 1;
@@ -62,12 +67,16 @@ public class SubjectDaoImpl extends AbstractDao<Subject> implements SubjectDao {
 
     @Override
     public List<Subject> selectAllByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("subject.select.all.by.faculty.id"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("subject.select.all.by.faculty.id");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, facultyId);
+            LOGGER.trace("selectAllByFacultyId['{ " + ps.toString() + " }']");
             List<Subject> result = executeQuery(ps);
             if (result.size() > 0) {
                 return result;
             } else {
+                LOGGER.warn("Throw SELECT Exception, while selecting by facultyId : "
+                        + facultyId + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.SELECT_EXCEPTION_MESSAGE);
             }
         }

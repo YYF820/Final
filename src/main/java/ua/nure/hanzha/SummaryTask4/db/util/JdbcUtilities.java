@@ -1,9 +1,15 @@
 package ua.nure.hanzha.SummaryTask4.db.util;
 
+import org.apache.log4j.Logger;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public final class JdbcUtilities {
+
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
 
     private JdbcUtilities() {
 
@@ -14,7 +20,7 @@ public final class JdbcUtilities {
             try {
                 autoCloseable.close();
             } catch (Exception e) {
-                /* Log4j */
+                LOGGER.error("FAIL close " + autoCloseable + ", exception :" + e);
             }
         }
     }
@@ -24,7 +30,7 @@ public final class JdbcUtilities {
             try {
                 autoCloseable.close();
             } catch (Exception e) {
-                /* Log4j */
+                LOGGER.error("FAIL close " + autoCloseable + ", exception :" + e);
             }
         }
     }
@@ -34,7 +40,7 @@ public final class JdbcUtilities {
             try {
                 conn.rollback();
             } catch (SQLException e) {
-                /* Log4j */
+                LOGGER.error("FAIL rollback , exception :" + e);
             }
         }
     }

@@ -1,11 +1,13 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.faculty;
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Faculty;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +23,9 @@ import java.util.List;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
+
     @Override
     protected void prepareForInsert(Faculty entity, PreparedStatement preparedStatement) throws SQLException {
         int k = 1;
@@ -68,14 +73,15 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
 
     @Override
     public int selectIdByName(String name, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesUtilities.getSqlQuery("faculty.select.id.by.name"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("faculty.select.id.by.name");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, name);
+            LOGGER.trace("selectIdByName['{ " + ps.toString() + " }']");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                int result = rs.getInt(FieldsDataBase.ENTITY_ID);
-                return result;
+                return rs.getInt(FieldsDataBase.ENTITY_ID);
             } else {
+                LOGGER.warn("Throw SELECT Exception, while selecting id by name : " + name + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
             }
         }
@@ -83,12 +89,14 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
 
     @Override
     public List<Faculty> selectAllSubjectsMoreThanThree(Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesUtilities.getSqlQuery("faculty.function.select.only.with.subjects.more.than.three"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("faculty.function.select.only.with.subjects.more.than.three");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             List<Faculty> result = executeQuery(ps);
+            LOGGER.trace("selectAllSubjectsMoreThanThree['{ " + ps.toString() + " }']");
             if (result.size() > 0) {
                 return result;
             } else {
+                LOGGER.warn("Throw SELECT Exception, while selecting List<Faculty>, sql :" + sql);
                 throw new CrudException(ExceptionMessages.SELECT_EXCEPTION_MESSAGE);
             }
         }

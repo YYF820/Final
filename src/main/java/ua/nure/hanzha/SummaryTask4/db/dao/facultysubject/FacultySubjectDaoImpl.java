@@ -1,10 +1,12 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.facultysubject;
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.FacultySubject;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +23,8 @@ import java.util.List;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implements FacultySubjectDao {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
 
     @Override
     protected void prepareForInsert(FacultySubject entity, PreparedStatement preparedStatement) throws SQLException {

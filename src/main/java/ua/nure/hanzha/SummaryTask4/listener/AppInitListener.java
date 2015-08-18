@@ -1,6 +1,7 @@
 package ua.nure.hanzha.SummaryTask4.listener;
 
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.entrant.EntrantDaoImpl;
@@ -49,6 +50,7 @@ import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserServiceImpl;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReaderUtilities;
 
 import javax.servlet.ServletContext;
@@ -61,6 +63,8 @@ import java.io.File;
  *         Created by faffi-ubuntu on 19/07/15.
  */
 public class AppInitListener implements ServletContextListener {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
 
     private static final String PATH_TO_PROPERTIES_SQL = "WEB-INF/classes/sqlQueries.properties";
     private static final String PATH_TO_PROPERTIES_TICKETS = "WEB-INF/classes/tickets.properties";
@@ -80,7 +84,6 @@ public class AppInitListener implements ServletContextListener {
         setAuthorizationMap(servletContext, securityConfigName);
 
         setUpServices(servletContext, txManager);
-        System.out.println("INITIALAIZED");
     }
 
     @Override
@@ -140,7 +143,9 @@ public class AppInitListener implements ServletContextListener {
             File file = new File(this.getClass().getResource(fileName).toURI());
             AuthorizationMap authorizationMap = new XmlAuthorizationMap(file);
             servletContext.setAttribute(AppAttribute.AUTHORIZATION_MAP, authorizationMap);
+            LOGGER.debug("AuthorisationMap authorized");
         } catch (Exception ex) {
+            LOGGER.error("Can't load authorization map file: " + fileName, ex);
             throw new RuntimeException("Can't load authorization map file: '" + fileName + "'");
         }
     }

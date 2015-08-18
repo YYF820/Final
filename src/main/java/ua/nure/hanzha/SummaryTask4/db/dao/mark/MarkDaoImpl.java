@@ -1,11 +1,13 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.mark;
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Mark;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +23,8 @@ import java.util.List;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
 
     @Override
     protected void prepareForInsert(Mark entity, PreparedStatement preparedStatement) throws SQLException {
@@ -105,12 +109,16 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
 
     @Override
     public List<Mark> selectByMarkValue(double markValue, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("mark.select.by.value"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("mark.select.by.value");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setDouble(1, markValue);
+            LOGGER.trace("selectByMarkValue['{ " + ps.toString() + " }']");
             List<Mark> result = executeQuery(ps);
             if (result.size() > 0) {
                 return result;
             } else {
+                LOGGER.warn("Throw SELECT Exception, while selecting List<Mark> by markValue : "
+                        + markValue + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.SELECT_BY_ID_EXCEPTION_MESSAGE);
             }
         }

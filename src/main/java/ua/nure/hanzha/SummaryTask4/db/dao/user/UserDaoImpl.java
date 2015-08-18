@@ -1,11 +1,13 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.user;
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +23,8 @@ import java.util.List;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
 
     @Override
     protected void prepareForInsert(User entity, PreparedStatement preparedStatement) throws SQLException {
@@ -77,12 +81,15 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public User selectByEmail(String email, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("user.select.by.email"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("user.select.by.email");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, email);
+            LOGGER.trace("selectByEmail['{ " + ps.toString() + " }']");
             List<User> result = executeQuery(ps);
             if (result.size() > 0) {
                 return result.get(0);
             } else {
+                LOGGER.warn("Throw SELECT Exception, while selecting user by email : " + email + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
             }
         }
@@ -91,19 +98,25 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public boolean userExistsByEmail(String email, Connection connection) throws SQLException {
         try {
+            LOGGER.trace("userExistsByEmail [ASK] email :" + email);
             selectByEmail(email, connection);
+            LOGGER.trace("userExistsByEmail [ANSWER = YES] email :" + email);
             return true;
         } catch (CrudException e) {
+            LOGGER.warn("userExistsByEmail [ANSWER = NO] email :" + email);
             return false;
         }
     }
 
     @Override
     public void updatePasswordById(int id, String password, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("user.update.by.id"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("user.update.by.id");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, password);
             ps.setInt(2, id);
+            LOGGER.trace("updatePasswordById['{ " + ps.toString() + " }']");
             if (ps.executeUpdate() == 0) {
+                LOGGER.warn("Throw UPDATE Exception, while updating by id : " + id + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.UPDATE_EXCEPTION_MESSAGE);
             }
         }

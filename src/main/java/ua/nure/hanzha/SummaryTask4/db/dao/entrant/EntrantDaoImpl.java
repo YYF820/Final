@@ -1,11 +1,13 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.entrant;
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +24,8 @@ import java.util.List;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
 
     @Override
     protected void prepareForInsert(Entrant entity, PreparedStatement preparedStatement) throws SQLException {
@@ -75,15 +79,14 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
 
     @Override
     public int selectStatusByUserId(int userId, Connection connection) throws SQLException {
-        int entrantStatusId;
         try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("entrant.select.by.user.id"))) {
             ps.setInt(1, userId);
+            LOGGER.trace("selectStatusByUserId['{ " + ps.toString() + " }']");
             try (ResultSet resultSet = ps.executeQuery()) {
                 resultSet.next();
-                entrantStatusId = resultSet.getInt(FieldsDataBase.ENTRANT_STATUS);
+                return resultSet.getInt(FieldsDataBase.ENTRANT_STATUS);
             }
         }
-        return entrantStatusId;
     }
 
     @Override
@@ -116,32 +119,45 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
 
     @Override
     public void updateEntrantStatus(int statusId, int entrantId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("entrant.update.status"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("entrant.update.status");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, statusId);
             ps.setInt(2, entrantId);
+            LOGGER.trace("selectStatusByUserId['{ " + ps.toString() + " }']");
             if (ps.executeUpdate() == 0) {
+                LOGGER.warn("Throw UPDATE Exception, while update by entrantId : "
+                        + entrantId + " with  statusId : " + statusId + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.UPDATE_EXCEPTION_MESSAGE);
             }
         }
     }
 
     @Override
-    public List<Integer> selectAllEntrantsIdStatusActive(Connection connection) throws SQLException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("entrant.select.all.id.status.active"))) {
+    public List<Integer> selectAllEntrantsIdStatusActive(Connection connection) throws SQLException, CrudException {
+        String sql = SqlQueriesUtilities.getSqlQuery("entrant.select.all.id.status.active");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            LOGGER.trace("selectAllEntrantsIdStatusActive['{ " + ps.toString() + " }']");
             try (ResultSet resultSet = ps.executeQuery()) {
                 List<Integer> result = new ArrayList<>();
                 while (resultSet.next()) {
                     result.add(resultSet.getInt(FieldsDataBase.ENTITY_ID));
                 }
-                return result;
+                if (result.size() > 0) {
+                    return result;
+                } else {
+                    LOGGER.warn("Throw SELECT Exception,  sql :" + sql);
+                    throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
+                }
             }
         }
     }
 
     @Override
     public Integer selectUserIdByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("entrant.select.user.id.by.id"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("entrant.select.user.id.by.id");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, entrantId);
+            LOGGER.trace("selectAllEntrantsIdStatusActive['{ " + ps.toString() + " }']");
             Integer userId = null;
             try (ResultSet resultSet = ps.executeQuery()) {
                 if (resultSet.next()) {
@@ -151,6 +167,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
             if (userId != null) {
                 return userId;
             } else {
+                LOGGER.warn("Throw SELECT Exception, entrantId : " + entrantId + "  sql : " + sql);
                 throw new CrudException(ExceptionMessages.SELECT_BY_ID_EXCEPTION_MESSAGE);
             }
         }

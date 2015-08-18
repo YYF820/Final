@@ -1,5 +1,6 @@
 package ua.nure.hanzha.SummaryTask4.db.dao.facultyentrant;
 
+import org.apache.log4j.Logger;
 import ua.nure.hanzha.SummaryTask4.bean.EntrantFinalSheetBean;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
@@ -7,6 +8,7 @@ import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
 import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.FacultyEntrant;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 
 import java.sql.*;
 import java.util.*;
@@ -20,6 +22,8 @@ import java.util.*;
  *         Created by faffi-ubuntu on 28/07/15.
  */
 public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implements FacultyEntrantDao {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
 
     @Override
     protected void prepareForInsert(FacultyEntrant entity, PreparedStatement preparedStatement) throws SQLException {
@@ -108,13 +112,16 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
 
     @Override
     public List<FacultyEntrant> selectByPriority(int priority, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.priority"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.priority");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, priority);
+            LOGGER.trace("selectByPriority['{ " + ps.toString() + " }']");
             List<FacultyEntrant> result = executeQuery(ps);
             if (result.size() > 0) {
                 return result;
             } else {
+                LOGGER.warn("Throw SELECT Exception, while selecting List<FacultyEntrant> by priority : "
+                        + priority + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
             }
         }
@@ -122,13 +129,16 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
 
     @Override
     public List<FacultyEntrant> selectBySumMarks(double sumMarks, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.sum.marks"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.sum.marks");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setDouble(1, sumMarks);
+            LOGGER.trace("selectBySumMarks['{ " + ps.toString() + " }']");
             List<FacultyEntrant> result = executeQuery(ps);
             if (result.size() > 0) {
                 return result;
             } else {
+                LOGGER.warn("Throw SELECT Exception, while selecting List<FacultyEntrant> by sum_marks : "
+                        + sumMarks + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
             }
         }
@@ -136,14 +146,17 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
 
     @Override
     public List<FacultyEntrant> selectByPrioritySumMarks(int priority, double sumMarks, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.priority.and.sum.marks"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.priority.and.sum.marks");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, priority);
             ps.setDouble(2, sumMarks);
+            LOGGER.trace("selectByPrioritySumMarks['{ " + ps.toString() + " }']");
             List<FacultyEntrant> result = executeQuery(ps);
             if (result.size() > 0) {
                 return result;
             } else {
+                LOGGER.warn("Throw SELECT Exception, while selecting List<FacultyEntrant> by sum_marks and priority : "
+                        + sumMarks + " " + priority + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
             }
         }
@@ -151,24 +164,32 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
 
     @Override
     public List<Integer> selectAllPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.priority.by.entrant.id"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.priority.by.entrant.id");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, entrantId);
+            LOGGER.trace("selectAllPriorityByEntrantId['{ " + ps.toString() + " }']");
             List<Integer> result = new ArrayList<>();
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {
                     result.add(resultSet.getInt(FieldsDataBase.FACULTY_ENTRANT_PRIORITY));
                 }
             }
-            return result;
+            if (result.size() > 0) {
+                return result;
+            } else {
+                LOGGER.warn("Throw SELECT Exception, while selecting List<Integer> priorities by entrantId : "
+                        + entrantId + " sql :" + sql);
+                throw new CrudException(ExceptionMessages.SELECT_BY_SOME_VALUE_EXCEPTION_MESSAGE);
+            }
         }
     }
 
     @Override
     public Map<Integer, Integer> selectAllFacultyIdPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.faculty.id.priority.by.entrant.id"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.faculty.id.priority.by.entrant.id");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, entrantId);
+            LOGGER.trace("selectAllFacultyIdPriorityByEntrantId['{ " + ps.toString() + " }']");
             Map<Integer, Integer> result = new HashMap<>();
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -182,9 +203,10 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
 
     @Override
     public EntrantFinalSheetBean selectEntrantBeanByEntrantId(int entrantId, Connection connection) throws SQLException {
-        try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.entrant.id"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.entrant.id");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, entrantId);
+            LOGGER.trace("selectEntrantBeanByEntrantId['{ " + ps.toString() + " }']");
             Map<Integer, Integer> tempMap = new HashMap<>();
             EntrantFinalSheetBean entrantFinalSheetBean = null;
             try (ResultSet rs = ps.executeQuery()) {
@@ -213,11 +235,15 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
 
     @Override
     public void updatePriorityByFacultyIdEntrantId(int priority, int facultyId, int entrantId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("faculty_entrant.update.priority.by.faculty.id.entrant.id"))) {
+        String sql = SqlQueriesUtilities.getSqlQuery("faculty_entrant.update.priority.by.faculty.id.entrant.id");
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, priority);
             ps.setInt(2, facultyId);
             ps.setInt(3, entrantId);
+            LOGGER.trace("updatePriorityByFacultyIdEntrantId['{ " + ps.toString() + " }']");
             if (ps.executeUpdate() == 0) {
+                LOGGER.warn("Throw UPDATE Exception, while updating priority by faculty id : " + facultyId + " entrant id :"
+                        + entrantId + " sql :" + sql);
                 throw new CrudException(ExceptionMessages.UPDATE_EXCEPTION_MESSAGE);
             }
         }
@@ -226,6 +252,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public void sumAllMarks(Connection connection) throws SQLException {
         try (Statement st = connection.createStatement()) {
+            LOGGER.trace("Sum up all marks");
             st.executeQuery(SqlQueriesUtilities.getSqlQuery("faculty.entrant.summ.all.marks"));
         }
     }
