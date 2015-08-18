@@ -4,7 +4,7 @@ package ua.nure.hanzha.SummaryTask4.constants;
  * @author Dmytro Hanzha
  *         Created by faffi-ubuntu on 02/08/15.
  */
-public class SessionAttribute {
+public final class SessionAttribute {
 
     public static final String ACCOUNT = "account";
     public static final String COMMAND = "command";
@@ -205,4 +205,17 @@ public class SessionAttribute {
 
 
     public static final String SEARCHED_PASSED_ENTRANTS = "searchedPassedEntrants";
+
+    //====================================SUPPORT SHEET============================================//
+    public static final String SUPPORT_IS_ANY_EMPTY_FIELD = "supportIsAnyEmptyField";
+    public static final String SUPPORT_IS_VALID_ACCOUNT_NAME = "supportIsValidAccountName";
+    public static final String SUPPORT_IS_VALID_SUBJECT = "supportIsValidSubject";
+    public static final String SUPPORT_IS_VALID_MESSAGE = "supportIsValidMessage";
+    public static final String SUPPORT_ACCOUNT_NAME = "supportAccountName";
+    public static final String SUPPORT_SUBJECT = "supportSubject";
+    public static final String SUPPORT_MESSAGE = "supportMessage";
+
+    private SessionAttribute() {
+
+    }
 }

@@ -6,7 +6,7 @@ package ua.nure.hanzha.SummaryTask4.constants;
  * @author Dmytro Hanzha
  *         Created by faffi-ubuntu on 28/07/15.
  */
-public class FieldsDataBase {
+public final class FieldsDataBase {
 
     //===========================ENTITY FIELDS===================================
 
@@ -80,4 +80,8 @@ public class FieldsDataBase {
     public static final String ENTRANT_FINAL_SHEET_ENTRANT_ID = "entrant_id";
     public static final String ENTRANT_FINAL_SHEET_ENTER_UNIVERSITY_STATUS_ID = "enter_university_status_id";
     public static final String ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET = "number_of_sheet";
+
+    private FieldsDataBase() {
+
+    }
 }

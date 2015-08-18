@@ -11,7 +11,7 @@ public final class MailMessagesUtilities {
     }
 
     public static String createSubjectVerifyAccount() {
-        return "Подтверждение E-mail учетной записи UniversityAlpha.com";
+        return "Подтверждение E-mailSupport учетной записи UniversityAlpha.com";
     }
 
     public static String createSubjectRecoverPassword() {
@@ -37,7 +37,7 @@ public final class MailMessagesUtilities {
     public static String createMessageVerifyAccount(String firstName, String lastName, String patronymic, String confirmLink) {
         return "Здравствуйте, " + lastName + " " + firstName + " " + patronymic + ".\n\n"
                 + "Добро пожаловать на UniversityAlpha.com\n"
-                + "Если Вы еще не подтвердили действительность своего E-mail, настоятельно рекомендуем Вам сделать это сейчас.\n\n"
+                + "Если Вы еще не подтвердили действительность своего E-mailSupport, настоятельно рекомендуем Вам сделать это сейчас.\n\n"
                 + " " + confirmLink;
     }
 

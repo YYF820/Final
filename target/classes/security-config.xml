@@ -41,6 +41,21 @@
         <role name="admin"/>
         <role name="entrant"/>
     </action>
+
+    <action path="/support.html">
+        <role name="guest"/>
+        <role name="entrant"/>
+    </action>
+
+    <action path="/support.do">
+        <role name="guest"/>
+        <role name="entrant"/>
+    </action>
+
+    <action path="/supportMessageSent.html">
+        <role name="guest"/>
+        <role name="entrant"/>
+    </action>
     <!-- Pages for guest only -->
 
     <action path="/registration.html">

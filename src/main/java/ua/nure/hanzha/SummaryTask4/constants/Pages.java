@@ -4,7 +4,7 @@ package ua.nure.hanzha.SummaryTask4.constants;
  * @author Dmytro Hanzha
  *         Created by faffi-ubuntu on 31/07/15.
  */
-public class Pages {
+public final class Pages {
 
     public static final String INDEX_HTML = "/index.html";
     public static final String LOGIN_HTML = "/login.html";
@@ -41,5 +41,12 @@ public class Pages {
     public static final String PUBLIC_FINAL_SHEET_SERVLET = "/publicFinalSheet.do";
     public static final String PUBLIC_FINAL_SHEET_HTML = "/finalSheet.html";
 
+    public static final String SUPPORT_HTML = "/support.html";
+    public static final String SUPPORT_SERVLET = "/support.do";
+    public static final String SUPPORT_MESSAGE_SENT_HTML = "/supportMessageSent.html";
+
+    private Pages() {
+
+    }
 
 }

@@ -68,7 +68,7 @@ public class User extends Entity {
                 "First name: " + firstName +
                 "Last name : " + lastName +
                 "Patronymic: " + patronymic +
-                "E-mail: " + email +
+                "E-mailSupport: " + email +
                 "RoleId: " + roleId;
     }
 }

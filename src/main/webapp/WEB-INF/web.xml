@@ -158,6 +158,24 @@
         <url-pattern>/finalSheet.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SupportView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/support.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SupportView</servlet-name>
+        <url-pattern>/support.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SupportMessageSentView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/supportMessageSent.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SupportMessageSentView</servlet-name>
+        <url-pattern>/supportMessageSent.html</url-pattern>
+    </servlet-mapping>
+
 
     <!-- admin pages -->
     <servlet>
@@ -242,6 +260,7 @@
         <servlet-name>SetUpPrioritiesView</servlet-name>
         <url-pattern>/entrant/setUpPriorities.html</url-pattern>
     </servlet-mapping>
+
 
     <!--Servlets mapping-->
     <servlet>
@@ -495,6 +514,15 @@
     <servlet-mapping>
         <servlet-name>PaginationFinalSheetServlet</servlet-name>
         <url-pattern>/paginationFinalSheet.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SupportServlet</servlet-name>
+        <servlet-class>ua.nure.hanzha.SummaryTask4.servlet.SupportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SupportServlet</servlet-name>
+        <url-pattern>/support.do</url-pattern>
     </servlet-mapping>
 
     <!--Filters-->

@@ -4,7 +4,7 @@ package ua.nure.hanzha.SummaryTask4.constants;
  * @author Dmytro Hanhza
  *         Created by faffi-ubuntu on 02/08/15.
  */
-public class AppAttribute {
+public final class AppAttribute {
 
     public static final String USER_SERVICE = "userService";
     public static final String ENTRANT_SERVICE = "entrantService";
@@ -19,6 +19,9 @@ public class AppAttribute {
     public static final String ENTRANT_FINAL_SHEET_SERVICE = "entrantFinalSheetService";
 
     public static final String AUTHORIZATION_MAP = "authorizationMap";
-    public static final String MAIL_MANAGER = "mailManager";
+
+    private AppAttribute() {
+
+    }
 
 }

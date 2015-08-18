@@ -1,9 +1,10 @@
 package ua.nure.hanzha.SummaryTask4.constants;
 
 /**
- * Created by faffi-ubuntu on 31/07/15.
+ * @author Dmytro Hanzha
+ *         Created by faffi-ubuntu on 31/07/15.
  */
-public class Validations {
+public final class Validations {
     public static final String MAP_KEY_IS_ACCOUNT_NAME_VALID = "isEmailValid";
     public static final String MAP_KEY_IS_PASSWORD_VALID = "isPasswordValid";
 
@@ -14,4 +15,8 @@ public class Validations {
     public static final String MAP_KEY_IS_CITY_VALID = "isCityValid";
     public static final String MAP_KEY_IS_REGION_VALID = "isRegionValid";
     public static final String MAP_KEY_IS_SCHOOL_VALID = "isSchoolValid";
+
+    private Validations() {
+
+    }
 }

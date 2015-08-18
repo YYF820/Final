@@ -32,11 +32,11 @@
                 </div>
             </li>
             <u:ifAuthAs role="guest">
-                <li><a href=""><fmt:message key="top.panel.support"/> </a></li>
+                <li><a href="<c:url value="/support.html"/>"><fmt:message key="top.panel.support"/> </a></li>
 
             </u:ifAuthAs>
             <u:ifAuthAs role="entrant">
-                <li><a href=""><fmt:message key="top.panel.support"/></a></li>
+                <li><a href="<c:url value="/support.html"/>"><fmt:message key="top.panel.support"/></a></li>
             </u:ifAuthAs>
 
             <li class="uk-parent" data-uk-dropdown>
