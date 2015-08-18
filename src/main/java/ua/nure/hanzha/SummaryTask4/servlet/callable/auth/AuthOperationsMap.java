@@ -45,8 +45,8 @@ public class AuthOperationsMap {
                 new AuthCallable() {
                     @Override
                     public void call() throws IOException {
-                        session.setAttribute(SessionAttribute.ACCOUNT, user);
-                        response.sendRedirect(Pages.INDEX_HTML);
+                        session.setAttribute(SessionAttribute.LOGIN_IS_VERIFIED_ACCOUNT, false);
+                        response.sendRedirect(Pages.LOGIN_HTML);
                     }
                 }
         );
@@ -55,7 +55,7 @@ public class AuthOperationsMap {
                 new AuthCallable() {
                     @Override
                     public void call() throws IOException {
-                        session.setAttribute(SessionAttribute.LOGIN_IS_VERIFIED_ACCOUNT, false);
+                        session.setAttribute(SessionAttribute.LOGIN_IS_BLOCKED, true);
                         response.sendRedirect(Pages.LOGIN_HTML);
                     }
                 }
@@ -65,8 +65,8 @@ public class AuthOperationsMap {
                 new AuthCallable() {
                     @Override
                     public void call() throws IOException {
-                        session.setAttribute(SessionAttribute.LOGIN_IS_BLOCKED, true);
-                        response.sendRedirect(Pages.LOGIN_HTML);
+                        session.setAttribute(SessionAttribute.ACCOUNT, user);
+                        response.sendRedirect(Pages.INDEX_HTML);
                     }
                 }
         );

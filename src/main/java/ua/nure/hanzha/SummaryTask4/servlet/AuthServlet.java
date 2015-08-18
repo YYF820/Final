@@ -45,7 +45,6 @@ public class AuthServlet extends HttpServlet {
         userService = (UserService) getServletContext().getAttribute(AppAttribute.USER_SERVICE);
         entrantService = (EntrantService) getServletContext().getAttribute(AppAttribute.ENTRANT_SERVICE);
         AuthOperationsMap.getInstance();
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -71,6 +70,7 @@ public class AuthServlet extends HttpServlet {
                     } else {
                         int statusId = entrantService.getStatusIdByUserId(user.getId());
                         String status = EntrantStatus.getEntrantStatusById(statusId).getName();
+                        System.out.println(status);
                         AuthOperationsMap.initAuthCallableMap(session, response, user);
                         AuthOperationsMap.getAuthCallable(status).call();
                     }
@@ -127,6 +127,8 @@ public class AuthServlet extends HttpServlet {
 
     private void cleanBadAttributes(HttpSession session) {
         session.removeAttribute(SessionAttribute.LOGIN_IS_CORRECT_ACCOUNT_NAME_OR_PASSWORD);
+        session.removeAttribute(SessionAttribute.LOGIN_IS_VERIFIED_ACCOUNT);
+        session.removeAttribute(SessionAttribute.LOGIN_IS_BLOCKED);
     }
 
 }

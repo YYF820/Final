@@ -51,7 +51,6 @@ public class VerifyAccountServlet extends HttpServlet {
         } else {
             try {
                 User userForConfirm = userService.getByEmail(accountName);
-                System.out.println(userForConfirm);
                 int userId = userForConfirm.getId();
                 Entrant entrant = entrantService.getByUserId(userId);
                 int entrantId = entrant.getId();
