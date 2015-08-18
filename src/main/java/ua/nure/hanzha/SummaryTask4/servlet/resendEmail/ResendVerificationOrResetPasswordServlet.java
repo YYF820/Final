@@ -13,8 +13,8 @@ import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
 import ua.nure.hanzha.SummaryTask4.servlet.callable.checkEmail.CheckEmailStatusCallable;
 import ua.nure.hanzha.SummaryTask4.servlet.callable.checkEmail.CheckEmailStatusOperationsMap;
-import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleanerUtilities;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -118,7 +118,7 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
     }
 
     private boolean checkValidationAccountName(HttpSession session, String accountName) {
-        boolean isAccountNameValid = Validation.validateEmail(accountName);
+        boolean isAccountNameValid = ValidationUtilities.validateEmail(accountName);
         if (!isAccountNameValid) {
             session.setAttribute(SessionAttribute.RESEND_IS_ACCOUNT_NAME_VALID, false);
         }
@@ -135,7 +135,7 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
     }
 
     private void cleanSession(HttpSession session) {
-        SessionCleaner.cleanAttributes(
+        SessionCleanerUtilities.cleanAttributes(
                 session,
                 SessionAttribute.RESEND_IS_ACCOUNT_NAME_EMPTY,
                 SessionAttribute.RESEND_IS_ACCOUNT_NAME_VALID,

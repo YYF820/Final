@@ -13,7 +13,7 @@ import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.mark.MarkService;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
-import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleanerUtilities;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -112,7 +112,7 @@ public class EnoughSubjectsFilter extends BaseFilter {
     }
 
     private void cleanSession(HttpSession session) {
-        SessionCleaner.cleanAttributes(
+        SessionCleanerUtilities.cleanAttributes(
                 session,
                 SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_ALL_SUBJECTS,
                 SessionAttribute.ENTRANT_NO_SUBJECTS_ADDED,

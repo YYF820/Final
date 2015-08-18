@@ -3,7 +3,7 @@ package ua.nure.hanzha.SummaryTask4.servlet.check;
 import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
-import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
+import ua.nure.hanzha.SummaryTask4.db.util.HashUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
@@ -44,7 +44,7 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
             String ticketResetPassword = request.getParameter(PARAM_TICKET_RESET_PASSWORD);
             boolean checkEmpty = checkEmpty(session, ticketResetPassword);
             String hashTicketResetPassword = (String) session.getAttribute(SessionAttribute.CHECK_TICKET_HASH_TICKET_RESET_PASSWORD);
-            if (checkEmpty || !PasswordHash.validatePassword(ticketResetPassword, hashTicketResetPassword)) {
+            if (checkEmpty || !HashUtilities.validatePassword(ticketResetPassword, hashTicketResetPassword)) {
                 Entrant entrantForBlock = (Entrant) session.getAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
                 int entrantId = entrantForBlock.getId();
                 blockAccount(session, request, response, entrantId);
@@ -61,7 +61,7 @@ public class CheckTicketResetPasswordServlet extends HttpServlet {
                 response.sendRedirect(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML + "?" + PARAM_TICKET_RESET_PASSWORD + "=" + ticketResetPassword);
             } else {
                 String hashTicketResetPassword = (String) session.getAttribute(SessionAttribute.CHECK_TICKET_HASH_TICKET_RESET_PASSWORD);
-                if (!PasswordHash.validatePassword(ticketResetPassword, hashTicketResetPassword)) {
+                if (!HashUtilities.validatePassword(ticketResetPassword, hashTicketResetPassword)) {
                     session.setAttribute(SessionAttribute.CHECK_TICKET_IS_TICKET_RESET_PASSWORD_CORRECT, false);
                     response.sendRedirect(Pages.RESET_PASSWORD_MESSAGE_SENT_HTML + "?" + PARAM_TICKET_RESET_PASSWORD + "=" + ticketResetPassword);
                 } else {

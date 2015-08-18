@@ -7,18 +7,18 @@ import java.util.Properties;
 
 /**
  * <p/>
- * Class is using patter Singleton, which loads property file with method SqlQueriesHolder#initSqlQueriesHolder.
- * Method SqlQueriesHolder#getSqlQuery returns sql query by key.
+ * Class is using pattern Singleton, which loads property file with method SqlQueriesUtilities#initSqlQueriesHolder.
+ * Method SqlQueriesUtilities#getSqlQuery returns sql query by key.
  * <p/>
  * Created by faffi-ubuntu on 28/07/15.
  *
  * @author Dmytro Hanzha
  */
-public class SqlQueriesHolder {
+public final class SqlQueriesUtilities {
     //===========================SINGLETON
     private static Properties properties;
 
-    private SqlQueriesHolder() {
+    private SqlQueriesUtilities() {
 
     }
 
@@ -39,8 +39,4 @@ public class SqlQueriesHolder {
         return String.valueOf(properties.getProperty(key));
     }
 
-    public static void main(String[] args) {
-        SqlQueriesHolder.initSqlQueriesHolder("src/main/resources/sqlQueries.properties");
-        System.out.println(SqlQueriesHolder.getSqlQuery("users.select.all"));
-    }
 }

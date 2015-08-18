@@ -24,7 +24,7 @@ import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDao;
 import ua.nure.hanzha.SummaryTask4.db.dao.user.UserDaoImpl;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManager;
 import ua.nure.hanzha.SummaryTask4.db.transactionmanager.TransactionManagerImpl;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.security.AuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.security.XmlAuthorizationMap;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
@@ -49,7 +49,7 @@ import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserServiceImpl;
-import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReader;
+import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReaderUtilities;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -73,8 +73,8 @@ public class AppInitListener implements ServletContextListener {
 
         TransactionManager txManager = new TransactionManagerImpl();
 
-        SqlQueriesHolder.initSqlQueriesHolder(contextPath + PATH_TO_PROPERTIES_SQL);
-        TicketsWriterReader.initSqlQueriesHolder(contextPath + PATH_TO_PROPERTIES_TICKETS);
+        SqlQueriesUtilities.initSqlQueriesHolder(contextPath + PATH_TO_PROPERTIES_SQL);
+        TicketsWriterReaderUtilities.initSqlQueriesHolder(contextPath + PATH_TO_PROPERTIES_TICKETS);
 
         String securityConfigName = servletContext.getInitParameter(CONTEXT_PARAM_SECURITY_CONFIG);
         setAuthorizationMap(servletContext, securityConfigName);

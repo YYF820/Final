@@ -5,7 +5,7 @@ import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.mail.MailHelper;
-import ua.nure.hanzha.SummaryTask4.util.MailMessagesCreator;
+import ua.nure.hanzha.SummaryTask4.util.MailMessagesUtilities;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -62,8 +62,8 @@ public class MailOperationsMap {
                         String patronymic = mailInfoVerifyAccountBean.getPatronymic();
                         String accountName = mailInfoVerifyAccountBean.getAccountName();
                         String verifyLink = mailInfoVerifyAccountBean.getVerifyLink();
-                        String subjectMail = MailMessagesCreator.createSubjectVerifyAccount();
-                        String messageMail = MailMessagesCreator.createMessageVerifyAccount(firstName, lastName, patronymic, verifyLink);
+                        String subjectMail = MailMessagesUtilities.createSubjectVerifyAccount();
+                        String messageMail = MailMessagesUtilities.createMessageVerifyAccount(firstName, lastName, patronymic, verifyLink);
                         try {
                             MailHelper.sendMail(accountName, subjectMail, messageMail);
                             session.setAttribute(SessionAttribute.VERIFY_ACCOUNT_IS_MESSAGE_SENT, true);
@@ -87,8 +87,8 @@ public class MailOperationsMap {
                         String patronymic = mailInfoResetPasswordBean.getPatronymic();
                         String accountName = mailInfoResetPasswordBean.getAccountName();
                         String ticketRecoverPassword = mailInfoResetPasswordBean.getTicketResetPassword();
-                        String subjectMail = MailMessagesCreator.createSubjectRecoverPassword();
-                        String messageMail = MailMessagesCreator.createMessageRecoverPassword(firstName, lastName, patronymic, ticketRecoverPassword);
+                        String subjectMail = MailMessagesUtilities.createSubjectRecoverPassword();
+                        String messageMail = MailMessagesUtilities.createMessageRecoverPassword(firstName, lastName, patronymic, ticketRecoverPassword);
                         try {
                             MailHelper.sendMail(accountName, subjectMail, messageMail);
                             session.setAttribute(SessionAttribute.CHECK_TICKET_IS_MESSAGE_SENT, true);
@@ -111,8 +111,8 @@ public class MailOperationsMap {
                         String lastName = mailInfoUpdatedPasswordOrBlockedBean.getLastName();
                         String patronymic = mailInfoUpdatedPasswordOrBlockedBean.getPatronymic();
                         String accountName = mailInfoUpdatedPasswordOrBlockedBean.getAccountName();
-                        String subjectMail = MailMessagesCreator.createSubjectUpdatedPassword();
-                        String messageMail = MailMessagesCreator.createMessageUpdatedPassword(firstName, lastName, patronymic);
+                        String subjectMail = MailMessagesUtilities.createSubjectUpdatedPassword();
+                        String messageMail = MailMessagesUtilities.createMessageUpdatedPassword(firstName, lastName, patronymic);
                         try {
                             MailHelper.sendMail(accountName, subjectMail, messageMail);
                             session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_UPDATED_PASSWORD, true);
@@ -135,8 +135,8 @@ public class MailOperationsMap {
                         String lastName = mailInfoUpdatedPasswordOrBlockedBean.getLastName();
                         String patronymic = mailInfoUpdatedPasswordOrBlockedBean.getPatronymic();
                         String accountName = mailInfoUpdatedPasswordOrBlockedBean.getAccountName();
-                        String subjectMail = MailMessagesCreator.createSubjectBannedAccount();
-                        String messageMail = MailMessagesCreator.createMessageBannedAccount(firstName, lastName, patronymic);
+                        String subjectMail = MailMessagesUtilities.createSubjectBannedAccount();
+                        String messageMail = MailMessagesUtilities.createMessageBannedAccount(firstName, lastName, patronymic);
                         try {
                             MailHelper.sendMail(accountName, subjectMail, messageMail);
                             response.sendRedirect(Pages.ENTRANTS_ADMIN_SERVLET + "?page=" + currentPage);
@@ -158,8 +158,8 @@ public class MailOperationsMap {
                         String lastName = mailInfoUpdatedPasswordOrBlockedBean.getLastName();
                         String patronymic = mailInfoUpdatedPasswordOrBlockedBean.getPatronymic();
                         String accountName = mailInfoUpdatedPasswordOrBlockedBean.getAccountName();
-                        String subjectMail = MailMessagesCreator.createSubjectUnBannedAccount();
-                        String messageMail = MailMessagesCreator.createMessageUnBannedAccount(firstName, lastName, patronymic);
+                        String subjectMail = MailMessagesUtilities.createSubjectUnBannedAccount();
+                        String messageMail = MailMessagesUtilities.createMessageUnBannedAccount(firstName, lastName, patronymic);
                         try {
                             MailHelper.sendMail(accountName, subjectMail, messageMail);
                             response.sendRedirect(Pages.ENTRANTS_ADMIN_SERVLET + "?page=" + currentPage);
@@ -185,8 +185,8 @@ public class MailOperationsMap {
                                 String lastName = entrantFinalSheetBean.getLastName();
                                 String patronymic = entrantFinalSheetBean.getPatronymic();
                                 String accountName = entrantFinalSheetBean.getAccountName();
-                                String subjectMail = MailMessagesCreator.createSubjectEnterUniversity();
-                                String messageMail = MailMessagesCreator.createMessageCongratulationsBudgetEntrant(firstName, lastName, patronymic, facultyName);
+                                String subjectMail = MailMessagesUtilities.createSubjectEnterUniversity();
+                                String messageMail = MailMessagesUtilities.createMessageCongratulationsBudgetEntrant(firstName, lastName, patronymic, facultyName);
                                 try {
                                     MailHelper.sendMail(accountName, subjectMail, messageMail);
                                 } catch (MessagingException e) {
@@ -201,8 +201,8 @@ public class MailOperationsMap {
                                 String lastName = entrantFinalSheetBean.getLastName();
                                 String patronymic = entrantFinalSheetBean.getPatronymic();
                                 String accountName = entrantFinalSheetBean.getAccountName();
-                                String subjectMail = MailMessagesCreator.createSubjectEnterUniversity();
-                                String messageMail = MailMessagesCreator.createMessageCongratulationsContractEntrant(firstName, lastName, patronymic, facultyName);
+                                String subjectMail = MailMessagesUtilities.createSubjectEnterUniversity();
+                                String messageMail = MailMessagesUtilities.createMessageCongratulationsContractEntrant(firstName, lastName, patronymic, facultyName);
                                 try {
                                     MailHelper.sendMail(accountName, subjectMail, messageMail);
                                 } catch (MessagingException e) {
@@ -216,8 +216,8 @@ public class MailOperationsMap {
                             String lastName = notPassedEntrant.getLastName();
                             String patronymic = notPassedEntrant.getPatronymic();
                             String accountName = notPassedEntrant.getAccountName();
-                            String subjectMail = MailMessagesCreator.createSubjectEnterUniversity();
-                            String messageMail = MailMessagesCreator.createMessageNotPassedEntrant(firstName, lastName, patronymic);
+                            String subjectMail = MailMessagesUtilities.createSubjectEnterUniversity();
+                            String messageMail = MailMessagesUtilities.createMessageNotPassedEntrant(firstName, lastName, patronymic);
                             try {
                                 MailHelper.sendMail(accountName, subjectMail, messageMail);
                             } catch (MessagingException e) {

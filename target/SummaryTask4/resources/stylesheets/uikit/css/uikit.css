@@ -3604,7 +3604,7 @@ input:not([type]).uk-form-large {
     height: auto;
 }
 
-/* Validation states
+/* ValidationUtilities states
  * Using !important to keep the selector simple
  ========================================================================== */
 /*

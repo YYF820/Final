@@ -10,20 +10,23 @@ import java.util.Random;
 
 /*
  * PBKDF2 salted password hashing.
- *
- * Created by faffi-ubuntu on 28/07/15.
  */
-public class PasswordHash {
+public final class HashUtilities {
+
     public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
-
     // The following constants may be changed without breaking existing hashes.
-    public static final int SALT_BYTE_SIZE = 24;
-    public static final int HASH_BYTE_SIZE = 24;
-    public static final int PBKDF2_ITERATIONS = 1000;
+    private static final int SALT_BYTE_SIZE = 24;
+    private static final int HASH_BYTE_SIZE = 24;
+    private static final int PBKDF2_ITERATIONS = 1000;
+    private static final int ITERATION_INDEX = 0;
+    private static final int SALT_INDEX = 1;
+    private static final int PBKDF2_INDEX = 2;
+    private static final String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String numbers = "0123456789";
 
-    public static final int ITERATION_INDEX = 0;
-    public static final int SALT_INDEX = 1;
-    public static final int PBKDF2_INDEX = 2;
+    private HashUtilities() {
+
+    }
 
     /**
      * Returns a salted PBKDF2 hash of the password.
@@ -160,8 +163,6 @@ public class PasswordHash {
     }
 
     public static String randomPassword(int length) {
-        final String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        final String numbers = "0123456789";
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length - 1; i++)
@@ -169,14 +170,4 @@ public class PasswordHash {
         sb.append(numbers.charAt(rnd.nextInt(numbers.length())));
         return sb.toString().toLowerCase();
     }
-
-    /**
-     * Tests the basic functionality of the PasswordHash class
-     *
-     * @param args ignored
-     */
-    public static void main(String[] args) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        System.out.println(PasswordHash.createHash("ganzha-2000@gmail.com"));
-    }
-
 }

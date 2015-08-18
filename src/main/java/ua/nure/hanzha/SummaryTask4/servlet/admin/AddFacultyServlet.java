@@ -7,8 +7,8 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Faculty;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
-import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArray;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArrayUtilities;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -64,7 +64,7 @@ public class AddFacultyServlet extends HttpServlet {
                     response.sendRedirect(Pages.FACULTY_ADD_ADMIN_HTML);
                 } else {
                     Faculty faculty = prepareForCreate(facultyName, totalSpotsInt, budgetSpotsInt);
-                    Integer[] subjectsIdToAddForService = StringToDecimalArray.convertToInteger(subjectsIdToAdd);
+                    Integer[] subjectsIdToAddForService = StringToDecimalArrayUtilities.convertToInteger(subjectsIdToAdd);
                     try {
                         facultyAdminService.addFaculty(faculty, subjectsIdToAddForService);
                         response.sendRedirect(Pages.FACULTIES_ADMIN_SERVLET);
@@ -104,7 +104,7 @@ public class AddFacultyServlet extends HttpServlet {
             session.setAttribute(SessionAttribute.ADMIN_ADD_IS_FACULTY_NAME_VALID, true);
             return true;
         }
-        boolean isFacultyNameValid = Validation.validateFacultyName(facultyName);
+        boolean isFacultyNameValid = ValidationUtilities.validateFacultyName(facultyName);
         if (!isFacultyNameValid) {
             session.setAttribute(SessionAttribute.ADMIN_ADD_IS_FACULTY_NAME_VALID, false);
             return false;

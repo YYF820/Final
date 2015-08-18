@@ -10,7 +10,7 @@ import ua.nure.hanzha.SummaryTask4.enums.Role;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.extraMark.ExtraMarkService;
-import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleanerUtilities;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -68,7 +68,7 @@ public class ExtraMarksFilter extends BaseFilter {
     }
 
     private void cleanSession(HttpSession session) {
-        SessionCleaner.cleanAttributes(
+        SessionCleanerUtilities.cleanAttributes(
                 session,
                 SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_CERTIFICATE_POINTS,
                 SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_CERTIFICATE_POINTS,

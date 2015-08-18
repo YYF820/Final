@@ -3,7 +3,11 @@ package ua.nure.hanzha.SummaryTask4.db.util;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class JdbcUtils {
+public final class JdbcUtilities {
+
+    private JdbcUtilities() {
+
+    }
 
     public static void closeQuietly(AutoCloseable autoCloseable) {
         if (autoCloseable != null) {

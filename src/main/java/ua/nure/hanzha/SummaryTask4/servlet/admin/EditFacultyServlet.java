@@ -8,8 +8,8 @@ import ua.nure.hanzha.SummaryTask4.entity.Faculty;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
-import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArray;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArrayUtilities;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -82,8 +82,8 @@ public class EditFacultyServlet extends HttpServlet {
                         response.sendRedirect(Pages.FACULTY_EDIT_ADMIN_HTML);
                     } else {
                         prepareInfoBeforeEdit(facultyForEdit, facultyName, totalSpots, budgetSpots);
-                        Integer[] subjectsIdToAddForService = StringToDecimalArray.convertToInteger(subjectsIdToAdd);
-                        Integer[] subjectsIdToDeleteForService = StringToDecimalArray.convertToInteger(subjectsIdToDelete);
+                        Integer[] subjectsIdToAddForService = StringToDecimalArrayUtilities.convertToInteger(subjectsIdToAdd);
+                        Integer[] subjectsIdToDeleteForService = StringToDecimalArrayUtilities.convertToInteger(subjectsIdToDelete);
                         try {
                             if (subjectsIdToAddForService != null && subjectsIdToDeleteForService != null) {
                                 facultyAdminService.editFacultyInfoWithSubjects(facultyForEdit, subjectsIdToAddForService, subjectsIdToDeleteForService);
@@ -128,7 +128,7 @@ public class EditFacultyServlet extends HttpServlet {
 
     private boolean checkFacultyNameValid(HttpSession session, String facultyName) {
         if (!facultyName.equals(EMPTY_PARAM)) {
-            boolean isFacultyNameValid = Validation.validateFacultyName(facultyName);
+            boolean isFacultyNameValid = ValidationUtilities.validateFacultyName(facultyName);
             if (!isFacultyNameValid) {
                 session.setAttribute(SessionAttribute.ADMIN_EDIT_IS_FACULTY_NAME_VALID, false);
                 return false;

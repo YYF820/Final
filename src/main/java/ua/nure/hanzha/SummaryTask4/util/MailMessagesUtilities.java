@@ -4,7 +4,12 @@ package ua.nure.hanzha.SummaryTask4.util;
  * @author Dmytro Hanzha
  *         Created by faffi-ubuntu on 16/08/15.
  */
-public class MailMessagesCreator {
+public final class MailMessagesUtilities {
+
+    private MailMessagesUtilities() {
+
+    }
+
     public static String createSubjectVerifyAccount() {
         return "Подтверждение E-mail учетной записи UniversityAlpha.com";
     }

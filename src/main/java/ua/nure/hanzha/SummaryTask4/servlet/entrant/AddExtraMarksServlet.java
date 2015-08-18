@@ -6,7 +6,7 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.ExtraMark;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.extraMark.ExtraMarkService;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -75,13 +75,13 @@ public class AddExtraMarksServlet extends HttpServlet {
     //check if fields are valid and set up session attribute for PRG
     private boolean checkIsValidFields(HttpSession session, String certificatePoints, String extraPoints) {
         boolean isValidFields = true;
-        if (!Validation.validateCertificatePoints(certificatePoints)) {
+        if (!ValidationUtilities.validateCertificatePoints(certificatePoints)) {
             isValidFields = false;
             session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_CERTIFICATE_POINTS, false);
         } else {
             session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_CERTIFICATE_POINTS, true);
         }
-        if (!Validation.validateExtraPoints(extraPoints)) {
+        if (!ValidationUtilities.validateExtraPoints(extraPoints)) {
             isValidFields = false;
             session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_EXTRA_MARKS_IS_VALID_EXTRA_POINTS, false);
         } else {

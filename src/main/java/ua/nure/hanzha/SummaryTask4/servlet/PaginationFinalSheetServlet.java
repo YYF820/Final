@@ -5,7 +5,7 @@ import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.service.entrantFinalSheet.EntrantFinalSheetService;
 import ua.nure.hanzha.SummaryTask4.servlet.callable.finalSheet.FinalSheetOperationsMap;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -94,13 +94,13 @@ public class PaginationFinalSheetServlet extends HttpServlet {
         boolean isValidLastName = true;
         boolean isValidFacultyName = true;
         if (!lastName.equals(EMPTY_PARAM)) {
-            isValidLastName = Validation.validateLastName(lastName);
+            isValidLastName = ValidationUtilities.validateLastName(lastName);
             if (!isValidLastName) {
                 session.setAttribute(SessionAttribute.FINAL_SHEET_IS_VALID_LAST_NAME, false);
             }
         }
         if (!facultyName.equals(EMPTY_PARAM)) {
-            isValidFacultyName = Validation.validateFacultyName(facultyName);
+            isValidFacultyName = ValidationUtilities.validateFacultyName(facultyName);
             if (!isValidFacultyName) {
                 session.setAttribute(SessionAttribute.FINAL_SHEET_IS_VALID_FACULTY_NAME, false);
             }

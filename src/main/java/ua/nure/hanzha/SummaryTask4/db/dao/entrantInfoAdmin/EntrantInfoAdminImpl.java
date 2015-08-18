@@ -3,7 +3,7 @@ package ua.nure.hanzha.SummaryTask4.db.dao.entrantInfoAdmin;
 import ua.nure.hanzha.SummaryTask4.bean.EntrantInfoAdminBean;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
 import java.sql.Connection;
@@ -44,7 +44,7 @@ public class EntrantInfoAdminImpl extends AbstractDao<EntrantInfoAdminBean> impl
     @Override
     public List<EntrantInfoAdminBean> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("entrant.info.admin.select.all"),
+                SqlQueriesUtilities.getSqlQuery("entrant.info.admin.select.all"),
                 connection
         );
     }

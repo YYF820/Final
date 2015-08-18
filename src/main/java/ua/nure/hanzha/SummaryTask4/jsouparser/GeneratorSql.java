@@ -4,7 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
+import ua.nure.hanzha.SummaryTask4.db.util.HashUtilities;
 
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -81,8 +81,8 @@ public class GeneratorSql {
             List<String> infoEntrants = pair.getValue();
             final int prime_email = 31;
             BigInteger randomNumbersForEmail = BigInteger.valueOf(pair.getKey() * prime_email + 1);
-            String password = PasswordHash.randomPassword(8);
-            String hashPassword = PasswordHash.createHash(password);
+            String password = HashUtilities.randomPassword(8);
+            String hashPassword = HashUtilities.createHash(password);
             String emailGenarated = "entrant" + randomNumbersForEmail + "@gmail.com";
             pwUsers.println(
                     "INSERT INTO Users VALUES (DEFAULT, \'" +
@@ -95,7 +95,7 @@ public class GeneratorSql {
         }
         pwUsers.println(
                 "INSERT INTO Users VALUES (DEFAULT, \'" +
-                        PasswordHash.createHash("t9dnb2mq") + "\', \'" +
+                        HashUtilities.createHash("t9dnb2mq") + "\', \'" +
                         "Dmitriy" + "\', \'" +
                         "Ganzha" + "\', \'" +
                         "Dmytrievich" + "\', \'" +

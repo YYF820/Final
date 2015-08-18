@@ -3,7 +3,7 @@ package ua.nure.hanzha.SummaryTask4.db.dao.subject;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
@@ -46,7 +46,7 @@ public class SubjectDaoImpl extends AbstractDao<Subject> implements SubjectDao {
     public void deleteById(int id, Connection connection) throws SQLException, CrudException {
         deleteById(
                 id,
-                SqlQueriesHolder.getSqlQuery("subject.delete.by.id"),
+                SqlQueriesUtilities.getSqlQuery("subject.delete.by.id"),
                 connection
         );
     }
@@ -55,14 +55,14 @@ public class SubjectDaoImpl extends AbstractDao<Subject> implements SubjectDao {
     public Subject selectById(int id, Connection connection) throws SQLException, CrudException {
         return selectById(
                 id,
-                SqlQueriesHolder.getSqlQuery("subject.select.by.id"),
+                SqlQueriesUtilities.getSqlQuery("subject.select.by.id"),
                 connection
         );
     }
 
     @Override
     public List<Subject> selectAllByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("subject.select.all.by.faculty.id"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("subject.select.all.by.faculty.id"))) {
             ps.setInt(1, facultyId);
             List<Subject> result = executeQuery(ps);
             if (result.size() > 0) {
@@ -77,7 +77,7 @@ public class SubjectDaoImpl extends AbstractDao<Subject> implements SubjectDao {
     public void insert(Subject entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
-                SqlQueriesHolder.getSqlQuery("subject.insert"),
+                SqlQueriesUtilities.getSqlQuery("subject.insert"),
                 connection
         );
     }
@@ -86,7 +86,7 @@ public class SubjectDaoImpl extends AbstractDao<Subject> implements SubjectDao {
     public void update(Subject entity, Connection connection) throws SQLException, CrudException {
         update(
                 entity,
-                SqlQueriesHolder.getSqlQuery("subject.update"),
+                SqlQueriesUtilities.getSqlQuery("subject.update"),
                 connection
         );
     }
@@ -94,7 +94,7 @@ public class SubjectDaoImpl extends AbstractDao<Subject> implements SubjectDao {
     @Override
     public List<Subject> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("subject.select.all"),
+                SqlQueriesUtilities.getSqlQuery("subject.select.all"),
                 connection
         );
     }

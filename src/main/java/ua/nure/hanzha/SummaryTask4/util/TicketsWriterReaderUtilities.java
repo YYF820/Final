@@ -12,21 +12,22 @@ import java.util.Properties;
  * @author Dmytro Hanzha
  *         Created by faffi-ubuntu on 02/08/15.
  */
-public class TicketsWriterReader {
+public final class TicketsWriterReaderUtilities {
 
     private static final String BACK_UP_SH_PATH = "/home/faffi-ubuntu/IdeaProjects/SummaryTask4/sh/backUpTickets.sh";
+
     //===========================SINGLETON
     private static Properties properties;
     private static File file;
     private static String ticketsConfirmAccountPath;
 
-    private TicketsWriterReader() {
+    private TicketsWriterReaderUtilities() {
 
     }
 
     public static void initSqlQueriesHolder(String ticketsConfirmAccountPath) {
         file = new File(ticketsConfirmAccountPath);
-        TicketsWriterReader.ticketsConfirmAccountPath = ticketsConfirmAccountPath;
+        TicketsWriterReaderUtilities.ticketsConfirmAccountPath = ticketsConfirmAccountPath;
         loadTickets(ticketsConfirmAccountPath);
     }
 

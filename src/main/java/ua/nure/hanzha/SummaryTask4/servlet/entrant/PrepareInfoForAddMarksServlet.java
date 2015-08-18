@@ -3,7 +3,7 @@ package ua.nure.hanzha.SummaryTask4.servlet.entrant;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
-import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArray;
+import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArrayUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +33,7 @@ public class PrepareInfoForAddMarksServlet extends HttpServlet {
             if (!isCorrectNumberOfSubjects) {
                 response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_SUBJECTS_HTML);
             } else {
-                Integer[] subjectsIdToAddInt = StringToDecimalArray.convertToInteger(subjectsIdToAdd);
+                Integer[] subjectsIdToAddInt = StringToDecimalArrayUtilities.convertToInteger(subjectsIdToAdd);
                 List<Subject> subjectsToAdd = prepareSubjects(session, subjectsIdToAddInt);
                 session.setAttribute(SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_SUBJECTS_TO_ADD, subjectsToAdd);
                 response.sendRedirect(Pages.ENTRANT_ACCOUNT_SETTINGS_ADD_MARKS_HTML);

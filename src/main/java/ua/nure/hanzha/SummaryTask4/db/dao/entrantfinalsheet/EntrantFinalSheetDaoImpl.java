@@ -4,7 +4,7 @@ import ua.nure.hanzha.SummaryTask4.bean.ReadyFinalEntrantSheetBean;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.EntrantFinalSheet;
 import ua.nure.hanzha.SummaryTask4.enums.EnterUniversityStatus;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
@@ -57,7 +57,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     public void deleteByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException {
         deleteById(
                 facultyId,
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.delete.by.faculty.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.delete.by.faculty.id"),
                 connection
         );
     }
@@ -66,7 +66,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     public void deleteByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         deleteById(
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.delete.by.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.delete.by.entrant.id"),
                 connection
         );
     }
@@ -76,7 +76,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
         deleteByDoubleId(
                 facultyId,
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.delete.by.faculty.id.and.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.delete.by.faculty.id.and.entrant.id"),
                 connection
         );
     }
@@ -85,7 +85,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     public List<EntrantFinalSheet> selectByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException {
         return selectByIdMultiRows(
                 facultyId,
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.faculty.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.select.by.faculty.id"),
                 connection
         );
     }
@@ -94,7 +94,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     public List<EntrantFinalSheet> selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         return selectByIdMultiRows(
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.select.by.entrant.id"),
                 connection
         );
     }
@@ -104,7 +104,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
         return selectByDoubleId(
                 facultyId,
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.faculty.id.and.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.select.by.faculty.id.and.entrant.id"),
                 connection
         );
     }
@@ -112,7 +112,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     @Override
     public List<EntrantFinalSheet> selectByEnterUniversityStatusId(int enterUniversityStatusId, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.enter_university_status_id"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.select.by.enter_university_status_id"))) {
             ps.setInt(1, enterUniversityStatusId);
             List<EntrantFinalSheet> result = executeQuery(ps);
             if (result.size() > 0) {
@@ -126,7 +126,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     @Override
     public List<EntrantFinalSheet> selectByNumberOfSheet(int numberOfSheet, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.number_of_sheet"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.select.by.number_of_sheet"))) {
             ps.setInt(1, numberOfSheet);
             List<EntrantFinalSheet> result = executeQuery(ps);
             if (result.size() > 0) {
@@ -140,7 +140,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     @Override
     public List<EntrantFinalSheet> selectByEnterUniversityStatusIdAndNumberOfSheet(int enterUniversityStatusId, int numberOfSheet, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.by.enter_university_status_id.and.number_of_sheet"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.select.by.enter_university_status_id.and.number_of_sheet"))) {
             ps.setInt(1, enterUniversityStatusId);
             ps.setInt(2, numberOfSheet);
             List<EntrantFinalSheet> result = executeQuery(ps);
@@ -155,7 +155,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     @Override
     public Integer selectMaxNumberOfPage(Connection connection) throws SQLException, CrudException {
         try (Statement st = connection.createStatement()) {
-            try (ResultSet rs = st.executeQuery(SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.max.number_of_sheet"))) {
+            try (ResultSet rs = st.executeQuery(SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.select.max.number_of_sheet"))) {
                 Integer numberOfPage = null;
                 if (rs.next()) {
                     numberOfPage = rs.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET);
@@ -172,7 +172,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     @Override
     public Integer selectIncrementedNumberOfPage(Connection connection) throws SQLException {
         try (Statement st = connection.createStatement()) {
-            try (ResultSet rs = st.executeQuery(SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.max.number_of_sheet"))) {
+            try (ResultSet rs = st.executeQuery(SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.select.max.number_of_sheet"))) {
                 if (rs.next()) {
                     return rs.getInt(FieldsDataBase.ENTRANT_FINAL_SHEET_NUMBER_OF_SHEET) + 1;
                 } else {
@@ -185,7 +185,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     @Override
     public List<ReadyFinalEntrantSheetBean> selectPassedEntrants(Connection connection) throws SQLException, CrudException {
         try (Statement st = connection.createStatement()) {
-            try (ResultSet rs = st.executeQuery(SqlQueriesHolder.getSqlQuery("faculty_final_sheet_select.entrant.ready.final.sheet"))) {
+            try (ResultSet rs = st.executeQuery(SqlQueriesUtilities.getSqlQuery("faculty_final_sheet_select.entrant.ready.final.sheet"))) {
                 List<ReadyFinalEntrantSheetBean> result = new ArrayList<>();
                 while (rs.next()) {
                     ReadyFinalEntrantSheetBean readyFinalEntrantSheetBean = new ReadyFinalEntrantSheetBean();
@@ -210,7 +210,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
 
     @Override
     public ReadyFinalEntrantSheetBean selectPassedEntrantByUserId(int userId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("faculty_final_sheet_select.entrant.by.user.id"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("faculty_final_sheet_select.entrant.by.user.id"))) {
             ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 ReadyFinalEntrantSheetBean readyFinalEntrantSheetBean = null;
@@ -238,7 +238,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     public void insert(EntrantFinalSheet entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.insert"),
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.insert"),
                 connection
         );
     }
@@ -247,7 +247,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     public void update(EntrantFinalSheet entity, Connection connection) throws SQLException, CrudException {
         update(
                 entity,
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.update"),
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.update"),
                 connection
         );
     }
@@ -255,7 +255,7 @@ public class EntrantFinalSheetDaoImpl extends AbstractDao<EntrantFinalSheet> imp
     @Override
     public List<EntrantFinalSheet> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("faculty_final_sheet.select.all"),
+                SqlQueriesUtilities.getSqlQuery("faculty_final_sheet.select.all"),
                 connection
         );
     }

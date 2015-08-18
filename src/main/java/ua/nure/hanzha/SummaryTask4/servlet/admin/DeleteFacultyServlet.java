@@ -5,7 +5,7 @@ import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.faculty.FacultyService;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -48,7 +48,7 @@ public class DeleteFacultyServlet extends HttpServlet {
     }
 
     private boolean checkFacultyIdIsValid(HttpSession session, String facultyId) {
-        boolean isValidFacultyId = Validation.validateParamFacultyId(facultyId);
+        boolean isValidFacultyId = ValidationUtilities.validateParamFacultyId(facultyId);
         if (!isValidFacultyId) {
             session.setAttribute(SessionAttribute.ADMIN_DELETE_IS_VALID_PARAM_FACULTY_ID, false);
             return false;

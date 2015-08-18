@@ -5,7 +5,7 @@ import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.entity.Entity;
 import ua.nure.hanzha.SummaryTask4.entity.SkeletonEntity;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
-import ua.nure.hanzha.SummaryTask4.util.ClassName;
+import ua.nure.hanzha.SummaryTask4.util.ClassNameUtilities;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public abstract class AbstractDao<T extends SkeletonEntity> implements Dao<T> {
 
-    private static final Logger LOGGER = Logger.getLogger(ClassName.getCurrentClassName());
+    private static final Logger LOGGER = Logger.getLogger(ClassNameUtilities.getCurrentClassName());
 
     protected void insert(T entity, String sql, Connection connection) throws SQLException, CrudException {
         if (entity instanceof Entity) {

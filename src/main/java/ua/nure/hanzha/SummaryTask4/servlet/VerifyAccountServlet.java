@@ -9,7 +9,7 @@ import ua.nure.hanzha.SummaryTask4.enums.EntrantStatus;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
-import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReader;
+import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReaderUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,7 +44,7 @@ public class VerifyAccountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         String ticket = request.getParameter(TICKET);
-        String accountName = TicketsWriterReader.getValue(ticket);
+        String accountName = TicketsWriterReaderUtilities.getValue(ticket);
         if (accountName == null) {
             session.setAttribute(SessionAttribute.VERIFY_ACCOUNT_IS_VERIFIED_ACCOUNT, false);
             response.sendRedirect(Pages.VERIFY_ACCOUNT_HTML);
@@ -54,7 +54,7 @@ public class VerifyAccountServlet extends HttpServlet {
                 Entrant entrant = entrantService.getByUserId(userForConfirm.getId());
                 int activeStatusId = EntrantStatus.ACTIVE.ordinal() + 1;
                 entrantService.updateEntrantStatus(activeStatusId, entrant.getId());
-                TicketsWriterReader.removePair(ticket);
+                TicketsWriterReaderUtilities.removePair(ticket);
                 request.setAttribute(SessionAttribute.VERIFY_ACCOUNT_ACCOUNT_NAME, accountName);
                 session.setAttribute(SessionAttribute.VERIFY_ACCOUNT_IS_VERIFIED_ACCOUNT, true);
                 response.sendRedirect(Pages.VERIFY_ACCOUNT_HTML);

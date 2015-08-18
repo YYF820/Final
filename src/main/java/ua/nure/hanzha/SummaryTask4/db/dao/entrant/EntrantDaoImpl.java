@@ -3,7 +3,7 @@ package ua.nure.hanzha.SummaryTask4.db.dao.entrant;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
@@ -59,7 +59,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     public void deleteById(int id, Connection connection) throws SQLException, CrudException {
         deleteById(
                 id,
-                SqlQueriesHolder.getSqlQuery("entrant.delete.by.id"),
+                SqlQueriesUtilities.getSqlQuery("entrant.delete.by.id"),
                 connection
         );
     }
@@ -68,7 +68,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     public Entrant selectById(int id, Connection connection) throws SQLException, CrudException {
         return selectById(
                 id,
-                SqlQueriesHolder.getSqlQuery("entrant.select.by.id"),
+                SqlQueriesUtilities.getSqlQuery("entrant.select.by.id"),
                 connection
         );
     }
@@ -76,7 +76,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     @Override
     public int selectStatusByUserId(int userId, Connection connection) throws SQLException {
         int entrantStatusId;
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.select.by.user.id"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("entrant.select.by.user.id"))) {
             ps.setInt(1, userId);
             try (ResultSet resultSet = ps.executeQuery()) {
                 resultSet.next();
@@ -90,7 +90,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     public Entrant selectByUserId(int userId, Connection connection) throws SQLException, CrudException {
         return selectById(
                 userId,
-                SqlQueriesHolder.getSqlQuery("entrant.select.by.user.id"),
+                SqlQueriesUtilities.getSqlQuery("entrant.select.by.user.id"),
                 connection
         );
     }
@@ -100,7 +100,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     public void insert(Entrant entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
-                SqlQueriesHolder.getSqlQuery("entrant.insert"),
+                SqlQueriesUtilities.getSqlQuery("entrant.insert"),
                 connection
         );
     }
@@ -109,14 +109,14 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     public void update(Entrant entity, Connection connection) throws SQLException, CrudException {
         update(
                 entity,
-                SqlQueriesHolder.getSqlQuery("entrant.update"),
+                SqlQueriesUtilities.getSqlQuery("entrant.update"),
                 connection
         );
     }
 
     @Override
     public void updateEntrantStatus(int statusId, int entrantId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.update.status"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("entrant.update.status"))) {
             ps.setInt(1, statusId);
             ps.setInt(2, entrantId);
             if (ps.executeUpdate() == 0) {
@@ -127,7 +127,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
 
     @Override
     public List<Integer> selectAllEntrantsIdStatusActive(Connection connection) throws SQLException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.select.all.id.status.active"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("entrant.select.all.id.status.active"))) {
             try (ResultSet resultSet = ps.executeQuery()) {
                 List<Integer> result = new ArrayList<>();
                 while (resultSet.next()) {
@@ -140,7 +140,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
 
     @Override
     public Integer selectUserIdByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("entrant.select.user.id.by.id"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("entrant.select.user.id.by.id"))) {
             ps.setInt(1, entrantId);
             Integer userId = null;
             try (ResultSet resultSet = ps.executeQuery()) {
@@ -159,7 +159,7 @@ public class EntrantDaoImpl extends AbstractDao<Entrant> implements EntrantDao {
     @Override
     public List<Entrant> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("entrant.select.all"),
+                SqlQueriesUtilities.getSqlQuery("entrant.select.all"),
                 connection
         );
     }

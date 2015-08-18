@@ -5,8 +5,8 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.servlet.callable.checkQuestion.CheckQuestionCallable;
 import ua.nure.hanzha.SummaryTask4.servlet.callable.checkQuestion.CheckQuestionOperationsMap;
-import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleanerUtilities;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -65,7 +65,7 @@ public class CheckQuestionServlet extends HttpServlet {
     }
 
     private boolean checkValidationSchoolNumber(HttpSession session, String schoolNumber) {
-        boolean isAccountNameValid = Validation.validateSchool(schoolNumber);
+        boolean isAccountNameValid = ValidationUtilities.validateSchool(schoolNumber);
         if (!isAccountNameValid) {
             session.setAttribute(SessionAttribute.CHECK_QUESTION_IS_SCHOOL_VALID, false);
         } else {
@@ -86,7 +86,7 @@ public class CheckQuestionServlet extends HttpServlet {
     }
 
     private void cleanSession(HttpSession session) {
-        SessionCleaner.cleanAttributes(
+        SessionCleanerUtilities.cleanAttributes(
                 session,
                 SessionAttribute.CHECK_QUESTION_IS_SCHOOL_EMPTY,
                 SessionAttribute.CHECK_QUESTION_IS_SCHOOL_VALID,

@@ -5,10 +5,10 @@ import ua.nure.hanzha.SummaryTask4.bean.MailInfoVerifyAccountBean;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.RequestAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
-import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
+import ua.nure.hanzha.SummaryTask4.db.util.HashUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.exception.PropertiesDuplicateException;
-import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReader;
+import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReaderUtilities;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -80,8 +80,8 @@ public class CheckQuestionOperationsMap {
                     public void call() throws ServletException, IOException {
                         session.setMaxInactiveInterval(10 * 60);
                         Long counterBadTicketInserts = 0L;
-                        String ticketResetPassword = PasswordHash.randomPassword(6).toUpperCase();
-                        String hashTicketResetPassword = PasswordHash.createHash(ticketResetPassword);
+                        String ticketResetPassword = HashUtilities.randomPassword(6).toUpperCase();
+                        String hashTicketResetPassword = HashUtilities.createHash(ticketResetPassword);
                         session.setAttribute(SessionAttribute.CHECK_TICKET_HASH_TICKET_RESET_PASSWORD, hashTicketResetPassword);
                         session.setAttribute(SessionAttribute.CHECK_TICKET_COUNTER_BAD_TICKET_INSERTS, counterBadTicketInserts);
                         User user = (User) session.getAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
@@ -106,12 +106,12 @@ public class CheckQuestionOperationsMap {
         String ticket = generateTicket();
         String verifyLink = "http://localhost:8080/verifyAccount.do?ticket=" + ticket;
         boolean flagSuccessTicket = false;
-        if (TicketsWriterReader.containsValue(accountName)) {
-            TicketsWriterReader.removeAllValues(accountName);
+        if (TicketsWriterReaderUtilities.containsValue(accountName)) {
+            TicketsWriterReaderUtilities.removeAllValues(accountName);
         }
         while (!flagSuccessTicket) {
             try {
-                TicketsWriterReader.writePair(ticket, accountName);
+                TicketsWriterReaderUtilities.writePair(ticket, accountName);
                 flagSuccessTicket = true;
             } catch (PropertiesDuplicateException e) {
                 ticket = generateTicket();
@@ -151,6 +151,6 @@ public class CheckQuestionOperationsMap {
     }
 
     private static String generateTicket() {
-        return PasswordHash.randomPassword(40);
+        return HashUtilities.randomPassword(40);
     }
 }

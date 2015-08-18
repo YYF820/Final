@@ -3,7 +3,7 @@ package ua.nure.hanzha.SummaryTask4.db.dao.mark;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Mark;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
@@ -51,7 +51,7 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     public void deleteBySubjectId(int subjectId, Connection connection) throws SQLException, CrudException {
         deleteById(
                 subjectId,
-                SqlQueriesHolder.getSqlQuery("mark.delete.by.subject.id"),
+                SqlQueriesUtilities.getSqlQuery("mark.delete.by.subject.id"),
                 connection
         );
     }
@@ -60,7 +60,7 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     public void deleteByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         deleteById(
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("mark.delete.by.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("mark.delete.by.entrant.id"),
                 connection
         );
     }
@@ -70,7 +70,7 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
         deleteByDoubleId(
                 subjectId,
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("mark.delete.by.subject.id.and.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("mark.delete.by.subject.id.and.entrant.id"),
                 connection
         );
     }
@@ -79,7 +79,7 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     public List<Mark> selectBySubjectId(int subjectId, Connection connection) throws SQLException, CrudException {
         return selectByIdMultiRows(
                 subjectId,
-                SqlQueriesHolder.getSqlQuery("mark.select.by.subject.id"),
+                SqlQueriesUtilities.getSqlQuery("mark.select.by.subject.id"),
                 connection
         );
     }
@@ -88,7 +88,7 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     public List<Mark> selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         return selectByIdMultiRows(
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("mark.select.by.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("mark.select.by.entrant.id"),
                 connection
         );
     }
@@ -98,14 +98,14 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
         return selectByDoubleId(
                 subjectId,
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("mark.select.by.subject.id.and.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("mark.select.by.subject.id.and.entrant.id"),
                 connection
         );
     }
 
     @Override
     public List<Mark> selectByMarkValue(double markValue, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("mark.select.by.value"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("mark.select.by.value"))) {
             ps.setDouble(1, markValue);
             List<Mark> result = executeQuery(ps);
             if (result.size() > 0) {
@@ -121,7 +121,7 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     public void insert(Mark entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
-                SqlQueriesHolder.getSqlQuery("mark.insert"),
+                SqlQueriesUtilities.getSqlQuery("mark.insert"),
                 connection
         );
     }
@@ -130,7 +130,7 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     public void update(Mark entity, Connection connection) throws SQLException, CrudException {
         update(
                 entity,
-                SqlQueriesHolder.getSqlQuery("mark.update"),
+                SqlQueriesUtilities.getSqlQuery("mark.update"),
                 connection
         );
     }
@@ -138,7 +138,7 @@ public class MarkDaoImpl extends AbstractDao<Mark> implements MarkDao {
     @Override
     public List<Mark> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("mark.select.all"),
+                SqlQueriesUtilities.getSqlQuery("mark.select.all"),
                 connection
         );
     }

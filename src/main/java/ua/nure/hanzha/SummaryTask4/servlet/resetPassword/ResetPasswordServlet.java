@@ -2,12 +2,12 @@ package ua.nure.hanzha.SummaryTask4.servlet.resetPassword;
 
 import ua.nure.hanzha.SummaryTask4.bean.MailInfoUpdatedPasswordOrBlockedBean;
 import ua.nure.hanzha.SummaryTask4.constants.*;
-import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
+import ua.nure.hanzha.SummaryTask4.db.util.HashUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
-import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleanerUtilities;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -50,7 +50,7 @@ public class ResetPasswordServlet extends HttpServlet {
             response.sendRedirect(Pages.RESET_PASSWORD_HTML);
         } else {
             User userForUpdatePassword = (User) session.getAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD);
-            String hashPassword = PasswordHash.createHash(password);
+            String hashPassword = HashUtilities.createHash(password);
             try {
                 userService.updatePasswordById(userForUpdatePassword.getId(), hashPassword);
                 session.setAttribute(SESSION_ATTRIBUTE_COMMAND, COMMAND_UPDATED_PASSWORD);
@@ -102,8 +102,8 @@ public class ResetPasswordServlet extends HttpServlet {
     }
 
     private boolean checkValidationPasswords(HttpSession session, String password, String confirmPassword) {
-        boolean isValidPassword = Validation.validatePassword(password);
-        boolean isValidConfirmPassword = Validation.validatePassword(confirmPassword);
+        boolean isValidPassword = ValidationUtilities.validatePassword(password);
+        boolean isValidConfirmPassword = ValidationUtilities.validatePassword(confirmPassword);
         if (!isValidPassword || !isValidConfirmPassword) {
             session.setAttribute(SessionAttribute.RESET_PASSWORD_IS_PASSWORD_VALID, false);
             return false;
@@ -125,7 +125,7 @@ public class ResetPasswordServlet extends HttpServlet {
     }
 
     private void cleanSession(HttpSession session) {
-        SessionCleaner.cleanAttributes(
+        SessionCleanerUtilities.cleanAttributes(
                 session,
                 SessionAttribute.RESET_PASSWORD_IS_CONFIRM_PASSWORD_EMPTY,
                 SessionAttribute.RESET_PASSWORD_IS_SAME_PASSWORDS,

@@ -3,7 +3,7 @@ package ua.nure.hanzha.SummaryTask4.db.dao.user;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
@@ -61,7 +61,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public void deleteById(int id, Connection connection) throws SQLException, CrudException {
         deleteById(
                 id,
-                SqlQueriesHolder.getSqlQuery("user.delete.by.id"),
+                SqlQueriesUtilities.getSqlQuery("user.delete.by.id"),
                 connection
         );
     }
@@ -70,14 +70,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public User selectById(int id, Connection connection) throws SQLException, CrudException {
         return selectById(
                 id,
-                SqlQueriesHolder.getSqlQuery("user.select.by.id"),
+                SqlQueriesUtilities.getSqlQuery("user.select.by.id"),
                 connection
         );
     }
 
     @Override
     public User selectByEmail(String email, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("user.select.by.email"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("user.select.by.email"))) {
             ps.setString(1, email);
             List<User> result = executeQuery(ps);
             if (result.size() > 0) {
@@ -100,7 +100,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public void updatePasswordById(int id, String password, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("user.update.by.id"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("user.update.by.id"))) {
             ps.setString(1, password);
             ps.setInt(2, id);
             if (ps.executeUpdate() == 0) {
@@ -113,7 +113,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public void insert(User entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
-                SqlQueriesHolder.getSqlQuery("user.insert"),
+                SqlQueriesUtilities.getSqlQuery("user.insert"),
                 connection
         );
     }
@@ -122,7 +122,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public void update(User entity, Connection connection) throws SQLException, CrudException {
         update(
                 entity,
-                SqlQueriesHolder.getSqlQuery("user.update"),
+                SqlQueriesUtilities.getSqlQuery("user.update"),
                 connection
         );
     }
@@ -130,7 +130,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public List<User> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("user.select.all"),
+                SqlQueriesUtilities.getSqlQuery("user.select.all"),
                 connection
         );
     }

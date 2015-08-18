@@ -3,7 +3,7 @@ package ua.nure.hanzha.SummaryTask4.db.dao.faculty;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Faculty;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
@@ -52,7 +52,7 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
     public void deleteById(int id, Connection connection) throws SQLException, CrudException {
         deleteById(
                 id,
-                SqlQueriesHolder.getSqlQuery("faculty.delete.by.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty.delete.by.id"),
                 connection
         );
     }
@@ -61,7 +61,7 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
     public Faculty selectById(int id, Connection connection) throws SQLException, CrudException {
         return selectById(
                 id,
-                SqlQueriesHolder.getSqlQuery("faculty.select.by.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty.select.by.id"),
                 connection
         );
     }
@@ -69,7 +69,7 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
     @Override
     public int selectIdByName(String name, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty.select.id.by.name"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty.select.id.by.name"))) {
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -84,7 +84,7 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
     @Override
     public List<Faculty> selectAllSubjectsMoreThanThree(Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty.function.select.only.with.subjects.more.than.three"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty.function.select.only.with.subjects.more.than.three"))) {
             List<Faculty> result = executeQuery(ps);
             if (result.size() > 0) {
                 return result;
@@ -98,7 +98,7 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
     public void insert(Faculty entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
-                SqlQueriesHolder.getSqlQuery("faculty.insert"),
+                SqlQueriesUtilities.getSqlQuery("faculty.insert"),
                 connection
         );
     }
@@ -107,7 +107,7 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
     public void update(Faculty entity, Connection connection) throws SQLException, CrudException {
         update(
                 entity,
-                SqlQueriesHolder.getSqlQuery("faculty.update"),
+                SqlQueriesUtilities.getSqlQuery("faculty.update"),
                 connection
         );
     }
@@ -115,7 +115,7 @@ public class FacultyDaoImpl extends AbstractDao<Faculty> implements FacultyDao {
     @Override
     public List<Faculty> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("faculty.select.all"),
+                SqlQueriesUtilities.getSqlQuery("faculty.select.all"),
                 connection
         );
     }

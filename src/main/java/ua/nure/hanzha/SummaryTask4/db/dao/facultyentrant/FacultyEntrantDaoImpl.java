@@ -4,7 +4,7 @@ import ua.nure.hanzha.SummaryTask4.bean.EntrantFinalSheetBean;
 import ua.nure.hanzha.SummaryTask4.constants.ExceptionMessages;
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.FacultyEntrant;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
@@ -54,7 +54,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     public void deleteByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException {
         deleteById(
                 facultyId,
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.delete.by.faculty.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.delete.by.faculty.id"),
                 connection
         );
     }
@@ -63,7 +63,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     public void deleteByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         deleteById(
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.delete.by.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.delete.by.entrant.id"),
                 connection
         );
     }
@@ -73,7 +73,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
         deleteByDoubleId(
                 facultyId,
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.delete.by.faculty.id.and.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.delete.by.faculty.id.and.entrant.id"),
                 connection
         );
     }
@@ -82,7 +82,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     public List<FacultyEntrant> selectByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException {
         return selectByIdMultiRows(
                 facultyId,
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.faculty.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.faculty.id"),
                 connection
         );
     }
@@ -91,7 +91,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     public List<FacultyEntrant> selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         return selectByIdMultiRows(
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.entrant.id"),
                 connection
         );
     }
@@ -101,7 +101,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
         return selectByDoubleId(
                 facultyId,
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.faculty.id.and.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.faculty.id.and.entrant.id"),
                 connection
         );
     }
@@ -109,7 +109,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public List<FacultyEntrant> selectByPriority(int priority, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.priority"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.priority"))) {
             ps.setInt(1, priority);
             List<FacultyEntrant> result = executeQuery(ps);
             if (result.size() > 0) {
@@ -123,7 +123,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public List<FacultyEntrant> selectBySumMarks(double sumMarks, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.sum.marks"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.sum.marks"))) {
             ps.setDouble(1, sumMarks);
             List<FacultyEntrant> result = executeQuery(ps);
             if (result.size() > 0) {
@@ -137,7 +137,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public List<FacultyEntrant> selectByPrioritySumMarks(int priority, double sumMarks, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.priority.and.sum.marks"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.priority.and.sum.marks"))) {
             ps.setInt(1, priority);
             ps.setDouble(2, sumMarks);
             List<FacultyEntrant> result = executeQuery(ps);
@@ -152,7 +152,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public List<Integer> selectAllPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.priority.by.entrant.id"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.priority.by.entrant.id"))) {
             ps.setInt(1, entrantId);
             List<Integer> result = new ArrayList<>();
             try (ResultSet resultSet = ps.executeQuery()) {
@@ -167,7 +167,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public Map<Integer, Integer> selectAllFacultyIdPriorityByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.faculty.id.priority.by.entrant.id"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.faculty.id.priority.by.entrant.id"))) {
             ps.setInt(1, entrantId);
             Map<Integer, Integer> result = new HashMap<>();
             try (ResultSet rs = ps.executeQuery()) {
@@ -183,7 +183,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public EntrantFinalSheetBean selectEntrantBeanByEntrantId(int entrantId, Connection connection) throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement(
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.by.entrant.id"))) {
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.by.entrant.id"))) {
             ps.setInt(1, entrantId);
             Map<Integer, Integer> tempMap = new HashMap<>();
             EntrantFinalSheetBean entrantFinalSheetBean = null;
@@ -213,7 +213,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
 
     @Override
     public void updatePriorityByFacultyIdEntrantId(int priority, int facultyId, int entrantId, Connection connection) throws SQLException, CrudException {
-        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesHolder.getSqlQuery("faculty_entrant.update.priority.by.faculty.id.entrant.id"))) {
+        try (PreparedStatement ps = connection.prepareStatement(SqlQueriesUtilities.getSqlQuery("faculty_entrant.update.priority.by.faculty.id.entrant.id"))) {
             ps.setInt(1, priority);
             ps.setInt(2, facultyId);
             ps.setInt(3, entrantId);
@@ -226,7 +226,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public void sumAllMarks(Connection connection) throws SQLException {
         try (Statement st = connection.createStatement()) {
-            st.executeQuery(SqlQueriesHolder.getSqlQuery("faculty.entrant.summ.all.marks"));
+            st.executeQuery(SqlQueriesUtilities.getSqlQuery("faculty.entrant.summ.all.marks"));
         }
     }
 
@@ -234,7 +234,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     public void insert(FacultyEntrant entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.insert"),
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.insert"),
                 connection
         );
     }
@@ -243,7 +243,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     public void update(FacultyEntrant entity, Connection connection) throws SQLException, CrudException {
         update(
                 entity,
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.update"),
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.update"),
                 connection
         );
 
@@ -252,7 +252,7 @@ public class FacultyEntrantDaoImpl extends AbstractDao<FacultyEntrant> implement
     @Override
     public List<FacultyEntrant> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("faculty_entrant.select.all"),
+                SqlQueriesUtilities.getSqlQuery("faculty_entrant.select.all"),
                 connection
         );
     }

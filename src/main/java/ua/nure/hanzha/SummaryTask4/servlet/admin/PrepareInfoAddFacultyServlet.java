@@ -6,7 +6,7 @@ import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.subject.SubjectService;
-import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleanerUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,7 +43,7 @@ public class PrepareInfoAddFacultyServlet extends HttpServlet {
     }
 
     private void cleanSession(HttpSession session) {
-        SessionCleaner.cleanAttributes(
+        SessionCleanerUtilities.cleanAttributes(
                 session,
                 SessionAttribute.ADMIN_ADD_IS_ANY_EMPTY_FIELDS,
                 SessionAttribute.ADMIN_ADD_IS_FACULTY_NAME_VALID,

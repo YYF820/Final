@@ -4,7 +4,7 @@ import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Validations;
-import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
+import ua.nure.hanzha.SummaryTask4.db.util.HashUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.User;
 import ua.nure.hanzha.SummaryTask4.enums.EntrantStatus;
 import ua.nure.hanzha.SummaryTask4.enums.Role;
@@ -12,7 +12,7 @@ import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.entrant.EntrantService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
 import ua.nure.hanzha.SummaryTask4.servlet.callable.auth.AuthOperationsMap;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -55,14 +55,14 @@ public class AuthServlet extends HttpServlet {
         session.setAttribute(SessionAttribute.LOGIN_ACCOUNT_NAME, email);
         session.setAttribute(SessionAttribute.LOGIN_PASSWORD, password);
         boolean isEmptyAnyField = checkEmpty(email, password, session);
-        Map<String, Boolean> validationsEmailPassword = Validation.validateLoginAction(email, password);
+        Map<String, Boolean> validationsEmailPassword = ValidationUtilities.validateLoginAction(email, password);
         boolean isValidFields = checkValidations(validationsEmailPassword, session);
         if (isEmptyAnyField || !isValidFields) {
             response.sendRedirect(Pages.LOGIN_HTML);
         } else {
             try {
                 User user = userService.getByEmail(email);
-                if (PasswordHash.validatePassword(password, user.getPassword())) {
+                if (HashUtilities.validatePassword(password, user.getPassword())) {
                     String role = Role.getRole(user).getName();
                     if (role.equals(ROLE_ADMIN)) {
                         session.setAttribute(SessionAttribute.ACCOUNT, user);

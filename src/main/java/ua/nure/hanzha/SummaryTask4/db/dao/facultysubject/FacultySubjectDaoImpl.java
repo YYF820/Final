@@ -2,7 +2,7 @@ package ua.nure.hanzha.SummaryTask4.db.dao.facultysubject;
 
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.FacultySubject;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
@@ -48,7 +48,7 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
     public void deleteByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException {
         deleteById(
                 facultyId,
-                SqlQueriesHolder.getSqlQuery("faculty_subject.delete.by.faculty.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_subject.delete.by.faculty.id"),
                 connection
         );
     }
@@ -57,7 +57,7 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
     public void deleteBySubjectId(int subjectId, Connection connection) throws SQLException, CrudException {
         deleteById(
                 subjectId,
-                SqlQueriesHolder.getSqlQuery("faculty_subject.delete.by.subject.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_subject.delete.by.subject.id"),
                 connection
         );
     }
@@ -67,7 +67,7 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
         deleteByDoubleId(
                 facultyId,
                 subjectId,
-                SqlQueriesHolder.getSqlQuery("faculty_subject.delete.by.faculty.id.and.subject.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_subject.delete.by.faculty.id.and.subject.id"),
                 connection
         );
     }
@@ -76,7 +76,7 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
     public List<FacultySubject> selectByFacultyId(int facultyId, Connection connection) throws SQLException, CrudException {
         return selectByIdMultiRows(
                 facultyId,
-                SqlQueriesHolder.getSqlQuery("faculty_subject.select.by.faculty.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_subject.select.by.faculty.id"),
                 connection
         );
     }
@@ -85,7 +85,7 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
     public List<FacultySubject> selectBySubjectId(int subjectId, Connection connection) throws SQLException, CrudException {
         return selectByIdMultiRows(
                 subjectId,
-                SqlQueriesHolder.getSqlQuery("faculty_subject.select.by.subject.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_subject.select.by.subject.id"),
                 connection
         );
     }
@@ -95,7 +95,7 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
         return selectByDoubleId(
                 facultyId,
                 subjectId,
-                SqlQueriesHolder.getSqlQuery("faculty_subject.select.by.faculty.id.and.subject.id"),
+                SqlQueriesUtilities.getSqlQuery("faculty_subject.select.by.faculty.id.and.subject.id"),
                 connection
         );
     }
@@ -104,7 +104,7 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
     public void insert(FacultySubject entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
-                SqlQueriesHolder.getSqlQuery("faculty_subject.insert"),
+                SqlQueriesUtilities.getSqlQuery("faculty_subject.insert"),
                 connection
         );
     }
@@ -117,7 +117,7 @@ public class FacultySubjectDaoImpl extends AbstractDao<FacultySubject> implement
     @Override
     public List<FacultySubject> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("faculty_subject.select.all"),
+                SqlQueriesUtilities.getSqlQuery("faculty_subject.select.all"),
                 connection
         );
     }

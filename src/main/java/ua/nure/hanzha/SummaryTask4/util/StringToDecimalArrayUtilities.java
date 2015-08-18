@@ -4,7 +4,11 @@ package ua.nure.hanzha.SummaryTask4.util;
  * @author Dmytro Hanzha
  *         Created by faffi-ubuntu on 09/08/15.
  */
-public class StringToDecimalArray {
+public final class StringToDecimalArrayUtilities {
+
+    private StringToDecimalArrayUtilities() {
+
+    }
 
     public static Integer[] convertToInteger(String[] strings) {
         if (strings == null) {

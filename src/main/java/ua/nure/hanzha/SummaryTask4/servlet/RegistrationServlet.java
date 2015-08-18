@@ -3,7 +3,7 @@ package ua.nure.hanzha.SummaryTask4.servlet;
 import ua.nure.hanzha.SummaryTask4.bean.MailInfoVerifyAccountBean;
 import ua.nure.hanzha.SummaryTask4.bean.RegistrationBean;
 import ua.nure.hanzha.SummaryTask4.constants.*;
-import ua.nure.hanzha.SummaryTask4.db.util.PasswordHash;
+import ua.nure.hanzha.SummaryTask4.db.util.HashUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.Entity;
 import ua.nure.hanzha.SummaryTask4.entity.Entrant;
 import ua.nure.hanzha.SummaryTask4.entity.User;
@@ -11,9 +11,9 @@ import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.exception.PropertiesDuplicateException;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationService;
 import ua.nure.hanzha.SummaryTask4.service.user.UserService;
-import ua.nure.hanzha.SummaryTask4.util.SessionCleaner;
-import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReader;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.SessionCleanerUtilities;
+import ua.nure.hanzha.SummaryTask4.util.TicketsWriterReaderUtilities;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -69,7 +69,7 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         RegistrationBean registrationBean = getRegistrationBean(request);
-        Map<String, Boolean> validationsRegisterForm = Validation.validateRegistrationForm(registrationBean);
+        Map<String, Boolean> validationsRegisterForm = ValidationUtilities.validateRegistrationAction(registrationBean);
         boolean isAnyEmptyField = checkFormEmptyFields(session, registrationBean);
         boolean isAnyBadValidation = checkFormBadValidations(session, validationsRegisterForm);
         if (isAnyEmptyField || isAnyBadValidation) {
@@ -240,7 +240,7 @@ public class RegistrationServlet extends HttpServlet {
         Map<String, Entity> entrantInfo = new HashMap<>();
         User user = new User();
         Entrant entrant = new Entrant();
-        String hashPassword = PasswordHash.createHash(registrationBean.getPassword());
+        String hashPassword = HashUtilities.createHash(registrationBean.getPassword());
 
         user.setFirstName(registrationBean.getFirstName());
         user.setLastName(registrationBean.getLastName());
@@ -266,7 +266,7 @@ public class RegistrationServlet extends HttpServlet {
         boolean flagSuccessTicket = false;
         while (!flagSuccessTicket) {
             try {
-                TicketsWriterReader.writePair(ticket, registrationBean.getAccountName());
+                TicketsWriterReaderUtilities.writePair(ticket, registrationBean.getAccountName());
                 flagSuccessTicket = true;
             } catch (PropertiesDuplicateException e) {
                 ticket = generateTicket();
@@ -282,11 +282,11 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     private String generateTicket() {
-        return PasswordHash.randomPassword(40);
+        return HashUtilities.randomPassword(40);
     }
 
     private void cleanSession(HttpSession session) {
-        SessionCleaner.cleanAttributes(
+        SessionCleanerUtilities.cleanAttributes(
                 session,
                 SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_VALID,
                 SessionAttribute.REGISTRATION_IS_ACCOUNT_NAME_EMPTY,

@@ -1,4 +1,4 @@
-package ua.nure.hanzha.SummaryTask4.validation;
+package ua.nure.hanzha.SummaryTask4.util;
 
 import ua.nure.hanzha.SummaryTask4.bean.RegistrationBean;
 import ua.nure.hanzha.SummaryTask4.constants.Validations;
@@ -12,8 +12,26 @@ import java.util.regex.Pattern;
  * @author Dmytro Hanzha
  *         Created by faffi-ubuntu on 18/07/15.
  */
-public class Validation {
+public final class ValidationUtilities {
 
+    private static final String REGEX_VALIDATE_PASSWORD = "^((?=.*\\d)(?=.*[\\p{L}]).{6,20})$";
+    private static final String REGEX_VALIDATE_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private static final String REGEX_VALIDATE_CITY = "^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}+([' -][\\p{Lu}][\\p{L}&&[^\\p{Lu}]]*+){0,2}$";
+    private static final String REGEX_VALIDATE_REGION = "^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}(?:[' -][\\p{L}&&[^\\p{Lu}]]{2,14})$";
+    private static final String REGEX_VALIDATE_SCHOOL = "^[1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-5][0-5]$";
+    private static final String REGEX_VALIDATE_FIRST_NAME = "^[\\p{Lu}][['-]?\\p{L}&&[^\\p{Lu}]]{2,15}$";
+    private static final String REGEX_VALIDATE_LAST_NAME = "^[\\p{Lu}](['-]?[\\p{L}&&[^\\p{Lu}]]+){2,15}$";
+    private static final String REGEX_VALIDATE_PATRONYMIC = "^[\\p{Lu}]['-]?[\\p{L}&&[^\\p{Lu}]]{2,15}$";
+    private static final String REGEX_VALIDATE_FACULTY_NAME = "^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,25}(\\s[\\p{Lu}]*[\\p{L}&&[^\\p{Lu}]]{2,25})*$";
+    private static final String REGEX_VALIDATE_PARAM_FACULTY_ID = "^[0-9]+$";
+    private static final String REGEX_VALIDATE_MARK = "1[0-9][0-9](\\.\\d{0,2}|)|200(\\.0{1,2}|)";
+    private static final String REGEX_VALIDATE_CERTIFICATE_POINTS = "^[3-5][0-9](\\.\\d{0,2}|)|60(\\.0{1,2}|)$";
+    private static final String REGEX_VALIDATE_EXTRA_POINTS = "^[0-9](\\.\\d{0,2}|)|[1][0-9](\\.\\d{0,2}|)|20(\\.[0]{1,2}|)$";
+
+
+    private ValidationUtilities() {
+
+    }
 
     public static Map<String, Boolean> validateLoginAction(String email, String password) {
         Map<String, Boolean> validations = new HashMap<>();
@@ -26,30 +44,8 @@ public class Validation {
         return validations;
     }
 
-    public static boolean[] validatePasswordFullNameEmail(String password, String fullName, String email) {
-        boolean isPasswordValid = validatePassword(password);
-        boolean isFullNameValid = validateFullName(fullName);
-        boolean isEmailValid = validateEmail(email);
-        return new boolean[]{isPasswordValid, isFullNameValid, isEmailValid};
-    }
 
-    public static Map<String, Boolean> validateAddForm(String login, String password, String fullName, String email) {
-        Map<String, Boolean> validations = new HashMap<>();
-
-        Boolean isLoginValid = validateLogin(login);
-        Boolean isPasswordValid = validatePassword(password);
-        Boolean isFullNameValid = validateFullName(fullName);
-        Boolean isEmailValid = validateEmail(email);
-
-        validations.put(login, isLoginValid);
-        validations.put(password, isPasswordValid);
-        validations.put(fullName, isFullNameValid);
-        validations.put(email, isEmailValid);
-
-        return validations;
-    }
-
-    public static Map<String, Boolean> validateRegistrationForm(
+    public static Map<String, Boolean> validateRegistrationAction(
             RegistrationBean registrationBean) {
 
         Map<String, Boolean> validations = new HashMap<>();
@@ -75,100 +71,88 @@ public class Validation {
         return validations;
     }
 
-
-    private static boolean validateLogin(String login) {
-        Pattern p = Pattern.compile("^[\\p{L}0-9_-]{6,15}$");
-        Matcher m = p.matcher(login);
-        return m.matches();
-    }
-
     public static boolean validatePassword(String password) {
-        Pattern p = Pattern.compile("^((?=.*\\d)(?=.*[\\p{L}]).{6,20})$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_PASSWORD);
         Matcher m = p.matcher(password);
         return m.matches();
     }
 
     public static boolean validateEmail(String email) {
-        Pattern p = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_EMAIL);
         Matcher m = p.matcher(email);
         return m.matches();
     }
 
-    private static boolean validateFullName(String fullName) {
-        Pattern p = Pattern.compile("^\\p{L}+ \\p{L}+$");
-        Matcher m = p.matcher(fullName);
-        return m.matches();
-    }
-
     private static boolean validateCity(String city) {
-        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}+([' -][\\p{Lu}][\\p{L}&&[^\\p{Lu}]]*+){0,2}$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_CITY);
         Matcher m = p.matcher(city);
         return m.matches();
     }
 
     public static boolean validateRegion(String region) {
-        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,14}(?:[' -][\\p{L}&&[^\\p{Lu}]]{2,14})$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_REGION);
         Matcher m = p.matcher(region);
         return m.matches();
     }
 
     public static boolean validateSchool(String school) {
-        Pattern p = Pattern.compile("^[1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-5][0-5]$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_SCHOOL);
         Matcher m = p.matcher(school);
         return m.matches();
     }
 
     public static boolean validateFirstName(String firstName) {
-        Pattern p = Pattern.compile("^[\\p{Lu}][['-]?\\p{L}&&[^\\p{Lu}]]{2,15}$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_FIRST_NAME);
         Matcher m = p.matcher(firstName);
         return m.matches();
     }
 
     public static boolean validateLastName(String lastName) {
-        Pattern p = Pattern.compile("^[\\p{Lu}](['-]?[\\p{L}&&[^\\p{Lu}]]+){2,15}$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_LAST_NAME);
         Matcher m = p.matcher(lastName);
         return m.matches();
     }
 
     private static boolean validatePatronymic(String patronymic) {
-        Pattern p = Pattern.compile("^[\\p{Lu}]['-]?[\\p{L}&&[^\\p{Lu}]]{2,15}$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_PATRONYMIC);
         Matcher m = p.matcher(patronymic);
         return m.matches();
     }
 
-    public static boolean validateTicketResetPassword(String ticketResetPassword) {
-        Pattern p = Pattern.compile("^[A-Z0-9]{6}$");
-        Matcher m = p.matcher(ticketResetPassword);
-        return m.matches();
-    }
 
     public static boolean validateFacultyName(String facultyName) {
-        Pattern p = Pattern.compile("^[\\p{Lu}][\\p{L}&&[^\\p{Lu}]]{2,25}(\\s[\\p{Lu}]*[\\p{L}&&[^\\p{Lu}]]{2,25})*$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_FACULTY_NAME);
         Matcher m = p.matcher(facultyName);
         return m.matches();
     }
 
     public static boolean validateParamFacultyId(String facultyId) {
-        Pattern p = Pattern.compile("^[0-9]+$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_PARAM_FACULTY_ID);
         Matcher m = p.matcher(facultyId);
         return m.matches();
     }
 
     public static boolean validateMark(String mark) {
-        Pattern p = Pattern.compile("[1][0-9][0-9](\\.\\d{0,2}|)|200(\\.0{1,2}|)");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_MARK);
         Matcher m = p.matcher(mark);
         return m.matches();
     }
 
     public static boolean validateCertificatePoints(String certificatePoints) {
-        Pattern p = Pattern.compile("^[3-5][0-9](\\.\\d{0,2}|)|60(\\.0{1,2}|)$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_CERTIFICATE_POINTS);
         Matcher m = p.matcher(certificatePoints);
         return m.matches();
     }
 
     public static boolean validateExtraPoints(String extraPoints) {
-        Pattern p = Pattern.compile("^[0-9](\\.\\d{0,2}|)|[1][0-9](\\.\\d{0,2}|)|20(\\.[0]{1,2}|)$");
+        Pattern p = Pattern.compile(REGEX_VALIDATE_EXTRA_POINTS);
         Matcher m = p.matcher(extraPoints);
         return m.matches();
     }
 }
+
+/* public static boolean validateTicketResetPassword(String ticketResetPassword) {
+        Pattern p = Pattern.compile("^[A-Z0-9]{6}$");
+        Matcher m = p.matcher(ticketResetPassword);
+        return m.matches();
+    }*/

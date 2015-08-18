@@ -2,7 +2,7 @@ package ua.nure.hanzha.SummaryTask4.db.dao.extramark;
 
 import ua.nure.hanzha.SummaryTask4.constants.FieldsDataBase;
 import ua.nure.hanzha.SummaryTask4.db.dao.AbstractDao;
-import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesHolder;
+import ua.nure.hanzha.SummaryTask4.db.util.SqlQueriesUtilities;
 import ua.nure.hanzha.SummaryTask4.entity.ExtraMark;
 import ua.nure.hanzha.SummaryTask4.exception.CrudException;
 
@@ -49,7 +49,7 @@ public class ExtraMarkDaoImpl extends AbstractDao<ExtraMark> implements ExtraMar
     public void deleteByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         deleteById(
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("extra_mark.delete.by.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("extra_mark.delete.by.entrant.id"),
                 connection
         );
     }
@@ -58,7 +58,7 @@ public class ExtraMarkDaoImpl extends AbstractDao<ExtraMark> implements ExtraMar
     public ExtraMark selectByEntrantId(int entrantId, Connection connection) throws SQLException, CrudException {
         return selectById(
                 entrantId,
-                SqlQueriesHolder.getSqlQuery("extra_mark.select.by.entrant.id"),
+                SqlQueriesUtilities.getSqlQuery("extra_mark.select.by.entrant.id"),
                 connection
         );
     }
@@ -67,7 +67,7 @@ public class ExtraMarkDaoImpl extends AbstractDao<ExtraMark> implements ExtraMar
     public void insert(ExtraMark entity, Connection connection) throws SQLException, CrudException {
         insert(
                 entity,
-                SqlQueriesHolder.getSqlQuery("extra_mark.insert"),
+                SqlQueriesUtilities.getSqlQuery("extra_mark.insert"),
                 connection
         );
     }
@@ -76,7 +76,7 @@ public class ExtraMarkDaoImpl extends AbstractDao<ExtraMark> implements ExtraMar
     public void update(ExtraMark entity, Connection connection) throws SQLException, CrudException {
         update(
                 entity,
-                SqlQueriesHolder.getSqlQuery("extra_mark.update"),
+                SqlQueriesUtilities.getSqlQuery("extra_mark.update"),
                 connection
         );
     }
@@ -84,7 +84,7 @@ public class ExtraMarkDaoImpl extends AbstractDao<ExtraMark> implements ExtraMar
     @Override
     public List<ExtraMark> selectAll(Connection connection) throws SQLException, CrudException {
         return selectAll(
-                SqlQueriesHolder.getSqlQuery("extra_mark.select.all"),
+                SqlQueriesUtilities.getSqlQuery("extra_mark.select.all"),
                 connection
         );
     }

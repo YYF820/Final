@@ -8,8 +8,8 @@ import ua.nure.hanzha.SummaryTask4.entity.Mark;
 import ua.nure.hanzha.SummaryTask4.entity.Subject;
 import ua.nure.hanzha.SummaryTask4.exception.DaoSystemException;
 import ua.nure.hanzha.SummaryTask4.service.mark.MarkService;
-import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArray;
-import ua.nure.hanzha.SummaryTask4.validation.Validation;
+import ua.nure.hanzha.SummaryTask4.util.StringToDecimalArrayUtilities;
+import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,7 +50,7 @@ public class AddSubjectsMarksServlet extends HttpServlet {
             } else {
                 Entrant entrant = (Entrant) session.getAttribute(
                         SessionAttribute.ENTRANT_ACCOUNT_SETTINGS_ENTRANT_TO_ADD_SUBJECTS_MARKS);
-                Double[] marks = StringToDecimalArray.convertToDouble(params);
+                Double[] marks = StringToDecimalArrayUtilities.convertToDouble(params);
                 for (int i = 0; i < subjectsToAdd.size(); i++) {
                     Mark mark = new Mark();
                     mark.setEntrantId(entrant.getId());
@@ -89,7 +89,7 @@ public class AddSubjectsMarksServlet extends HttpServlet {
     private boolean checkIsValidMarks(HttpSession session, String[] params) {
         boolean isValidMarks = true;
         for (String param : params) {
-            boolean temp = Validation.validateMark(param);
+            boolean temp = ValidationUtilities.validateMark(param);
             if (!temp) {
                 isValidMarks = false;
             }
