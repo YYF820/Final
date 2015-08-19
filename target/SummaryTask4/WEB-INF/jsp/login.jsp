@@ -13,7 +13,7 @@
              src="<c:url value="/resources/img/mainLogoLogin.png"/>"
              alt="">
 
-        <form class="uk-panel uk-panel-box uk-form" action="auth.do" method="POST">
+        <form class="uk-panel uk-panel-box uk-form" action="<c:url value="/auth.do"/>" method="POST">
             <%@include file="../jspf/validations/loginValidation.jspf" %>
             <label id="accountName-label" class="control-label" for="accountName"></label>
 
