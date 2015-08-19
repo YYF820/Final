@@ -1,0 +1,17 @@
+<logos>
+    <logo facultyName="Computer Science">
+        <src>../../resources/img/facultiesLogo/CS.jpg</src>
+    </logo>
+    <logo facultyName="Software Engineering">
+        <src>../../resources/img/facultiesLogo/SE.jpg</src>
+    </logo>
+    <logo facultyName="Telecommunication Systems">
+        <src>../../resources/img/facultiesLogo/TCS.jpg</src>
+    </logo>
+    <logo facultyName="Informatics">
+        <src>../../resources/img/facultiesLogo/INF.jpg</src>
+    </logo>
+    <logo facultyName="Design and Operation of Electronic Devices">
+        <src>../../resources/img/facultiesLogo/DOED.jpg</src>
+    </logo>
+</logos>

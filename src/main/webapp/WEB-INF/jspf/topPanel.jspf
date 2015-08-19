@@ -3,7 +3,7 @@
         <a href="#adminCanvasId" class="uk-navbar-toggle" data-uk-offcanvas></a>
     </u:ifAuthAs>
 
-    <a href="<c:url value="/index.html"/>"><img class="uk-navbar-brand" src="../../resources/img/logo.png"/></a>
+    <a href="<c:url value="/index.html"/>"><i class="uk-icon-university uk-icon-large uk-margin-left"></i></a>
 
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">

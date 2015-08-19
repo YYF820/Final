@@ -1,3 +1,4 @@
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 <%@include file="../jspf/imports.jspf" %>
 <html>
 <head>
@@ -6,12 +7,14 @@
     <title></title>
 </head>
 <body>
+<c:import var="facultiesLogoInfo" url="/resources/xml/facultiesLogo.xml"/>
+<x:parse xml="${facultiesLogoInfo}" var="output"/>
 <%@ include file="../jspf/topPanel.jspf" %>
-<div class="uk-container uk-container-center uk-margin-large-bottom">
+<div class="uk-container uk-container-center uk-margin-large-bottom ">
     <%@ include file="../jspf/logo.jspf" %>
     <%@ include file="../jspf/navAndLogin.jspf" %>
     <u:ifAuthAs role="entrant">
-        <div class="uk-grid uk-text-center uk-margin-top">
+        <div class="uk-grid uk-text-center uk-margin-large-top">
             <div class="uk-width-medium-2-10">
 
                 <a href="#sortFacultiesEntrant" data-uk-offcanvas></a>
@@ -54,6 +57,12 @@
                         </div>
                         <c:remove var="facultiesIsSamePriorities" scope="session"/>
                     </c:when>
+                    <c:when test="${sessionScope.facultiesIsSameSubjects == false}">
+                        <div class="uk-alert uk-alert-danger uk-margin-top-remove uk-margin-bottom-remove alert">
+                            <p><fmt:message key="faculties.public.alert.not.same.subjects"/></p>
+                        </div>
+                        <c:remove var="facultiesIsSameSubjects" scope="session"/>
+                    </c:when>
                 </c:choose>
             </div>
             <div class="uk-width-medium-2-10">
@@ -76,7 +85,7 @@
     </u:ifAuthAs>
 
     <u:ifAuthAs role="guest">
-        <div class="uk-grid uk-text-center uk-margin-top">
+        <div class="uk-grid uk-text-center uk-margin-large-top">
             <div class="uk-width-medium-2-10">
                 <a href="#sortFacultiesEntrant" data-uk-offcanvas></a>
                 <!-- This is a button toggling the off-canvas sidebar -->
@@ -109,7 +118,7 @@
     </u:ifAuthAs>
 
     <u:ifAuthAs role="admin">
-        <div class="uk-grid uk-text-center uk-margin-top">
+        <div class="uk-grid uk-text-center uk-margin-large-top">
             <div class="uk-width-medium-2-10">
                 <a href="#sortFacultiesEntrant" data-uk-offcanvas></a>
                 <!-- This is a button toggling the off-canvas sidebar -->
@@ -129,28 +138,23 @@
         </div>
     </u:ifAuthAs>
     <c:forEach var="facultyBean" items="${sessionScope.facultiesInfoBeansPagination}" varStatus="counter" step="1">
+    <c:set var="facultyName" scope="page" value="${facultyBean.faculty.name}"/>
     <c:choose>
 
     <c:when test="${counter.index % 2 == 0}">
         <div class="uk-grid uk-margin-large-top" data-uk-grid-margin="">
             <div class="uk-width-medium-1-2">
+
                 <img width="660" height="400"
-                     src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iNjYwcHgiIGhlaWdodD0iNDAwcHgiIHZpZXdCb3g9IjAgMCA2NjAgNDAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA2NjAgNDAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI2NjAiIGhlaWdodD0iNDAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0yNTguMTg0LDE0My41djExM2gxNDMuNjMydi0xMTNIMjU4LjE4NHogTTM5MC4yNDQsMjQ0LjI0N0gyNzAuNDM3di04OC40OTRoMTE5LjgwOEwzOTAuMjQ0LDI0NC4yNDcNCgkJTDM5MC4yNDQsMjQ0LjI0N3oiLz4NCgk8cG9seWdvbiBmaWxsPSIjRDhEOEQ4IiBwb2ludHM9IjI3Ni44ODEsMjM0LjcxNyAzMDEuNTcyLDIwOC43NjQgMzEwLjgyNCwyMTIuNzY4IDM0MC4wMTYsMTgxLjY4OCAzNTEuNTA1LDE5NS40MzQgDQoJCTM1Ni42ODksMTkyLjMwMyAzODQuNzQ2LDIzNC43MTcgCSIvPg0KCTxjaXJjbGUgZmlsbD0iI0Q4RDhEOCIgY3g9IjMwNS40MDUiIGN5PSIxNzguMjU3IiByPSIxMC43ODciLz4NCjwvZz4NCjwvc3ZnPg0K"
+                     src="<x:out select="$output/logos/logo[@facultyName=$pageScope:facultyName]/src"/>"
                      alt="">
+
             </div>
             <div class="uk-width-medium-1-2">
                 <h1>${facultyBean.faculty.name}</h1>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore
-                    et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut
-                    aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum
-                    dolore eu
-                    fugiat nulla pariatur.</p>
+                <p><fmt:message
+                        key="${fn:toLowerCase(fn:replace(facultyBean.faculty.name,' ', '.')).concat('.faq')}"/></p>
 
                 <h2><fmt:message key="faculties.public.info"/></h2>
 
@@ -229,16 +233,7 @@
         <div class="uk-width-medium-1-2">
             <h1>${facultyBean.faculty.name}</h1>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                labore
-                et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                ut
-                aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum
-                dolore eu
-                fugiat nulla pariatur.</p>
+            <p><fmt:message key="${fn:toLowerCase(fn:replace(facultyBean.faculty.name,' ', '.')).concat('.faq')}"/></p>
 
             <h2><fmt:message key="faculties.public.info"/></h2>
 
@@ -311,7 +306,7 @@
         </div>
         <div class="uk-width-medium-1-2">
             <img width="660" height="400"
-                 src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iNjYwcHgiIGhlaWdodD0iNDAwcHgiIHZpZXdCb3g9IjAgMCA2NjAgNDAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA2NjAgNDAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxyZWN0IGZpbGw9IiNGNUY1RjUiIHdpZHRoPSI2NjAiIGhlaWdodD0iNDAwIi8+DQo8ZyBvcGFjaXR5PSIwLjciPg0KCTxwYXRoIGZpbGw9IiNEOEQ4RDgiIGQ9Ik0yNTguMTg0LDE0My41djExM2gxNDMuNjMydi0xMTNIMjU4LjE4NHogTTM5MC4yNDQsMjQ0LjI0N0gyNzAuNDM3di04OC40OTRoMTE5LjgwOEwzOTAuMjQ0LDI0NC4yNDcNCgkJTDM5MC4yNDQsMjQ0LjI0N3oiLz4NCgk8cG9seWdvbiBmaWxsPSIjRDhEOEQ4IiBwb2ludHM9IjI3Ni44ODEsMjM0LjcxNyAzMDEuNTcyLDIwOC43NjQgMzEwLjgyNCwyMTIuNzY4IDM0MC4wMTYsMTgxLjY4OCAzNTEuNTA1LDE5NS40MzQgDQoJCTM1Ni42ODksMTkyLjMwMyAzODQuNzQ2LDIzNC43MTcgCSIvPg0KCTxjaXJjbGUgZmlsbD0iI0Q4RDhEOCIgY3g9IjMwNS40MDUiIGN5PSIxNzguMjU3IiByPSIxMC43ODciLz4NCjwvZz4NCjwvc3ZnPg0K"
+                 src="<x:out select="$output/logos/logo[@facultyName=$pageScope:facultyName]/src"/>"
                  alt="">
         </div>
     </div>
@@ -354,6 +349,5 @@
     </c:forEach>
 </ul>
 <%@ include file="../jspf/footer.jspf" %>
-</div>
 </body>
 </html>

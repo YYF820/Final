@@ -9,8 +9,8 @@
 <%@include file="../../jspf/topPanel.jspf" %>
 <div class="uk-container-center uk-text-center uk-width-8-10">
     <div class="uk-container-center uk-text-center uk-width-medium-4-10 uk-margin-large-top">
-        <img class="logo-login uk-align-center"
-             src="<c:url value="/resources/img/mainLogo.png"/>"
+        <img class="uk-margin-large-bottom uk-margin-top"
+             src="<c:url value="/resources/img/mainLogoLogin.png"/>"
              alt="">
 
         <div class="uk-alert uk-alert-warning uk-text-center">

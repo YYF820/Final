@@ -176,6 +176,15 @@
         <url-pattern>/supportMessageSent.html</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AboutUsView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/aboutUs.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AboutUsView</servlet-name>
+        <url-pattern>/aboutUs.html</url-pattern>
+    </servlet-mapping>
+
 
     <!-- admin pages -->
     <servlet>
@@ -525,6 +534,24 @@
         <url-pattern>/support.do</url-pattern>
     </servlet-mapping>
 
+    <error-page>
+        <error-code>401</error-code>
+        <location>/login.html</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/jsp/error/notFound.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/jsp/error/serverError.jsp</location>
+    </error-page>
+
+
     <!--Filters-->
     <filter>
         <filter-name>CharsetFilter</filter-name>
@@ -575,7 +602,12 @@
         <url-pattern>/finalSheet.html</url-pattern>
         <url-pattern>/publicFinalSheet.do</url-pattern>
         <url-pattern>/paginationFinalSheet.do</url-pattern>
+        <url-pattern>/aboutUs.html</url-pattern>
+        <url-pattern>/support.html</url-pattern>
+        <url-pattern>/support.do</url-pattern>
+        <url-pattern>/supportMessageSent.html</url-pattern>
         <url-pattern>/index.html</url-pattern>
+        <url-pattern>/404.html</url-pattern>
     </filter-mapping>
 
 

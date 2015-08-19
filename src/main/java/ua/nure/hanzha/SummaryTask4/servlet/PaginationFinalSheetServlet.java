@@ -4,6 +4,7 @@ import ua.nure.hanzha.SummaryTask4.constants.AppAttribute;
 import ua.nure.hanzha.SummaryTask4.constants.Pages;
 import ua.nure.hanzha.SummaryTask4.constants.SessionAttribute;
 import ua.nure.hanzha.SummaryTask4.service.entrantFinalSheet.EntrantFinalSheetService;
+import ua.nure.hanzha.SummaryTask4.servlet.callable.finalSheet.FinalSheetCallable;
 import ua.nure.hanzha.SummaryTask4.servlet.callable.finalSheet.FinalSheetOperationsMap;
 import ua.nure.hanzha.SummaryTask4.util.ValidationUtilities;
 
@@ -41,14 +42,19 @@ public class PaginationFinalSheetServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
         cleanSession(session);
         String command = request.getParameter(PARAM_COMMAND);
         String lastName = request.getParameter(PARAM_LAST_NAME);
         String facultyName = request.getParameter(PARAM_FACULTY_NAME);
         FinalSheetOperationsMap.initFinalSheetCallableMap(session, response,
                 request, entrantFinalSheetService, lastName, facultyName);
-        FinalSheetOperationsMap.getFinalSheetCallable(command).call();
+        FinalSheetCallable finalSheetCallable = FinalSheetOperationsMap.getFinalSheetCallable(command);
+        if (finalSheetCallable != null) {
+            finalSheetCallable.call();
+        } else {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override

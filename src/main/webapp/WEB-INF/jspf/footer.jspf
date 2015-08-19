@@ -1,1 +1,14 @@
-<div class="uk-width-1-1">footer</div>
+<footer class="footer-basic-centered">
+    <p class="footer-company-motto">The University</p>
+
+    <p class="footer-links">
+        <a href="<c:url value="/index.html"/>"><fmt:message key="nav.panel.home"/> |</a>
+        <a href="<c:url value="/aboutUs.html"/>"><fmt:message key="nav.panel.about.us"/> |</a>
+        <a href="<c:url value="/faculties.html"/>"><fmt:message key="nav.panel.faculties"/> |</a>
+        <a href="<c:url value="/support.html"/>"><fmt:message key="top.panel.support"/> |</a>
+        <a href="<c:url value="/publicFinalSheet.do"/>"><fmt:message key="nav.panel.final.sheet"/></a>
+    </p>
+
+    <p class="footer-company-name">University &copy; 2015</p>
+</footer>
+

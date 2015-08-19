@@ -11,11 +11,11 @@ public final class MailMessagesUtilities {
     }
 
     public static String createSubjectVerifyAccount() {
-        return "Подтверждение E-mailSupport учетной записи UniversityAlpha.com";
+        return "Подтверждение учетной записи University";
     }
 
     public static String createSubjectRecoverPassword() {
-        return "Восстановление пароля учетной записи UniversityAlpha.com";
+        return "Восстановление пароля учетной записи University";
     }
 
     public static String createSubjectUpdatedPassword() {
@@ -35,35 +35,39 @@ public final class MailMessagesUtilities {
     }
 
     public static String createMessageVerifyAccount(String firstName, String lastName, String patronymic, String confirmLink) {
-        return "Здравствуйте, " + lastName + " " + firstName + " " + patronymic + ".\n\n"
-                + "Добро пожаловать на UniversityAlpha.com\n"
-                + "Если Вы еще не подтвердили действительность своего E-mailSupport, настоятельно рекомендуем Вам сделать это сейчас.\n\n"
-                + " " + confirmLink;
+        return "Уважаемый, " + lastName + " " + firstName + " " + patronymic + ".\n\n"
+                + "Добро пожаловать на University.com\n"
+                + "Подтвердите свой электронный почтовый ящик переходом по. \n" + confirmLink
+                + "\nдля завершения настройки учетной записи.\n\n"
+                + "С уважение University.";
     }
 
     public static String createMessageRecoverPassword(String firstName, String lastName, String patronymic, String ticketRecoverPassword) {
         return "Здравствуйте, " + lastName + " " + firstName + " " + patronymic + ".\n\n"
-                + "Добро пожаловать на UniversityAlpha.com\n"
-                + "Мы вам выслали код который вы должны ввести в форму на которую вы перешли\n\n"
-                + " " + ticketRecoverPassword;
+                + "Добро пожаловать на University.com\n"
+                + "Вам выслан код на восстановление пароля:\n\n"
+                + " " + ticketRecoverPassword + "\n\n"
+                + "Код действителен 10 минут\n\n"
+                + "С уважение University.";
     }
 
     public static String createMessageUpdatedPassword(String firstName, String lastName, String patronymic) {
         return "Здравствуйте, " + lastName + " " + firstName + " " + patronymic + ".\n\n"
-                + "Вашей записи назначен новый пароль.\n\n"
-                + "Спасибо что пользуетесь нашим сервисом.\n\n";
+                + "Пароль изменен успешно! Желаем удачи!\n\n"
+                + "С уважение University.";
     }
 
     public static String createMessageBannedAccount(String firstName, String lastName, String patronymic) {
         return "Здравствуйте, " + lastName + " " + firstName + " " + patronymic + ".\n\n"
-                + "Ваша запись была заблокирована, администрацией.\n\n"
-                + "Свяжитесь с поддержкой для выявления причины.\n\n";
+                + "Ваша учетная запись заблокирована.\n\n"
+                + "Свяжитесь с поддержкой для выявления причины.\n\n"
+                + "С уважение University.";
     }
 
     public static String createMessageUnBannedAccount(String firstName, String lastName, String patronymic) {
         return "Здравствуйте, " + lastName + " " + firstName + " " + patronymic + ".\n\n"
-                + "Ваша запись была разблокирована.\n\n"
-                + "Спасибо что пользуетесь нашей системой.\n\n";
+                + "Ваш учетная запись успешно разблокирована!\n\n"
+                + "С уважение University.";
     }
 
     public static String createMessageCongratulationsBudgetEntrant(String firstName, String lastName, String patronymic, String facultyName) {

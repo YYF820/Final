@@ -8,6 +8,12 @@
         <role name="admin"/>
     </action>
 
+    <action path="/aboutUs.html">
+        <role name="guest"/>
+        <role name="entrant"/>
+        <role name="admin"/>
+    </action>
+
     <action path="/facultiesSort.do">
         <role name="guest"/>
         <role name="entrant"/>

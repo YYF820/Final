@@ -85,9 +85,7 @@ public class MailSupportOperationsMap {
                                         mailInfoToSupportBean.getAccountName()
                                 );
                                 cleanSession(session);
-                                request.setAttribute(RequestAttribute.SUPPORT_IS_MESSAGE_SENT, true);
-                                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.SUPPORT_MESSAGE_SENT_HTML);
-                                requestDispatcher.forward(request, response);
+                                session.setAttribute(SessionAttribute.SUPPORT_IS_MESSAGE_SENT, true);
                             } catch (MessagingException e) {
                                 setUpAttr(session, mailInfoToSupportBean);
                                 LOGGER.info(
@@ -95,10 +93,9 @@ public class MailSupportOperationsMap {
                                                 + " to support, subject : " + mailInfoToSupportBean.getSubject()
                                                 + " message : " + mailInfoToSupportBean.getMessage()
                                                 + " exception : ", e);
-                                request.setAttribute(RequestAttribute.SUPPORT_IS_MESSAGE_SENT, false);
-                                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.SUPPORT_MESSAGE_SENT_HTML);
-                                requestDispatcher.forward(request, response);
+                                session.setAttribute(SessionAttribute.SUPPORT_IS_MESSAGE_SENT, false);
                             }
+                            response.sendRedirect(Pages.SUPPORT_MESSAGE_SENT_HTML);
                         }
                     }
                 }
@@ -125,19 +122,16 @@ public class MailSupportOperationsMap {
                                         mailInfoToSupportBean.getAccountName()
                                 );
                                 cleanSession(session);
-                                request.setAttribute(RequestAttribute.SUPPORT_IS_MESSAGE_SENT, true);
-                                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.SUPPORT_MESSAGE_SENT_HTML);
-                                requestDispatcher.forward(request, response);
+                                session.setAttribute(SessionAttribute.SUPPORT_IS_MESSAGE_SENT, true);
                             } catch (MessagingException e) {
                                 LOGGER.info(
                                         "Couldn't send message from : " + mailInfoToSupportBean.getAccountName()
                                                 + " to support, subject : " + mailInfoToSupportBean.getSubject()
                                                 + " message : " + mailInfoToSupportBean.getMessage()
                                                 + " exception : ", e);
-                                request.setAttribute(RequestAttribute.SUPPORT_IS_MESSAGE_SENT, false);
-                                RequestDispatcher requestDispatcher = request.getRequestDispatcher(Pages.SUPPORT_MESSAGE_SENT_HTML);
-                                requestDispatcher.forward(request, response);
+                                session.setAttribute(SessionAttribute.SUPPORT_IS_MESSAGE_SENT, false);
                             }
+                            response.sendRedirect(Pages.SUPPORT_MESSAGE_SENT_HTML);
                         }
                     }
                 }

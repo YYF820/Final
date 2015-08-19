@@ -10,8 +10,8 @@
 <%@include file="../jspf/topPanel.jspf" %>
 <div class="uk-container uk-container-center uk-width-8-10 uk-text-center uk-margin-top ">
 
-    <img class="uk-margin-bottom logo-login"
-         src="<c:url value="/resources/img/mainLogo.png"/>"
+    <img class="uk-margin-large-bottom uk-margin-top"
+         src="<c:url value="/resources/img/mainLogoLogin.png"/>"
          alt="">
 
     <div class="uk-grid uk-align-center uk-width-small-9-10">
@@ -231,7 +231,7 @@
                                 <p class="uk-text-danger"><fmt:message key="registration.error.not.valid.email"/>
                                     <a href="#email-id"
                                        data-uk-modal="{center:true}">
-                                        <i class="uk-icon-question"></i>
+                                        <i class="uk-icon-info-circle"></i>
                                     </a>
                                 </p>
                             </c:when>

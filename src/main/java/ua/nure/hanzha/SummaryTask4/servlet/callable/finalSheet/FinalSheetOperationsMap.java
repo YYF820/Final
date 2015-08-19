@@ -175,11 +175,9 @@ public class FinalSheetOperationsMap {
                         }
                         if (searchedPassedEntrants.size() == 0) {
                             session.setAttribute(SessionAttribute.FINAL_SHEET_IS_FOUND_SOMETHING, false);
-                            response.sendRedirect(Pages.PUBLIC_FINAL_SHEET_SERVLET);
+                            response.sendRedirect(Pages.PUBLIC_FINAL_SHEET_HTML);
                         } else {
                             session.setAttribute(SessionAttribute.FINAL_SHEET_IS_FOUND_SOMETHING, true);
-                            if (request.getParameter(PARAM_PAGE) != null)
-                                page = Integer.parseInt(request.getParameter(PARAM_PAGE));
                             int numberOfRecords = searchedPassedEntrants.size();
                             int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / RECORDS_PER_PAGE);
                             page = 1;
@@ -242,8 +240,6 @@ public class FinalSheetOperationsMap {
                             response.sendRedirect(Pages.PUBLIC_FINAL_SHEET_HTML);
                         } else {
                             session.setAttribute(SessionAttribute.FINAL_SHEET_IS_FOUND_SOMETHING, true);
-                            if (request.getParameter(PARAM_PAGE) != null)
-                                page = Integer.parseInt(request.getParameter(PARAM_PAGE));
                             int numberOfRecords = searchedPassedEntrants.size();
                             int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / RECORDS_PER_PAGE);
                             page = 1;

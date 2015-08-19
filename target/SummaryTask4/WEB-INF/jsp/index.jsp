@@ -10,7 +10,6 @@
     <%@ include file="../jspf/logo.jspf" %>
     <%@ include file="../jspf/navAndLogin.jspf" %>
     <%@ include file="../jspf/content.jspf" %>
-    <%@ include file="../jspf/entrantInfoMain.jspf" %>
     <%@ include file="../jspf/footer.jspf" %>
 </div>
 </body>

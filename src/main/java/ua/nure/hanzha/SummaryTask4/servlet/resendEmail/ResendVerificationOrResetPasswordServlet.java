@@ -80,7 +80,7 @@ public class ResendVerificationOrResetPasswordServlet extends HttpServlet {
                                 CheckEmailStatusOperationsMap.getCheckEmailStatusCallable(entrantStatus);
                         if (checkEmailStatusCallable != null) {
                             cleanSession(session);
-                            checkEmailStatusCallable.call(entrantStatus);
+                            checkEmailStatusCallable.call(command);
                         } else {
                             //UNSUPPORTED STATUS
                             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

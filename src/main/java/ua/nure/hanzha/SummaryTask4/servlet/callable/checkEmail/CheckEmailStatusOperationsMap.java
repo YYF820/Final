@@ -48,9 +48,9 @@ public class CheckEmailStatusOperationsMap {
                 STATUS_ACTIVE,
                 new CheckEmailStatusCallable() {
                     @Override
-                    public void call(String status) throws IOException {
+                    public void call(String command) throws IOException {
                         session.setAttribute(SessionAttribute.RESEND_IS_ACTIVE_ACCOUNT, true);
-                        response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + status);
+                        response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                     }
                 }
         );
@@ -58,9 +58,9 @@ public class CheckEmailStatusOperationsMap {
                 STATUS_BLOCKED,
                 new CheckEmailStatusCallable() {
                     @Override
-                    public void call(String status) throws IOException {
+                    public void call(String command) throws IOException {
                         session.setAttribute(SessionAttribute.RESEND_IS_BLOCKED_ACCOUNT, true);
-                        response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + status);
+                        response.sendRedirect(Pages.RESEND_VERIFICATION_OR_RESET_PASSWORD_HTML + "?" + PARAM_COMMAND + "=" + command);
                     }
                 }
         );
@@ -68,10 +68,10 @@ public class CheckEmailStatusOperationsMap {
                 STATUS_NOT_VERIFIED,
                 new CheckEmailStatusCallable() {
                     @Override
-                    public void call(String status) throws IOException {
+                    public void call(String command) throws IOException {
                         session.setAttribute(SessionAttribute.ENTRANT_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, entrantForResendVerifyMessage);
                         session.setAttribute(SessionAttribute.USER_FOR_VERIFY_ACCOUNT_RESET_PASSWORD, userForResendVerifyMessage);
-                        session.setAttribute(SESSION_ATTRIBUTE_COMMAND, status);
+                        session.setAttribute(SESSION_ATTRIBUTE_COMMAND, command);
                         response.sendRedirect(Pages.CHECK_QUESTION_HTML);
                     }
                 }

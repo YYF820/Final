@@ -63,11 +63,11 @@
                 </u:ifAuthAs>
                 <input class="uk-form-row uk-width-1-1
                 ${sessionScope.supportIsValidSubject == false ? badSubjectClass : ''}"
-                       type="text" placeholder="Subject" name="subject" value="${sessionScope.supportSubject}">
+                       type="text" placeholder="<fmt:message key="support.form.subject"/>" name="subject" value="${sessionScope.supportSubject}">
 
                 <div class="uk-form-row">
                     <textarea class="${sessionScope.supportIsValidMessage == false ? badMessageClass : ''}"
-                              cols="66" rows="10" placeholder="Message" name="message">
+                              cols="66" rows="10" placeholder="<fmt:message key="support.form.message"/>" name="message">
                         ${sessionScope.supportMessage}
                     </textarea>
                 </div>

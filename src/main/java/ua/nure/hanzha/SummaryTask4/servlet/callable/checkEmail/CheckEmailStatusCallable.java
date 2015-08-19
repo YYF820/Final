@@ -8,5 +8,5 @@ import java.io.IOException;
  */
 public interface CheckEmailStatusCallable {
 
-    void call(String status) throws IOException;
+    void call(String command) throws IOException;
 }

@@ -1,30 +1,20 @@
-<div class="${fn:split(language,'_')[0]== 'en'? 'uk-width-medium-7-10' : 'uk-width-medium-8-10' } uk-container-center">
+<div class="${fn:split(language,'_')[0]== 'en'? 'uk-width-medium-5-10' : 'uk-width-medium-5-10' } uk-container-center">
     <nav class="uk-navbar">
         <ul class="uk-navbar-nav uk-navbar-attached uk-margin-left">
 
             <li class="">
                 <a href="<c:url value="/index.html"/>">
-                    <img src="../../resources/img/home.png"> <fmt:message key="nav.panel.home"/>
+                    <i class="uk-icon-university uk-icon-medium uk-text-primary"></i> <fmt:message key="nav.panel.home"/>
                 </a>
             </li>
             <li>
-                <a href="index.html">
+                <a href="<c:url value="/aboutUs.html"/>">
                     <img src="../../resources/img/aboutUs.png"> <fmt:message key="nav.panel.about.us"/>
                 </a>
             </li>
             <li>
                 <a href="<c:url value="/faculties.html?page=1"/>">
                     <img src="../../resources/img/faculties.png"> <fmt:message key="nav.panel.faculties"/>
-                </a>
-            </li>
-            <li>
-                <a href="index.html">
-                    <img src="../../resources/img/life.png"> <fmt:message key="nav.panel.life.university"/>
-                </a>
-            </li>
-            <li>
-                <a href="index.html">
-                    <img src="../../resources/img/contact.png"> <fmt:message key="nav.panel.contact"/>
                 </a>
             </li>
             <li>

@@ -191,6 +191,7 @@ public final class SessionAttribute {
 
     public static final String FACULTIES_PUBLIC_SORT_TYPE = "facultiesPublicSortType";
     public static final String FACULTIES_IS_SORTED = "facultiesIsSorted";
+    public static final String FACULTIES_IS_SAME_SUBJECTS = "facultiesIsSameSubjects";
 
     //===================================FINAL SHEET==============================================//
     public static final String PASSED_ENTRANTS = "passedEntrants";
@@ -214,6 +215,7 @@ public final class SessionAttribute {
     public static final String SUPPORT_ACCOUNT_NAME = "supportAccountName";
     public static final String SUPPORT_SUBJECT = "supportSubject";
     public static final String SUPPORT_MESSAGE = "supportMessage";
+    public static final String SUPPORT_IS_MESSAGE_SENT = "supportIsMessageSent";
 
     private SessionAttribute() {
 

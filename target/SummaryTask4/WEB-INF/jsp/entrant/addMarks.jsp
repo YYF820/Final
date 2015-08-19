@@ -11,8 +11,8 @@
 </c:if>
 <%@include file="../../jspf/topPanel.jspf" %>
 <div class="uk-container uk-container-center uk-width-medium-5-10 uk-margin-top uk-text-center">
-    <img class="uk-margin-bottom logo-login uk-align-center"
-         src="<c:url value="/resources/img/mainLogo.png"/>"
+    <img class="uk-margin-large-bottom uk-margin-top"
+         src="<c:url value="/resources/img/mainLogoLogin.png"/>"
          alt="">
 
     <div class="uk-alert uk-alert-warning">

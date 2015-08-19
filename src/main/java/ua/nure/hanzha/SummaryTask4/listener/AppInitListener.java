@@ -42,6 +42,8 @@ import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminService;
 import ua.nure.hanzha.SummaryTask4.service.facultyAdmin.FacultyAdminServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.facultyEntrant.FacultyEntrantService;
 import ua.nure.hanzha.SummaryTask4.service.facultyEntrant.FacultyEntrantServiceImpl;
+import ua.nure.hanzha.SummaryTask4.service.facultySubject.FacultySubjectService;
+import ua.nure.hanzha.SummaryTask4.service.facultySubject.FacultySubjectServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.mark.MarkService;
 import ua.nure.hanzha.SummaryTask4.service.mark.MarkServiceImpl;
 import ua.nure.hanzha.SummaryTask4.service.registration.RegistrationService;
@@ -136,6 +138,9 @@ public class AppInitListener implements ServletContextListener {
 
         EntrantFinalSheetService entrantFinalSheetService = new EntrantFinalSheetServiceImpl(txManager, entrantFinalSheetDao);
         servletContext.setAttribute(AppAttribute.ENTRANT_FINAL_SHEET_SERVICE, entrantFinalSheetService);
+
+        FacultySubjectService facultySubjectService = new FacultySubjectServiceImpl(txManager, facultySubjectDao);
+        servletContext.setAttribute(AppAttribute.FACULTY_SUBJECT_SERVICE, facultySubjectService);
     }
 
     private void setAuthorizationMap(ServletContext servletContext, String fileName) {
